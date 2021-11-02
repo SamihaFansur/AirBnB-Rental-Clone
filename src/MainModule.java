@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+//Remove GUI mainModule later
 public class MainModule {
 
 	private Model model;
