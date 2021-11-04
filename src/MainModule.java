@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 //Remove GUI mainModule later, test webhook comment
 public class MainModule {
@@ -32,22 +33,23 @@ public class MainModule {
 		*/
 	}
 	
-	public static void main (String [] args){
-		/*
-		Connection con = null; // a Connection object
-	    try {
-	        con = DriverManager.getConnection(
-	        "jdbc:mysql://stusql.dcs.shef.ac.uk/team018", "team018", "7854a03f");
-	        // use the open connection
-	        // for several queries
-	    }
-	    catch (Exception ex) {
-	        ex.printStackTrace();
-	    }
-	    finally {
-	        if (con != null) con.close();
-	    }
-		*/
+	public static void main (String [] args) throws SQLException {
+		
+//		Connection con = null; // a Connection object
+//	    try {
+//	        con = DriverManager.getConnection(
+//	        "jdbc:mysql://stusql.dcs.shef.ac.uk/team018", "team018", "7854a03f");
+//	        // use the open connection
+//	        // for several queries
+//	        System.out.println("conn");
+//	    }
+//	    catch (Exception ex) {
+//	        ex.printStackTrace();
+//	    }
+//	    finally {
+//	        if (con != null) con.close();
+//	    }
+		
 		
 		MainModule mainModule = new MainModule();
 		
