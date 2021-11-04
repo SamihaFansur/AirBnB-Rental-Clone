@@ -2,7 +2,9 @@ package GUI;
 
 import java.awt.EventQueue;
 import javax.swing.*;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -20,16 +22,19 @@ import java.awt.Font;
 public class register extends JFrame{
 
 	private JFrame frame;
-	private final JButton registerButton = new JButton("Register");
-	private JPasswordField passwordTextField;
+	private JButton registerButton = new JButton("Register");
+	private JTextField passwordTextField;
 	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
-	//private JPasswordField passwordField_1; //unused
 	private JTextField addressLine1Field;
 	private JTextField postcodeTextField;
 	private JTextField houseNumberTextField;
 	private JTextField emailAddressTextField;
 	private JTextField mobileNumberTextField;
+	private JComboBox accountTypeComboBox;
+	private JComboBox registerTitleComboBox;
+	
+	Connection connection = null;
 
 	public void close() {
 		frame.dispose();
@@ -112,6 +117,8 @@ public class register extends JFrame{
 		registerPanel.add(firstNameTextField);
 		firstNameTextField.setColumns(10);
 
+		setFirstName(firstNameTextField.getText());
+		
 		JLabel lblNewLabel = new JLabel("Surname");
 		lblNewLabel.setBounds(99, 136, 118, 45);
 		registerPanel.add(lblNewLabel);
@@ -121,6 +128,8 @@ public class register extends JFrame{
 		registerPanel.add(surnameTextField);
 		surnameTextField.setColumns(10);
 
+		setSurname(surnameTextField.getText());
+		
 		JLabel emailAddressLabel = new JLabel("Email Address");
 		emailAddressLabel.setBounds(99, 173, 118, 45);
 		registerPanel.add(emailAddressLabel);
@@ -129,6 +138,8 @@ public class register extends JFrame{
 		emailAddressTextField.setColumns(10);
 		emailAddressTextField.setBounds(189, 181, 276, 29);
 		registerPanel.add(emailAddressTextField);
+		
+		setEmail(emailAddressTextField.getText());
 
 		JLabel mobileLabel = new JLabel("Mobile Number");
 		mobileLabel.setBounds(99, 229, 125, 14);
@@ -138,15 +149,19 @@ public class register extends JFrame{
 		mobileNumberTextField.setColumns(10);
 		mobileNumberTextField.setBounds(189, 217, 276, 29);
 		registerPanel.add(mobileNumberTextField);
+		
+		setMobileNumber(mobileNumberTextField.getText());
 
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(99, 267, 75, 14);
 		registerPanel.add(passwordLabel);
 
-		passwordTextField = new JPasswordField();
+		passwordTextField = new JTextField();
 		passwordTextField.setBounds(189, 261, 276, 26);
 		registerPanel.add(passwordTextField);
-
+		
+		setPassword(passwordTextField.getText());
+		
 		JLabel addressLine1Label = new JLabel("Address Line 1");
 		addressLine1Label.setBounds(99, 307, 125, 14);
 		registerPanel.add(addressLine1Label);
@@ -154,6 +169,8 @@ public class register extends JFrame{
 		addressLine1Field = new JTextField();
 		addressLine1Field.setBounds(189,  300, 276, 29);
 		registerPanel.add(addressLine1Field);
+		
+		setFla(addressLine1Field.getText());
 
 		JLabel houseNumberLabel = new JLabel("House Number");
 		houseNumberLabel.setBounds(99, 346, 125, 14);
@@ -162,6 +179,8 @@ public class register extends JFrame{
 		houseNumberTextField = new JTextField();
 		houseNumberTextField.setBounds(189, 340 , 276, 27);
 		registerPanel.add(houseNumberTextField);
+		
+		setHnhn(houseNumberTextField.getText());
 
 		JLabel postcodeLabel = new JLabel("Postcode");
 		postcodeLabel.setBounds(99, 386, 125, 14);
@@ -171,6 +190,8 @@ public class register extends JFrame{
 		postcodeTextField.setBounds(189, 378, 276, 31);
 		registerPanel.add(postcodeTextField);
 
+		setPc(postcodeTextField.getText());
+		
 		JLabel accountTypeLabel = new JLabel("Register as");
 		accountTypeLabel.setBounds(99, 430, 125, 14);
 		registerPanel.add(accountTypeLabel);
@@ -180,28 +201,28 @@ public class register extends JFrame{
 		accountTypeComboBox.setBounds(189,  426, 276, 23);
 		registerPanel.add(accountTypeComboBox);
 
-		registerButton.setBounds(264, 550, 120, 31);
+		setAccType(accountTypeComboBox.getSelectedItem().toString());
+		
+		registerButton.setBounds(356, 480, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String firstName = firstNameTextField.getText();
-				String surname = surnameTextField.getText();
-				String email = emailAddressTextField.getText();
-				String mobile = mobileNumberTextField.getText();
-				String password = passwordTextField.getText();
-				String addressLine = addressLine1Field.getText();
-				String houseNumber = houseNumberTextField.getText();
-				String postcode = postcodeTextField.getText();
-				JComboBox accountType = (JComboBox) accountTypeComboBox.getSelectedItem();
+				//ALREADY HAVE GETTERS AND SETTERS BELOW
+//				String firstName = firstNameTextField.getText();
+//				String surname = surnameTextField.getText();
+//				String email = emailAddressTextField.getText();
+//				String mobile = mobileNumberTextField.getText();
+//				String password = passwordTextField.getText();
+//				String addressLine = addressLine1Field.getText();
+//				String houseNumber = houseNumberTextField.getText();
+//				String postcode = postcodeTextField.getText();
+//				JComboBox accountType = (JComboBox) accountTypeComboBox.getSelectedItem();
 
+				submit();
 				close();
 				login sp = new login();
 			}
 		});
 		registerPanel.add(registerButton);
-
-		JButton register = new JButton("Register");
-		register.setBounds(356, 480, 91, 23);
-		registerPanel.add(register);
 
 		JLabel registerLabel = new JLabel("Register");
 		registerLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -231,6 +252,137 @@ public class register extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	public void submit() {
+		try {
+			System.out.println("1");
+			connection = ConnectionManager.getConnection();
+			System.out.println("2");
+			String insertQuery = "insert into ACCOUNT values(?,?,?,?,?,?,?,?,?,?)";
+			System.out.println("3");
+			PreparedStatement ps = connection.prepareStatement(insertQuery);
+			System.out.println("4");
+			ps.setString(1, getEmail());
+			ps.setString(2, getTitle());
+			ps.setString(3, getFirstName());
+			ps.setString(4, getSurame());
+			ps.setString(5, getMobileNumber());
+			ps.setString(6, getPasword());
+			ps.setString(7, getFla());
+			ps.setString(8, getHnhn());
+			ps.setString(9, getPc());
+			ps.setString(10, "Host");
+			System.out.println("5");
+			System.out.println(ps);
+			int i  = ps.executeUpdate();
+			System.out.println("6");
+			if(i>0) {
+				System.out.println("7");
+				System.out.println(this);
+				JOptionPane.showMessageDialog(this, "saved ok"); //remove later
+			}
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+
+	//getters and setters:
+	private String title;
+	private String firstName;
+	private String surname;
+	private String email;
+	private String mobileNumber;
+	private String password;
+	private String fla;
+	private String pc;
+	private String hnHn;
+	private String accType;
+	
+	public void setPassword(String pasword) {
+		this.password=pasword;
+	}
+
+	public String getPasword() {
+		return passwordTextField.getText();
+	}
+	
+	public void setFla(String fla) {
+		this.fla=fla;
+	}
+
+	public String getFla() {
+		return addressLine1Field.getText();
+	}
+	
+	public void setPc(String pc) {
+		this.pc=pc;
+	}
+
+	public String getPc() {
+		return postcodeTextField.getText();
+	}
+	
+	public void setHnhn(String hnHn) {
+		this.hnHn=hnHn;
+	}
+
+	public String getHnhn() {
+		return houseNumberTextField.getText();
+	}
+	
+	public void setAccType(String accType) {
+		this.accType=accType;
+	}
+
+//	public String getAccType(String[] acc) {
+//		return accountTypeComboBox.getSelectedItem().toString();
+//	}
+	
+	
+	public void setTitle(String title) {
+		this.title=title;
+	}
+
+	public String getTitle(String[] title) {
+		return registerTitleComboBox.getSelectedItem().toString();
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName=firstName;
+	}
+	
+	public String getFirstName() {
+		return firstNameTextField.getText();
+	}
+	
+	public void setSurname(String surname) {
+		this.surname=surname;
+	}
+
+	public String getSurame() {
+		return surnameTextField.getText();
+	}
+	
+	public void setEmail(String email) {
+		this.email=email;
+	}
+
+	public String getEmail() {
+		return emailAddressTextField.getText();
+	}
+	
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber=mobileNumber;
+	}
+	
+	public String getMobileNumber() {
+		return mobileNumberTextField.getText();
+	}
+
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
