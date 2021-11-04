@@ -104,7 +104,7 @@ public class register extends JFrame{
 		registerPanel.add(registerTitleLabel);
 
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
-		JComboBox registerTitleComboBox = new JComboBox(titles);
+		registerTitleComboBox = new JComboBox(titles);
 		registerTitleComboBox.setBounds(189, 71, 276, 23);
 		registerPanel.add(registerTitleComboBox);
 
@@ -172,12 +172,12 @@ public class register extends JFrame{
 		
 		setFla(addressLine1Field.getText());
 
-		JLabel houseNumberLabel = new JLabel("House Number");
+		JLabel houseNumberLabel = new JLabel("House Name/Number");
 		houseNumberLabel.setBounds(99, 346, 125, 14);
 		registerPanel.add(houseNumberLabel);
 
 		houseNumberTextField = new JTextField();
-		houseNumberTextField.setBounds(189, 340 , 276, 27);
+		houseNumberTextField.setBounds(225, 340 , 276, 27);
 		registerPanel.add(houseNumberTextField);
 		
 		setHnhn(houseNumberTextField.getText());
@@ -197,7 +197,7 @@ public class register extends JFrame{
 		registerPanel.add(accountTypeLabel);
 
 		String accountTypes[] = { "Host", "Guest", "Both (Host & Guest)" };
-		JComboBox accountTypeComboBox = new JComboBox(accountTypes);
+		accountTypeComboBox = new JComboBox(accountTypes);
 		accountTypeComboBox.setBounds(189,  426, 276, 23);
 		registerPanel.add(accountTypeComboBox);
 
@@ -271,7 +271,7 @@ public class register extends JFrame{
 			ps.setString(7, getFla());
 			ps.setString(8, getHnhn());
 			ps.setString(9, getPc());
-			ps.setString(10, "Host");
+			ps.setString(10, getAccType());
 			System.out.println("5");
 			System.out.println(ps);
 			int i  = ps.executeUpdate();
@@ -337,17 +337,16 @@ public class register extends JFrame{
 		this.accType=accType;
 	}
 
-//	public String getAccType(String[] acc) {
-//		return accountTypeComboBox.getSelectedItem().toString();
-//	}
-	
-	
+	public String getAccType() {
+		return accountTypeComboBox.getSelectedItem().toString();
+	}
+		
 	public void setTitle(String title) {
 		this.title=title;
 	}
 
-	public String getTitle(String[] title) {
-		return registerTitleComboBox.getSelectedItem().toString();
+	public String getTitle() {
+		return (String) registerTitleComboBox.getSelectedItem();
 	}
 	
 	public void setFirstName(String firstName) {
