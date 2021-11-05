@@ -1,5 +1,6 @@
 package GUI;
-
+import Controller.*;
+import Model.*;
 import java.awt.EventQueue;
 import javax.swing.*;
 import java.sql.Connection;
@@ -20,7 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class register extends JFrame{
+public class Register extends JFrame{
 
 	private JFrame frame;
 	private JButton registerButton = new JButton("Register");
@@ -34,6 +35,11 @@ public class register extends JFrame{
 	private JTextField mobileNumberTextField;
 	private JComboBox accountTypeComboBox;
 	private JComboBox registerTitleComboBox;
+	
+//	private Controller controller;
+	private Model model;
+	private Controller controller;
+	private MainModule mainModule;
 	
 	Connection connection = null;
 
@@ -53,14 +59,17 @@ public class register extends JFrame{
 	 * Create the application.
 	 */
 
-	public register() {
-		initializeRegister();
+	public Register(MainModule mainModule, Controller controller, Model model) {
+		//initializeRegister();
+		this.mainModule=mainModule;
+		this.model=model;
+		this.controller=controller;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initializeRegister() {
+	public void initializeRegister() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
@@ -72,7 +81,11 @@ public class register extends JFrame{
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				homePage sp = new homePage();
+				// remove all objects on the screen. 
+				// call the method to draw the homepage
+				// change STATE of the program
+				
+				//Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -80,7 +93,7 @@ public class register extends JFrame{
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				search sp = new search();
+				//Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -89,7 +102,7 @@ public class register extends JFrame{
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+				//Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -98,7 +111,7 @@ public class register extends JFrame{
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				login sp = new login();
+				//Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);
@@ -228,7 +241,7 @@ public class register extends JFrame{
 
 				submit();
 				close();
-				login sp = new login();
+				Login sp = new Login(mainModule,controller,model);
 			}
 		});
 		registerPanel.add(registerButton);

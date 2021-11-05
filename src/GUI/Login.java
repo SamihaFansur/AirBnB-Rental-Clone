@@ -1,10 +1,10 @@
 package GUI;
-
+import Controller.*;
+import Model.*;
 import java.awt.EventQueue;
 import java.sql.Statement;
 import javax.swing.*;
 import java.sql.ResultSet;
-
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -17,7 +17,8 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class login extends JFrame{
+
+public class Login extends JFrame{
 
 	private JFrame frame;
 	private JButton loginButton = new JButton("Login");
@@ -38,9 +39,16 @@ public class login extends JFrame{
 	/**	
 	 * Create the application.
 	 */
-	
-	public login() {
-		initializeLogin();
+
+	 
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	public Login(MainModule mainModule, Controller controller, Model model) {
+		//initializeLogin();
+		this.mainModule=mainModule;
+		this.controller=controller;
+		this.model=model;
 	}
 
 	/**
@@ -58,7 +66,7 @@ public class login extends JFrame{
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				homePage sp = new homePage();
+			//	Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -67,7 +75,7 @@ public class login extends JFrame{
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				search sp = new search();
+			//	Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -76,7 +84,7 @@ public class login extends JFrame{
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+			//	Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -85,7 +93,7 @@ public class login extends JFrame{
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 						close();
-						login sp = new login();
+			//			Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);
@@ -119,7 +127,7 @@ public class login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				logUserIn();
 				close();
-				search sp = new search();
+			//	Search sp = new Search();
 			}
 		});
 		
@@ -128,7 +136,7 @@ public class login extends JFrame{
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+			//	Register sp = new Register();
 			}
 		});		
 		

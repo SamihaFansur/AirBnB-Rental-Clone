@@ -1,5 +1,7 @@
 package GUI;
-
+import Controller.*;
+import GUI.MainModule.STATE;
+import Model.*;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -27,7 +29,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class homePage extends JFrame{
+public class Homepage extends JFrame{
 
 	private JFrame frame;
 
@@ -35,31 +37,39 @@ public class homePage extends JFrame{
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-	
-					homePage window = new homePage();
-					window.frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//	
+//			Homepage window = new Homepage();
+//			window.frame.setVisible(true);
+//	}
 	
 
 	 public void close() {
 		 	frame.dispose();
-	    }	
+	 }	
 	 
 
 	/**	
 	 * Create the application.
 	 */
-	 
-	public homePage() {
-		initializeHomePage();
+	 private Controller controller;
+	 private Model model;
+	 private MainModule mainModule;
+	// private Controller controler;
+	public Homepage(MainModule mainModule, Controller controller, Model model) {
+		//initializeHomePage();
+		this.model=model;
+		this.mainModule=mainModule;
+		this.controller=controller;
 	}
 
+	
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initializeHomePage() {
+	public void initializeHomePage() {
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
@@ -68,11 +78,18 @@ public class homePage extends JFrame{
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
 		
+		System.out.println("Initialise homepage");
+		
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				// remove all objects on the screen. 
+				// call the method to draw the homepage
+				// change STATE of the program
+				//Homepage sp = new Homepage();
+				System.out.println("action performaed homepage");
 				close();
-				homePage sp = new homePage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -81,8 +98,19 @@ public class homePage extends JFrame{
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// clear panels on the screen
+				// update STATE of the system
+				// call search.initialise();
+				//Search sp = new Search();
+				//MainModule=STATE.SEARCH;
+				System.out.println("action performed search btn");
+				mainModule.currentState=STATE.SEARCH;
+		
+				System.out.println(mainModule.currentState);
+				//mainModule.controller.drawNewView();
+				controller.drawNewView();
+				//search.initializeSearch();
 				close();
-				search sp = new search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -90,8 +118,11 @@ public class homePage extends JFrame{
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				mainModule.currentState=STATE.SELF_REGISTRATION;
+				controller.drawNewView();
 				close();
-				register sp = new register();
+				//Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -100,7 +131,7 @@ public class homePage extends JFrame{
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 						close();
-						login sp = new login();
+						//Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);

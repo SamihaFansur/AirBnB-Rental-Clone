@@ -1,5 +1,6 @@
 package GUI;
-
+import Controller.*;
+import Model.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -10,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class account {
+public class Account {
 
 	private JFrame frame;
 
@@ -21,8 +22,16 @@ public class account {
 	/**
 	 * Create the application.
 	 */
-	public account() {
-		initialize();
+	//private Controller controller;
+	private Model model;
+	private Controller controller;
+	private MainModule mainModule;
+	
+	public Account(MainModule mainModule, Controller controller, Model model) {
+		//initialize();
+		this.mainModule=mainModule;
+		this.model=model;
+		this.controller=controller;
 	}
 
 	 public void close() {
@@ -31,7 +40,7 @@ public class account {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +53,7 @@ public class account {
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				homePage sp = new homePage();
+			//	Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -54,7 +63,7 @@ public class account {
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				search sp = new search();
+			//	Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -63,7 +72,7 @@ public class account {
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+			//	Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -72,7 +81,7 @@ public class account {
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 						close();
-						login sp = new login();
+			//			Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);

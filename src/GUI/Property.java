@@ -1,4 +1,6 @@
 package GUI;
+import Controller.*;
+import Model.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class property {
+public class Property {
 
 	private JFrame frame;
 
@@ -21,9 +23,17 @@ public class property {
 	/**
 	 * Create the application.
 	 */
-	public property() {
-		initializeProperty();
+	
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	
+	public Property(MainModule mainModule, Controller controller, Model model) {
+		//initializeHomePage();
+		this.model=model;
+		this.mainModule=mainModule;
 	}
+
 
 	 public void close() {
 		 	frame.dispose();
@@ -44,7 +54,7 @@ public class property {
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				homePage sp = new homePage();
+				//Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -54,7 +64,7 @@ public class property {
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				search sp = new search();
+				//Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -63,7 +73,7 @@ public class property {
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+				//Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -72,7 +82,7 @@ public class property {
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 						close();
-						login sp = new login();
+					//	Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);

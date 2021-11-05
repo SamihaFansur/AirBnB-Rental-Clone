@@ -1,5 +1,6 @@
 package GUI;
-
+import Controller.*;
+import Model.*;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 
-public class search extends JFrame{
+public class Search extends JFrame{
 
 	private JFrame frame;
 	private final JButton filterButton = new JButton("Apply Filters");
@@ -36,8 +37,15 @@ public class search extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public search() {
-		initializeSearch();
+	
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	public Search(MainModule mainModule, Controller controller, Model model) {
+		//initializeSearch();
+		this.controller=controller;
+		this.model=model;
+		this.mainModule=mainModule;
 	}
 
 	 public void close() {
@@ -46,7 +54,7 @@ public class search extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	void initializeSearch() {
+	public void initializeSearch() {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
@@ -64,7 +72,8 @@ public class search extends JFrame{
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				homePage sp = new homePage();
+				controller.drawNewView();
+			//	Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -74,7 +83,7 @@ public class search extends JFrame{
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				search sp = new search();
+			//	Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -83,7 +92,7 @@ public class search extends JFrame{
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
-				register sp = new register();
+			//	Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -92,7 +101,7 @@ public class search extends JFrame{
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 						close();
-						login sp = new login();
+			//			Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);

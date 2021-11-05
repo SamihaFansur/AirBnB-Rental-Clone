@@ -1,25 +1,37 @@
+package GUI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import Controller.Controller;
+import Model.Model;
+
 
 //Remove GUI mainModule later, test webhook comment
 public class MainModule {
 
 	private Model model;
-	private Controller controller;
-	private SelfRegistration selfRegistration;
+	public static Controller controller;
+	private Register register;
+//	private Homepage homepage;
+	private Account Account;
 	private Homepage homepage;
+	private Login login;
+	private Search search;
 	
 	
 	//use enum to register the state of the system
 	public enum STATE{
 		HOMEPAGE,
 		SELF_REGISTRATION,
+		ACCOUNT,
+		LOGIN,
+		SEARCH,
 		//could have others that correspond to new pages.
-		HELP
+		CONTACT_US
 	}
 	
-	public STATE currentState = STATE.SELF_REGISTRATION;
+	public STATE currentState = STATE.HOMEPAGE;
 	
 	public MainModule() {
 		/*
@@ -34,41 +46,34 @@ public class MainModule {
 	}
 	
 	public static void main (String [] args) throws SQLException {
-		
-//		Connection con = null; // a Connection object
-//	    try {
-//	        con = DriverManager.getConnection(
-//	        "jdbc:mysql://stusql.dcs.shef.ac.uk/team018", "team018", "7854a03f");
-//	        // use the open connection
-//	        // for several queries
-//	        System.out.println("conn");
-//	    }
-//	    catch (Exception ex) {
-//	        ex.printStackTrace();
-//	    }
-//	    finally {
-//	        if (con != null) con.close();
-//	    }
-		
+	
 		
 		MainModule mainModule = new MainModule();
 		
 		//creating the model
 		Model model = new Model();
 		//creating an instance of SelfRegistration class
-		SelfRegistration selfRegistration = new SelfRegistration();
+		Register register = new Register(mainModule, controller, model);
 		//some test code
 		System.out.println("testing");
 		//creating an instance of Homepage class
-		Homepage homepage = new Homepage();
+		Homepage homepage = new Homepage(mainModule, controller, model);
+		//creating an instance of login class
+		Login login = new Login(mainModule, controller, model);
+		//creating an instance of search class
+		Account account = new Account(mainModule, controller, model);
+		//creating an instance of search class
+		Search search = new Search(mainModule, controller, model);
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		Controller controller = new Controller(mainModule, model, homepage, selfRegistration);
+		Controller controller = new Controller(mainModule, model, homepage, register, search, account, login);
 		//calling the draw method in the controller:
+		
 		controller.drawNewView();
 		
 		
 		}
+	
 	
 }
