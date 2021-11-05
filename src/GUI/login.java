@@ -1,35 +1,35 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.sql.Statement;
 import javax.swing.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.sql.ResultSet;
+
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-
-
-import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class login extends JFrame{
 
 	private JFrame frame;
-	private final JButton loginButton = new JButton("Login");
-	private JPasswordField passwordField;
+	private JButton loginButton = new JButton("Login");
+	private JButton registerButton = new JButton("Register");
+	private JTextField passwordField;
 	private JTextField usernameField;
+	private JLabel passwordLabel;
+	private JPanel registerPanel;
+	private JLabel usernameLabel;
 
+	Connection connection = null;
+	
 	 public void close() {
 		 	frame.dispose();
 	    }	
@@ -90,43 +90,112 @@ public class login extends JFrame{
 		});
 		navBarPanel.add(navLoginButton);
 		
-		JPanel registerPanel = new JPanel();
+		registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
 		
-		JLabel usernameLabel = new JLabel("Username");
+		usernameLabel = new JLabel("Username/email");
 		usernameLabel.setBounds(104, 223, 118, 45);
 		registerPanel.add(usernameLabel);
 		
-		passwordField = new JPasswordField();
+		usernameField = new JTextField();
+		usernameField.setBounds(200, 230, 295, 31);
+		registerPanel.add(usernameField);
+		usernameField.setColumns(10);
+		
+		passwordField = new JTextField();
 		passwordField.setBounds(168, 293, 295, 31);
 		registerPanel.add(passwordField);
 		
-		
-
-		loginButton.setBounds(236, 393, 141, 36);
-		registerPanel.add(loginButton);
-		
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				close();
-				search sp = new search();
-
-			}
-		});
-		
-		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(104, 301, 75, 14);
 		registerPanel.add(passwordLabel);
 		
-		usernameField = new JTextField();
-		usernameField.setBounds(168, 230, 295, 31);
-		registerPanel.add(usernameField);
-		usernameField.setColumns(10);
+
+		loginButton.setBounds(190, 393, 100, 36);
+		registerPanel.add(loginButton);
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logUserIn();
+				close();
+				search sp = new search();
+			}
+		});
+		
+		registerButton.setBounds(330, 393, 100, 36);
+		registerPanel.add(registerButton);
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				close();
+				register sp = new register();
+			}
+		});		
+		
 		frame.setBounds(100, 100, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.setVisible(true);
 	}
+	
+	public void logUserIn() {
+		try {
+			System.out.println("1");
+			connection = ConnectionManager.getConnection();
+			System.out.println("2");
+			String loginQuery = "select email, password from ACCOUNT";
+			System.out.println("3");
+			Statement stmt = connection.createStatement();
+			ResultSet userLoggingIn = stmt.executeQuery(loginQuery);
+			
+			if(!userLoggingIn.next()) {
+				JOptionPane.showMessageDialog(this, "Invalid username/email or password!");
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "Login successful!");
+				System.out.println("logged in");
+			}
+//			PreparedStatement ps = connection.prepareStatement(loginQuery);
+//			System.out.println("4");
+//			ps.setString(1, getUsername());;
+//			ps.setString(6, getPasword());
+//			System.out.println("5");
+//			System.out.println(ps);
+//			int i  = ps.executeQuery();
+//			System.out.println("6");
+//			if(i>0) {
+//				System.out.println("7");
+//				System.out.println(this);
+//				JOptionPane.showMessageDialog(this, "saved ok"); //remove later
+//				System.out.println("logged in");
+//			}
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+
+	//getters and setters:
+	private String username;
+	private String password;
+	
+	public void setPassword(String pasword) {
+		this.password = pasword;
+	}
+
+	public String getPasword() {
+		return passwordField.getText();
+	}
+	
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return usernameField.getText();
+	}
+	
+	
 }

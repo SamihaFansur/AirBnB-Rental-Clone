@@ -10,7 +10,7 @@ public class ConnectionManager {
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
 	private static Connection connection;
-	private static String urlString;
+//	private static String urlString;
 	
 	public static Connection getConnection() throws SQLException {
 		try {
