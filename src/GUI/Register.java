@@ -1,5 +1,6 @@
 package GUI;
 import Controller.*;
+import GUI.MainModule.STATE;
 import Model.*;
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -80,20 +81,18 @@ public class Register extends JFrame{
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
-				// remove all objects on the screen. 
-				// call the method to draw the homepage
-				// change STATE of the program
-				
-				//Homepage sp = new Homepage();
+				mainModule.currentState = STATE.HOMEPAGE;
+				MainModule.controller.drawNewView();
+//				close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
-				//Search sp = new Search();
+				mainModule.currentState = STATE.SEARCH;
+				MainModule.controller.drawNewView();
+//				close();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -101,8 +100,9 @@ public class Register extends JFrame{
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
-				//Register sp = new Register();
+				mainModule.currentState = STATE.SELF_REGISTRATION;
+				MainModule.controller.drawNewView();
+//				close();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -110,8 +110,9 @@ public class Register extends JFrame{
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
-				//Login sp = new Login();
+				mainModule.currentState = STATE.LOGIN;
+				MainModule.controller.drawNewView();
+//				close();
 			}
 		});
 		navBarPanel.add(navLoginButton);

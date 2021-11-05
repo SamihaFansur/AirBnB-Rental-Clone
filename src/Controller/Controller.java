@@ -1,5 +1,11 @@
 package Controller;
-import GUI.*;
+import GUI.Account;
+import GUI.Homepage;
+import GUI.Login;
+import GUI.MainModule;
+import GUI.Register;
+import GUI.Search;
+import GUI.MainModule.STATE;
 import Model.Model;
 
 public class Controller extends MainModule{
@@ -27,6 +33,7 @@ public class Controller extends MainModule{
 	}
 	
 	public static void main(String [] args) {
+		System.out.println("now in controller");
 	}
 	
 	public void setAccountId(int id) {
@@ -79,7 +86,7 @@ public class Controller extends MainModule{
 			account.initialize();
 		}
 		else if (mainModule.currentState == STATE.LOGIN){
-			
+			login.initializeLogin();
 			//login.initia
 		}
 		else if (mainModule.currentState == STATE.SEARCH){

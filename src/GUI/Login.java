@@ -1,5 +1,6 @@
 package GUI;
 import Controller.*;
+import GUI.MainModule.STATE;
 import Model.*;
 import java.awt.EventQueue;
 import java.sql.Statement;
@@ -54,7 +55,7 @@ public class Login extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initializeLogin() {
+	public void initializeLogin() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 		
@@ -65,7 +66,9 @@ public class Login extends JFrame{
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
+				mainModule.currentState=STATE.HOMEPAGE;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Homepage sp = new Homepage();
 			}
 		});
@@ -74,7 +77,9 @@ public class Login extends JFrame{
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
+				mainModule.currentState=STATE.SEARCH;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Search sp = new Search();
 			}
 		});
@@ -83,7 +88,9 @@ public class Login extends JFrame{
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
+				mainModule.currentState=STATE.SELF_REGISTRATION;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Register sp = new Register();
 			}
 		});
@@ -92,7 +99,9 @@ public class Login extends JFrame{
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						close();
+				mainModule.currentState=STATE.LOGIN;
+				MainModule.controller.drawNewView();
+//				close();
 			//			Login sp = new Login();
 			}
 		});

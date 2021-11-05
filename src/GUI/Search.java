@@ -1,5 +1,6 @@
 package GUI;
 import Controller.*;
+import GUI.MainModule.STATE;
 import Model.*;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -71,8 +72,9 @@ public class Search extends JFrame{
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
-				controller.drawNewView();
+				mainModule.currentState=STATE.HOMEPAGE;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Homepage sp = new Homepage();
 			}
 		});
@@ -82,7 +84,9 @@ public class Search extends JFrame{
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
+				mainModule.currentState=STATE.SEARCH;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Search sp = new Search();
 			}
 		});
@@ -91,7 +95,9 @@ public class Search extends JFrame{
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close();
+				mainModule.currentState=STATE.SELF_REGISTRATION;
+				MainModule.controller.drawNewView();
+//				close();
 			//	Register sp = new Register();
 			}
 		});
@@ -100,7 +106,9 @@ public class Search extends JFrame{
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						close();
+				mainModule.currentState=STATE.LOGIN;
+				MainModule.controller.drawNewView();
+//				close();
 			//			Login sp = new Login();
 			}
 		});

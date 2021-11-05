@@ -1,5 +1,6 @@
 package GUI;
 import Controller.*;
+import GUI.MainModule.STATE;
 import Model.*;
 
 import java.awt.BorderLayout;
@@ -53,8 +54,9 @@ public class Property {
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState = STATE.HOMEPAGE;
+				MainModule.controller.drawNewView();
 				close();
-				//Homepage sp = new Homepage();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -63,8 +65,9 @@ public class Property {
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState = STATE.SEARCH;
+				MainModule.controller.drawNewView();
 				close();
-				//Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -72,8 +75,9 @@ public class Property {
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState = STATE.SELF_REGISTRATION;
+				MainModule.controller.drawNewView();
 				close();
-				//Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -81,8 +85,9 @@ public class Property {
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						close();
-					//	Login sp = new Login();
+				mainModule.currentState = STATE.LOGIN;
+				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navLoginButton);

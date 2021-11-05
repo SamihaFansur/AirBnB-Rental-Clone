@@ -1,7 +1,9 @@
 package GUI;
 import Controller.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule;
 import Model.*;
+
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -17,9 +19,6 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-
-
 import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -55,7 +54,6 @@ public class Homepage extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-	// private Controller controler;
 	public Homepage(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
@@ -63,8 +61,6 @@ public class Homepage extends JFrame{
 		this.controller=controller;
 	}
 
-	
-	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -88,8 +84,10 @@ public class Homepage extends JFrame{
 				// call the method to draw the homepage
 				// change STATE of the program
 				//Homepage sp = new Homepage();
-				System.out.println("action performaed homepage");
-				close();
+				System.out.println("action performed homepage");
+				mainModule.currentState=STATE.HOMEPAGE;
+				MainModule.controller.drawNewView();
+//				close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -107,10 +105,13 @@ public class Homepage extends JFrame{
 				mainModule.currentState=STATE.SEARCH;
 		
 				System.out.println(mainModule.currentState);
-				//mainModule.controller.drawNewView();
-				controller.drawNewView();
+				try {
+					MainModule.controller.drawNewView();
+				} catch (Exception s) {
+					System.err.println(s.getMessage());
+				}
 				//search.initializeSearch();
-				close();
+				//close(); 
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -120,8 +121,8 @@ public class Homepage extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				mainModule.currentState=STATE.SELF_REGISTRATION;
-				controller.drawNewView();
-				close();
+				MainModule.controller.drawNewView();
+				//close();
 				//Register sp = new Register();
 			}
 		});
@@ -130,7 +131,9 @@ public class Homepage extends JFrame{
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						close();
+				mainModule.currentState=STATE.LOGIN;
+				MainModule.controller.drawNewView();
+				//close();
 						//Login sp = new Login();
 			}
 		});

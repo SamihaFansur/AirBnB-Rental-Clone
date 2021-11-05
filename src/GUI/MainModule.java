@@ -45,7 +45,7 @@ public class MainModule {
 		*/
 	}
 	
-	public static void main (String [] args) throws SQLException {
+	public static void main (String [] args) {
 	
 		
 		MainModule mainModule = new MainModule();
@@ -67,11 +67,10 @@ public class MainModule {
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		Controller controller = new Controller(mainModule, model, homepage, register, search, account, login);
+		controller = new Controller(mainModule, model, homepage, register, search, account, login);
 		//calling the draw method in the controller:
-		
+		System.out.println("-------controller made");
 		controller.drawNewView();
-		
 		
 		}
 	
