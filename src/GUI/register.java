@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -37,6 +38,14 @@ public class register extends JFrame{
 	Connection connection = null;
 
 	public void close() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("failed to close conn");
+			e.printStackTrace();
+		} finally {
+			System.out.println("conn closed!");
+		}
 		frame.dispose();
 	}
 
