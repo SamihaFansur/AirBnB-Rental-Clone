@@ -140,7 +140,7 @@ public class Register extends JFrame{
 		registerPanel.add(firstNameTextField);
 		firstNameTextField.setColumns(10);
 
-		setFirstName(firstNameTextField.getText());
+		model.setFirstName(firstNameTextField.getText());
 		
 		JLabel lblNewLabel = new JLabel("Surname");
 		lblNewLabel.setBounds(99, 136, 118, 45);
@@ -151,7 +151,7 @@ public class Register extends JFrame{
 		registerPanel.add(surnameTextField);
 		surnameTextField.setColumns(10);
 
-		setSurname(surnameTextField.getText());
+		model.setSurname(surnameTextField.getText());
 		
 		JLabel emailAddressLabel = new JLabel("Email Address");
 		emailAddressLabel.setBounds(99, 173, 118, 45);
@@ -162,7 +162,7 @@ public class Register extends JFrame{
 		emailAddressTextField.setBounds(189, 181, 276, 29);
 		registerPanel.add(emailAddressTextField);
 		
-		setEmail(emailAddressTextField.getText());
+		model.setEmail(emailAddressTextField.getText());
 
 		JLabel mobileLabel = new JLabel("Mobile Number");
 		mobileLabel.setBounds(99, 229, 125, 14);
@@ -173,7 +173,7 @@ public class Register extends JFrame{
 		mobileNumberTextField.setBounds(189, 217, 276, 29);
 		registerPanel.add(mobileNumberTextField);
 		
-		setMobileNumber(mobileNumberTextField.getText());
+		model.setMobileNumber(mobileNumberTextField.getText());
 
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(99, 267, 75, 14);
@@ -183,7 +183,7 @@ public class Register extends JFrame{
 		passwordTextField.setBounds(189, 261, 276, 26);
 		registerPanel.add(passwordTextField);
 		
-		setPassword(passwordTextField.getText());
+		model.setPassword(passwordTextField.getText());
 		
 		JLabel addressLine1Label = new JLabel("Address Line 1");
 		addressLine1Label.setBounds(99, 307, 125, 14);
@@ -193,7 +193,7 @@ public class Register extends JFrame{
 		addressLine1Field.setBounds(189,  300, 276, 29);
 		registerPanel.add(addressLine1Field);
 		
-		setFla(addressLine1Field.getText());
+		model.setAddressLine1(addressLine1Field.getText());
 
 		JLabel houseNumberLabel = new JLabel("House Name/Number");
 		houseNumberLabel.setBounds(99, 346, 125, 14);
@@ -203,7 +203,7 @@ public class Register extends JFrame{
 		houseNumberTextField.setBounds(225, 340 , 276, 27);
 		registerPanel.add(houseNumberTextField);
 		
-		setHnhn(houseNumberTextField.getText());
+		model.setHouseNameNum(houseNumberTextField.getText());
 
 		JLabel postcodeLabel = new JLabel("Postcode");
 		postcodeLabel.setBounds(99, 386, 125, 14);
@@ -213,7 +213,7 @@ public class Register extends JFrame{
 		postcodeTextField.setBounds(189, 378, 276, 31);
 		registerPanel.add(postcodeTextField);
 
-		setPc(postcodeTextField.getText());
+		model.setPostcode(postcodeTextField.getText());
 		
 		JLabel accountTypeLabel = new JLabel("Register as");
 		accountTypeLabel.setBounds(99, 430, 125, 14);
@@ -224,22 +224,11 @@ public class Register extends JFrame{
 		accountTypeComboBox.setBounds(189,  426, 276, 23);
 		registerPanel.add(accountTypeComboBox);
 
-		setAccType(accountTypeComboBox.getSelectedItem().toString());
+		model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 		
 		registerButton.setBounds(356, 480, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//ALREADY HAVE GETTERS AND SETTERS BELOW
-//				String firstName = firstNameTextField.getText();
-//				String surname = surnameTextField.getText();
-//				String email = emailAddressTextField.getText();
-//				String mobile = mobileNumberTextField.getText();
-//				String password = passwordTextField.getText();
-//				String addressLine = addressLine1Field.getText();
-//				String houseNumber = houseNumberTextField.getText();
-//				String postcode = postcodeTextField.getText();
-//				JComboBox accountType = (JComboBox) accountTypeComboBox.getSelectedItem();
-
 				submit();
 				close();
 				Login sp = new Login(mainModule,controller,model);
@@ -285,16 +274,16 @@ public class Register extends JFrame{
 			System.out.println("3");
 			PreparedStatement ps = connection.prepareStatement(insertQuery);
 			System.out.println("4");
-			ps.setString(1, getEmail());
-			ps.setString(2, getTitle());
-			ps.setString(3, getFirstName());
-			ps.setString(4, getSurame());
-			ps.setString(5, getMobileNumber());
-			ps.setString(6, getPasword());
-			ps.setString(7, getFla());
-			ps.setString(8, getHnhn());
-			ps.setString(9, getPc());
-			ps.setString(10, getAccType());
+			ps.setString(1, model.getEmail());
+			ps.setString(2, model.getTitle());
+			ps.setString(3, model.getFirstName());
+			ps.setString(4, model.getSurame());
+			ps.setString(5, model.getMobileNumber());
+			ps.setString(6, model.getPasword());
+			ps.setString(7, model.getAddressLine1());
+			ps.setString(8, model.getHouseNameNum());
+			ps.setString(9, model.getPostcode());
+			ps.setString(10, model.getAccountType());
 			System.out.println("5");
 			System.out.println(ps);
 			int i  = ps.executeUpdate();
@@ -313,96 +302,7 @@ public class Register extends JFrame{
 	
 
 	//getters and setters:
-	private String title;
-	private String firstName;
-	private String surname;
-	private String email;
-	private String mobileNumber;
-	private String password;
-	private String fla;
-	private String pc;
-	private String hnHn;
-	private String accType;
 	
-	public void setPassword(String pasword) {
-		this.password=pasword;
-	}
-
-	public String getPasword() {
-		return passwordTextField.getText();
-	}
-	
-	public void setFla(String fla) {
-		this.fla=fla;
-	}
-
-	public String getFla() {
-		return addressLine1Field.getText();
-	}
-	
-	public void setPc(String pc) {
-		this.pc=pc;
-	}
-
-	public String getPc() {
-		return postcodeTextField.getText();
-	}
-	
-	public void setHnhn(String hnHn) {
-		this.hnHn=hnHn;
-	}
-
-	public String getHnhn() {
-		return houseNumberTextField.getText();
-	}
-	
-	public void setAccType(String accType) {
-		this.accType=accType;
-	}
-
-	public String getAccType() {
-		return accountTypeComboBox.getSelectedItem().toString();
-	}
-		
-	public void setTitle(String title) {
-		this.title=title;
-	}
-
-	public String getTitle() {
-		return (String) registerTitleComboBox.getSelectedItem();
-	}
-	
-	public void setFirstName(String firstName) {
-		this.firstName=firstName;
-	}
-	
-	public String getFirstName() {
-		return firstNameTextField.getText();
-	}
-	
-	public void setSurname(String surname) {
-		this.surname=surname;
-	}
-
-	public String getSurame() {
-		return surnameTextField.getText();
-	}
-	
-	public void setEmail(String email) {
-		this.email=email;
-	}
-
-	public String getEmail() {
-		return emailAddressTextField.getText();
-	}
-	
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber=mobileNumber;
-	}
-	
-	public String getMobileNumber() {
-		return mobileNumberTextField.getText();
-	}
 
 	
 }

@@ -6,7 +6,7 @@ import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
 import GUI.MainModule.STATE;
-import Model.Model;
+import Model.*;
 
 public class Controller extends MainModule{
 
@@ -31,13 +31,12 @@ public class Controller extends MainModule{
 		this.account=account;
 		this.login=login;
 	}
-	
-	public static void main(String [] args) {
-		System.out.println("now in controller");
+	public void setTitle(String title){
+		model.setTitle(title);
 	}
-	
-	public void setAccountId(int id) {
-		model.setId(id);
+
+	public void setPassword(String password){
+		model.setPassword(password);
 	}
 	
 	public void setFirstName(String firstName) {
@@ -52,16 +51,25 @@ public class Controller extends MainModule{
 		model.setEmail(email);
 	}
 	
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		model.setMobileNumber(mobileNumber);
 	}
 	
-	public void setGuest(Boolean guest) {
-		model.setGuest(guest);
+
+	public void setAddressLine1(String addressLine1){
+		model.setAddressLine1(addressLine1);
 	}
-	
-	public void setHost(Boolean host) {
-		model.setHost(host);
+
+	public void setHouseNameNumber(String houseNameNumber){
+		model.setHouseNameNum(houseNameNumber);
+	}
+
+	public void setPostcode(String postcode){
+		model.setPostcode(postcode);
+	}
+
+	public void setAccountType(String accountType){
+		model.setAccountType(accountType);
 	}
 	
 	//checking the state of the system:

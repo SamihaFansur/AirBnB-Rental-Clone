@@ -1,5 +1,6 @@
 package GUI;
 import Controller.*;
+import Model.*;
 import GUI.MainModule.STATE;
 import Model.*;
 import java.awt.EventQueue;
@@ -120,10 +121,12 @@ public class Login extends JFrame{
 		usernameField.setBounds(200, 230, 295, 31);
 		registerPanel.add(usernameField);
 		usernameField.setColumns(10);
+		model.setEmail(usernameField.getText()); //should be controller.getEmail for all such set fields
 		
 		passwordField = new JTextField();
 		passwordField.setBounds(168, 293, 295, 31);
 		registerPanel.add(passwordField);
+		model.setPassword(passwordField.getText());
 		
 		passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(104, 301, 75, 14);
@@ -193,26 +196,6 @@ public class Login extends JFrame{
 	}
 	
 
-	//getters and setters:
-	private String username;
-	private String password;
-	
-	public void setPassword(String pasword) {
-		this.password = pasword;
-	}
 
-	public String getPasword() {
-		return passwordField.getText();
-	}
-	
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getUsername() {
-		return usernameField.getText();
-	}
-	
 	
 }
