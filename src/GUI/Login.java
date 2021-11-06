@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -108,33 +109,34 @@ public class Login extends JFrame{
 		});
 		navBarPanel.add(navLoginButton);
 		
-		registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel loginPanel = new JPanel();
 		
-		usernameLabel = new JLabel("Username/email");
-		usernameLabel.setBounds(104, 223, 118, 45);
-		registerPanel.add(usernameLabel);
+		loginPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
+		loginPanel.setLayout(null);
 		
-		usernameField = new JTextField();
-		usernameField.setBounds(200, 230, 295, 31);
-		registerPanel.add(usernameField);
+		JLabel usernameLabel = new JLabel("Username/email");
+		usernameLabel.setBounds(72, 221, 118, 45);
+		loginPanel.add(usernameLabel);
+		
+		JTextField usernameField = new JTextField();
+		usernameField.setBounds(168, 228, 295, 31);
+		loginPanel.add(usernameField);
 		usernameField.setColumns(10);
 		model.setEmail(usernameField.getText()); //should be controller.getEmail for all such set fields
 		
-		passwordField = new JTextField();
+		JTextField passwordField = new JTextField();
 		passwordField.setBounds(168, 293, 295, 31);
-		registerPanel.add(passwordField);
+		loginPanel.add(passwordField);
 		model.setPassword(passwordField.getText());
 		
-		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(104, 301, 75, 14);
-		registerPanel.add(passwordLabel);
+		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel.setBounds(72, 299, 75, 14);
+		loginPanel.add(passwordLabel);
 		
 
-		loginButton.setBounds(190, 393, 100, 36);
-		registerPanel.add(loginButton);
+		loginButton.setBounds(124, 392, 100, 36);
+		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logUserIn();
@@ -143,14 +145,34 @@ public class Login extends JFrame{
 			}
 		});
 		
-		registerButton.setBounds(330, 393, 100, 36);
-		registerPanel.add(registerButton);
+		JButton registerButton = new JButton("Register");
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
 			//	Register sp = new Register();
 			}
-		});		
+		});
+		
+		registerButton.setBounds(253, 392, 100, 36);
+		loginPanel.add(registerButton);
+		
+		JButton resetLogin = new JButton("Reset");
+		resetLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					usernameField.setText("");
+					passwordField.setText("");
+			}
+		});
+		
+		resetLogin.setBounds(381, 392, 100, 36);
+		loginPanel.add(resetLogin);
+		
+		JLabel loginLabel = new JLabel("Login");
+		loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		loginLabel.setBounds(253, 73, 118, 31);
+		loginPanel.add(loginLabel);
+		
+		
 		
 		frame.setBounds(100, 100, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
