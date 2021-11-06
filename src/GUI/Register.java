@@ -123,7 +123,7 @@ public class Register extends JFrame{
 		registerPanel.setLayout(null);
 
 		JLabel registerTitleLabel = new JLabel("Title");
-		registerTitleLabel.setBounds(99, 57, 118, 45);
+		registerTitleLabel.setBounds(54, 57, 118, 45);
 		registerPanel.add(registerTitleLabel);
 
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
@@ -132,7 +132,7 @@ public class Register extends JFrame{
 		registerPanel.add(registerTitleComboBox);
 
 		JLabel firstNameLabel = new JLabel("First Name");
-		firstNameLabel.setBounds(99, 102, 118, 45);
+		firstNameLabel.setBounds(54, 102, 118, 45);
 		registerPanel.add(firstNameLabel);
 
 		firstNameTextField = new JTextField();
@@ -143,7 +143,7 @@ public class Register extends JFrame{
 		model.setFirstName(firstNameTextField.getText());
 		
 		JLabel lblNewLabel = new JLabel("Surname");
-		lblNewLabel.setBounds(99, 136, 118, 45);
+		lblNewLabel.setBounds(54, 136, 118, 45);
 		registerPanel.add(lblNewLabel);
 
 		surnameTextField = new JTextField();
@@ -154,7 +154,7 @@ public class Register extends JFrame{
 		model.setSurname(surnameTextField.getText());
 		
 		JLabel emailAddressLabel = new JLabel("Email Address");
-		emailAddressLabel.setBounds(99, 173, 118, 45);
+		emailAddressLabel.setBounds(54, 173, 118, 45);
 		registerPanel.add(emailAddressLabel);
 
 		emailAddressTextField = new JTextField();
@@ -165,7 +165,7 @@ public class Register extends JFrame{
 		model.setEmail(emailAddressTextField.getText());
 
 		JLabel mobileLabel = new JLabel("Mobile Number");
-		mobileLabel.setBounds(99, 229, 125, 14);
+		mobileLabel.setBounds(54, 229, 125, 14);
 		registerPanel.add(mobileLabel);
 
 		mobileNumberTextField = new JTextField();
@@ -176,7 +176,7 @@ public class Register extends JFrame{
 		model.setMobileNumber(mobileNumberTextField.getText());
 
 		JLabel passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(99, 267, 75, 14);
+		passwordLabel.setBounds(54, 267, 75, 14);
 		registerPanel.add(passwordLabel);
 
 		passwordTextField = new JTextField();
@@ -186,7 +186,7 @@ public class Register extends JFrame{
 		model.setPassword(passwordTextField.getText());
 		
 		JLabel addressLine1Label = new JLabel("Address Line 1");
-		addressLine1Label.setBounds(99, 307, 125, 14);
+		addressLine1Label.setBounds(54, 307, 125, 14);
 		registerPanel.add(addressLine1Label);
 
 		addressLine1Field = new JTextField();
@@ -196,17 +196,17 @@ public class Register extends JFrame{
 		model.setAddressLine1(addressLine1Field.getText());
 
 		JLabel houseNumberLabel = new JLabel("House Name/Number");
-		houseNumberLabel.setBounds(99, 346, 125, 14);
+		houseNumberLabel.setBounds(54, 346, 125, 14);
 		registerPanel.add(houseNumberLabel);
 
 		houseNumberTextField = new JTextField();
-		houseNumberTextField.setBounds(225, 340 , 276, 27);
+		houseNumberTextField.setBounds(189, 340 , 276, 27);
 		registerPanel.add(houseNumberTextField);
 		
 		model.setHouseNameNum(houseNumberTextField.getText());
 
 		JLabel postcodeLabel = new JLabel("Postcode");
-		postcodeLabel.setBounds(99, 386, 125, 14);
+		postcodeLabel.setBounds(54, 386, 125, 14);
 		registerPanel.add(postcodeLabel);
 
 		postcodeTextField = new JTextField();
@@ -216,7 +216,7 @@ public class Register extends JFrame{
 		model.setPostcode(postcodeTextField.getText());
 		
 		JLabel accountTypeLabel = new JLabel("Register as");
-		accountTypeLabel.setBounds(99, 430, 125, 14);
+		accountTypeLabel.setBounds(54, 430, 125, 14);
 		registerPanel.add(accountTypeLabel);
 
 		String accountTypes[] = { "Host", "Guest", "Both (Host & Guest)" };
