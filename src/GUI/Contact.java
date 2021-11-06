@@ -28,7 +28,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class Homepage extends JFrame{
+public class Contact extends JFrame{
 
 	private JFrame frame;
 
@@ -54,7 +54,7 @@ public class Homepage extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-public Homepage(MainModule mainModule, Controller controller, Model model) {
+	 public Contact(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
 		this.mainModule=mainModule;
@@ -65,11 +65,10 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeHomePage() {
-		
+	public void initializeContact() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
-		
+
 		JPanel navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
@@ -129,19 +128,89 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 			}
 		});
 		navBarPanel.add(navContactButton);
+
+		JPanel contactPanel = new JPanel();
+		contactPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(contactPanel, BorderLayout.CENTER);
+		contactPanel.setLayout(null);
+
+		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
+
+		JLabel nameEmailLabel = new JLabel("Name");
+		nameEmailLabel.setBounds(54, 132, 118, 45);
+		contactPanel.add(nameEmailLabel);
+
+		JTextField firstNameTextField = new JTextField();
+		firstNameTextField.setBounds(189, 143, 276, 23);
+		contactPanel.add(firstNameTextField);
+		firstNameTextField.setColumns(10);
+
+		model.setFirstName(firstNameTextField.getText());
 		
-		JPanel loginPanel = new JPanel();
-		loginPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
-		loginPanel.setLayout(null);
+		JLabel emailAddressLabel = new JLabel("Email Address");
+		emailAddressLabel.setBounds(54, 173, 118, 45);
+		contactPanel.add(emailAddressLabel);
+
+		JTextField emailAddressTextField = new JTextField();
+		emailAddressTextField.setColumns(10);
+		emailAddressTextField.setBounds(189, 181, 276, 29);
+		contactPanel.add(emailAddressTextField);
 		
-		JLabel homePageLabel = new JLabel("Home Page");
-		homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
-		homePageLabel.setBounds(202, -27, 222, 152);
-		loginPanel.add(homePageLabel);
-		frame.setBounds(100, 100, 600, 600);
+		model.setEmail(emailAddressTextField.getText());
+
+		JLabel subjectLabel = new JLabel("Subject");
+		subjectLabel.setBounds(54, 229, 125, 14);
+		contactPanel.add(subjectLabel);
+
+		JTextField mobileNumberTextField = new JTextField();
+		mobileNumberTextField.setColumns(10);
+		mobileNumberTextField.setBounds(189, 222, 276, 29);
+		contactPanel.add(mobileNumberTextField);
+		
+		model.setMobileNumber(mobileNumberTextField.getText());
+
+		JLabel messageLabel = new JLabel("Message");
+		messageLabel.setBounds(54, 267, 75, 14);
+		contactPanel.add(messageLabel);
+
+		JTextField passwordTextField = new JTextField();
+		passwordTextField.setBounds(189, 261, 276, 205);
+		contactPanel.add(passwordTextField);
+		
+		model.setPassword(passwordTextField.getText());
+
+		String accountTypes[] = { "Host", "Guest", "Both (Host & Guest)" };
+		
+//		resetEmailButton.setBounds(356, 480, 91, 23);
+//		resetEmailButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				firstNameTextField.setText("");
+//				emailAddressTextField.setText("");
+//				mobileNumberTextField.setText("");
+//				passwordTextField.setText("");
+//			}
+//		});
+		//registerPanel.add(resetEmailButton);
+
+		JLabel contactLabel = new JLabel("Contact Us");
+		contactLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		contactLabel.setBounds(253, 40, 183, 57);
+		contactPanel.add(contactLabel);
+
+		JButton sendEmailButton = new JButton("sendEmail");
+		sendEmailButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Controller.SendEmail();
+			}
+		});
+		sendEmailButton.setBounds(220, 480, 91, 23);
+		contactPanel.add(sendEmailButton);
+
+
+		frame.setBounds(100, 100, 600, 599);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
 		frame.setVisible(true);
+		
+
 	}
 }

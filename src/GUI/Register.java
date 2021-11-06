@@ -77,45 +77,62 @@ public class Register extends JFrame{
 		JPanel navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-
+		
+		System.out.println("Initialise homepage");
+		
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
+				//Homepage sp = new Homepage();
+
+				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
-//				close();
+				//close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
+	
+		
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
+				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
-//				close();
 			}
 		});
 		navBarPanel.add(navSearchButton);
-
+		
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
+				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
-//				close();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
-
+		
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.LOGIN;
+				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
-//				close();
+				//close();
+						//Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);
+		
+		JButton navContactButton = new JButton("Contact");
+		navContactButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				mainModule.currentState=STATE.CONTACT_US;
+				MainModule.controller.drawNewView();
+				//close();
+				//Register sp = new Register();
+			}
+		});
+		navBarPanel.add(navContactButton);
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));

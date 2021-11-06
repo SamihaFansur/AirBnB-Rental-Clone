@@ -65,24 +65,26 @@ public class Login extends JFrame{
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
 		
+		System.out.println("Initialise homepage");
+		
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
 				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
-//				close();
-			//	Homepage sp = new Homepage();
+				//close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
 	
+		
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
-//				close();
-			//	Search sp = new Search();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -92,8 +94,6 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
-//				close();
-			//	Register sp = new Register();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -103,11 +103,23 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
-//				close();
-			//			Login sp = new Login();
+				//close();
+						//Login sp = new Login();
 			}
 		});
 		navBarPanel.add(navLoginButton);
+		
+		JButton navContactButton = new JButton("Contact");
+		navContactButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				mainModule.currentState=STATE.CONTACT_US;
+				MainModule.controller.drawNewView();
+				//close();
+				//Register sp = new Register();
+			}
+		});
+		navBarPanel.add(navContactButton);
 		
 		JPanel loginPanel = new JPanel();
 		

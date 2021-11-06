@@ -1,12 +1,18 @@
 package Controller;
 import GUI.Account;
+
 import GUI.Homepage;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
+import GUI.Contact;
 import GUI.MainModule.STATE;
 import Model.*;
+import java.util.*;  
+import javax.mail.*;  
+import javax.mail.internet.*;  
+import javax.activation.*;  
 
 public class Controller extends MainModule{
 
@@ -18,9 +24,10 @@ public class Controller extends MainModule{
 	private Search search;
 	private Account account;
 	private Login login;
+	private Contact contact;
 	
 	
-	public Controller(MainModule mainModule, Model model, Homepage homepage, Register register, Search search, Account account, Login login) {
+	public Controller(MainModule mainModule, Model model, Homepage homepage, Register register, Search search, Account account, Login login, Contact contact) {
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
 		this.model=model;
@@ -30,6 +37,7 @@ public class Controller extends MainModule{
 		this.search=search;
 		this.account=account;
 		this.login=login;
+		this.contact=contact;
 	}
 	public void setTitle(String title){
 		model.setTitle(title);
@@ -101,10 +109,39 @@ public class Controller extends MainModule{
 			System.out.println("HEREEE");
 			search.initializeSearch();
 		}
-	
+		else if (mainModule.currentState == STATE.CONTACT_US){
+			System.out.println("HEREEE");
+			contact.initializeContact();
+		}
 	
 		
 	}
 	
+//	public static void SendEmail() { //doesn't work yet
+//	
+//	      String to = "egoodbrand1@sheffield.ac.uk";//change accordingly  
+//	      String from = Contact.emailAddressTextField.getText();//change accordingly  
+//	      String host = "localhost";//or IP address  
+//	  
+//	     //Get the session object  
+//	      Properties properties = System.getProperties();  
+//	      properties.setProperty("mail.smtp.host", host);  
+//	      Session session = Session.getDefaultInstance(properties);  
+//	  
+//	     //compose the message  
+//	      try{  
+//	         MimeMessage message = new MimeMessage(session);  
+//	         message.setFrom(new InternetAddress(from));  
+//	         message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));  
+//	         message.setSubject("Ping");  
+//	         message.setText("Hello, this is example of sending email  ");  
+//	  
+//	         // Send message  
+//	         Transport.send(message);  
+//	         System.out.println("message sent successfully....");  
+//	  
+//	      }catch (MessagingException mex) {mex.printStackTrace();}  
+//	   }  
+	 
 	
 }

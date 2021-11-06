@@ -18,6 +18,7 @@ public class MainModule {
 	private Homepage homepage;
 	private Login login;
 	private Search search;
+	private Contact contact;
 	
 	
 	//use enum to register the state of the system
@@ -64,10 +65,12 @@ public class MainModule {
 		Account account = new Account(mainModule, controller, model);
 		//creating an instance of search class
 		Search search = new Search(mainModule, controller, model);
+		//creating instance of contact class
+		Contact contact = new Contact(mainModule, controller, model);
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, account, login);
+		controller = new Controller(mainModule, model, homepage, register, search, account, login, contact);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
