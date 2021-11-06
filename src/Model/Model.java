@@ -7,8 +7,9 @@ public class Model {
 	private String surname;
 	private String email;	
 	private String password;
-	private String addressLine1;
 	private String houseNameNum;
+	private String streetName;
+	private String city;
 	private String postcode;
 	private String accType;
 	private String mobileNumber;
@@ -61,23 +62,29 @@ public class Model {
 	public String getPasword() {
 		return password;
 	}
-	
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
-
-	
-
-	public String getAddressLine1() {
-		return addressLine1;
-	}
-	
+		
 	public void setHouseNameNum(String houseNameHum) {
 		this.houseNameNum = houseNameHum;
 	}
 
 	public String getHouseNameNum() {
 		return houseNameNum;
+	}
+
+	public void setStreetName(String streetName) {
+		this.streetName= streetName;
+	}
+
+	public String getStreetName() {
+		return streetName;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCity() {
+		return city;
 	}
 	
 	public void setPostcode(String postcode) {

@@ -60,13 +60,16 @@ public class Controller extends MainModule{
 		model.setMobileNumber(mobileNumber);
 	}
 	
-
-	public void setAddressLine1(String addressLine1){
-		model.setAddressLine1(addressLine1);
-	}
-
 	public void setHouseNameNumber(String houseNameNumber){
 		model.setHouseNameNum(houseNameNumber);
+	}
+
+	public void setStreetName(String streetName){
+		model.setStreetName(streetName);
+	}
+
+	public void setCity(String city){
+		model.setCity(city);
 	}
 
 	public void setPostcode(String postcode){

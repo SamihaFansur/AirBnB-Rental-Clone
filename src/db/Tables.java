@@ -10,20 +10,22 @@ public class Tables {
 	      try(Connection conn = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team018", "team018", "7854a03f");
 	         Statement stmt = conn.createStatement();
 	      ) {		      
-	          String sql = "CREATE TABLE ACCOUNT" +
+	          String account= "CREATE TABLE ACCOUNT" +
 	                   "(email VARCHAR(255) not NULL, " +
 	                   " title VARCHAR(255), " +
 	                   " firstName VARCHAR(255), " + 
 	                   " surname VARCHAR(255), " + 
 	                   " mobileNumber VARCHAR(255), " + 
-	                   " password VARCHAR(255), " + 
-	                   " addressLine1 VARCHAR(255), " + 
-	                   " houseNameNumber VARCHAR(255), " + 
+	                   " password VARCHAR(255), " +  
+	                   " houseNameNumber VARCHAR(255), " +
+	                   " streetName VARCHAR(255), " +
+	                   " city VARCHAR(255), " + 
 	                   " postcode VARCHAR(255), " + 
 	                   " accountType VARCHAR(255), " + 
 	                   " PRIMARY KEY ( email ))"; 
+//	    	  String sql = "DROP TABLE TEST";
 
-	         stmt.executeUpdate(sql);
+	         stmt.executeUpdate(account);
 	         System.out.println("Created ACCOUNT in given database...");   	  
 	      } catch (SQLException e) {
 	         e.printStackTrace();

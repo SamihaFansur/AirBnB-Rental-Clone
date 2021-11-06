@@ -130,46 +130,48 @@ public class Search extends JFrame{
 			frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
 			loginPanel.setLayout(null);
 			
-			JLabel numberOfGuestsLabel = new JLabel("Number of Guests");
-			numberOfGuestsLabel.setBounds(70, 45, 115, 45);
-			loginPanel.add(numberOfGuestsLabel);
-			filterButton.setBounds(165, 182, 141, 36);
-			loginPanel.add(filterButton);
-			
-			JLabel minPriceFilterLabel = new JLabel("Min Price Per Night");
-			minPriceFilterLabel.setBounds(70, 109, 100, 14);
+			JLabel minPriceFilterLabel = new JLabel("Min Price Per Night (£)");
+			minPriceFilterLabel.setBounds(30, 45, 130, 45);
 			loginPanel.add(minPriceFilterLabel);
+
+			minPriceFilter = new JTextField();
+			minPriceFilter.setColumns(10);
+			minPriceFilter.setBounds(170, 52, 70, 31);
+			loginPanel.add(minPriceFilter);
+						
+			JLabel numberOfGuestsLabel = new JLabel("Number of Guests");
+			numberOfGuestsLabel.setBounds(30, 109, 130, 20);
+			loginPanel.add(numberOfGuestsLabel);
 			
 			numberOfGuestsFilter = new JTextField();
-			numberOfGuestsFilter.setBounds(194, 52, 63, 31);
+			numberOfGuestsFilter.setBounds(170, 106, 70, 31);
 			loginPanel.add(numberOfGuestsFilter);
 			numberOfGuestsFilter.setColumns(10);
-			
-			JLabel maxPriceFilterLabel = new JLabel("Max Price Per Night");
-			maxPriceFilterLabel.setBounds(318, 109, 100, 14);
+
+			JLabel maxPriceFilterLabel = new JLabel("Max Price Per Night (£)");
+			maxPriceFilterLabel.setBounds(277, 55, 130, 20);
 			loginPanel.add(maxPriceFilterLabel);
+
+			maxPriceFilter = new JTextField();
+			maxPriceFilter.setColumns(10);
+			maxPriceFilter.setBounds(423, 50, 70, 31);
+			loginPanel.add(maxPriceFilter);
 			
 			JLabel locationFilterLabel = new JLabel("Location");
-			locationFilterLabel.setBounds(318, 45, 115, 45);
+			locationFilterLabel.setBounds(277, 100, 115, 45);
 			loginPanel.add(locationFilterLabel);
 			
 			JComboBox locationComboBox = new JComboBox();
-			locationComboBox.setBounds(423, 51, 63, 33);
+			locationComboBox.setBounds(340, 106, 220, 33);
 			loginPanel.add(locationComboBox);
 			
-			minPriceFilter = new JTextField();
-			minPriceFilter.setColumns(10);
-			minPriceFilter.setBounds(194, 106, 63, 31);
-			loginPanel.add(minPriceFilter);
-			
-			maxPriceFilter = new JTextField();
-			maxPriceFilter.setColumns(10);
-			maxPriceFilter.setBounds(423, 106, 63, 31);
-			loginPanel.add(maxPriceFilter);
-			
+						
 			propertiesTable = new JTable();
 			propertiesTable.setBounds(98, 256, 428, 244);
 			loginPanel.add(propertiesTable);
+
+			filterButton.setBounds(165, 182, 141, 36);
+			loginPanel.add(filterButton);
 			
 			JButton resetFiltersButton = new JButton("Reset");
 			resetFiltersButton.addActionListener(new ActionListener() {

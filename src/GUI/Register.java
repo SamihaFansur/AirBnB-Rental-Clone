@@ -29,9 +29,10 @@ public class Register extends JFrame{
 	private JTextField passwordTextField;
 	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
-	private JTextField addressLine1Field;
+	private JTextField streetNameTextField;
 	private JTextField postcodeTextField;
 	private JTextField houseNumberTextField;
+	private JTextField cityTextField;
 	private JTextField emailAddressTextField;
 	private JTextField mobileNumberTextField;
 	private JComboBox accountTypeComboBox;
@@ -139,6 +140,11 @@ public class Register extends JFrame{
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
 
+		JLabel registerLabel = new JLabel("Register");
+		registerLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		registerLabel.setBounds(264, 11, 183, 57);
+		registerPanel.add(registerLabel);
+
 		JLabel registerTitleLabel = new JLabel("Title");
 		registerTitleLabel.setBounds(54, 57, 118, 45);
 		registerPanel.add(registerTitleLabel);
@@ -202,48 +208,58 @@ public class Register extends JFrame{
 		
 		model.setPassword(passwordTextField.getText());
 		
-		JLabel addressLine1Label = new JLabel("Address Line 1");
-		addressLine1Label.setBounds(54, 307, 125, 14);
-		registerPanel.add(addressLine1Label);
-
-		addressLine1Field = new JTextField();
-		addressLine1Field.setBounds(189,  300, 276, 29);
-		registerPanel.add(addressLine1Field);
-		
-		model.setAddressLine1(addressLine1Field.getText());
-
 		JLabel houseNumberLabel = new JLabel("House Name/Number");
-		houseNumberLabel.setBounds(54, 346, 125, 14);
+		houseNumberLabel.setBounds(54, 307, 125, 14); 
 		registerPanel.add(houseNumberLabel);
 
 		houseNumberTextField = new JTextField();
-		houseNumberTextField.setBounds(189, 340 , 276, 27);
+		houseNumberTextField.setBounds(189, 300, 276, 29);
 		registerPanel.add(houseNumberTextField);
 		
 		model.setHouseNameNum(houseNumberTextField.getText());
 
+		JLabel streetNameLabel = new JLabel("Street Name");
+		streetNameLabel.setBounds(54, 346, 125, 14);
+		registerPanel.add(streetNameLabel);
+
+		streetNameTextField = new JTextField();
+		streetNameTextField.setBounds(189, 340, 276, 27);
+		registerPanel.add(streetNameTextField);
+		
+		model.setStreetName(streetNameTextField.getText());
+		
+		JLabel cityLabel = new JLabel("City/Town");
+		cityLabel.setBounds(54, 386, 125, 14);
+		registerPanel.add(cityLabel);
+
+		cityTextField = new JTextField();
+		cityTextField.setBounds(189, 378, 276, 31);
+		registerPanel.add(cityTextField);
+		
+		model.setCity(cityTextField.getText());
+
 		JLabel postcodeLabel = new JLabel("Postcode");
-		postcodeLabel.setBounds(54, 386, 125, 14);
+		postcodeLabel.setBounds(54, 430, 125, 14);
 		registerPanel.add(postcodeLabel);
 
 		postcodeTextField = new JTextField();
-		postcodeTextField.setBounds(189, 378, 276, 31);
+		postcodeTextField.setBounds(189, 425, 276, 23);
 		registerPanel.add(postcodeTextField);
 
 		model.setPostcode(postcodeTextField.getText());
 		
 		JLabel accountTypeLabel = new JLabel("Register as");
-		accountTypeLabel.setBounds(54, 430, 125, 14);
+		accountTypeLabel.setBounds(54, 467, 125, 14);
 		registerPanel.add(accountTypeLabel);
 
 		String accountTypes[] = { "Host", "Guest", "Both (Host & Guest)" };
 		accountTypeComboBox = new JComboBox(accountTypes);
-		accountTypeComboBox.setBounds(189,  426, 276, 23);
+		accountTypeComboBox.setBounds(189,  467, 276, 23);
 		registerPanel.add(accountTypeComboBox);
 
 		model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 		
-		registerButton.setBounds(356, 480, 91, 23);
+		registerButton.setBounds(356, 517, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				submit();
@@ -252,11 +268,6 @@ public class Register extends JFrame{
 			}
 		});
 		registerPanel.add(registerButton);
-
-		JLabel registerLabel = new JLabel("Register");
-		registerLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		registerLabel.setBounds(264, 11, 183, 57);
-		registerPanel.add(registerLabel);
 
 		JButton resetRegisterButton = new JButton("Reset");
 		resetRegisterButton.addActionListener(new ActionListener() {
@@ -267,13 +278,14 @@ public class Register extends JFrame{
 				emailAddressTextField.setText("");
 				mobileNumberTextField.setText("");
 				passwordTextField.setText("");
-				addressLine1Field.setText("");
 				houseNumberTextField.setText("");
+				streetNameTextField.setText("");
+				cityTextField.setText("");
 				postcodeTextField.setText("");
 				accountTypeComboBox.setSelectedItem("Host");
 			}
 		});
-		resetRegisterButton.setBounds(220, 480, 91, 23);
+		resetRegisterButton.setBounds(220, 517, 91, 23);
 		registerPanel.add(resetRegisterButton);
 
 
@@ -287,7 +299,7 @@ public class Register extends JFrame{
 			System.out.println("1");
 			connection = ConnectionManager.getConnection();
 			System.out.println("2");
-			String insertQuery = "insert into ACCOUNT values(?,?,?,?,?,?,?,?,?,?)";
+			String insertQuery = "insert into ACCOUNT values(?,?,?,?,?,?,?,?,?,?,?)";
 			System.out.println("3");
 			PreparedStatement ps = connection.prepareStatement(insertQuery);
 			System.out.println("4");
@@ -297,8 +309,9 @@ public class Register extends JFrame{
 			ps.setString(4, model.getSurame());
 			ps.setString(5, model.getMobileNumber());
 			ps.setString(6, model.getPasword());
-			ps.setString(7, model.getAddressLine1());
 			ps.setString(8, model.getHouseNameNum());
+			ps.setString(7, model.getStreetName());
+			ps.setString(7, model.getCity());
 			ps.setString(9, model.getPostcode());
 			ps.setString(10, model.getAccountType());
 			System.out.println("5");
@@ -308,7 +321,7 @@ public class Register extends JFrame{
 			if(i>0) {
 				System.out.println("7");
 				System.out.println(this);
-				JOptionPane.showMessageDialog(this, "saved ok"); //remove later
+				JOptionPane.showMessageDialog(this, "Successful registration!"); //remove later
 			}
 			
 		} catch(Exception e) {
@@ -317,11 +330,6 @@ public class Register extends JFrame{
 		}
 	}
 	
-
-	//getters and setters:
-	
-
-	
 }
 
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
+//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW & MAKE ALL HEIGHTS OF TEXTBOXES SAME

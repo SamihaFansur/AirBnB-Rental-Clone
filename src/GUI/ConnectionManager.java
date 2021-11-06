@@ -21,7 +21,7 @@ public class ConnectionManager {
 			ex.printStackTrace();
 		}finally {
 //			connection.close();
-			System.out.println("conn closed");
+			System.out.println("conn still open");
 		}
 		return connection;
 	}
