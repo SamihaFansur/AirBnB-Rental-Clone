@@ -44,7 +44,7 @@ public class Homepage extends JFrame{
 	
 
 	 public void close() {
-		 	frame.dispose();
+		 	this.frame.dispose();
 	 }	
 	 
 
@@ -83,7 +83,7 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 
 				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -94,6 +94,7 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -103,6 +104,7 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -112,7 +114,7 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 						//Login sp = new Login();
 			}
 		});
@@ -124,7 +126,7 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 
 				mainModule.currentState=STATE.CONTACT_US;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 				//Register sp = new Register();
 			}
 		});

@@ -46,15 +46,8 @@ public class Register extends JFrame{
 	Connection connection = null;
 
 	public void close() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			System.out.println("failed to close conn");
-			e.printStackTrace();
-		} finally {
-			System.out.println("conn closed!");
-		}
-		frame.dispose();
+		
+		this.frame.dispose();
 	}
 
 	/**
@@ -88,7 +81,7 @@ public class Register extends JFrame{
 
 				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -99,6 +92,7 @@ public class Register extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -108,6 +102,7 @@ public class Register extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -117,7 +112,7 @@ public class Register extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 						//Login sp = new Login();
 			}
 		});
@@ -129,7 +124,7 @@ public class Register extends JFrame{
 
 				mainModule.currentState=STATE.CONTACT_US;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 				//Register sp = new Register();
 			}
 		});

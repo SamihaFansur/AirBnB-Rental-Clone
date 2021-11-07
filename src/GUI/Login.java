@@ -35,7 +35,7 @@ public class Login extends JFrame{
 	Connection connection = null;
 	
 	 public void close() {
-		 	frame.dispose();
+		 	this.frame.dispose();
 	    }	
 	 
 
@@ -74,7 +74,7 @@ public class Login extends JFrame{
 
 				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -85,6 +85,7 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -94,6 +95,7 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
+				close();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -103,7 +105,7 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 						//Login sp = new Login();
 			}
 		});
@@ -115,7 +117,7 @@ public class Login extends JFrame{
 
 				mainModule.currentState=STATE.CONTACT_US;
 				MainModule.controller.drawNewView();
-				//close();
+				close();
 				//Register sp = new Register();
 			}
 		});
