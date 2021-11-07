@@ -58,7 +58,7 @@ public class Search extends JFrame{
 	 public void initializeSearch() {
 			frame = new JFrame();
 			frame.setResizable(false);
-			frame.setBounds(100, 100, 450, 300);
+			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			JPanel panel = new JPanel();
@@ -145,7 +145,7 @@ public class Search extends JFrame{
 
 			maxPriceFilter = new JTextField();
 			maxPriceFilter.setColumns(10);
-			maxPriceFilter.setBounds(423, 50, 70, 31);
+			maxPriceFilter.setBounds(490, 52, 70, 31);
 			loginPanel.add(maxPriceFilter);
 			
 			JLabel locationFilterLabel = new JLabel("Location");
@@ -158,7 +158,7 @@ public class Search extends JFrame{
 			
 						
 			propertiesTable = new JTable();
-			propertiesTable.setBounds(98, 256, 428, 244);
+			propertiesTable.setBounds(41, 252, 524, 346);
 			loginPanel.add(propertiesTable);
 
 			filterButton.setBounds(165, 182, 141, 36);
@@ -179,8 +179,10 @@ public class Search extends JFrame{
 			});
 			resetFiltersButton.setBounds(323, 182, 141, 36);
 			loginPanel.add(resetFiltersButton);
-			frame.setBounds(100, 100, 600, 600);
+			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			frame.setLocationRelativeTo(null);
 			
 			frame.setVisible(true);
 	}

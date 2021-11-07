@@ -131,120 +131,122 @@ public class Register extends JFrame{
 		registerPanel.add(registerLabel);
 
 		JLabel registerTitleLabel = new JLabel("Title");
-		registerTitleLabel.setBounds(54, 57, 118, 45);
+		registerTitleLabel.setBounds(82, 79, 118, 45);
 		registerPanel.add(registerTitleLabel);
 
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
 		registerTitleComboBox = new JComboBox(titles);
-		registerTitleComboBox.setBounds(189, 71, 276, 23);
+		registerTitleComboBox.setBounds(217, 93, 276, 23);
 		registerPanel.add(registerTitleComboBox);
 
+		model.setTitle(registerTitleComboBox.getSelectedItem().toString());
+		
 		JLabel firstNameLabel = new JLabel("First Name");
-		firstNameLabel.setBounds(54, 102, 118, 45);
+		firstNameLabel.setBounds(82, 124, 118, 45);
 		registerPanel.add(firstNameLabel);
 
 		firstNameTextField = new JTextField();
-		firstNameTextField.setBounds(189, 113, 276, 23);
+		firstNameTextField.setBounds(217, 135, 276, 23);
 		registerPanel.add(firstNameTextField);
 		firstNameTextField.setColumns(10);
 
 		model.setFirstName(firstNameTextField.getText());
 		
 		JLabel lblNewLabel = new JLabel("Surname");
-		lblNewLabel.setBounds(54, 136, 118, 45);
+		lblNewLabel.setBounds(82, 158, 118, 45);
 		registerPanel.add(lblNewLabel);
 
 		surnameTextField = new JTextField();
-		surnameTextField.setBounds(189, 147, 276, 23);
+		surnameTextField.setBounds(217, 169, 276, 23);
 		registerPanel.add(surnameTextField);
 		surnameTextField.setColumns(10);
 
 		model.setSurname(surnameTextField.getText());
 		
 		JLabel emailAddressLabel = new JLabel("Email Address");
-		emailAddressLabel.setBounds(54, 173, 118, 45);
+		emailAddressLabel.setBounds(82, 195, 118, 45);
 		registerPanel.add(emailAddressLabel);
 
 		emailAddressTextField = new JTextField();
 		emailAddressTextField.setColumns(10);
-		emailAddressTextField.setBounds(189, 181, 276, 29);
+		emailAddressTextField.setBounds(217, 203, 276, 29);
 		registerPanel.add(emailAddressTextField);
 		
 		model.setEmail(emailAddressTextField.getText());
 
 		JLabel mobileLabel = new JLabel("Mobile Number");
-		mobileLabel.setBounds(54, 229, 125, 14);
+		mobileLabel.setBounds(82, 251, 125, 14);
 		registerPanel.add(mobileLabel);
 
 		mobileNumberTextField = new JTextField();
 		mobileNumberTextField.setColumns(10);
-		mobileNumberTextField.setBounds(189, 217, 276, 29);
+		mobileNumberTextField.setBounds(217, 239, 276, 29);
 		registerPanel.add(mobileNumberTextField);
 		
 		model.setMobileNumber(mobileNumberTextField.getText());
 
 		JLabel passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(54, 267, 75, 14);
+		passwordLabel.setBounds(82, 289, 75, 14);
 		registerPanel.add(passwordLabel);
 
 		passwordTextField = new JTextField();
-		passwordTextField.setBounds(189, 261, 276, 26);
+		passwordTextField.setBounds(217, 283, 276, 26);
 		registerPanel.add(passwordTextField);
 		
 		model.setPassword(passwordTextField.getText());
 		
 		JLabel houseNumberLabel = new JLabel("House Name/Number");
-		houseNumberLabel.setBounds(54, 307, 125, 14); 
+		houseNumberLabel.setBounds(82, 329, 125, 14); 
 		registerPanel.add(houseNumberLabel);
 
 		houseNumberTextField = new JTextField();
-		houseNumberTextField.setBounds(189, 300, 276, 29);
+		houseNumberTextField.setBounds(217, 322, 276, 29);
 		registerPanel.add(houseNumberTextField);
 		
 		model.setHouseNameNum(houseNumberTextField.getText());
 
 		JLabel streetNameLabel = new JLabel("Street Name");
-		streetNameLabel.setBounds(54, 346, 125, 14);
+		streetNameLabel.setBounds(82, 368, 125, 14);
 		registerPanel.add(streetNameLabel);
 
 		streetNameTextField = new JTextField();
-		streetNameTextField.setBounds(189, 340, 276, 27);
+		streetNameTextField.setBounds(217, 362, 276, 27);
 		registerPanel.add(streetNameTextField);
 		
 		model.setStreetName(streetNameTextField.getText());
 		
 		JLabel cityLabel = new JLabel("City/Town");
-		cityLabel.setBounds(54, 386, 125, 14);
+		cityLabel.setBounds(82, 408, 125, 14);
 		registerPanel.add(cityLabel);
 
-		cityTextField = new JTextField();
-		cityTextField.setBounds(189, 378, 276, 31);
+		JTextField cityTextField = new JTextField();
+		cityTextField.setBounds(217, 400, 276, 31);
 		registerPanel.add(cityTextField);
 		
 		model.setCity(cityTextField.getText());
 
 		JLabel postcodeLabel = new JLabel("Postcode");
-		postcodeLabel.setBounds(54, 430, 125, 14);
+		postcodeLabel.setBounds(82, 452, 125, 14);
 		registerPanel.add(postcodeLabel);
 
 		postcodeTextField = new JTextField();
-		postcodeTextField.setBounds(189, 425, 276, 23);
+		postcodeTextField.setBounds(217, 447, 276, 23);
 		registerPanel.add(postcodeTextField);
 
 		model.setPostcode(postcodeTextField.getText());
 		
 		JLabel accountTypeLabel = new JLabel("Register as");
-		accountTypeLabel.setBounds(54, 467, 125, 14);
+		accountTypeLabel.setBounds(82, 489, 125, 14);
 		registerPanel.add(accountTypeLabel);
 
 		String accountTypes[] = { "Host", "Guest", "Both (Host & Guest)" };
 		accountTypeComboBox = new JComboBox(accountTypes);
-		accountTypeComboBox.setBounds(189,  467, 276, 23);
+		accountTypeComboBox.setBounds(217,  489, 276, 23);
 		registerPanel.add(accountTypeComboBox);
 
 		model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 		
-		registerButton.setBounds(356, 517, 91, 23);
+		registerButton.setBounds(321, 553, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				submit();
@@ -270,12 +272,16 @@ public class Register extends JFrame{
 				accountTypeComboBox.setSelectedItem("Host");
 			}
 		});
-		resetRegisterButton.setBounds(220, 517, 91, 23);
+		resetRegisterButton.setBounds(185, 553, 91, 23);
 		registerPanel.add(resetRegisterButton);
+		
 
 
-		frame.setBounds(100, 100, 600, 599);
+		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.setLocationRelativeTo(null);
+		
 		frame.setVisible(true);
 	}
 	

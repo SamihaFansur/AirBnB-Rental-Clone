@@ -129,16 +129,16 @@ public class Login extends JFrame{
 		model.setEmail(usernameField.getText()); //should be controller.getEmail for all such set fields
 		
 		JTextField passwordField = new JTextField();
-		passwordField.setBounds(168, 293, 295, 31);
+		passwordField.setBounds(168, 323, 295, 31);
 		loginPanel.add(passwordField);
 		model.setPassword(passwordField.getText());
 		
 		JLabel passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(72, 299, 75, 14);
+		passwordLabel.setBounds(72, 329, 75, 14);
 		loginPanel.add(passwordLabel);
 		
 
-		loginButton.setBounds(124, 392, 100, 36);
+		loginButton.setBounds(124, 432, 100, 36);
 		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,7 +156,7 @@ public class Login extends JFrame{
 			}
 		});
 		
-		registerButton.setBounds(253, 392, 100, 36);
+		registerButton.setBounds(253, 432, 100, 36);
 		loginPanel.add(registerButton);
 		
 		JButton resetLogin = new JButton("Reset");
@@ -167,7 +167,7 @@ public class Login extends JFrame{
 			}
 		});
 		
-		resetLogin.setBounds(381, 392, 100, 36);
+		resetLogin.setBounds(381, 432, 100, 36);
 		loginPanel.add(resetLogin);
 		
 		JLabel loginLabel = new JLabel("Login");
@@ -177,8 +177,11 @@ public class Login extends JFrame{
 		
 		
 		
-		frame.setBounds(100, 100, 600, 600);
+		frame.setBounds(100, 100, 601, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.setLocationRelativeTo(null);
+		
 		frame.setVisible(true);
 	}
 	
