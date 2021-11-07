@@ -65,72 +65,74 @@ public class Homepage extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeHomePage() {
-		
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
-		
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-		
-		System.out.println("Initialise homepage");
-		
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SEARCH;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
-		
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
-		
-		JButton navLoginButton = new JButton("Login");
-		navLoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.LOGIN;
-				MainModule.controller.drawNewView();
-				close();
-						//Login sp = new Login();
-			}
-		});
-		navBarPanel.add(navLoginButton);
-		
-		JButton navContactButton = new JButton("Contact");
-		navContactButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	 public void initializeHomePage() {
+			
+			frame = new JFrame();
+			frame.getContentPane().setBackground(new Color(204, 255, 255));
+			
+			JPanel navBarPanel = new JPanel();
+			navBarPanel.setBackground(new Color(51, 255, 255));
+			frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
+			
+			System.out.println("Initialise homepage");
+			
+			JButton navSearchButton = new JButton("Search");
+			navSearchButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainModule.currentState=STATE.SEARCH;
+					MainModule.controller.drawNewView();
+					close();
+				}
+			});
+			navBarPanel.add(navSearchButton);
+			
+			JButton navRegisterButton = new JButton("Register");
+			navRegisterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainModule.currentState=STATE.SELF_REGISTRATION;
+					MainModule.controller.drawNewView();
+					close();
+				}
+			});
+			navBarPanel.add(navRegisterButton);
+			
+			JButton navLoginButton = new JButton("Login");
+			navLoginButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainModule.currentState=STATE.LOGIN;
+					MainModule.controller.drawNewView();
+					close();
+							//Login sp = new Login();
+				}
+			});
+			navBarPanel.add(navLoginButton);
+			
+			JButton navContactButton = new JButton("Contact");
+			navContactButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 
-				mainModule.currentState=STATE.CONTACT_US;
-				MainModule.controller.drawNewView();
-				close();
-				//Register sp = new Register();
-			}
-		});
-		navBarPanel.add(navContactButton);
+					mainModule.currentState=STATE.CONTACT_US;
+					MainModule.controller.drawNewView();
+					close();
+					//Register sp = new Register();
+				}
+			});
+			navBarPanel.add(navContactButton);
+			
+			JPanel loginPanel = new JPanel();
+			loginPanel.setBackground(new Color(204, 255, 255));
+			frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
+			loginPanel.setLayout(null);
+			
+			JLabel homePageLabel = new JLabel("Home Page");
+			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
+			homePageLabel.setBounds(202, -27, 222, 152);
+			loginPanel.add(homePageLabel);
+			frame.setBounds(100, 100, 600, 700);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel loginPanel = new JPanel();
-		loginPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
-		loginPanel.setLayout(null);
-		
-		JLabel homePageLabel = new JLabel("Home Page");
-		homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
-		homePageLabel.setBounds(202, -27, 222, 152);
-		loginPanel.add(homePageLabel);
-		frame.setBounds(100, 100, 600, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-		frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+			
+			frame.setVisible(true);
 	}
 }
