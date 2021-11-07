@@ -138,8 +138,6 @@ public class Register extends JFrame{
 		registerTitleComboBox = new JComboBox(titles);
 		registerTitleComboBox.setBounds(217, 93, 276, 23);
 		registerPanel.add(registerTitleComboBox);
-
-		model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 		
 		JLabel firstNameLabel = new JLabel("First Name");
 		firstNameLabel.setBounds(82, 124, 118, 45);
@@ -149,8 +147,6 @@ public class Register extends JFrame{
 		firstNameTextField.setBounds(217, 135, 276, 23);
 		registerPanel.add(firstNameTextField);
 		firstNameTextField.setColumns(10);
-
-		model.setFirstName(firstNameTextField.getText());
 		
 		JLabel lblNewLabel = new JLabel("Surname");
 		lblNewLabel.setBounds(82, 158, 118, 45);
@@ -160,8 +156,6 @@ public class Register extends JFrame{
 		surnameTextField.setBounds(217, 169, 276, 23);
 		registerPanel.add(surnameTextField);
 		surnameTextField.setColumns(10);
-
-		model.setSurname(surnameTextField.getText());
 		
 		JLabel emailAddressLabel = new JLabel("Email Address");
 		emailAddressLabel.setBounds(82, 195, 118, 45);
@@ -172,8 +166,6 @@ public class Register extends JFrame{
 		emailAddressTextField.setBounds(217, 203, 276, 29);
 		registerPanel.add(emailAddressTextField);
 		
-		model.setEmail(emailAddressTextField.getText());
-
 		JLabel mobileLabel = new JLabel("Mobile Number");
 		mobileLabel.setBounds(82, 251, 125, 14);
 		registerPanel.add(mobileLabel);
@@ -183,8 +175,6 @@ public class Register extends JFrame{
 		mobileNumberTextField.setBounds(217, 239, 276, 29);
 		registerPanel.add(mobileNumberTextField);
 		
-		model.setMobileNumber(mobileNumberTextField.getText());
-
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(82, 289, 75, 14);
 		registerPanel.add(passwordLabel);
@@ -192,9 +182,7 @@ public class Register extends JFrame{
 		passwordTextField = new JTextField();
 		passwordTextField.setBounds(217, 283, 276, 26);
 		registerPanel.add(passwordTextField);
-		
-		model.setPassword(passwordTextField.getText());
-		
+				
 		JLabel houseNumberLabel = new JLabel("House Name/Number");
 		houseNumberLabel.setBounds(82, 329, 125, 14); 
 		registerPanel.add(houseNumberLabel);
@@ -203,8 +191,6 @@ public class Register extends JFrame{
 		houseNumberTextField.setBounds(217, 322, 276, 29);
 		registerPanel.add(houseNumberTextField);
 		
-		model.setHouseNameNum(houseNumberTextField.getText());
-
 		JLabel streetNameLabel = new JLabel("Street Name");
 		streetNameLabel.setBounds(82, 368, 125, 14);
 		registerPanel.add(streetNameLabel);
@@ -213,8 +199,6 @@ public class Register extends JFrame{
 		streetNameTextField.setBounds(217, 362, 276, 27);
 		registerPanel.add(streetNameTextField);
 		
-		model.setStreetName(streetNameTextField.getText());
-		
 		JLabel cityLabel = new JLabel("City/Town");
 		cityLabel.setBounds(82, 408, 125, 14);
 		registerPanel.add(cityLabel);
@@ -222,8 +206,6 @@ public class Register extends JFrame{
 		JTextField cityTextField = new JTextField();
 		cityTextField.setBounds(217, 400, 276, 31);
 		registerPanel.add(cityTextField);
-		
-		model.setCity(cityTextField.getText());
 
 		JLabel postcodeLabel = new JLabel("Postcode");
 		postcodeLabel.setBounds(82, 452, 125, 14);
@@ -232,8 +214,6 @@ public class Register extends JFrame{
 		postcodeTextField = new JTextField();
 		postcodeTextField.setBounds(217, 447, 276, 23);
 		registerPanel.add(postcodeTextField);
-
-		model.setPostcode(postcodeTextField.getText());
 		
 		JLabel accountTypeLabel = new JLabel("Register as");
 		accountTypeLabel.setBounds(82, 489, 125, 14);
@@ -243,8 +223,6 @@ public class Register extends JFrame{
 		accountTypeComboBox = new JComboBox(accountTypes);
 		accountTypeComboBox.setBounds(217,  489, 276, 23);
 		registerPanel.add(accountTypeComboBox);
-
-		model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 		
 		registerButton.setBounds(321, 553, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
@@ -275,13 +253,9 @@ public class Register extends JFrame{
 		resetRegisterButton.setBounds(185, 553, 91, 23);
 		registerPanel.add(resetRegisterButton);
 		
-
-
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.setLocationRelativeTo(null);
-		
 		frame.setVisible(true);
 	}
 	
@@ -290,28 +264,33 @@ public class Register extends JFrame{
 			System.out.println("1");
 			connection = ConnectionManager.getConnection();
 			System.out.println("2");
-			String insertQuery = "insert into ACCOUNT values(?,?,?,?,?,?,?,?)";
+			String insertQuery = "insert into Account values(?,?,?,?,?,?,?,?,?,?,?)";
 			System.out.println("3");
-			model.setSurname(surnameTextField.getText());
+
+			model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 			model.setFirstName(firstNameTextField.getText());
+			model.setSurname(surnameTextField.getText());
 			model.setEmail(emailAddressTextField.getText());
-			model.setMobileNumber(mobileNumberTextField.getText());
+			model.setMobileNumber(Integer.parseInt(mobileNumberTextField.getText()));
 			model.setPassword(passwordTextField.getText());
 			model.setHouseNameNum(houseNumberTextField.getText());
 			model.setStreetName(streetNameTextField.getText());
+			model.setCity("YOOO FIX THIS FIELD"); //NEED TO FIX THIS FIELD!!!
+			model.setPostcode(postcodeTextField.getText());
+			model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 			
 			PreparedStatement ps = connection.prepareStatement(insertQuery);
 			ps.setString(1, model.getEmail());
-			ps.setString(3, model.getTitle());
-			ps.setString(4, model.getFirstName());
-			ps.setString(5, model.getSurame());
-			ps.setString(2, model.getMobileNumber());
-			ps.setString(6, model.getPasword());
+			ps.setString(2, model.getTitle());
+			ps.setString(3, model.getFirstName());
+			ps.setString(4, model.getSurname());
+			ps.setLong(5, model.getMobileNumber());
+			ps.setString(6, model.getPassword());
 			ps.setString(7, model.getHouseNameNum());
 			ps.setString(8, model.getStreetName());
-//			ps.setString(7, model.getCity());
-//			ps.setString(9, model.getPostcode());
-//			ps.setString(10, model.getAccountType());
+			ps.setString(9, model.getCity());
+			ps.setString(10, model.getPostcode());
+			ps.setString(11, model.getAccountType());
 			System.out.println("5");
 			System.out.println(ps);
 			int i  = ps.executeUpdate();

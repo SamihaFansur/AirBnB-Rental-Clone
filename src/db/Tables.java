@@ -96,9 +96,10 @@ public class Tables {
 		dropAllTables(allDropQueries);
 
 		
-		String testAccount = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, mobile TINYTEXT NOT NULL, "
-				+ "title TINYTEXT, firstName TINYTEXT NOT NULL, surname TINYTEXT NOT NULL, password TINYTEXT NOT NULL, "
-				+ "houseNameNumber VARCHAR(255), postcode VARCHAR(10))";
+		String testAccount = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
+				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber INT, "
+				+ "password VARCHAR(255), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
+				+ "city VARCHAR(255), postcode VARCHAR(10), accountType VARCHAR(255))";
 		String[] create = {testAccount};
 		createAllTables(create);
 	}

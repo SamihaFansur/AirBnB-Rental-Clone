@@ -12,7 +12,7 @@ public class Model {
 	private String city;
 	private String postcode;
 	private String accType;
-	private String mobileNumber;
+	private int mobileNumber;
 	
 	public void setTitle(String title) {
 		this.title=title;
@@ -34,15 +34,15 @@ public class Model {
 		this.surname = surname;
 	}
 
-	public String getSurame() {
+	public String getSurname() {
 		return surname;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(int mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	
-	public String getMobileNumber() {
+	public int getMobileNumber() {
 		return mobileNumber;
 	}
 	
@@ -59,7 +59,7 @@ public class Model {
 		this.password = password;
 	}
 
-	public String getPasword() {
+	public String getPassword() {
 		return password;
 	}
 		
