@@ -97,16 +97,6 @@ public class Register extends JFrame{
 		});
 		navBarPanel.add(navSearchButton);
 		
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
-		
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

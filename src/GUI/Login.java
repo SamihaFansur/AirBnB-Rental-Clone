@@ -100,17 +100,6 @@ public class Login extends JFrame{
 		});
 		navBarPanel.add(navRegisterButton);
 		
-		JButton navLoginButton = new JButton("Login");
-		navLoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.LOGIN;
-				MainModule.controller.drawNewView();
-				close();
-						//Login sp = new Login();
-			}
-		});
-		navBarPanel.add(navLoginButton);
-		
 		JButton navContactButton = new JButton("Contact");
 		navContactButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -119,18 +119,6 @@ public class Contact extends JFrame{
 		});
 		navBarPanel.add(navLoginButton);
 		
-		JButton navContactButton = new JButton("Contact");
-		navContactButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				mainModule.currentState=STATE.CONTACT_US;
-				MainModule.controller.drawNewView();
-				close();
-				//Register sp = new Register();
-			}
-		});
-		navBarPanel.add(navContactButton);
-		
 		JPanel contactPanel = new JPanel();
 		contactPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(contactPanel, BorderLayout.CENTER);

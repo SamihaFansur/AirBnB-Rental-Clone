@@ -82,17 +82,6 @@ public class Search extends JFrame{
 				}
 			});
 			navBarPanel.add(navHomeButton);
-		
-			
-			JButton navSearchButton = new JButton("Search");
-			navSearchButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.SEARCH;
-					MainModule.controller.drawNewView();
-					close();
-				}
-			});
-			navBarPanel.add(navSearchButton);
 			
 			JButton navRegisterButton = new JButton("Register");
 			navRegisterButton.addActionListener(new ActionListener() {

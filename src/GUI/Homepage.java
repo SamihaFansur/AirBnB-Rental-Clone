@@ -54,7 +54,7 @@ public class Homepage extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-public Homepage(MainModule mainModule, Controller controller, Model model) {
+	 public Homepage(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
 		this.mainModule=mainModule;
@@ -75,19 +75,6 @@ public Homepage(MainModule mainModule, Controller controller, Model model) {
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
 		
 		System.out.println("Initialise homepage");
-		
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-				mainModule.currentState=STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-	
 		
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
