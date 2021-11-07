@@ -8,14 +8,13 @@ import java.sql.Statement;
 public class Tables {
 
 	public static void main(String[] args) {
-//		String createAddressTable = "CREATE TABLE Address("
-//				+ "PRIMARY KEY (houseNameNumber, postcode), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
-//				+ "placeName VARCHAR(255), postcode VARCHAR(10))";
-//
-//		String createAccountTable = "CREATE TABLE Account("
-//				+ "email VARCHAR(255) NOT NULL PRIMARY KEY, mobile INT NOT NULL, "
-//				+ "title TINYTEXT NOT NULL, firstName TINYTEXT NOT NULL, surname TINYTEXT NOT NULL, password TINYTEXT NOT NULL, "
-//				+ "houseNameNumber VARCHAR(255) REFERENCES Address, postcode VARCHAR(10) REFERENCES Address)";
+		String createAddressTable = "CREATE TABLE Address("
+				+ "PRIMARY KEY (houseNameNumber, postcode), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
+				+ "placeName VARCHAR(255), postcode VARCHAR(10))";
+
+		String createAccountTable = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
+				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(15), "
+				+ "password VARCHAR(255), houseNameNumber VARCHAR(255) REFERENCES Address, postcode VARCHAR(10) REFERENCES Address)";
 //
 //		String createHostAccountTable = "CREATE TABLE HostAccount("
 //				+ "host_id INT NOT NULL PRIMARY KEY, email VARCHAR(50), CONSTRAINT FK_HostEmail FOREIGN KEY (email)"
@@ -96,11 +95,11 @@ public class Tables {
 		dropAllTables(allDropQueries);
 
 		
-		String testAccount = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
-				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber INT, "
-				+ "password VARCHAR(255), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
-				+ "city VARCHAR(255), postcode VARCHAR(10), accountType VARCHAR(255))";
-		String[] create = {testAccount};
+//	String testAccount = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
+//				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber INT, "
+//				+ "password VARCHAR(255), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
+//				+ "city VARCHAR(255), postcode VARCHAR(10), accountType VARCHAR(255))";
+		String[] create = {createAddressTable, createAccountTable};
 		createAllTables(create);
 	}
 

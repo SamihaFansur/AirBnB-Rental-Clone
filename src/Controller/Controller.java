@@ -56,7 +56,7 @@ public class Controller extends MainModule{
 		model.setEmail(email);
 	}
 	
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		model.setMobileNumber(mobileNumber);
 	}
 	

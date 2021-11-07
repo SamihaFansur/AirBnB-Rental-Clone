@@ -12,7 +12,7 @@ public class Model {
 	private String city;
 	private String postcode;
 	private String accType;
-	private int mobileNumber;
+	private String mobileNumber;
 	
 	public void setTitle(String title) {
 		this.title=title;
@@ -38,11 +38,11 @@ public class Model {
 		return surname;
 	}
 
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	
-	public int getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 	

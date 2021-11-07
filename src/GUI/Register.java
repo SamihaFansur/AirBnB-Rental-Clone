@@ -203,7 +203,7 @@ public class Register extends JFrame{
 		cityLabel.setBounds(82, 408, 125, 14);
 		registerPanel.add(cityLabel);
 
-		JTextField cityTextField = new JTextField();
+		cityTextField = new JTextField();
 		cityTextField.setBounds(217, 400, 276, 31);
 		registerPanel.add(cityTextField);
 
@@ -261,42 +261,48 @@ public class Register extends JFrame{
 	
 	public void submit() {
 		try {
-			System.out.println("1");
 			connection = ConnectionManager.getConnection();
-			System.out.println("2");
-			String insertQuery = "insert into Account values(?,?,?,?,?,?,?,?,?,?,?)";
-			System.out.println("3");
+			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,?,?)";
+			String insertAddressQuery = "INSERT INTO Address values(?,?,?,?) ";
 
 			model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 			model.setFirstName(firstNameTextField.getText());
 			model.setSurname(surnameTextField.getText());
 			model.setEmail(emailAddressTextField.getText());
-			model.setMobileNumber(Integer.parseInt(mobileNumberTextField.getText()));
+			model.setMobileNumber(mobileNumberTextField.getText());
 			model.setPassword(passwordTextField.getText());
 			model.setHouseNameNum(houseNumberTextField.getText());
 			model.setStreetName(streetNameTextField.getText());
-			model.setCity("YOOO FIX THIS FIELD"); //NEED TO FIX THIS FIELD!!!
+			model.setCity(cityTextField.getText()); 
 			model.setPostcode(postcodeTextField.getText());
 			model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
+			PreparedStatement ps_account = connection.prepareStatement(insertAccountQuery);
 			
-			PreparedStatement ps = connection.prepareStatement(insertQuery);
-			ps.setString(1, model.getEmail());
-			ps.setString(2, model.getTitle());
-			ps.setString(3, model.getFirstName());
-			ps.setString(4, model.getSurname());
-			ps.setLong(5, model.getMobileNumber());
-			ps.setString(6, model.getPassword());
-			ps.setString(7, model.getHouseNameNum());
-			ps.setString(8, model.getStreetName());
-			ps.setString(9, model.getCity());
-			ps.setString(10, model.getPostcode());
-			ps.setString(11, model.getAccountType());
-			System.out.println("5");
-			System.out.println(ps);
-			int i  = ps.executeUpdate();
-			System.out.println("6");
+			ps_account.setString(1, model.getEmail());
+			ps_account.setString(2, model.getTitle());
+			ps_account.setString(3, model.getFirstName());
+			ps_account.setString(4, model.getSurname());
+			ps_account.setString(5, model.getMobileNumber());
+			ps_account.setString(6, model.getPassword());
+			ps_account.setString(7, model.getHouseNameNum());
+			ps_account.setString(8, model.getPostcode());
+
+			System.out.println(ps_account);
+			int i  = ps_account.executeUpdate();
 			if(i>0) {
 				System.out.println("7");
+				System.out.println(this);
+				 //remove later
+			}
+			PreparedStatement ps_address = connection.prepareStatement(insertAddressQuery);
+			ps_address.setString(1, model.getHouseNameNum());
+			ps_address.setString(2, model.getStreetName());
+			ps_address.setString(3, model.getCity());
+			ps_address.setString(4, model.getPostcode());
+			int  y = ps_address.executeUpdate();
+			System.out.println("6");
+			if(y>0) {
+				System.out.println("tryagain");
 				System.out.println(this);
 				JOptionPane.showMessageDialog(this, "Successful registration!"); //remove later
 			}
