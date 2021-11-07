@@ -82,9 +82,9 @@ public class Tables {
 				+ "startDate DATE, endDate DATE, pricePerNight DOUBLE, serviceCharge DOUBLE, "
 				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
 
-		String[] allCreateQueries = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable, createReviewTable, 
+		String[] allCreateQueries = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable, createReviewTable, 
 				createOutdoorsTable, createLivingTable, createKitchenTable,createUtilityTable, createBathTypeTable, createBathingTable, 
-				createBathing_BathTypeTable, createSleepingTable, createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, createPropertyTable, createChargeBandsTable, createBookingTable };
+				createBathing_BathTypeTable, createSleepingTable, createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, createPropertyTable, createChargeBandsTable, createBookingTable};
 		
 		String[] allDropQueries = { "DROP TABLE IF EXISTS Outdoors", "DROP TABLE IF EXISTS Living",
 				"DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility", "DROP TABLE IF EXISTS Bathing_BathType",
@@ -92,7 +92,8 @@ public class Tables {
 				"DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property",
 				"DROP TABLE IF EXISTS HostAccount","DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Address", "DROP TABLE IF EXISTS Account",
 				"DROP TABLE IF EXISTS Review","DROP TABLE IF EXISTS ChargeBands" , "DROP TABLE IF EXISTS Booking"};
-		createAllTables(allCreateQueries,allDropQueries);
+		dropAllTables(allDropQueries);
+		createAllTables(allCreateQueries);
 
 	}
 
@@ -114,15 +115,19 @@ public class Tables {
 		}
 	}
 
-	static void createAllTables(String[] allCreateQueries, String[] allDropQueries) {
+	static void dropAllTables(String[] allDropQueries) {
 		for (int i = 0; i < allDropQueries.length; i++) {
 			dropTable(allDropQueries[i]);
 			System.out.println("Dropped " + i + " in given database...");
 		}
+	}
+	
+	static void createAllTables(String[] allCreateQueries) {
+	
 		for (int i = 0; i < allCreateQueries.length; i++) {
 			createTable(allCreateQueries[i]);
 			System.out.println("Created " + i + " in given database...");
 		}
-
 	}
+	
 }
