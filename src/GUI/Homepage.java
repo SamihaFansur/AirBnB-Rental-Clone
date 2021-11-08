@@ -1,4 +1,5 @@
 package GUI;
+import hostGUI.*;
 import Controller.*;
 import GUI.MainModule.STATE;
 import GUI.MainModule;
@@ -54,6 +55,7 @@ public class Homepage extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
+	 
 	 public Homepage(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
@@ -66,6 +68,8 @@ public class Homepage extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	 public void initializeHomePage() {
+		 
+		 if(mainModule.userState == STATE.ENQUIRER) {
 			
 			frame = new JFrame();
 			frame.getContentPane().setBackground(new Color(204, 255, 255));
@@ -134,5 +138,23 @@ public class Homepage extends JFrame{
 			frame.setLocationRelativeTo(null);
 			
 			frame.setVisible(true);
+		 }
+		 else if (mainModule.userState==STATE.HOST) {
+			 /*Homepage for host should display list of host properties and buttons in the nav for:
+			  * 	add property
+			  * 	charge bands
+			  * 	provision bookings
+			  * 	accepted bookings
+			  * 	search
+			  * 	contact
+			  * 
+			  * 
+			  */
+			 
+		 }
+		 else if (mainModule.userState==STATE.GUEST) {
+			 
+		 }
+		 
 	}
 }

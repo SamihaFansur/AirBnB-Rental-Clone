@@ -44,6 +44,9 @@ public class Login extends JFrame{
 	 */
 
 	 
+	private String userName_login;
+	private String password_login;
+	 
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
@@ -126,13 +129,11 @@ public class Login extends JFrame{
 		usernameField.setBounds(168, 228, 295, 31);
 		loginPanel.add(usernameField);
 		usernameField.setColumns(10);
-		model.setEmail(usernameField.getText()); //should be controller.getEmail for all such set fields
 		
 		JTextField passwordField = new JTextField();
 		passwordField.setBounds(168, 323, 295, 31);
 		loginPanel.add(passwordField);
-		model.setPassword(passwordField.getText());
-		
+
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(72, 329, 75, 14);
 		loginPanel.add(passwordLabel);
@@ -142,8 +143,26 @@ public class Login extends JFrame{
 		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+				model.setEmail(usernameField.getText());
+				model.setPassword(passwordField.getText());
+				
+				
+				
+				userName_login = model.getEmail();
+				password_login = model.getPassword();
+				
 				logUserIn();
-				close();
+				
+//				System.out.println(usernameField.getText());
+//				System.out.println(passwordField.getText());
+//				
+//				userName_login = model.getEmail();
+//				password_login = model.getPassword();
+//				System.out.println(userName_login);
+//				System.out.println(password_login);
+//				
+				//close();
 			//	Search sp = new Search();
 			}
 		});
@@ -186,21 +205,34 @@ public class Login extends JFrame{
 	}
 	
 	public void logUserIn() {
+		
+		System.out.println("here");		
+//		String email = model.getEmail();
+//		String password = model.getPassword();
+		System.out.println("emaillll "+userName_login);
+		System.out.println(password_login);
+		
 		try {
-			System.out.println("1");
 			connection = ConnectionManager.getConnection();
-			System.out.println("2");
-			String loginQuery = "select email, password from ACCOUNT";
-			System.out.println("3");
-			Statement stmt = connection.createStatement();
-			ResultSet userLoggingIn = stmt.executeQuery(loginQuery);
+
+			PreparedStatement loginQuery = (PreparedStatement) connection.prepareStatement("Select email, password from Account where email=? and password=?");
 			
-			if(!userLoggingIn.next()) {
-				JOptionPane.showMessageDialog(this, "Invalid username/email or password!");
-			}
-			else {
-				JOptionPane.showMessageDialog(this, "Login successful!");
-				System.out.println("logged in");
+
+			loginQuery.setString(1, userName_login);
+			loginQuery.setString(2, password_login);
+			ResultSet rs = loginQuery.executeQuery();
+		
+			
+			/*Need to check if the email belongs to a "host and guest" account.
+			 * If so, ask user to log in as either a host or a guest so 
+			 * GUI can be built according to this. 
+			 */
+			
+			if (rs.next()) {
+				JOptionPane.showMessageDialog(this,"You have successfully logged in");
+				System.out.println("logggin in: "+model.getEmail());
+			} else {
+				JOptionPane.showMessageDialog(this, "Wrong Username & Password");
 			}
 //			PreparedStatement ps = connection.prepareStatement(loginQuery);
 //			System.out.println("4");

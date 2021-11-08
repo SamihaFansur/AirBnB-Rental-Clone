@@ -9,6 +9,7 @@ import GUI.Search;
 import GUI.Contact;
 import GUI.MainModule.STATE;
 import Model.*;
+
 import java.util.*;   
 
 public class Controller extends MainModule{
@@ -24,7 +25,15 @@ public class Controller extends MainModule{
 	private Contact contact;
 	
 	
-	public Controller(MainModule mainModule, Model model, Homepage homepage, Register register, Search search, Account account, Login login, Contact contact) {
+	public Controller(MainModule mainModule, 
+			Model model, 
+			Homepage homepage, 
+			Register register, 
+			Search search, 
+			Account account, 
+			Login login, 
+			Contact contact) {
+		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
 		this.model=model;
@@ -113,6 +122,8 @@ public class Controller extends MainModule{
 			System.out.println("HEREEE");
 			contact.initializeContact();
 		}
+		//added for HOST GUI:
+		
 	
 		
 	}

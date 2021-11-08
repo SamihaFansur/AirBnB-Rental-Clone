@@ -13,13 +13,11 @@ public class MainModule {
 	private Model model;
 	public static Controller controller;
 	private Register register;
-//	private Homepage homepage;
 	private Account Account;
 	private Homepage homepage;
 	private Login login;
 	private Search search;
 	private Contact contact;
-	
 	
 	//use enum to register the state of the system
 	public enum STATE{
@@ -29,10 +27,24 @@ public class MainModule {
 		LOGIN,
 		SEARCH,
 		//could have others that correspond to new pages.
-		CONTACT_US
+		CONTACT_US,
+		// pages for host gui:
+		
+		/* new */
+		// edit host account details
+		// properties - showing the list of properties 
+		// edit property
+		// provisional bookings page - makes list of all provisional booking. Reeject/Accept booking here
+		// active bookings page.
+		
+		// for checking who's logged in:
+		ENQUIRER,
+		HOST,
+		GUEST
 	}
 	
 	public STATE currentState = STATE.HOMEPAGE;
+	public STATE userState = STATE.ENQUIRER;
 	
 	public MainModule() {
 		/*
@@ -67,6 +79,12 @@ public class MainModule {
 		Search search = new Search(mainModule, controller, model);
 		//creating instance of contact class
 		Contact contact = new Contact(mainModule, controller, model);
+		
+		//Objects for Host GUI:
+		
+								
+		
+		
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
