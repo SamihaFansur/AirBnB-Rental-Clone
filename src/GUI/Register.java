@@ -263,7 +263,15 @@ public class Register extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,?,?)";
-			String insertAddressQuery = "INSERT INTO Address values(?,?,?,?) ";
+			String insertAddressQuery = "insert into Address values(?,?,?,?) ";
+			String insertIntoHostAccountTable = "insert into HostAccount (email) "
+					+ "values((SELECT email FROM Account WHERE email=?))";		
+			String insertIntoGuestAccountTable = "insert into GuestAccount (email) "
+					+ "values((SELECT email FROM Account WHERE email=?))";			
+			
+//			INSERT INTO joke(joke_text, joke_date, author_id)
+//			VALUES (‘Humpty Dumpty had a great fall.’, ‘1899–03–13’, 
+//			        (SELECT id FROM author WHERE author_name = ‘Famous Anthony’));
 
 			model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 			model.setFirstName(firstNameTextField.getText());
@@ -299,6 +307,7 @@ public class Register extends JFrame{
 			ps_address.setString(2, model.getStreetName());
 			ps_address.setString(3, model.getCity());
 			ps_address.setString(4, model.getPostcode());
+			
 			int  y = ps_address.executeUpdate();
 			System.out.println("6");
 			if(y>0) {
@@ -306,6 +315,55 @@ public class Register extends JFrame{
 				System.out.println(this);
 				JOptionPane.showMessageDialog(this, "Successful registration!"); //remove later
 			}
+			
+
+			PreparedStatement ps_guestAccount = connection.prepareStatement(insertIntoGuestAccountTable);
+			PreparedStatement ps_hostAccount = connection.prepareStatement(insertIntoHostAccountTable);
+			
+			if(model.getAccountType() == "Host") {
+				ps_hostAccount.setString(1, model.getEmail());
+				System.out.println(ps_hostAccount);
+				
+				int h  = ps_hostAccount.executeUpdate();
+				if(h>0) {
+					System.out.println("7");
+					System.out.println(this);
+					 //remove later
+				}
+				
+			}else if (model.getAccountType() == "Guest") {
+				ps_guestAccount.setString(1, model.getEmail());
+				System.out.println(ps_guestAccount);
+				
+				int g  = ps_guestAccount.executeUpdate();
+				if(g>0) {
+					System.out.println("7");
+					System.out.println(this);
+					 //remove later
+				}
+			}else if(model.getAccountType() == "Both (Host & Guest)") {
+
+				ps_hostAccount.setString(1, model.getEmail());
+				System.out.println(ps_hostAccount);
+				
+				int h  = ps_hostAccount.executeUpdate();
+				if(h>0) {
+					System.out.println("7");
+					System.out.println(this);
+					 //remove later
+				}
+				
+				ps_guestAccount.setString(1, model.getEmail());
+				System.out.println(ps_guestAccount);
+				
+				int g  = ps_guestAccount.executeUpdate();
+				if(g>0) {
+					System.out.println("7");
+					System.out.println(this);
+					 //remove later
+				}
+			}
+			
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");

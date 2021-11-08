@@ -15,13 +15,13 @@ public class Tables {
 		String createAccountTable = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
 				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(15), "
 				+ "password VARCHAR(255), houseNameNumber VARCHAR(255) REFERENCES Address, postcode VARCHAR(10) REFERENCES Address)";
-//
-//		String createHostAccountTable = "CREATE TABLE HostAccount("
-//				+ "host_id INT NOT NULL PRIMARY KEY, email VARCHAR(50), CONSTRAINT FK_HostEmail FOREIGN KEY (email)"
-//				+ " REFERENCES Account(email), rating FLOAT NOT NULL, superhost BOOL)";
-//
-//		String createGuestAccountTable = "CREATE TABLE GuestAccount(guest_id INT NOT NULL PRIMARY KEY, "
-//				+ "email VARCHAR(50) NOT NULL REFERENCES Account)";
+
+		String createHostAccountTable = "CREATE TABLE HostAccount("
+				+ "host_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(50), FOREIGN KEY (email) REFERENCES Account(email), "
+				+ "rating FLOAT , superhost BOOL)";
+
+		String createGuestAccountTable = "CREATE TABLE GuestAccount(guest_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+				+ "email VARCHAR(50), FOREIGN KEY (email) REFERENCES Account(email))";
 //
 //		String createReviewTable = "CREATE TABLE Review("
 //				+ "review_id INT NOT NULL PRIMARY KEY, accuracy DEC, location DEC, "
@@ -99,7 +99,7 @@ public class Tables {
 //				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber INT, "
 //				+ "password VARCHAR(255), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
 //				+ "city VARCHAR(255), postcode VARCHAR(10), accountType VARCHAR(255))";
-		String[] create = {createAddressTable, createAccountTable};
+		String[] create = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable};
 		createAllTables(create);
 	}
 
