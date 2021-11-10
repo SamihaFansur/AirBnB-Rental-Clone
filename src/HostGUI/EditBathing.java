@@ -7,6 +7,7 @@ import javax.swing.*;
 import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -139,6 +140,12 @@ public class EditBathing extends JFrame{
 		noOfBahtroomsTextField.setColumns(10);
 		
 		JButton addBathroomButton = new JButton("Add Bathroom");
+		addBathroomButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		addBathroomButton.setBounds(199, 405, 209, 46);
 		registerPanel.add(addBathroomButton);
 

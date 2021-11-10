@@ -4,9 +4,11 @@ package HostGUI;
 import java.awt.EventQueue;
 import javax.swing.*;
 
+
 import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -105,7 +107,7 @@ public class HostAccount extends JFrame{
 		registerPanel.setLayout(null);
 
 
-		JLabel hostAccountLabel = new JLabel("HostAccount");
+		JLabel hostAccountLabel = new JLabel("Host Account");
 		hostAccountLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		hostAccountLabel.setBounds(222, 53, 183, 57);
 		registerPanel.add(hostAccountLabel);
@@ -121,6 +123,8 @@ public class HostAccount extends JFrame{
 		JButton addPropertyButton = new JButton("Add Property");
 		addPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
+				MainModule.controller.editPropertyView();
 			}
 		});
 		addPropertyButton.setBounds(203, 294, 183, 34);
@@ -130,9 +134,10 @@ public class HostAccount extends JFrame{
 		bookingsButton.setBounds(203, 351, 183, 34);
 		registerPanel.add(bookingsButton);
 		
-		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
-		provisionalBookingsButton.setBounds(203, 406, 183, 34);
-		registerPanel.add(provisionalBookingsButton);
+		//I dont think this should be in the host account section-Samiha
+//		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
+//		provisionalBookingsButton.setBounds(203, 406, 183, 34);
+//		registerPanel.add(provisionalBookingsButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

@@ -7,6 +7,7 @@ import javax.swing.*;
 import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -110,30 +111,62 @@ public class AddFacility extends JFrame{
 		registerPanel.add(addFacilityLabel);
 		
 		JButton addSleepingButton = new JButton("Add Sleeping Facility");
+		addSleepingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		addSleepingButton.setBounds(190, 160, 196, 51);
 		registerPanel.add(addSleepingButton);
 		
 		JButton btnAddBathingFacility = new JButton("Add Bathing Facility");
 		btnAddBathingFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
+				MainModule.controller.editPropertyView();
 			}
 		});
 		btnAddBathingFacility.setBounds(190, 222, 196, 51);
 		registerPanel.add(btnAddBathingFacility);
 		
 		JButton btnAddKitchenfacility = new JButton("Add KitchenFacility");
+		btnAddKitchenfacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_KITCHEN;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
 		registerPanel.add(btnAddKitchenfacility);
 		
 		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
+		btnAddUtilityFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
 		registerPanel.add(btnAddUtilityFacility);
 		
 		JButton btnAddLivingFacility = new JButton("Add Living Facility");
+		btnAddLivingFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
 		registerPanel.add(btnAddLivingFacility);
 		
 		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
+		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
 		registerPanel.add(btnAddOutdoorsFacility);
 

@@ -51,7 +51,7 @@ public class EditKitchen extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditOutdoors() {
+	public void initializeEditKitchen() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 

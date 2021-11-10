@@ -53,6 +53,8 @@ public class Controller extends MainModule{
 	private Facilities facilities;
 	private HostAccount hostAccount;
 	private Properties properties;
+
+//	private Properties properties;
 	
 	
 	public Controller(MainModule mainModule, 
@@ -63,6 +65,7 @@ public class Controller extends MainModule{
 			Account account, 
 			Login login, 
 			Contact contact,
+			
 			AddFacility addFacility,
 			EditBathing editBathing,
 			EditBathroom editBathroom,
@@ -180,10 +183,44 @@ public class Controller extends MainModule{
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			hostAccount.initializeHostAccount();
 		}
-	
 		
 	}
 	
+	public void editPropertyView() {
+		System.out.println("in editPropertyView");
+		System.out.println("1----------"+mainModule.editPropertyState);
+		if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_PROPERTY){
+			editProperty.initializeEditProperty();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.ADD_FACILITY){
+			addFacility.initializeAddFacility();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_SLEEPING){
+			editSleeping.initializeEditSleeping();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHING){
+			editBathing.initializeEditBathing();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_KITCHEN){
+			editKitchen.initializeEditKitchen();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_UTILITY){
+			editUtility.initializeEditUtility();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_LIVING){
+			editLiving.initializeEditLiving();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_OUTDOORS){
+			editOutdoors.initializeEditOutdoors();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BEDROOM){
+			editBedroom.initializeEditBedroom();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
+			editBathroom.initializeEditBathroom();
+		}
+	}
+ 	
 //	public static void SendEmail() { //doesn't work yet
 //	
 //	      String to = "egoodbrand1@sheffield.ac.uk";//change accordingly  

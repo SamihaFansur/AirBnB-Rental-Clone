@@ -72,19 +72,32 @@ public class MainModule {
 		// active bookings page.
 		
 		//for host GUI:
-		ADD_FACILITY,
-		EDIT_BATHING,
-		EDIT_BATHROOM,
-		EDIT_BEDROOM,
-		EDIT_KITCHEN,
-		EDIT_LIVING,
-		EDIT_OUTDOORS,
-		EDIT_PROPERTY,
-		EDIT_SLEEPING,
-		EDIT_UTILITY,
+//		PROPERTY_EDIT,
+//		ADD_FACILITY,
+//		EDIT_BATHING,
+//		EDIT_BATHROOM,
+//		EDIT_BEDROOM,
+//		EDIT_KITCHEN,
+//		EDIT_LIVING,
+//		EDIT_OUTDOORS,
+//		EDIT_SLEEPING,
+//		EDIT_UTILITY,
 		FACILTIES, 
 		HOST_ACCOUNT,
 		PROPERTIES,
+	}
+	
+	public enum EDITPROPERTY {
+		EDIT_PROPERTY,
+		ADD_FACILITY,
+		EDIT_SLEEPING,
+		EDIT_BATHING,
+		EDIT_KITCHEN,
+		EDIT_LIVING,
+		EDIT_OUTDOORS,
+		EDIT_UTILITY,
+		EDIT_BATHROOM,
+		EDIT_BEDROOM,
 	}
 	
 	public enum USER {
@@ -96,6 +109,7 @@ public class MainModule {
 	
 	public STATE currentState = STATE.HOMEPAGE;
 	public USER userState = USER.ENQUIRER;
+	public EDITPROPERTY editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 	
 	public MainModule() {
 		/*

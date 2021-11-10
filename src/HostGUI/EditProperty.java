@@ -7,6 +7,7 @@ import javax.swing.*;
 import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -35,9 +36,9 @@ public class EditProperty extends JFrame{
 	private JTextField placeNameTextField;
 	private JTextField houseNameTextField;
 
-	public void close() {
-		frame.dispose();
-	}
+//	public void close() {
+//		frame.dispose();
+//	}
 
 	/**
 	 * Create the application.
@@ -46,6 +47,7 @@ public class EditProperty extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
+	 
 	 public EditProperty(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
@@ -109,7 +111,7 @@ public class EditProperty extends JFrame{
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
 
-		JLabel editPropertyLabel = new JLabel("Edit Property");
+		JLabel editPropertyLabel = new JLabel("Property details");
 		editPropertyLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editPropertyLabel.setBounds(222, 53, 183, 57);
 		registerPanel.add(editPropertyLabel);
@@ -119,6 +121,12 @@ public class EditProperty extends JFrame{
 		registerPanel.add(facilitiesButton);
 		
 		JButton addFacilityButton = new JButton("Add Facility");
+		addFacilityButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+				MainModule.controller.editPropertyView();
+			}
+		});
 		addFacilityButton.setBounds(203, 235, 183, 34);
 		registerPanel.add(addFacilityButton);
 		

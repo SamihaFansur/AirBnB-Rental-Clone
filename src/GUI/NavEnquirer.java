@@ -64,10 +64,8 @@ public class NavEnquirer extends JFrame{
 		System.out.println("IN NAVENQ");
 		System.out.println("in nav current state= "+mainModule);
 		this.frame= frame;
-//		frame = getFrame();
 		System.out.println("in nav enq: "+frame);
 
-//		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
 		JPanel navBarPanel = new JPanel();
