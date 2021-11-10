@@ -8,6 +8,7 @@ import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.Model;
 
 import java.awt.SystemColor;
@@ -96,7 +97,7 @@ public class EditProperty extends JFrame{
 		navLogoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = STATE.ENQUIRER;
+				mainModule.userState = USER.ENQUIRER;
 				MainModule.controller.drawNewView();
 //				close();
 			}

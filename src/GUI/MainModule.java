@@ -50,7 +50,7 @@ public class MainModule {
 	private Properties properties;
 	
 	
-	//use enum to register the state of the system
+	//Page user is on
 	public enum STATE{
 		HOMEPAGE,
 		SELF_REGISTRATION,
@@ -61,6 +61,8 @@ public class MainModule {
 		//could have others that correspond to new pages.
 		CONTACT_US,
 		// pages for host gui:
+		LOGOUT,
+		
 		
 		/* new */
 		// edit host account details
@@ -83,10 +85,9 @@ public class MainModule {
 		FACILTIES, 
 		HOST_ACCOUNT,
 		PROPERTIES,
-		
-		//
-		LOGOUT,
-		
+	}
+	
+	public enum USER {
 		// for checking who's logged in:
 		ENQUIRER,
 		HOST,
@@ -94,7 +95,7 @@ public class MainModule {
 	}
 	
 	public STATE currentState = STATE.HOMEPAGE;
-	public STATE userState = STATE.ENQUIRER;
+	public USER userState = USER.ENQUIRER;
 	
 	public MainModule() {
 		/*

@@ -24,7 +24,6 @@ import java.awt.Font;
 
 public class Register extends JFrame{
 
-	private JFrame frame;
 	private JButton registerButton = new JButton("Register");
 	private JTextField passwordTextField;
 	private JTextField firstNameTextField;
@@ -38,17 +37,20 @@ public class Register extends JFrame{
 	private JComboBox accountTypeComboBox;
 	private JComboBox registerTitleComboBox;
 	
-//	private Controller controller;
+//	private JFrame frame;
 	private Model model;
 	private Controller controller;
 	private MainModule mainModule;
+	private NavEnquirer navBeforeLogin = new NavEnquirer();
+	private JFrame frame ;
 	
 	Connection connection = null;
+	
 
-	public void close() {
-		
-		this.frame.dispose();
-	}
+//	public void close() {
+//		
+//		this.frame.dispose();
+//	}
 
 	/**
 	 * Create the application.
@@ -65,60 +67,16 @@ public class Register extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeRegister() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
-
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-		
-		System.out.println("Initialise homepage");
-		
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-				mainModule.currentState=STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-	
-		
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SEARCH;
-				MainModule.controller.drawNewView();
-				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
-		
-		JButton navLoginButton = new JButton("Login");
-		navLoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.LOGIN;
-				MainModule.controller.drawNewView();
-				close();
-						//Login sp = new Login();
-			}
-		});
-		navBarPanel.add(navLoginButton);
-		
-		JButton navContactButton = new JButton("Contact");
-		navContactButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				mainModule.currentState=STATE.CONTACT_US;
-				MainModule.controller.drawNewView();
-				close();
-				//Register sp = new Register();
-			}
-		});
-		navBarPanel.add(navContactButton);
+		mainModule.currentState = STATE.SELF_REGISTRATION;
+		try {
+			frame = new JFrame();
+			System.out.println("in register: "+frame);
+			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
+			System.out.println("after nav in register = "+mainModule);
+			
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}		
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
@@ -228,7 +186,6 @@ public class Register extends JFrame{
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				submit();
-				close();
 				Login sp = new Login(mainModule,controller,model);
 			}
 		});
@@ -268,10 +225,6 @@ public class Register extends JFrame{
 					+ "values((SELECT email FROM Account WHERE email=?))";		
 			String insertIntoGuestAccountTable = "insert into GuestAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";			
-			
-//			INSERT INTO joke(joke_text, joke_date, author_id)
-//			VALUES (‘Humpty Dumpty had a great fall.’, ‘1899–03–13’, 
-//			        (SELECT id FROM author WHERE author_name = ‘Famous Anthony’));
 
 			model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 			model.setFirstName(firstNameTextField.getText());

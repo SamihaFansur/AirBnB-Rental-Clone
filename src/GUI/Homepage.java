@@ -2,6 +2,7 @@ package GUI;
 //import hostGUI.*;
 import Controller.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import GUI.MainModule;
 import Model.*;
 
@@ -69,7 +70,7 @@ public class Homepage extends JFrame{
 	 */
 	 public void initializeHomePage() {
 		 
-		 if(mainModule.userState == STATE.ENQUIRER) {
+		 if(mainModule.userState == USER.ENQUIRER) {
 			
 			frame = new JFrame();
 			frame.getContentPane().setBackground(new Color(204, 255, 255));
@@ -139,7 +140,7 @@ public class Homepage extends JFrame{
 			
 			frame.setVisible(true);
 		 }
-		 else if (mainModule.userState==STATE.HOST) {
+		 else if (mainModule.userState==USER.HOST) {
 			 /*Homepage for host should display list of host properties and buttons in the nav for:
 			  * 	add property
 			  * 	charge bands
@@ -152,7 +153,7 @@ public class Homepage extends JFrame{
 			  */
 			 
 		 }
-		 else if (mainModule.userState==STATE.GUEST) {
+		 else if (mainModule.userState==USER.GUEST) {
 			 
 		 }
 		 

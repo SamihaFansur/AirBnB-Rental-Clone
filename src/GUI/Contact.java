@@ -1,6 +1,7 @@
 package GUI;
 import Controller.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import GUI.MainModule;
 import Model.*;
 
@@ -110,7 +111,7 @@ public class Contact extends JFrame{
 			navLoginButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					mainModule.currentState=STATE.HOMEPAGE;
-					mainModule.userState=STATE.ENQUIRER;
+					mainModule.userState=USER.ENQUIRER;
 					MainModule.controller.drawNewView();
 					close();
 							//Login sp = new Login();

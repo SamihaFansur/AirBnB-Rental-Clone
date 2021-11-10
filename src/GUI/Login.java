@@ -2,6 +2,7 @@ package GUI;
 import Controller.*;
 import Model.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.*;
 import java.awt.EventQueue;
 import java.sql.Statement;
@@ -155,7 +156,7 @@ public class Login extends JFrame{
 				logUserIn();
 				
 				mainModule.currentState = STATE.HOST_ACCOUNT;
-				mainModule.userState = STATE.HOST;
+				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
 				close();
 //				System.out.println(usernameField.getText());

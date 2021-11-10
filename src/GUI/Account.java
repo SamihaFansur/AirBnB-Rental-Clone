@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 public class Account {
 
-	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -26,6 +25,11 @@ public class Account {
 	private Model model;
 	private Controller controller;
 	private MainModule mainModule;
+	private JFrame frame;
+	
+	public void close() {
+	 	frame.dispose();
+    }
 	
 	public Account(MainModule mainModule, Controller controller, Model model) {
 		//initialize();
@@ -33,10 +37,7 @@ public class Account {
 		this.model=model;
 		this.controller=controller;
 	}
-
-	 public void close() {
-		 	frame.dispose();
-	    }	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */

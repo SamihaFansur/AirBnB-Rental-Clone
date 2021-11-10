@@ -8,6 +8,7 @@ import GUI.Register;
 import GUI.Search;
 import GUI.Contact;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.*;
 import HostGUI.*;
 import HostGUI.AddFacility;
@@ -149,38 +150,34 @@ public class Controller extends MainModule{
 	public void drawNewView() {
 		System.out.println("in drawNewView");
 		System.out.println("1----------"+mainModule.currentState);
-		//checking if we're in the homepage state.
-		if (mainModule.currentState == STATE.HOMEPAGE && mainModule.userState==STATE.ENQUIRER){
-			//call the function to update the JPanel in homepage
+		if (mainModule.currentState == STATE.HOMEPAGE && mainModule.userState==USER.ENQUIRER){
 			homepage.initializeHomePage();
 		}
 		//checking if in SELF_REGISTRATION state, then update the JPanel in SELF_REGISTRATION 
 		// (at the moment the window is made in SELF_REGISTRATION)
-		else if (mainModule.currentState == STATE.SELF_REGISTRATION && mainModule.userState==STATE.ENQUIRER){
-			//some test code
-			//System.out.println("in the draw controller method here");
+		else if (mainModule.currentState == STATE.SELF_REGISTRATION && mainModule.userState==USER.ENQUIRER){
 			register.initializeRegister();
-			//some test code
-			//System.out.println("dfv sdvdvdvdr method here");
 		}
-		else if (mainModule.currentState == STATE.ACCOUNT && mainModule.userState==STATE.ENQUIRER){
+		else if (mainModule.currentState == STATE.ACCOUNT && mainModule.userState==USER.ENQUIRER){
 			account.initialize();
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 		}
-		else if (mainModule.currentState == STATE.LOGIN && mainModule.userState==STATE.ENQUIRER){
+		else if (mainModule.currentState == STATE.LOGIN && mainModule.userState==USER.ENQUIRER){
 			login.initializeLogin();
 			//login.initia
 		}
-		else if (mainModule.currentState == STATE.SEARCH && mainModule.userState==STATE.ENQUIRER){
+		else if (mainModule.currentState == STATE.SEARCH && mainModule.userState==USER.ENQUIRER){
 			System.out.println("HEREEE");
 			search.initializeSearch();
 		}
-		else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState==STATE.ENQUIRER){
+		else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState==USER.ENQUIRER){
 			System.out.println("HEREEE");
 			contact.initializeContact();
 		}
 		//added for HOST GUI:
-		else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState==STATE.HOST){
+		else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState==USER.HOST){
 			System.out.println("HEREEE");
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			hostAccount.initializeHostAccount();
 		}
 	
