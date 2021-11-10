@@ -5,19 +5,20 @@ import java.sql.SQLException;
 
 import Controller.Controller;
 import Model.Model;
-import hostGUI.AddFacility;
-import hostGUI.EditBathing;
-import hostGUI.EditBathroom;
-import hostGUI.EditBedroom;
-import hostGUI.EditKitchen;
-import hostGUI.EditLiving;
-import hostGUI.EditOutdoors;
-import hostGUI.EditProperty;
-import hostGUI.EditSleeping;
-import hostGUI.EditUtility;
-import hostGUI.Facilities;
-import hostGUI.HostAccount;
-import hostGUI.Properties;
+import HostGUI.*;
+import HostGUI.AddFacility;
+import HostGUI.EditBathing;
+import HostGUI.EditBathroom;
+import HostGUI.EditBedroom;
+import HostGUI.EditKitchen;
+import HostGUI.EditLiving;
+import HostGUI.EditOutdoors;
+import HostGUI.EditProperty;
+import HostGUI.EditSleeping;
+import HostGUI.EditUtility;
+import HostGUI.Facilities;
+import HostGUI.HostAccount;
+import HostGUI.Properties;
 
 
 

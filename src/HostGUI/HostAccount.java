@@ -1,5 +1,5 @@
 
-package hostGUI;
+package HostGUI;
 
 import java.awt.EventQueue;
 import javax.swing.*;
