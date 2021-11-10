@@ -154,6 +154,10 @@ public class Login extends JFrame{
 				
 				logUserIn();
 				
+				mainModule.currentState = STATE.HOST_ACCOUNT;
+				mainModule.userState = STATE.HOST;
+				MainModule.controller.drawNewView();
+				close();
 //				System.out.println(usernameField.getText());
 //				System.out.println(passwordField.getText());
 //				

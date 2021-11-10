@@ -1,5 +1,5 @@
 
-package HostGUI;
+package hostGUI;
 
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -88,15 +88,16 @@ public class Facilities extends JFrame{
 		});
 		navBarPanel.add(navRegisterButton);
 
-		JButton navLoginButton = new JButton("Login");
-		navLoginButton.addActionListener(new ActionListener() {
+		JButton navLogoutButton = new JButton("Logout");
+		navLogoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.LOGIN;
+				mainModule.currentState = STATE.HOMEPAGE;
+				mainModule.userState = STATE.ENQUIRER;
 				MainModule.controller.drawNewView();
 //				close();
 			}
 		});
-		navBarPanel.add(navLoginButton);
+		navBarPanel.add(navLogoutButton);
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
@@ -117,6 +118,7 @@ public class Facilities extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

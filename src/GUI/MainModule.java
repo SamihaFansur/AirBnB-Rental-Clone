@@ -5,6 +5,20 @@ import java.sql.SQLException;
 
 import Controller.Controller;
 import Model.Model;
+import hostGUI.AddFacility;
+import hostGUI.EditBathing;
+import hostGUI.EditBathroom;
+import hostGUI.EditBedroom;
+import hostGUI.EditKitchen;
+import hostGUI.EditLiving;
+import hostGUI.EditOutdoors;
+import hostGUI.EditProperty;
+import hostGUI.EditSleeping;
+import hostGUI.EditUtility;
+import hostGUI.Facilities;
+import hostGUI.HostAccount;
+import hostGUI.Properties;
+
 
 
 //Remove GUI mainModule later, test webhook comment
@@ -19,11 +33,28 @@ public class MainModule {
 	private Search search;
 	private Contact contact;
 	
+	//hostGUI
+	private AddFacility addFacility;
+	private EditBathing editBathing;
+	private EditBathroom editBathroom;
+	private EditBedroom editBedroom;
+	private EditKitchen editKitchen;
+	private EditLiving editLiving;
+	private EditOutdoors editOutdoors;
+	private EditProperty editProperty;
+	private EditSleeping editSleeping;
+	private EditUtility editUtility;
+	private Facilities facilities;
+	private HostAccount hostAccount;
+	private Properties properties;
+	
+	
 	//use enum to register the state of the system
 	public enum STATE{
 		HOMEPAGE,
 		SELF_REGISTRATION,
-		ACCOUNT,
+		ACCOUNT, //not being used
+		/*property class also not being used*/
 		LOGIN,
 		SEARCH,
 		//could have others that correspond to new pages.
@@ -36,6 +67,24 @@ public class MainModule {
 		// edit property
 		// provisional bookings page - makes list of all provisional booking. Reeject/Accept booking here
 		// active bookings page.
+		
+		//for host GUI:
+		ADD_FACILITY,
+		EDIT_BATHING,
+		EDIT_BATHROOM,
+		EDIT_BEDROOM,
+		EDIT_KITCHEN,
+		EDIT_LIVING,
+		EDIT_OUTDOORS,
+		EDIT_PROPERTY,
+		EDIT_SLEEPING,
+		EDIT_UTILITY,
+		FACILTIES, 
+		HOST_ACCOUNT,
+		PROPERTIES,
+		
+		//
+		LOGOUT,
 		
 		// for checking who's logged in:
 		ENQUIRER,
@@ -81,14 +130,24 @@ public class MainModule {
 		Contact contact = new Contact(mainModule, controller, model);
 		
 		//Objects for Host GUI:
-		
+		AddFacility addFacility = new AddFacility(mainModule, controller, model);
+		EditBathing editBathing = new EditBathing(mainModule, controller, model);
+		EditBathroom editBathroom = new EditBathroom(mainModule, controller, model);
+		EditBedroom editBedroom = new EditBedroom(mainModule, controller, model);
+		EditKitchen editKitchen = new EditKitchen(mainModule, controller, model);
+		EditLiving editLiving = new EditLiving(mainModule, controller, model);
+		EditOutdoors editOutdoors = new EditOutdoors(mainModule, controller, model);
+		EditProperty editProperty = new EditProperty(mainModule, controller, model);
+		EditSleeping editSleeping = new EditSleeping(mainModule, controller, model);
+		EditUtility editUtility = new EditUtility(mainModule, controller, model);
+		Facilities facilities = new Facilities(mainModule, controller, model);
+		HostAccount hostAccount = new HostAccount(mainModule, controller, model);
+		Properties properties = new Properties(mainModule, controller, model);
 								
-		
-		
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, account, login, contact);
+		controller = new Controller(mainModule, model, homepage, register, search, account, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
