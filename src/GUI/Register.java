@@ -46,12 +46,6 @@ public class Register extends JFrame{
 	
 	Connection connection = null;
 	
-
-//	public void close() {
-//		
-//		this.frame.dispose();
-//	}
-
 	/**
 	 * Create the application.
 	 */

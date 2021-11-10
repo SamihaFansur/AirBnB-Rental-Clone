@@ -159,7 +159,7 @@ public class Controller extends MainModule{
 			register.initializeRegister();
 		}
 		else if (mainModule.currentState == STATE.ACCOUNT && mainModule.userState==USER.ENQUIRER){
-			account.initialize();
+			account.initializeAccount();
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 		}
 		else if (mainModule.currentState == STATE.LOGIN && mainModule.userState==USER.ENQUIRER){

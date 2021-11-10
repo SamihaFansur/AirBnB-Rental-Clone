@@ -21,27 +21,18 @@ import javax.swing.JTable;
 
 public class Search extends JFrame{
 
-	private JFrame frame;
 	private final JButton filterButton = new JButton("Apply Filters");
 	private JTextField numberOfGuestsFilter;
 	private JTextField minPriceFilter;
 	private JTextField maxPriceFilter;
 	private JTable propertiesTable;
-	/**
-	 * @wbp.nonvisual location=718,143
-	 */
-
-	/**
-	 * Launch the application.
-	 */
-	
-	/**
-	 * Create the application.
-	 */
-	
+		
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
+	private NavEnquirer navBeforeLogin = new NavEnquirer();
+	private JFrame frame ;
+	
 	public Search(MainModule mainModule, Controller controller, Model model) {
 		//initializeSearch();
 		this.controller=controller;
@@ -56,65 +47,16 @@ public class Search extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	 public void initializeSearch() {
-			frame = new JFrame();
-			frame.setResizable(false);
-			frame.setBounds(100, 100, 600, 700);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-			JPanel panel = new JPanel();
-			frame.getContentPane().add(panel, BorderLayout.NORTH);
-
-			
-			JPanel navBarPanel = new JPanel();
-			navBarPanel.setBackground(new Color(51, 255, 255));
-			frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-			
-			System.out.println("Initialise homepage");
-			
-			JButton navHomeButton = new JButton("Home");
-			navHomeButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					//Homepage sp = new Homepage();
-
-					mainModule.currentState=STATE.HOMEPAGE;
-					MainModule.controller.drawNewView();
-					close();
-				}
-			});
-			navBarPanel.add(navHomeButton);
-			
-			JButton navRegisterButton = new JButton("Register");
-			navRegisterButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.SELF_REGISTRATION;
-					MainModule.controller.drawNewView();
-					close();
-				}
-			});
-			navBarPanel.add(navRegisterButton);
-			
-			JButton navLoginButton = new JButton("Login");
-			navLoginButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.LOGIN;
-					MainModule.controller.drawNewView();
-					close();
-							//Login sp = new Login();
-				}
-			});
-			navBarPanel.add(navLoginButton);
-			
-			JButton navContactButton = new JButton("Contact");
-			navContactButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
-					mainModule.currentState=STATE.CONTACT_US;
-					MainModule.controller.drawNewView();
-					close();
-					//Register sp = new Register();
-				}
-			});
-			navBarPanel.add(navContactButton);
+		 mainModule.currentState = STATE.SEARCH;
+			try {
+				frame = new JFrame();
+				System.out.println("in register: "+frame);
+				navBeforeLogin.addNavBeforeLogin(frame, mainModule);
+				System.out.println("after nav in register = "+mainModule);
+				
+			}catch(Exception e) {
+				System.err.println(e.getMessage());
+			}
 			
 			JPanel loginPanel = new JPanel();
 			loginPanel.setBackground(new Color(204, 255, 255));
