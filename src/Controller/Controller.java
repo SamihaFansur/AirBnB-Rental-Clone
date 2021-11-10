@@ -9,6 +9,19 @@ import GUI.Search;
 import GUI.Contact;
 import GUI.MainModule.STATE;
 import Model.*;
+import hostGUI.AddFacility;
+import hostGUI.EditBathing;
+import hostGUI.EditBathroom;
+import hostGUI.EditBedroom;
+import hostGUI.EditKitchen;
+import hostGUI.EditLiving;
+import hostGUI.EditOutdoors;
+import hostGUI.EditProperty;
+import hostGUI.EditSleeping;
+import hostGUI.EditUtility;
+import hostGUI.Facilities;
+import hostGUI.HostAccount;
+import hostGUI.Properties;
 
 import java.util.*;   
 
@@ -24,6 +37,21 @@ public class Controller extends MainModule{
 	private Login login;
 	private Contact contact;
 	
+	//hostGUI
+	private AddFacility addFacility;
+	private EditBathing editBathing;
+	private EditBathroom editBathroom;
+	private EditBedroom editBedroom;
+	private EditKitchen editKitchen;
+	private EditLiving editLiving;
+	private EditOutdoors editOutdoors;
+	private EditProperty editProperty;
+	private EditSleeping editSleeping;
+	private EditUtility editUtility;
+	private Facilities facilities;
+	private HostAccount hostAccount;
+	private Properties properties;
+	
 	
 	public Controller(MainModule mainModule, 
 			Model model, 
@@ -32,7 +60,20 @@ public class Controller extends MainModule{
 			Search search, 
 			Account account, 
 			Login login, 
-			Contact contact) {
+			Contact contact,
+			AddFacility addFacility,
+			EditBathing editBathing,
+			EditBathroom editBathroom,
+			EditBedroom editBedroom,
+			EditKitchen editKitchen,
+			EditLiving editLiving,
+			EditOutdoors editOutdoors,
+			EditProperty editProperty,
+			EditSleeping editSleeping,
+			EditUtility editUtility,
+			Facilities facilities,
+			HostAccount hostAccount,
+			Properties properties) {
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -44,6 +85,20 @@ public class Controller extends MainModule{
 		this.account=account;
 		this.login=login;
 		this.contact=contact;
+		this.addFacility=addFacility;
+		this.editBathing=editBathing;
+		this.editBathroom=editBathroom;
+		this.editBedroom=editBedroom;
+		this.editKitchen=editKitchen;
+		this.editLiving=editLiving;
+		this.editOutdoors=editOutdoors;
+		this.editProperty=editProperty;
+		this.editSleeping=editSleeping;
+		this.editUtility=editUtility;
+		this.facilities=facilities;
+		this.hostAccount=hostAccount;
+		this.properties=properties;
+		
 	}
 	public void setTitle(String title){
 		model.setTitle(title);
@@ -94,36 +149,39 @@ public class Controller extends MainModule{
 		System.out.println("in drawNewView");
 		System.out.println("1----------"+mainModule.currentState);
 		//checking if we're in the homepage state.
-		if (mainModule.currentState == STATE.HOMEPAGE){
+		if (mainModule.currentState == STATE.HOMEPAGE && mainModule.userState==STATE.ENQUIRER){
 			//call the function to update the JPanel in homepage
 			homepage.initializeHomePage();
 		}
 		//checking if in SELF_REGISTRATION state, then update the JPanel in SELF_REGISTRATION 
 		// (at the moment the window is made in SELF_REGISTRATION)
-		else if (mainModule.currentState == STATE.SELF_REGISTRATION){
+		else if (mainModule.currentState == STATE.SELF_REGISTRATION && mainModule.userState==STATE.ENQUIRER){
 			//some test code
 			//System.out.println("in the draw controller method here");
 			register.initializeRegister();
 			//some test code
 			//System.out.println("dfv sdvdvdvdr method here");
 		}
-		else if (mainModule.currentState == STATE.ACCOUNT){
+		else if (mainModule.currentState == STATE.ACCOUNT && mainModule.userState==STATE.ENQUIRER){
 			account.initialize();
 		}
-		else if (mainModule.currentState == STATE.LOGIN){
+		else if (mainModule.currentState == STATE.LOGIN && mainModule.userState==STATE.ENQUIRER){
 			login.initializeLogin();
 			//login.initia
 		}
-		else if (mainModule.currentState == STATE.SEARCH){
+		else if (mainModule.currentState == STATE.SEARCH && mainModule.userState==STATE.ENQUIRER){
 			System.out.println("HEREEE");
 			search.initializeSearch();
 		}
-		else if (mainModule.currentState == STATE.CONTACT_US){
+		else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState==STATE.ENQUIRER){
 			System.out.println("HEREEE");
 			contact.initializeContact();
 		}
 		//added for HOST GUI:
-		
+		else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState==STATE.HOST){
+			System.out.println("HEREEE");
+			hostAccount.initializeHostAccount();
+		}
 	
 		
 	}

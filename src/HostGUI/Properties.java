@@ -1,5 +1,5 @@
 
-package HostGUI;
+package hostGUI;
 
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -78,15 +78,16 @@ public class Properties extends JFrame{
 		});
 		navBarPanel.add(navSearchButton);
 
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
+		JButton navLogoutButton = new JButton("Logout");
+		navLogoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
+				mainModule.currentState = STATE.HOMEPAGE;
+				mainModule.userState = STATE.ENQUIRER;
 				MainModule.controller.drawNewView();
 //				close();
 			}
 		});
-		navBarPanel.add(navRegisterButton);
+		navBarPanel.add(navLogoutButton);
 
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {

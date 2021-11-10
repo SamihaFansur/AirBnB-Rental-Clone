@@ -106,10 +106,11 @@ public class Contact extends JFrame{
 			});
 			navBarPanel.add(navRegisterButton);
 			
-			JButton navLoginButton = new JButton("Login");
+			JButton navLoginButton = new JButton("Logout");
 			navLoginButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.LOGIN;
+					mainModule.currentState=STATE.HOMEPAGE;
+					mainModule.userState=STATE.ENQUIRER;
 					MainModule.controller.drawNewView();
 					close();
 							//Login sp = new Login();
