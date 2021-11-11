@@ -14,6 +14,12 @@ public class Model {
 	private String accType;
 	private String mobileNumber;
 	
+	//edit property variables
+	private String editPropertyHouseNameNum;
+	private String editPropertyStreetName;
+	private String editPropertyCity;
+	private String editPropertyPostcode;
+	
 	public void setTitle(String title) {
 		this.title=title;
 	}
@@ -102,7 +108,41 @@ public class Model {
 	public String getAccountType() {
 		return accType;
 	}
-		
+	
+	
+	//edit property getters and setters
+	public void setEditPropertyHouseNameNum(String editPropertyHouseNameHum) {
+		this.editPropertyHouseNameNum = editPropertyHouseNameHum;
+	}
+
+	public String getEditPropertyHouseNameNum() {
+		return editPropertyHouseNameNum;
+	}
+
+	public void setEditPropertyStreetName(String editPropertyStreetName) {
+		this.editPropertyStreetName= editPropertyStreetName;
+	}
+
+	public String getEditPropertyStreetName() {
+		return editPropertyStreetName;
+	}
+
+	public void setEditPropertyCity(String editPropertyCity) {
+		this.editPropertyCity = editPropertyCity;
+	}
+
+	public String getEditPropertyCity() {
+		return editPropertyCity;
+	}
+	
+	public void setEditPropertyPostcode(String editPropertyPostcode) {
+		this.editPropertyPostcode = editPropertyPostcode;
+	}
+
+	public String getEditPropertyPostcode() {
+		return editPropertyPostcode;
+	}
+	
 	
 	
 }

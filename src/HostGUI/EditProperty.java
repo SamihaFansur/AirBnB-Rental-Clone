@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.*;
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
@@ -20,6 +21,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -30,15 +35,14 @@ public class EditProperty extends JFrame{
 
 
 	private JFrame frame;
-	private JTextField listingNameTextField;
 	private JTextField postcodeTextField;
 	private JTextField streetNameTextField;
-	private JTextField placeNameTextField;
-	private JTextField houseNameTextField;
+	private JTextField cityTextField;
+	private JTextField houseNameNumberTextField;
+	private JButton resetEditPropertyButton;
+	private JButton addEditPropertyButton;
 
-//	public void close() {
-//		frame.dispose();
-//	}
+	Connection connection = null;
 
 	/**
 	 * Create the application.
@@ -129,16 +133,7 @@ public class EditProperty extends JFrame{
 		});
 		addFacilityButton.setBounds(203, 235, 183, 34);
 		registerPanel.add(addFacilityButton);
-		
-		listingNameTextField = new JTextField();
-		listingNameTextField.setBounds(204, 305, 274, 34);
-		registerPanel.add(listingNameTextField);
-		listingNameTextField.setColumns(10);
-		
-		JLabel listingNameLabel = new JLabel("Listing Name:");
-		listingNameLabel.setBounds(105, 305, 93, 34);
-		registerPanel.add(listingNameLabel);
-		
+				
 		JLabel postcodeLabel = new JLabel("Postcode:");
 		postcodeLabel.setBounds(105, 350, 93, 34);
 		registerPanel.add(postcodeLabel);
@@ -157,29 +152,146 @@ public class EditProperty extends JFrame{
 		streetNameTextField.setBounds(203, 395, 274, 34);
 		registerPanel.add(streetNameTextField);
 		
-		JLabel placeNameLabel = new JLabel("Place Name:");
-		placeNameLabel.setBounds(105, 440, 93, 34);
-		registerPanel.add(placeNameLabel);
+		JLabel cityLabel = new JLabel("City/Town:");
+		cityLabel.setBounds(105, 440, 93, 34);
+		registerPanel.add(cityLabel);
 		
-		placeNameTextField = new JTextField();
-		placeNameTextField.setColumns(10);
-		placeNameTextField.setBounds(203, 440, 274, 34);
-		registerPanel.add(placeNameTextField);
+		cityTextField = new JTextField();
+		cityTextField.setColumns(10);
+		cityTextField.setBounds(203, 440, 274, 34);
+		registerPanel.add(cityTextField);
 		
-		JLabel houseNameLabel = new JLabel("House Name:");
-		houseNameLabel.setBounds(105, 481, 93, 34);
-		registerPanel.add(houseNameLabel);
+		JLabel houseNameNumberLabel = new JLabel("House Name/Number:");
+		houseNameNumberLabel.setBounds(105, 481, 93, 34);
+		registerPanel.add(houseNameNumberLabel);
 		
-		houseNameTextField = new JTextField();
-		houseNameTextField.setColumns(10);
-		houseNameTextField.setBounds(203, 485, 274, 34);
-		registerPanel.add(houseNameTextField);
+		houseNameNumberTextField = new JTextField();
+		houseNameNumberTextField.setColumns(10);
+		houseNameNumberTextField.setBounds(203, 485, 274, 34);
+		registerPanel.add(houseNameNumberTextField);
+		
+		addEditPropertyButton = new JButton("Save");
+		addEditPropertyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addEditPropertyDetails();
+			}
+		});
+		addEditPropertyButton.setBounds(385, 553, 91, 23);
+		registerPanel.add(addEditPropertyButton);
+		
+		
+		resetEditPropertyButton = new JButton("Reset");
+		resetEditPropertyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				houseNameNumberTextField.setText("");
+				streetNameTextField.setText("");
+				cityTextField.setText("");
+				postcodeTextField.setText("");
+			}
+		});
+		resetEditPropertyButton.setBounds(185, 553, 91, 23);
+		registerPanel.add(resetEditPropertyButton);
 
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	public void addEditPropertyDetails() {
+		try {
+			connection = ConnectionManager.getConnection();
+			String insertPropertyAddressQuery = "insert into Address values(?,?,?,?) ";	
+			
+			model.setEditPropertyHouseNameNum(houseNameNumberTextField.getText());
+			model.setEditPropertyStreetName(streetNameTextField.getText());
+			model.setEditPropertyCity(cityTextField.getText()); 
+			model.setEditPropertyPostcode(postcodeTextField.getText());
+			
+			PreparedStatement propertyAddress = connection.prepareStatement(insertPropertyAddressQuery);
+			propertyAddress.setString(1, model.getEditPropertyHouseNameNum());
+			propertyAddress.setString(2, model.getEditPropertyStreetName());
+			propertyAddress.setString(3, model.getEditPropertyCity());
+			propertyAddress.setString(4, model.getEditPropertyPostcode());
+			
+			int  y = propertyAddress.executeUpdate();
+			if(y>0) {
+				System.out.println(this);
+				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
+			}
+			
+
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ = "+model.getEmail());
+			
+			String finalQuery = "insert into Property(houseNameNumber, postcode, host_id) "
+								+ "select houseNameNumber, postcode, host_id "
+								+ "from Account, HostAccount "
+								+ "where Account.email=?";
+
+			PreparedStatement finalQ = connection.prepareStatement(finalQuery);
+			finalQ.setString(1, model.getEmail());
+			
+			int i  = finalQ.executeUpdate();
+			if(i>0) {
+				System.out.println("7");
+				System.out.println(this);
+				 //remove later
+			}
+			
+//			String getHostIDOfUser = "select host_id from HostAccount where email=?";			
+//			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+//			hostIDfromHostAccountTable.setString(1, model.getEmail());
+//			
+//			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
+//			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
+//			
+//			String getHouseNameHumAndPostcodeOfUser = "select houseNameNumber, postcode from Account where email=?";			
+//			PreparedStatement houseNameNumAndPostcodeFromAccountTable = connection.prepareStatement(getHouseNameHumAndPostcodeOfUser);
+//			houseNameNumAndPostcodeFromAccountTable.setString(1, model.getEmail());
+//			
+//			String insertHouseNameNumAndPostcodeInProperty = "insert into Property (houseNameNumber, postcode) values (?,?)";			
+//			PreparedStatement insertingHouseNameNumAndPostcodeInProperty = connection.prepareStatement(insertHouseNameNumAndPostcodeInProperty);
+			
+//			int id = 0;
+//			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+//			while (h_id.next()) {
+//			 id = h_id.getInt(1);
+//			 System.out.println("host id = "+id);
+//			}
+//			 System.out.println("host id  after = "+id);
+//			 
+//			insertingHostIDInProperty.setInt(1, id);
+//			int  w = insertingHostIDInProperty.executeUpdate();
+//			if(w>0) {
+//				System.out.println(this);
+//				JOptionPane.showMessageDialog(this, "inserted host id into property!"); //remove later
+//			}
+//			
+//			String hnhn = "";
+//			String pc = "";
+//			ResultSet h_hnhmAndPc = houseNameNumAndPostcodeFromAccountTable.executeQuery();
+//			while (h_hnhmAndPc.next()) {
+//				 hnhn = h_hnhmAndPc.getString(1);
+//				 pc = h_hnhmAndPc.getString(2);
+//			 System.out.println("host hmhm = "+hnhn+" postcode = "+pc);
+//			}
+//			 System.out.println("host hmhm after = "+hnhn+" postcode after = "+pc);
+//			 
+//			 insertingHouseNameNumAndPostcodeInProperty.setString(1, hnhn);
+//			 insertingHouseNameNumAndPostcodeInProperty.setString(2, pc);
+//			int  z = insertingHouseNameNumAndPostcodeInProperty.executeUpdate();
+//			if(z>0) {
+//				System.out.println(this);
+//				JOptionPane.showMessageDialog(this, "inserted hnhn and pc into property!"); //remove later
+//			}
+			 
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

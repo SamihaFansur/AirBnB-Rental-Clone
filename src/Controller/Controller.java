@@ -149,6 +149,23 @@ public class Controller extends MainModule{
 		model.setAccountType(accountType);
 	}
 	
+	//edit property setters
+	public void setEditPropertyHouseNameNum(String houseNameNum){
+		model.setEditPropertyHouseNameNum(houseNameNum);
+	}
+
+	public void setEditPropertyStreetName(String streetName){
+		model.setEditPropertyStreetName(streetName);
+	}
+
+	public void setEditPropertyCity(String city){
+		model.setEditPropertyCity(city);
+	}
+
+	public void setEditPropertyPostcode(String postcode){
+		model.setEditPropertyPostcode(postcode);
+	}
+	
 	//checking the state of the system:
 	public void drawNewView() {
 		System.out.println("in drawNewView");
