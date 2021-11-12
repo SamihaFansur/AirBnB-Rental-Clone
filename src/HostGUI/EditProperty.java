@@ -1,4 +1,3 @@
-
 package HostGUI;
 
 import java.awt.EventQueue;
@@ -202,6 +201,7 @@ public class EditProperty extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 			String insertPropertyAddressQuery = "insert into Address values(?,?,?,?) ";	
+			String insertPropertyAddressInPropertyQuery = "insert into Property (houseNameNumber, postcode) values(?,?) ";	
 			
 			model.setEditPropertyHouseNameNum(houseNameNumberTextField.getText());
 			model.setEditPropertyStreetName(streetNameTextField.getText());
@@ -220,24 +220,76 @@ public class EditProperty extends JFrame{
 				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
 			}
 			
+			PreparedStatement propertyAddressInProperty = connection.prepareStatement(insertPropertyAddressInPropertyQuery);
+			propertyAddressInProperty.setString(1, model.getEditPropertyHouseNameNum());
+			propertyAddressInProperty.setString(2, model.getEditPropertyPostcode());
+
+			int  u = propertyAddressInProperty.executeUpdate();
+			if(u>0) {
+				System.out.println(this);
+				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
+			}
+
 
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ = "+model.getEmail());
 			
-			String finalQuery = "insert into Property(houseNameNumber, postcode, host_id) "
-								+ "select houseNameNumber, postcode, host_id "
-								+ "from Account, HostAccount "
-								+ "where Account.email=?";
-
-			PreparedStatement finalQ = connection.prepareStatement(finalQuery);
-			finalQ.setString(1, model.getEmail());
 			
-			int i  = finalQ.executeUpdate();
-			if(i>0) {
-				System.out.println("7");
-				System.out.println(this);
-				 //remove later
+			String getHostIDOfUser = "select host_id from HostAccount where email=?";			
+			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+			hostIDfromHostAccountTable.setString(1, model.getEmail());
+			int id = 0;
+			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+			while (h_id.next()) {
+			 id = h_id.getInt(1);
+			 System.out.println("host id = "+id);
 			}
+			 System.out.println("host id  after = "+id);
+			 
+			String insertHostIDInProperty = "update Property set host_id=? where houseNameNumber=? AND postcode=?";
+			PreparedStatement hostIDInProperty= connection.prepareStatement(insertHostIDInProperty);
+			hostIDInProperty.setInt(1, id);
+			hostIDInProperty.setString(2, model.getEditPropertyHouseNameNum());
+			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
+			hostIDInProperty.executeUpdate();
+			System.out.println(hostIDInProperty.toString());
 			
+			
+//			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
+//			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
+//			
+//			
+//			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
+//			hostIDInProperty.setInt(1, model.getEditPropertyHouseNameNum());
+//			hostIDInProperty.setString(2, model.getEditPropertyPostcode());
+//
+//			int v = hostIDInProperty.executeUpdate();
+//			if(v>0) {
+//				System.out.println(this);
+//				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
+//			}
+			
+//			String finalQuery = "insert into Property(houseNameNumber, postcode, host_id) "
+//								+ "select houseNameNumber, postcode, host_id "
+//								+ "from Account, HostAccount "
+//								+ "where email=?";
+			
+//			String finalQuery = "insert into Property(host_id) "
+////					+ "select houseNameNumber, postcode from Address"
+//					+ "select host_id from HostAccount"
+//					+ "where email=?";
+////					+ "select houseNameNumber, postcode from Address"
+////					+ "where host_id =";
+//			
+//			PreparedStatement finalQ = connection.prepareStatement(finalQuery);
+//			finalQ.setString(1, model.getEmail());
+//			
+//			int i  = finalQ.executeUpdate();
+//			if(i>0) {
+//				System.out.println("7");
+//				System.out.println(this);
+//				 //remove later
+//			}
+//			
 //			String getHostIDOfUser = "select host_id from HostAccount where email=?";			
 //			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
 //			hostIDfromHostAccountTable.setString(1, model.getEmail());
@@ -245,13 +297,13 @@ public class EditProperty extends JFrame{
 //			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
 //			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
 //			
-//			String getHouseNameHumAndPostcodeOfUser = "select houseNameNumber, postcode from Account where email=?";			
+//			String getHouseNameHumAndPostcodeOfUser = "select houseNameNumber, postcode from Address where email=?";			
 //			PreparedStatement houseNameNumAndPostcodeFromAccountTable = connection.prepareStatement(getHouseNameHumAndPostcodeOfUser);
 //			houseNameNumAndPostcodeFromAccountTable.setString(1, model.getEmail());
 //			
 //			String insertHouseNameNumAndPostcodeInProperty = "insert into Property (houseNameNumber, postcode) values (?,?)";			
 //			PreparedStatement insertingHouseNameNumAndPostcodeInProperty = connection.prepareStatement(insertHouseNameNumAndPostcodeInProperty);
-			
+//			
 //			int id = 0;
 //			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 //			while (h_id.next()) {

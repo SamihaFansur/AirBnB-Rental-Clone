@@ -1,4 +1,3 @@
-
 package HostGUI;
 
 import java.awt.EventQueue;
