@@ -43,7 +43,7 @@ public class Tables {
 
 		String createUtilityTable = "CREATE TABLE Utility("
 				+ "utility_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, heating BOOL, washingMachine BOOL, "
-				+ "dryingMaching BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
+				+ "dryingMachine BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
 
 		String createBedTypeTable = "CREATE TABLE BedType("
 				+ "bedType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "

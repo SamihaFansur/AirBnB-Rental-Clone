@@ -20,6 +20,15 @@ public class Model {
 	private String editPropertyCity;
 	private String editPropertyPostcode;
 	
+	//utility variables
+	private boolean heating;
+	private boolean washingMachine;
+	private boolean fireExtinguisher;
+	private boolean dryingMachine;
+	private boolean smokeAlarm;
+	private boolean firstAidKit;
+	
+	
 	public void setTitle(String title) {
 		this.title=title;
 	}
@@ -143,6 +152,49 @@ public class Model {
 		return editPropertyPostcode;
 	}
 	
-	
+	//getters and setters for utility facility
+
+	public void setHeating(boolean heating) {
+		this.heating = heating;
+	}
+
+	public boolean getHeating() {
+		return heating;
+	}
+	public void setWashingMachine(boolean washingMaching) {
+		this.washingMachine = washingMachine;
+	}
+
+	public boolean getWashingMaching() {
+		return washingMachine;
+	}
+	public void setFireExtinguisher(boolean fireExtinguisher) {
+		this.fireExtinguisher = fireExtinguisher;
+	}
+
+	public boolean getFireExtinguisher() {
+		return fireExtinguisher;
+	}
+	public void setDryingMachine(boolean dryingMachine) {
+		this.dryingMachine = dryingMachine;
+	}
+
+	public boolean getDryingMachine() {
+		return dryingMachine;
+	}
+	public void setSmokeAlarm(boolean smokeAlarm) {
+		this.smokeAlarm = smokeAlarm;
+	}
+
+	public boolean getSmokeAlarm() {
+		return smokeAlarm;
+	}
+	public void setFirstAidKit(boolean firstAidKit) {
+		this.firstAidKit= firstAidKit;
+	}
+
+	public boolean getFirstAidKit() {
+		return firstAidKit;
+	}
 	
 }
