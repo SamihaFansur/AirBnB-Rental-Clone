@@ -2,48 +2,26 @@ package Model;
 
 public class Model {
 
-	private String title;
-	private String firstName;
-	private String surname;
-	private String email;	
-	private String password;
-	private String houseNameNum;
-	private String streetName;
-	private String city;
-	private String postcode;
-	private String accType;
-	private String mobileNumber;
+	//account variables
+	private String title, firstName, surname, email, password, houseNameNum, 
+					streetName, city, postcode, accType, mobileNumber;
 	
 	//edit property variables
-	private String editPropertyHouseNameNum;
-	private String editPropertyStreetName;
-	private String editPropertyCity;
-	private String editPropertyPostcode;
+	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode;
 	
 	//utility variables
-	private boolean heating;
-	private boolean washingMachine;
-	private boolean fireExtinguisher;
-	private boolean dryingMachine;
-	private boolean smokeAlarm;
-	private boolean firstAidKit;
+	private boolean heating, washingMachine, fireExtinguisher, dryingMachine, smokeAlarm, firstAidKit;
 	
 	//outdoors variables
-	private boolean freeOnSiteParking;
-	private boolean onRoadParking;
-	private boolean paidCarPark;
-	private boolean patio;
-	private boolean barbeque;
+	private boolean freeOnSiteParking, onRoadParking, paidCarPark, patio, barbeque;
 	
 	//living variables
-	private boolean wifi;
-	private boolean television;
-	private boolean satellite;
-	private boolean streaming;
-	private boolean dvdPlayer;
-	private boolean boardGames;
+	private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
 	
+	//kitchen variables
+	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvisions;
 	
+	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
 	}
@@ -301,5 +279,70 @@ public class Model {
 
 	public boolean getBoardGames() {
 		return boardGames;
+	}
+	
+	//kitchen getters and setters
+	public void setRefrigerator(boolean refrigerator) {
+		this.refrigerator = refrigerator;
+	}
+
+	public boolean getRefrigerator() {
+		return refrigerator;
+	}
+
+	public void setMicrowave(boolean microwave) {
+		this.microwave = microwave;
+	}
+
+	public boolean getMicrowave() {
+		return microwave;
+	}
+
+	public void setOven(boolean oven) {
+		this.oven = oven;
+	}
+
+	public boolean getOven() {
+		return oven;
+	}
+
+	public void setStove(boolean stove) {
+		this.stove = stove;
+	}
+
+	public boolean getStove() {
+		return stove;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
+	}
+
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setTableware(boolean tableware) {
+		this.tableware = tableware;
+	}
+
+	public boolean getTableware() {
+		return tableware;
+	}
+
+	public void setCookware(boolean cookware) {
+		this.cookware = cookware;
+	}
+
+	public boolean getCookware() {
+		return cookware;
+	}
+
+	public void setBasicProvisions(boolean basicProvisions) {
+		this.basicProvisions = basicProvisions;
+	}
+
+	public boolean getBasicProvisions() {
+		return basicProvisions;
 	}
 }
