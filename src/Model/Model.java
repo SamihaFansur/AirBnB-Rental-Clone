@@ -24,6 +24,10 @@ public class Model {
 	//bathtype variables
 	private boolean toilet, bath, shower, shared;
 	
+	//bathing variables
+	private boolean hairDryer, toiletPaper;
+	private int noOfBathrooms;
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
@@ -381,5 +385,31 @@ public class Model {
 
 	public boolean getShared() {
 		return shared;
+	}
+	
+	//bathing getters and setters
+
+	public void setHairDryer(boolean hairDryer) {
+		this.hairDryer = hairDryer;
+	}
+
+	public boolean getHairDryer() {
+		return hairDryer;
+	}
+	
+	public void setToiletPaper(boolean toiletPaper) {
+		this.toiletPaper = toiletPaper;
+	}
+
+	public boolean getToiletPaper() {
+		return toiletPaper;
+	}
+	
+	public void setNoOfBathrooms(int noOfBathrooms) {
+		this.noOfBathrooms= noOfBathrooms;
+	}
+
+	public int getNoOfBathrooms() {
+		return noOfBathrooms;
 	}
 }

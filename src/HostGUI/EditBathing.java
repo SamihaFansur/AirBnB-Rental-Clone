@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.*;
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
@@ -19,6 +20,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -29,7 +32,12 @@ public class EditBathing extends JFrame{
 
 
 	private JFrame frame;
-	private JTextField noOfBahtroomsTextField;
+	private JTextField noOfBathroomsTextField; 
+	private JRadioButton toiletPaperRadioBtn;
+	private JRadioButton hairDryerRadioBtn;
+	private JButton addBathing;
+	 
+	Connection connection = null;
 
 	public void close() {
 		frame.dispose();
@@ -105,7 +113,7 @@ public class EditBathing extends JFrame{
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
 
-		JLabel editBathingLabel = new JLabel("Bathing");
+		JLabel editBathingLabel = new JLabel("Add Bathing Facility");
 		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editBathingLabel.setBounds(248, 47, 183, 57);
 		registerPanel.add(editBathingLabel);
@@ -114,29 +122,29 @@ public class EditBathing extends JFrame{
 		hairDryerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		hairDryerLabel.setBounds(170, 135, 167, 34);
 		registerPanel.add(hairDryerLabel);
+
+		hairDryerRadioBtn = new JRadioButton("Hair Dryer", false);
+		hairDryerRadioBtn.setBounds(364, 146, 21, 23);
+		registerPanel.add(hairDryerRadioBtn);
 		
 		JLabel toiletPaperLabel = new JLabel("Toilet Paper");
 		toiletPaperLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		toiletPaperLabel.setBounds(170, 191, 167, 34);
 		registerPanel.add(toiletPaperLabel);
 		
+		toiletPaperRadioBtn = new JRadioButton("Toilet paper", false);
+		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
+		registerPanel.add(toiletPaperRadioBtn);
+		
 		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
 		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
 		registerPanel.add(noOfBathroomsLabel);
 		
-		JRadioButton hairDryerRadioBtn = new JRadioButton("");
-		hairDryerRadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(hairDryerRadioBtn);
-		
-		JRadioButton toiletPaperRadioBtn = new JRadioButton("");
-		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
-		registerPanel.add(toiletPaperRadioBtn);
-		
-		noOfBahtroomsTextField = new JTextField();
-		noOfBahtroomsTextField.setBounds(347, 254, 106, 29);
-		registerPanel.add(noOfBahtroomsTextField);
-		noOfBahtroomsTextField.setColumns(10);
+		noOfBathroomsTextField = new JTextField();
+		noOfBathroomsTextField.setBounds(347, 254, 106, 29);
+		registerPanel.add(noOfBathroomsTextField);
+		noOfBathroomsTextField.setColumns(10);
 		
 		JButton addBathroomButton = new JButton("Add Bathroom");
 		addBathroomButton.addActionListener(new ActionListener() {
@@ -147,12 +155,47 @@ public class EditBathing extends JFrame{
 		});
 		addBathroomButton.setBounds(199, 405, 209, 46);
 		registerPanel.add(addBathroomButton);
-
+		
+		addBathing= new JButton("Save");
+		addBathing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addBathingDetails();
+			}
+		});
+		addBathing.setBounds(275, 500, 91, 23);
+		registerPanel.add(addBathing);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	public void addBathingDetails() {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setHairDryer(hairDryerRadioBtn.isSelected());
+			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
+			model.setNoOfBathrooms(Integer.parseInt(noOfBathroomsTextField.getText().toString()));
+			
+			String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
+										+ " values(?,?,?)";
+			PreparedStatement ps_bathing= connection.prepareStatement(insertBathingQuery);
+			
+			ps_bathing.setBoolean(1, model.getHairDryer());
+			ps_bathing.setBoolean(2, model.getToiletPaper());
+			ps_bathing.setInt(3, model.getNoOfBathrooms());
+
+			System.out.println(ps_bathing);
+			ps_bathing.executeUpdate();
+			
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
