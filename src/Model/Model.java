@@ -35,6 +35,14 @@ public class Model {
 	private boolean patio;
 	private boolean barbeque;
 	
+	//living variables
+	private boolean wifi;
+	private boolean television;
+	private boolean satellite;
+	private boolean streaming;
+	private boolean dvdPlayer;
+	private boolean boardGames;
+	
 	
 	public void setTitle(String title) {
 		this.title=title;
@@ -228,6 +236,7 @@ public class Model {
 	public boolean getPaidCarPark() {
 		return paidCarPark;
 	}
+	
 	public void setPatio(boolean patio) {
 		this.patio = patio;
 	}
@@ -235,11 +244,62 @@ public class Model {
 	public boolean getPatio() {
 		return patio;
 	}
+	
 	public void setBarbeque(boolean barbeque) {
 		this.barbeque = barbeque;
 	}
 
 	public boolean getBarbeque() {
 		return barbeque;
+	}
+	
+	//living getters and setters
+	
+	public void setWifi(boolean wifi) {
+		this.wifi= wifi;
+	}
+
+	public boolean getWifi() {
+		return wifi;
+	}
+	
+	public void setTelevision(boolean television) {
+		this.television = television;
+	}
+
+	public boolean getTelevision() {
+		return television;
+	}
+	
+	public void setSatellite(boolean satellite) {
+		this.satellite = satellite;
+	}
+
+	public boolean getSatellite() {
+		return satellite;
+	}
+	
+	public void setStreaming(boolean streaming) {
+		this.streaming = streaming;
+	}
+
+	public boolean getStreaming() {
+		return streaming;
+	}
+	
+	public void setDvdPlayer(boolean dvdPlayer) {
+		this.dvdPlayer = dvdPlayer;
+	}
+
+	public boolean getDvdPlayer() {
+		return dvdPlayer;
+	}
+	
+	public void setBoardGames(boolean boardGames) {
+		this.boardGames = boardGames;
+	}
+
+	public boolean getBoardGames() {
+		return boardGames;
 	}
 }
