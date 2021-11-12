@@ -28,6 +28,13 @@ public class Model {
 	private boolean smokeAlarm;
 	private boolean firstAidKit;
 	
+	//outdoors variables
+	private boolean freeOnSiteParking;
+	private boolean onRoadParking;
+	private boolean paidCarPark;
+	private boolean patio;
+	private boolean barbeque;
+	
 	
 	public void setTitle(String title) {
 		this.title=title;
@@ -197,4 +204,42 @@ public class Model {
 		return firstAidKit;
 	}
 	
+	//outdoors getters and setters
+	public void setFreeOnSiteParking(boolean freeOnSiteParking) {
+		this.freeOnSiteParking = freeOnSiteParking;
+	}
+
+	public boolean getFreeOnSiteParking() {
+		return freeOnSiteParking;
+	}
+	
+	public void setOnRoadParking(boolean onRoadParking) {
+		this.onRoadParking = onRoadParking;
+	}
+
+	public boolean getOnRoadParking() {
+		return onRoadParking;
+	}
+	
+	public void setPaidCarPark(boolean paidCarPark) {
+		this.paidCarPark = paidCarPark;
+	}
+
+	public boolean getPaidCarPark() {
+		return paidCarPark;
+	}
+	public void setPatio(boolean patio) {
+		this.patio = patio;
+	}
+
+	public boolean getPatio() {
+		return patio;
+	}
+	public void setBarbeque(boolean barbeque) {
+		this.barbeque = barbeque;
+	}
+
+	public boolean getBarbeque() {
+		return barbeque;
+	}
 }

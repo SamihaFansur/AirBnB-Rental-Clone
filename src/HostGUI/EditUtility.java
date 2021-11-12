@@ -45,13 +45,13 @@ public class EditUtility extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-	 private JButton addUtility;
 	 private JRadioButton heatingRadioBtn; 
 	 private JRadioButton washingMachineRadioBtn;
 	 private JRadioButton fireExtinguisherRadioBtn;
 	 private JRadioButton dryingMachineRadioBtn;
 	 private JRadioButton smokeAlarmRadioBtn;
 	 private JRadioButton firstAidKitRadioBtn;
+	 private JButton addUtility;
 	 
 	Connection connection = null;
 
@@ -222,7 +222,7 @@ public class EditUtility extends JFrame{
 			ps_utility.setBoolean(6, model.getFirstAidKit());
 
 			System.out.println(ps_utility);
-			int i  = ps_utility.executeUpdate();
+			ps_utility.executeUpdate();
 			
 			
 		} catch(Exception e) {
