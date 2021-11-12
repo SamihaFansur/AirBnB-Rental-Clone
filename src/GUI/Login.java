@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.sql.Statement;
 import javax.swing.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -24,8 +25,8 @@ import java.sql.PreparedStatement;
 
 public class Login extends JFrame{
 
-	private JButton loginButton = new JButton("Login");
-	private JButton registerButton = new JButton("Register");
+	private JButton loginButton;
+	private JButton registerButton;
 	private JTextField passwordField;
 	private JTextField usernameField;
 	private JLabel passwordLabel;
@@ -87,6 +88,7 @@ public class Login extends JFrame{
 		loginPanel.add(passwordLabel);
 		
 
+		JButton loginButton = new JButton("Login");
 		loginButton.setBounds(124, 432, 100, 36);
 		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
@@ -158,7 +160,10 @@ public class Login extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void logUserIn() {
+	private PreparedStatement loginQuery = null;
+	private ResultSet rs = null;
+	
+	public void logUserIn(){
 		
 		
 		try {
@@ -205,12 +210,14 @@ public class Login extends JFrame{
 //				JOptionPane.showMessageDialog(this, "saved ok"); //remove later
 //				System.out.println("logged in");
 //			}
+			loginQuery.close();
+			rs.close();
+			
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
-		}
-		
+		} 
 	}
 	
 
