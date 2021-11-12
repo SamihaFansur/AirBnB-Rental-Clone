@@ -21,6 +21,9 @@ public class Model {
 	//kitchen variables
 	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvisions;
 	
+	//bathtype variables
+	private boolean toilet, bath, shower, shared;
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
@@ -344,5 +347,39 @@ public class Model {
 
 	public boolean getBasicProvisions() {
 		return basicProvisions;
+	}
+	
+	//bathtype getters and setters
+
+	public void setToilet(boolean toilet) {
+		this.toilet = toilet;
+	}
+
+	public boolean getToilet() {
+		return toilet;
+	}
+
+	public void setBath(boolean bath) {
+		this.bath = bath;
+	}
+
+	public boolean getBath() {
+		return bath;
+	}
+
+	public void setShower(boolean shower) {
+		this.shower = shower;
+	}
+
+	public boolean getShower() {
+		return shower;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
+
+	public boolean getShared() {
+		return shared;
 	}
 }
