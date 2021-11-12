@@ -57,9 +57,7 @@ public class Login extends JFrame{
 		mainModule.currentState = STATE.LOGIN;
 		try {
 			frame = new JFrame();
-			System.out.println("in register: "+frame);
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-			System.out.println("after nav in register = "+mainModule);
 			
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
@@ -104,11 +102,12 @@ public class Login extends JFrame{
 				
 				logUserIn();
 				
-				mainModule.currentState = STATE.HOST_ACCOUNT;
-				mainModule.userState = USER.HOST;
+				
+//				mainModule.currentState = STATE.HOST_ACCOUNT;
+//				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
 //				close();
-//				System.out.println(usernameField.getText());
+				
 //				System.out.println(passwordField.getText());
 //				
 //				userName_login = model.getEmail();
@@ -119,6 +118,7 @@ public class Login extends JFrame{
 				//close();
 			//	Search sp = new Search();
 			}
+
 		});
 		
 		JButton registerButton = new JButton("Register");
@@ -160,11 +160,6 @@ public class Login extends JFrame{
 	
 	public void logUserIn() {
 		
-		System.out.println("here");		
-//		String email = model.getEmail();
-//		String password = model.getPassword();
-		System.out.println("emaillll "+userName_login);
-		System.out.println(password_login);
 		
 		try {
 			connection = ConnectionManager.getConnection();
@@ -185,8 +180,16 @@ public class Login extends JFrame{
 			if (rs.next()) {
 				JOptionPane.showMessageDialog(this,"You have successfully logged in");
 				System.out.println("logggin in: "+model.getEmail());
+				frame.dispose();
+				mainModule.currentState = STATE.HOST_ACCOUNT;
+				mainModule.userState = USER.HOST;
 			} else {
 				JOptionPane.showMessageDialog(this, "Wrong Username & Password");
+				frame.dispose();
+				System.out.println("Current email: "+model.getEmail());
+				System.out.println("Current pword: "+model.getPassword());
+				mainModule.currentState = STATE.LOGIN;
+				mainModule.userState = USER.ENQUIRER;
 			}
 //			PreparedStatement ps = connection.prepareStatement(loginQuery);
 //			System.out.println("4");
@@ -207,6 +210,7 @@ public class Login extends JFrame{
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
+		
 	}
 	
 

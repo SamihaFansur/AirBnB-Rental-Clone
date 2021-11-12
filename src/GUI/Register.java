@@ -64,9 +64,9 @@ public class Register extends JFrame{
 		mainModule.currentState = STATE.SELF_REGISTRATION;
 		try {
 			frame = new JFrame();
-			System.out.println("in register: "+frame);
+			//System.out.println("in register: "+frame);
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-			System.out.println("after nav in register = "+mainModule);
+			//System.out.println("after nav in register = "+mainModule);
 			
 		}catch(Exception e) {
 			System.err.println(e.getMessage());

@@ -40,7 +40,7 @@ public class HostAccount extends JFrame{
 	 * Create the application.
 	 */
 
-	private Controller controller;
+	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
 	 public HostAccount(MainModule mainModule, Controller controller, Model model) {
@@ -95,6 +95,7 @@ public class HostAccount extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState = STATE.HOMEPAGE;
 				mainModule.userState = USER.ENQUIRER;
+				frame.dispose();
 				MainModule.controller.drawNewView();
 //				close();
 			}

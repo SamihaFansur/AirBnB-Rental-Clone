@@ -187,7 +187,7 @@ public class Controller extends MainModule{
 			//login.initia
 		}
 		else if (mainModule.currentState == STATE.SEARCH && mainModule.userState==USER.ENQUIRER){
-			System.out.println("HEREEE");
+			//System.out.println("HEREEE");
 			search.initializeSearch();
 		}
 		else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState==USER.ENQUIRER){

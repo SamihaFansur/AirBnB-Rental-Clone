@@ -61,10 +61,10 @@ public class NavEnquirer extends JFrame{
 //	
 	
 	public void addNavBeforeLogin(JFrame frame, MainModule mainModule) {
-		System.out.println("IN NAVENQ");
-		System.out.println("in nav current state= "+mainModule);
+		//System.out.println("IN NAVENQ");
+		//System.out.println("in nav current state= "+mainModule);
 		this.frame= frame;
-		System.out.println("in nav enq: "+frame);
+		//System.out.println("in nav enq: "+frame);
 
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
@@ -82,6 +82,8 @@ public class NavEnquirer extends JFrame{
 				mainModule.currentState=STATE.HOMEPAGE;
 				MainModule.controller.drawNewView();
 //				close();
+				frame.dispose();
+				
 			}
 		});
 		navBarPanel.add(navHomeButton);
@@ -93,6 +95,7 @@ public class NavEnquirer extends JFrame{
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
 //				close();
+				frame.dispose();
 			}
 		});
 		navBarPanel.add(navSearchButton);
@@ -102,6 +105,7 @@ public class NavEnquirer extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
+				frame.dispose();
 			}
 		});
 		navBarPanel.add(navRegisterButton);
@@ -112,7 +116,9 @@ public class NavEnquirer extends JFrame{
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
 //				close();
+				frame.dispose();
 						//Login sp = new Login();
+				System.out.println("************in the nav enquirere file at login button**********");
 			}
 		});
 		navBarPanel.add(navLoginButton);
@@ -124,6 +130,7 @@ public class NavEnquirer extends JFrame{
 				mainModule.currentState=STATE.CONTACT_US;
 				MainModule.controller.drawNewView();
 //				close();
+				frame.dispose();
 				//Register sp = new Register();
 			}
 		});
