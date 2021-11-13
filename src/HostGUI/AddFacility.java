@@ -28,6 +28,7 @@ import java.awt.Font;
 public class AddFacility extends JFrame{
 
 
+	private NavHost navForHost = new NavHost();
 	private JFrame frame;
 
 	public void close() {
@@ -52,6 +53,16 @@ public class AddFacility extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeAddFacility() {
+		
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
+			
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+	
+		/*
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
@@ -98,6 +109,7 @@ public class AddFacility extends JFrame{
 			}
 		});
 		navBarPanel.add(navLogoutButton);
+		*/
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));

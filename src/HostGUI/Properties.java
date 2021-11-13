@@ -30,7 +30,8 @@ public class Properties extends JFrame{
 
 	private JFrame frame;
 	private JTable propertiesTable;
-
+	private NavHost navForHost = new NavHost();
+	 
 	public void close() {
 		frame.dispose();
 	}
@@ -53,52 +54,17 @@ public class Properties extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeProperties() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
+		
+		
 
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
-
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = USER.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
-
-		JButton navLoginButton = new JButton("Login");
-		navLoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.LOGIN;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLoginButton);
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
+			
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));

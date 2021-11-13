@@ -1,6 +1,8 @@
 package GUI;
+import HostGUI.*;
 import Controller.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.*;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -30,7 +32,8 @@ public class Search extends JFrame{
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
-	private NavEnquirer navBeforeLogin = new NavEnquirer();
+	private NavEnquirer navBeforeLogin;
+	private NavHost navHost;
 	private JFrame frame ;
 	
 	public Search(MainModule mainModule, Controller controller, Model model) {
@@ -48,15 +51,25 @@ public class Search extends JFrame{
 	 */
 	 public void initializeSearch() {
 		 mainModule.currentState = STATE.SEARCH;
+		 if(mainModule.userState==USER.ENQUIRER) {
 			try {
 				frame = new JFrame();
-				System.out.println("in register: "+frame);
+				navBeforeLogin = new NavEnquirer();
 				navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-				System.out.println("after nav in register = "+mainModule);
 				
 			}catch(Exception e) {
 				System.err.println(e.getMessage());
 			}
+		 }else if(mainModule.userState==USER.HOST) {
+			 try {
+				frame = new JFrame();
+				navHost = new NavHost();
+				navHost.addHostNav(frame, mainModule);
+				
+				}catch(Exception e) {
+					System.err.println(e.getMessage());
+				}
+		 }
 			
 			JPanel loginPanel = new JPanel();
 			loginPanel.setBackground(new Color(204, 255, 255));
