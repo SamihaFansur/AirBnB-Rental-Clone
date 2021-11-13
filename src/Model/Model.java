@@ -161,11 +161,11 @@ public class Model {
 	public boolean getHeating() {
 		return heating;
 	}
-	public void setWashingMachine(boolean washingMaching) {
+	public void setWashingMachine(boolean washingMachine) {
 		this.washingMachine = washingMachine;
 	}
 
-	public boolean getWashingMaching() {
+	public boolean getWashingMachine() {
 		return washingMachine;
 	}
 	public void setFireExtinguisher(boolean fireExtinguisher) {

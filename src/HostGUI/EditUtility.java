@@ -178,7 +178,7 @@ public class EditUtility extends JFrame{
 			PreparedStatement ps_utility = connection.prepareStatement(insertUtilitiesQuery);
 			
 			ps_utility.setBoolean(1, model.getHeating());
-			ps_utility.setBoolean(2, model.getWashingMaching());
+			ps_utility.setBoolean(2, model.getWashingMachine());
 			ps_utility.setBoolean(3, model.getFireExtinguisher());
 			ps_utility.setBoolean(4, model.getDryingMachine());
 			ps_utility.setBoolean(5, model.getSmokeAlarm());
