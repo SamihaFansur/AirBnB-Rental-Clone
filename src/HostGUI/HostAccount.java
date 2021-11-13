@@ -90,6 +90,7 @@ public class HostAccount extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 				MainModule.controller.editPropertyView();
+				frame.dispose();
 			}
 		});
 		addPropertyButton.setBounds(203, 294, 183, 34);

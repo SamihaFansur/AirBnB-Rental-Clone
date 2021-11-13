@@ -90,6 +90,7 @@ public class NavHost extends JFrame{
 				frame.dispose();
 				MainModule.controller.drawNewView();
 //				close();
+				frame.dispose();
 			}
 		});
 		navBarPanel.add(navLogoutButton);

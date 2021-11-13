@@ -84,6 +84,7 @@ public class MainModule {
 //		EDIT_UTILITY,
 		FACILTIES, 
 		HOST_ACCOUNT,
+		GUEST_ACCOUNT,
 		PROPERTIES,
 	}
 	

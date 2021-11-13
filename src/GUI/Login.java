@@ -37,7 +37,7 @@ public class Login extends JFrame{
 		 
 	private String userName_login;
 	private String password_login;
-	 
+	private int accountSelected;
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
@@ -183,11 +183,38 @@ public class Login extends JFrame{
 			 */
 			
 			if (rs.next()) {
+				// checking if the username/email belongs to a "host and guest" account
+				PreparedStatement hostAccountQuery = (PreparedStatement) connection.prepareStatement("Select email from HostAccount where email=?");
+				hostAccountQuery.setString(1, userName_login);
+				ResultSet rsHost = hostAccountQuery.executeQuery();
+				PreparedStatement guestAccountQuery = (PreparedStatement) connection.prepareStatement("Select email from GuestAccount where email=?");
+				guestAccountQuery.setString(1, userName_login);
+				ResultSet rsGuest = guestAccountQuery.executeQuery();
+				
+				int result;
+				if(rsHost.next() && rsGuest.next()) {
+					String[] options = {"Host","Guest"};
+					accountSelected = JOptionPane.showOptionDialog(this, "Please log in as a Host or Guest","Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+					System.out.println("THE RESULT: "+accountSelected);
+					
+				}
+				
 				JOptionPane.showMessageDialog(this,"You have successfully logged in");
 				System.out.println("logggin in: "+model.getEmail());
 				frame.dispose();
-				mainModule.currentState = STATE.HOST_ACCOUNT;
-				mainModule.userState = USER.HOST;
+				if(accountSelected==0) {
+					mainModule.currentState = STATE.HOST_ACCOUNT;
+					mainModule.userState = USER.HOST;
+					
+				}else if (accountSelected == 1) {
+					mainModule.currentState = STATE.GUEST_ACCOUNT;
+					mainModule.userState = USER.GUEST;
+					
+				}
+				
+				hostAccountQuery.close();
+				guestAccountQuery.close();
+				
 			} else {
 				JOptionPane.showMessageDialog(this, "Wrong Username & Password");
 				frame.dispose();
@@ -211,7 +238,6 @@ public class Login extends JFrame{
 //				System.out.println("logged in");
 //			}
 			loginQuery.close();
-			rs.close();
 			
 			
 		} catch(Exception e) {
