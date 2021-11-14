@@ -54,7 +54,7 @@ public class EditKitchen extends JFrame{
 	private JRadioButton tablewareRadioBtn;
 	private JRadioButton cookwareRadioBtn;
 	private JButton addKitchen;
-	 
+	private int idAfter;
 	Connection connection = null;
 	 
 	 
@@ -68,7 +68,7 @@ public class EditKitchen extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditKitchen() {
+	public void initializeEditKitchen(int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -76,7 +76,9 @@ public class EditKitchen extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
+		System.out.println("kitchen record id in edit kitchen facility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit kitchen func = "+idAfter);
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
@@ -162,7 +164,7 @@ public class EditKitchen extends JFrame{
 		addKitchen= new JButton("Save");
 		addKitchen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addKitchenDetails();
+				updateKitchenDetails();
 			}
 		});
 		addKitchen.setBounds(275, 500, 91, 23);
@@ -173,10 +175,11 @@ public class EditKitchen extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addKitchenDetails() {
+	public void updateKitchenDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
 
+			System.out.println("id after in updateKitchen func = "+idAfter);
 			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
 			model.setMicrowave(microwaveRadioBtn.isSelected());
 			model.setOven(ovenRadioBtn.isSelected());
@@ -186,22 +189,40 @@ public class EditKitchen extends JFrame{
 			model.setCookware(cookwareRadioBtn.isSelected());
 			model.setBasicProvisions(basicProvisionsRadioBtn.isSelected());
 			
-			String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
-										+ "stove, dishwasher, tableware, cookware, basicProvision)"
-										+ " values(?,?,?,?,?,?,?,?) ";
-			PreparedStatement ps_kitchen = connection.prepareStatement(insertKitchenQuery);
+			String updateKitchenRecord = "update Kitchen set refrigerator=?, microwave=?, "
+										+ "oven=?, stove=?, dishwasher=?, tableware=?, "
+										+ "cookware=?, basicProvision=?  "
+										+ "where kitchen_id=?";
 			
-			ps_kitchen.setBoolean(1, model.getRefrigerator());
-			ps_kitchen.setBoolean(2, model.getMicrowave());
-			ps_kitchen.setBoolean(3, model.getOven());
-			ps_kitchen.setBoolean(4, model.getStove());
-			ps_kitchen.setBoolean(5, model.getDishwasher());
-			ps_kitchen.setBoolean(6, model.getTableware());
-			ps_kitchen.setBoolean(7, model.getCookware());
-			ps_kitchen.setBoolean(8, model.getBasicProvisions());
-
-			System.out.println(ps_kitchen);
-			ps_kitchen.executeUpdate();
+			PreparedStatement updatingKitchenValues= connection.prepareStatement(updateKitchenRecord);
+			updatingKitchenValues.setBoolean(1, model.getRefrigerator());
+			updatingKitchenValues.setBoolean(2, model.getMicrowave());
+			updatingKitchenValues.setBoolean(3, model.getOven());
+			updatingKitchenValues.setBoolean(4, model.getStove());
+			updatingKitchenValues.setBoolean(5, model.getDishwasher());
+			updatingKitchenValues.setBoolean(6, model.getTableware());
+			updatingKitchenValues.setBoolean(7, model.getCookware());
+			updatingKitchenValues.setBoolean(8, model.getBasicProvisions());
+			updatingKitchenValues.setInt(9, idAfter);
+			updatingKitchenValues.executeUpdate();
+			System.out.println(updatingKitchenValues.toString());
+			
+//			String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
+//										+ "stove, dishwasher, tableware, cookware, basicProvision)"
+//										+ " values(?,?,?,?,?,?,?,?) ";
+//			PreparedStatement ps_kitchen = connection.prepareStatement(insertKitchenQuery);
+//			
+//			ps_kitchen.setBoolean(1, model.getRefrigerator());
+//			ps_kitchen.setBoolean(2, model.getMicrowave());
+//			ps_kitchen.setBoolean(3, model.getOven());
+//			ps_kitchen.setBoolean(4, model.getStove());
+//			ps_kitchen.setBoolean(5, model.getDishwasher());
+//			ps_kitchen.setBoolean(6, model.getTableware());
+//			ps_kitchen.setBoolean(7, model.getCookware());
+//			ps_kitchen.setBoolean(8, model.getBasicProvisions());
+//
+//			System.out.println(ps_kitchen);
+//			ps_kitchen.executeUpdate();
 			
 			
 		} catch(Exception e) {

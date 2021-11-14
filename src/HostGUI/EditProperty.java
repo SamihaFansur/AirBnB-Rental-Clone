@@ -88,7 +88,7 @@ public class EditProperty extends JFrame{
 		addFacilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView();
+				MainModule.controller.editPropertyView(0);
 			}
 		});
 		addFacilityButton.setBounds(203, 235, 183, 34);
