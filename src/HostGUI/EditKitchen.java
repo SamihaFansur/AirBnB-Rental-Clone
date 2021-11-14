@@ -76,9 +76,11 @@ public class EditKitchen extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+
 		System.out.println("kitchen record id in edit kitchen facility page = "+id);
 		idAfter = id;
 		System.out.println("id after in init edit kitchen func = "+idAfter);
+		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);

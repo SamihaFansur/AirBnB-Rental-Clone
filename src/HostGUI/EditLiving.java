@@ -50,7 +50,8 @@ public class EditLiving extends JFrame{
 	 private JRadioButton televisionRadioBtn;
 	 private JRadioButton streamingRadioBtn;
 	 private JRadioButton dvdPlayerRadioBtn;
-	 private JRadioButton boardGamesRadioBtn;	 
+	 private JRadioButton boardGamesRadioBtn;	
+	 private int idAfter; 
 	 private JButton addLiving;
 	 
 	Connection connection = null;
@@ -65,7 +66,7 @@ public class EditLiving extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditLiving() {
+	public void initializeEditLiving(int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -74,6 +75,10 @@ public class EditLiving extends JFrame{
 			System.err.println(e.getMessage());
 		}
 		
+		System.out.println("kitchen record id in edit living facility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit living func = "+idAfter);
+
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
@@ -141,7 +146,7 @@ public class EditLiving extends JFrame{
 		addLiving = new JButton("Save");
 		addLiving.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addLivingDetails();
+				updateLivingDetails();
 			}
 		});
 		addLiving.setBounds(256, 502, 91, 23);
@@ -157,7 +162,8 @@ public class EditLiving extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addLivingDetails() {
+	public void updateLivingDetails() {
+		System.out.println("idafter in updateLivingDetails = "+idAfter);
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -167,21 +173,21 @@ public class EditLiving extends JFrame{
 			model.setStreaming(streamingRadioBtn.isSelected());
 			model.setDvdPlayer(dvdPlayerRadioBtn.isSelected());
 			model.setBoardGames(boardGamesRadioBtn.isSelected());
-			
-			String insertLivingQuery = "insert into Living (wifi, television, satellite, "
-										+ "streaming, dvdPlayer, boardGames)"
-										+ " values(?,?,?,?,?,?) ";
-			PreparedStatement ps_living = connection.prepareStatement(insertLivingQuery);
-			
-			ps_living.setBoolean(1, model.getWifi());
-			ps_living.setBoolean(2, model.getTelevision());
-			ps_living.setBoolean(3, model.getSatellite());
-			ps_living.setBoolean(4, model.getStreaming());
-			ps_living.setBoolean(5, model.getDvdPlayer());
-			ps_living.setBoolean(6, model.getBoardGames());
 
-			System.out.println(ps_living);
-			ps_living.executeUpdate();
+			String updateLivingRecord = "update Living set wifi=?, television=?, "
+										+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? "
+										+ "where living_id=?";
+			
+			PreparedStatement updatingLivingValues= connection.prepareStatement(updateLivingRecord);
+			updatingLivingValues.setBoolean(1, model.getWifi());
+			updatingLivingValues.setBoolean(2, model.getTelevision());
+			updatingLivingValues.setBoolean(3, model.getSatellite());
+			updatingLivingValues.setBoolean(4, model.getStreaming());
+			updatingLivingValues.setBoolean(5, model.getDvdPlayer());
+			updatingLivingValues.setBoolean(6, model.getBoardGames());
+			updatingLivingValues.setInt(7, idAfter);
+			updatingLivingValues.executeUpdate();
+			System.out.println(updatingLivingValues.toString());
 			
 			
 		} catch(Exception e) {

@@ -53,6 +53,7 @@ public class EditUtility extends JFrame{
 	 private JRadioButton smokeAlarmRadioBtn;
 	 private JRadioButton firstAidKitRadioBtn;
 	 private JButton addUtility;
+	 private int idAfter;
 	 
 	Connection connection = null;
 
@@ -66,7 +67,7 @@ public class EditUtility extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditUtility() {
+	public void initializeEditUtility(int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -75,6 +76,10 @@ public class EditUtility extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
+		System.out.println("utility record id in edit utility facility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit utility func = "+idAfter);
+		
 		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
@@ -143,7 +148,7 @@ public class EditUtility extends JFrame{
 		addUtility = new JButton("Save");
 		addUtility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addUtilityDetails();
+				updateUtilityDetails();
 			}
 		});
 		addUtility.setBounds(248, 500, 91, 23);
@@ -160,27 +165,25 @@ public class EditUtility extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addUtilityDetails() {
+	public void updateUtilityDetails() {
 		try {
+			
 			connection = ConnectionManager.getConnection();
 
-			model.setHeating(heatingRadioBtn.isSelected());
-			System.out.println("heating = "+heatingRadioBtn.isSelected());
-			model.setWashingMachine(washingMachineRadioBtn.isSelected());
-			System.out.println("washing machine = "+washingMachineRadioBtn.isSelected());
-			model.setFireExtinguisher(fireExtinguisherRadioBtn.isSelected());
-			System.out.println("fire extinguisher = "+fireExtinguisherRadioBtn.isSelected());
-			model.setDryingMachine(dryingMachineRadioBtn.isSelected());
-			System.out.println("dryer = "+dryingMachineRadioBtn.isSelected());
+			System.out.println("id after in updateUtility func = "+idAfter);
+			model.setHeating(heatingRadioBtn.isSelected());			
+			model.setWashingMachine(washingMachineRadioBtn.isSelected());			
+			model.setFireExtinguisher(fireExtinguisherRadioBtn.isSelected());			
+			model.setDryingMachine(dryingMachineRadioBtn.isSelected());			
 			model.setSmokeAlarm(smokeAlarmRadioBtn.isSelected());
-			System.out.println("smoke alarm= "+smokeAlarmRadioBtn.isSelected());
 			model.setFirstAidKit(firstAidKitRadioBtn.isSelected());
-			System.out.println("first aid= "+firstAidKitRadioBtn.isSelected());
 			
-			String insertUtilitiesQuery = "insert into Utility (heating, washingMachine, "
-										+ "fireExtinguisher, dryingMaching, smokeAlarm, firstAidKit)"
-										+ " values(?,?,?,?,?,?) ";
-			PreparedStatement ps_utility = connection.prepareStatement(insertUtilitiesQuery);
+			
+			String updateUtilityRecord = "update Utility set heating=?, washingMachine=?, "
+					+ "dryingMaching=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? "
+					+ "where utility_id=?";
+			
+			PreparedStatement ps_utility = connection.prepareStatement(updateUtilityRecord);
 			
 			ps_utility.setBoolean(1, model.getHeating());
 			ps_utility.setBoolean(2, model.getWashingMachine());
@@ -188,6 +191,7 @@ public class EditUtility extends JFrame{
 			ps_utility.setBoolean(4, model.getDryingMachine());
 			ps_utility.setBoolean(5, model.getSmokeAlarm());
 			ps_utility.setBoolean(6, model.getFirstAidKit());
+			ps_utility.setInt(7, idAfter);
 
 			System.out.println(ps_utility);
 			ps_utility.executeUpdate();

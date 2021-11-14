@@ -206,7 +206,7 @@ public class Controller extends MainModule{
 	public void editPropertyView(int id) {
 		System.out.println("in editPropertyView");
 		System.out.println("1----------"+mainModule.editPropertyState);
-		System.out.println("editPropertyView--id from add kitchen facility = "+id);
+		System.out.println("editPropertyView--id from add facility = "+id);
 		if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_PROPERTY){
 			editProperty.initializeEditProperty();
 		}
@@ -223,10 +223,10 @@ public class Controller extends MainModule{
 			editKitchen.initializeEditKitchen(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_UTILITY){
-			editUtility.initializeEditUtility();
+			editUtility.initializeEditUtility(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_LIVING){
-			editLiving.initializeEditLiving();
+			editLiving.initializeEditLiving(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_OUTDOORS){
 			editOutdoors.initializeEditOutdoors();

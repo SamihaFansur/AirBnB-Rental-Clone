@@ -105,7 +105,7 @@ public class EditSleeping extends JFrame{
 		addBedroomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BEDROOM;
-				MainModule.controller.editPropertyView();
+				MainModule.controller.editPropertyView(0);
 			}
 		});
 		addBedroomButton.setBounds(199, 405, 209, 46);

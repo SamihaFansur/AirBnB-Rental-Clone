@@ -147,26 +147,97 @@ public class AddFacility extends JFrame{
 		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
 		registerPanel.add(btnAddKitchenfacility);
 		
-//		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
-//		btnAddUtilityFacility.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
-//				MainModule.controller.editPropertyView();
-//			}
-//		});
-//		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
-//		registerPanel.add(btnAddUtilityFacility);
-//		
-//		JButton btnAddLivingFacility = new JButton("Add Living Facility");
-//		btnAddLivingFacility.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
-//				MainModule.controller.editPropertyView();
-//			}
-//		});
-//		btnAddLivingFacility.setBounds(192, 437, 194, 57);
-//		registerPanel.add(btnAddLivingFacility);
-//		
+		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
+		btnAddUtilityFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
+				//create a record and set values to null
+				int id=0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMaching, " //change to machine spelling
+												+ "fireExtinguisher, smokeAlarm, firstAidKit)"
+												+ " values(?,?,?,?,?,?) ";
+					PreparedStatement ps_utility = connection.prepareStatement(insertUtilityQuery, Statement.RETURN_GENERATED_KEYS);
+					
+					ps_utility.setBoolean(1, false);
+					ps_utility.setBoolean(2, false);
+					ps_utility.setBoolean(3, false);
+					ps_utility.setBoolean(4, false);
+					ps_utility.setBoolean(5, false);
+					ps_utility.setBoolean(6, false);
+
+					System.out.println(ps_utility);
+					ps_utility.executeUpdate();
+					
+					ResultSet rs=ps_utility.getGeneratedKeys();
+					if(rs.next()){
+						id=rs.getInt(1);
+					}
+					
+					//create public id var
+					//call it in editUtility, set it as the id using select k_id from k where
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("IDDDDDDDDDDDD = "+id);
+				
+				
+				MainModule.controller.editPropertyView(id);
+			}
+		});
+		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
+		registerPanel.add(btnAddUtilityFacility);
+		
+		JButton btnAddLivingFacility = new JButton("Add Living Facility");
+		btnAddLivingFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
+				//create a record and set values to null
+				int id=0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertLivingQuery = "insert into Living (wifi, television, satellite, "
+												+ "streaming, dvdPlayer, boardGames)"
+												+ " values(?,?,?,?,?,?) ";
+
+					PreparedStatement ps_living = connection.prepareStatement(insertLivingQuery, Statement.RETURN_GENERATED_KEYS);
+					
+					ps_living.setBoolean(1, false);
+					ps_living.setBoolean(2, false);
+					ps_living.setBoolean(3, false);
+					ps_living.setBoolean(4, false);
+					ps_living.setBoolean(5, false);
+					ps_living.setBoolean(6, false);
+
+					System.out.println(ps_living);
+					ps_living.executeUpdate();
+					
+					ResultSet rs=ps_living.getGeneratedKeys();
+					if(rs.next()){
+						id=rs.getInt(1);
+					}
+					
+					//create public id var
+					//call it in editKitchen, set it as the id using select k_id from k where
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("IDDDDDDDDDDDD = "+id);
+				
+				
+				MainModule.controller.editPropertyView(id);
+			}
+		});
+		btnAddLivingFacility.setBounds(192, 437, 194, 57);
+		registerPanel.add(btnAddLivingFacility);
+		
 //		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
 //		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {

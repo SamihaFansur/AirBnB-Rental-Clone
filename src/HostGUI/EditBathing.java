@@ -161,7 +161,7 @@ public class EditBathing extends JFrame{
 		addBathroomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
-				MainModule.controller.editPropertyView();
+				MainModule.controller.editPropertyView(0);
 			}
 		});
 		addBathroomButton.setBounds(207, 395, 209, 46);
