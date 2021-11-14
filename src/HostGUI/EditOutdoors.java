@@ -51,6 +51,8 @@ public class EditOutdoors extends JFrame{
 	 private JRadioButton onRoadParkingRadioButton;
 	 private JRadioButton patioRadioButton;
 	 private JRadioButton barbequeRadioButton;
+	 private int idAfter;
+	 
 	 
 	 Connection connection = null;
 	 
@@ -64,7 +66,7 @@ public class EditOutdoors extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditOutdoors() {
+	public void initializeEditOutdoors(int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -72,6 +74,10 @@ public class EditOutdoors extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+		
+		System.out.println("Outdoors record id in edit Outdoors facility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit Outdoors func = "+idAfter);
 		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
@@ -132,7 +138,7 @@ public class EditOutdoors extends JFrame{
 		addOutdoors = new JButton("Save");
 		addOutdoors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addOutdoorsDetails();
+				updateOutdoorsDetails();
 			}
 		});
 		addOutdoors.setBounds(250, 510, 91, 23);
@@ -148,29 +154,32 @@ public class EditOutdoors extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addOutdoorsDetails() {
+	public void updateOutdoorsDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
 
+			System.out.println("id after in updateOutdoors func = "+idAfter);
 			model.setFreeOnSiteParking(freeOnSiteParkingRadioButton.isSelected());
 			model.setOnRoadParking(onRoadParkingRadioButton.isSelected());
 			model.setPaidCarPark(paidCarParkRadioButton.isSelected());
 			model.setPatio(patioRadioButton.isSelected());
 			model.setBarbeque(barbequeRadioButton.isSelected());
 			
-			String insertOutdoorsQuery = "insert into Outdoors (freeOnSiteParking, onRoadParking, "
-										+ "paidCarPark, patio, barbeque)"
-										+ " values(?,?,?,?,?) ";
-			PreparedStatement ps_outdoors = connection.prepareStatement(insertOutdoorsQuery);
+			String updateOutdoorsRecord = "update Outdoors set freeOnSiteParking=?, onRoadParking=?, "
+					+ "paidCarPark=?, patio=?, barbeque=? "
+					+ "where outdoors_id=?";
 			
-			ps_outdoors.setBoolean(1, model.getFreeOnSiteParking());
-			ps_outdoors.setBoolean(2, model.getOnRoadParking());
-			ps_outdoors.setBoolean(3, model.getPaidCarPark());
-			ps_outdoors.setBoolean(4, model.getPatio());
-			ps_outdoors.setBoolean(5, model.getBarbeque());
-
-			System.out.println(ps_outdoors);
-			ps_outdoors.executeUpdate();
+			PreparedStatement updatingOutdoorsValues = connection.prepareStatement(updateOutdoorsRecord);
+			
+			updatingOutdoorsValues.setBoolean(1, model.getFreeOnSiteParking());
+			updatingOutdoorsValues.setBoolean(2, model.getOnRoadParking());
+			updatingOutdoorsValues.setBoolean(3, model.getPaidCarPark());
+			updatingOutdoorsValues.setBoolean(4, model.getPatio());
+			updatingOutdoorsValues.setBoolean(5, model.getBarbeque());
+			updatingOutdoorsValues.setInt(6, idAfter);
+			
+			System.out.println(updatingOutdoorsValues);
+			updatingOutdoorsValues.executeUpdate();
 			
 			
 		} catch(Exception e) {

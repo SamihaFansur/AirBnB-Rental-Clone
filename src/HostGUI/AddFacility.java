@@ -51,7 +51,7 @@ public class AddFacility extends JFrame{
 	 private MainModule mainModule;
 	 
 	 public AddFacility(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeAddFacility();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -238,15 +238,50 @@ public class AddFacility extends JFrame{
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
 		registerPanel.add(btnAddLivingFacility);
 		
-//		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
-//		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
-//				MainModule.controller.editPropertyView();
-//			}
-//		});
-//		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
-//		registerPanel.add(btnAddOutdoorsFacility);
+		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
+		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
+				//create a record and set values to null
+				int id=0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertOutdoorsQuery = "insert into Outdoors (freeOnSiteParking, onRoadParking, paidCarPark, "
+												+ "patio, barbeque) "
+												+ " values(?,?,?,?,?) ";
+
+					PreparedStatement ps_outdoors = connection.prepareStatement(insertOutdoorsQuery, Statement.RETURN_GENERATED_KEYS);
+					
+					ps_outdoors.setBoolean(1, false);
+					ps_outdoors.setBoolean(2, false);
+					ps_outdoors.setBoolean(3, false);
+					ps_outdoors.setBoolean(4, false);
+					ps_outdoors.setBoolean(5, false);
+
+					System.out.println(ps_outdoors);
+					ps_outdoors.executeUpdate();
+					
+					ResultSet rs=ps_outdoors.getGeneratedKeys();
+					if(rs.next()){
+						id=rs.getInt(1);
+					}
+					
+					//create public id var
+					//call it in editKitchen, set it as the id using select k_id from k where
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("IDDDDDDDDDDDD = "+id);
+				
+				
+				MainModule.controller.editPropertyView(id);
+			}
+		});
+		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
+		registerPanel.add(btnAddOutdoorsFacility);
 
 
 		frame.setBounds(100, 100, 600, 700);

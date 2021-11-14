@@ -52,7 +52,7 @@ public class EditProperty extends JFrame{
 	 private MainModule mainModule;
 	 
 	 public EditProperty(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditProperty();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
