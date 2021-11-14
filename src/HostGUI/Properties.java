@@ -44,7 +44,7 @@ public class Properties extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public Properties(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeProperties();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -79,6 +79,11 @@ public class Properties extends JFrame{
 		propertiesTable = new JTable();
 		propertiesTable.setBounds(55, 121, 485, 487);
 		registerPanel.add(propertiesTable);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(26, 47, 91, 23);
+		registerPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

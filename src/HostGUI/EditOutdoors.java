@@ -55,7 +55,7 @@ public class EditOutdoors extends JFrame{
 	 Connection connection = null;
 	 
 	 public EditOutdoors(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditOutdoors();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -80,53 +80,53 @@ public class EditOutdoors extends JFrame{
 
 		JLabel editOutdoorsLabel = new JLabel("Add Outdoor Facility");
 		editOutdoorsLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editOutdoorsLabel.setBounds(248, 61, 183, 57);
+		editOutdoorsLabel.setBounds(173, 64, 229, 57);
 		registerPanel.add(editOutdoorsLabel);
 		
 		JLabel freeOnSiteParkingLabel = new JLabel("Free On Site Parking");
 		freeOnSiteParkingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		freeOnSiteParkingLabel.setBounds(173, 194, 167, 34);
+		freeOnSiteParkingLabel.setBounds(159, 179, 167, 34);
 		registerPanel.add(freeOnSiteParkingLabel);
 		
 		freeOnSiteParkingRadioButton = new JRadioButton("Free on site parking", false);
-		freeOnSiteParkingRadioButton.setBounds(367, 205, 21, 23);
+		freeOnSiteParkingRadioButton.setBounds(394, 193, 21, 23);
 		registerPanel.add(freeOnSiteParkingRadioButton);
 		
 		JLabel onRoadParkingLabel = new JLabel("On Road Parking");
 		onRoadParkingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		onRoadParkingLabel.setBounds(173, 250, 167, 34);
+		onRoadParkingLabel.setBounds(159, 235, 167, 34);
 		registerPanel.add(onRoadParkingLabel);
 		
 		onRoadParkingRadioButton = new JRadioButton("On road parking", false);
-		onRoadParkingRadioButton.setBounds(367, 258, 21, 23);
+		onRoadParkingRadioButton.setBounds(394, 246, 21, 23);
 		registerPanel.add(onRoadParkingRadioButton);
 		
 		
 		JLabel paidCarParkLabel = new JLabel("Paid Car Parking");
 		paidCarParkLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		paidCarParkLabel.setBounds(173, 313, 167, 34);
+		paidCarParkLabel.setBounds(159, 298, 167, 34);
 		registerPanel.add(paidCarParkLabel);
 		
 		paidCarParkRadioButton = new JRadioButton("Paid Car Parking", false);
-		paidCarParkRadioButton.setBounds(367, 321, 21, 23);
+		paidCarParkRadioButton.setBounds(394, 309, 21, 23);
 		registerPanel.add(paidCarParkRadioButton);
 		
 		JLabel patioLabel = new JLabel("Patio");
 		patioLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		patioLabel.setBounds(173, 383, 167, 34);
+		patioLabel.setBounds(159, 368, 167, 34);
 		registerPanel.add(patioLabel);
 		
 		patioRadioButton = new JRadioButton("Patio", false);
-		patioRadioButton.setBounds(367, 391, 21, 23);
+		patioRadioButton.setBounds(394, 379, 21, 23);
 		registerPanel.add(patioRadioButton);
 		
 		JLabel barbequeLabel = new JLabel("Barbeque");
 		barbequeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		barbequeLabel.setBounds(173, 446, 167, 34);
+		barbequeLabel.setBounds(159, 431, 167, 34);
 		registerPanel.add(barbequeLabel);
 		
 		barbequeRadioButton = new JRadioButton("Barbeque", false);
-		barbequeRadioButton.setBounds(367, 454, 21, 23);
+		barbequeRadioButton.setBounds(394, 442, 21, 23);
 		registerPanel.add(barbequeRadioButton);
 		
 		addOutdoors = new JButton("Save");
@@ -135,8 +135,13 @@ public class EditOutdoors extends JFrame{
 				addOutdoorsDetails();
 			}
 		});
-		addOutdoors.setBounds(275, 500, 91, 23);
+		addOutdoors.setBounds(250, 510, 91, 23);
 		registerPanel.add(addOutdoors);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(21, 83, 91, 23);
+		registerPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

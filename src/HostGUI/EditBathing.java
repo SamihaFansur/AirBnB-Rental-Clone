@@ -52,7 +52,7 @@ public class EditBathing extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public EditBathing(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditBathing();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -126,7 +126,7 @@ public class EditBathing extends JFrame{
 
 		JLabel editBathingLabel = new JLabel("Add Bathing Facility");
 		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBathingLabel.setBounds(248, 47, 183, 57);
+		editBathingLabel.setBounds(170, 47, 261, 57);
 		registerPanel.add(editBathingLabel);
 		
 		JLabel hairDryerLabel = new JLabel("Hair Dryer");
@@ -164,7 +164,7 @@ public class EditBathing extends JFrame{
 				MainModule.controller.editPropertyView();
 			}
 		});
-		addBathroomButton.setBounds(199, 405, 209, 46);
+		addBathroomButton.setBounds(207, 395, 209, 46);
 		registerPanel.add(addBathroomButton);
 		
 		addBathing= new JButton("Save");
@@ -173,8 +173,13 @@ public class EditBathing extends JFrame{
 				addBathingDetails();
 			}
 		});
-		addBathing.setBounds(275, 500, 91, 23);
+		addBathing.setBounds(258, 329, 91, 23);
 		registerPanel.add(addBathing);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(29, 57, 91, 23);
+		registerPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

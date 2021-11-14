@@ -57,7 +57,7 @@ public class EditUtility extends JFrame{
 	Connection connection = null;
 
 	 public EditUtility(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditUtility();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -88,56 +88,56 @@ public class EditUtility extends JFrame{
 		
 		JLabel heatingLabel = new JLabel("Heating");
 		heatingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		heatingLabel.setBounds(170, 135, 167, 34);
+		heatingLabel.setBounds(146, 135, 167, 34);
 		registerPanel.add(heatingLabel);
 		
 		heatingRadioBtn = new JRadioButton("Heating", false);
-		heatingRadioBtn.setBounds(364, 146, 21, 23);
+		heatingRadioBtn.setBounds(395, 146, 21, 23);
 		registerPanel.add(heatingRadioBtn);
 		
 		JLabel washingMachineLabel = new JLabel("Washing Machine");
 		washingMachineLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		washingMachineLabel.setBounds(170, 188, 167, 34);
+		washingMachineLabel.setBounds(146, 188, 167, 34);
 		registerPanel.add(washingMachineLabel);
 
 		washingMachineRadioBtn = new JRadioButton("Washing machine", false);
-		washingMachineRadioBtn.setBounds(364, 199, 21, 23);
+		washingMachineRadioBtn.setBounds(395, 199, 21, 23);
 		registerPanel.add(washingMachineRadioBtn);
 		
 		JLabel fireExtinguisherLabel = new JLabel("Fire Extinguisher");
 		fireExtinguisherLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		fireExtinguisherLabel.setBounds(170, 254, 167, 34);
+		fireExtinguisherLabel.setBounds(146, 254, 167, 34);
 		registerPanel.add(fireExtinguisherLabel);
 		
 		fireExtinguisherRadioBtn = new JRadioButton("fire extinguisher", false);
-		fireExtinguisherRadioBtn.setBounds(364, 262, 21, 23);
+		fireExtinguisherRadioBtn.setBounds(395, 262, 21, 23);
 		registerPanel.add(fireExtinguisherRadioBtn);
 		
 		JLabel dryingMachineLabel = new JLabel("Drying Machine");
 		dryingMachineLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		dryingMachineLabel.setBounds(170, 310, 167, 34);
+		dryingMachineLabel.setBounds(146, 310, 167, 34);
 		registerPanel.add(dryingMachineLabel);
 
 		dryingMachineRadioBtn = new JRadioButton("Drying machine", false);
-		dryingMachineRadioBtn.setBounds(364, 310, 21, 23);
+		dryingMachineRadioBtn.setBounds(395, 310, 21, 23);
 		registerPanel.add(dryingMachineRadioBtn);
 		
 		JLabel smokeAlarmLabel = new JLabel("Smoke Alarm");
 		smokeAlarmLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		smokeAlarmLabel.setBounds(170, 369, 167, 34);
+		smokeAlarmLabel.setBounds(146, 369, 167, 34);
 		registerPanel.add(smokeAlarmLabel);
 		
 		smokeAlarmRadioBtn = new JRadioButton("Smoke alarm", false);
-		smokeAlarmRadioBtn.setBounds(364, 380, 21, 23);
+		smokeAlarmRadioBtn.setBounds(395, 380, 21, 23);
 		registerPanel.add(smokeAlarmRadioBtn);				
 		
 		JLabel firstAidKitLabel = new JLabel("First Aid Kit");
 		firstAidKitLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		firstAidKitLabel.setBounds(170, 424, 167, 34);
+		firstAidKitLabel.setBounds(146, 424, 167, 34);
 		registerPanel.add(firstAidKitLabel);
 		
 		firstAidKitRadioBtn = new JRadioButton("First aid kit", false);
-		firstAidKitRadioBtn.setBounds(364, 435, 21, 23);
+		firstAidKitRadioBtn.setBounds(395, 435, 21, 23);
 		registerPanel.add(firstAidKitRadioBtn);
 		
 		addUtility = new JButton("Save");
@@ -146,8 +146,13 @@ public class EditUtility extends JFrame{
 				addUtilityDetails();
 			}
 		});
-		addUtility.setBounds(275, 500, 91, 23);
+		addUtility.setBounds(248, 500, 91, 23);
 		registerPanel.add(addUtility);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(29, 66, 91, 23);
+		registerPanel.add(backButton);
 		
 
 		frame.setBounds(100, 100, 600, 700);

@@ -45,7 +45,7 @@ public class EditBedroom extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public EditBedroom(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditBedroom();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -127,6 +127,15 @@ public class EditBedroom extends JFrame{
 		Bed2NoOfPeopleTextField.setColumns(10);
 		Bed2NoOfPeopleTextField.setBounds(364, 444, 67, 20);
 		registerPanel.add(Bed2NoOfPeopleTextField);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(22, 69, 91, 23);
+		registerPanel.add(backButton);
+		
+		JButton addBedrooms = new JButton("Save");
+		addBedrooms.setBounds(264, 518, 91, 23);
+		registerPanel.add(addBedrooms);
 
 
 		frame.setBounds(100, 100, 600, 700);

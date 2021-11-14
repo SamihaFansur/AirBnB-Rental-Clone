@@ -44,7 +44,7 @@ public class Facilities extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public Facilities(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeFacilities();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -75,6 +75,11 @@ public class Facilities extends JFrame{
 		facilitiesTable = new JTable();
 		facilitiesTable.setBounds(55, 121, 485, 487);
 		registerPanel.add(facilitiesTable);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(20, 58, 91, 23);
+		registerPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

@@ -56,7 +56,7 @@ public class EditLiving extends JFrame{
 	Connection connection = null;
 	
 	 public EditLiving(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditLiving();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -81,7 +81,7 @@ public class EditLiving extends JFrame{
 
 		JLabel editLivingLabel = new JLabel("Add Living facility");
 		editLivingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editLivingLabel.setBounds(248, 47, 183, 57);
+		editLivingLabel.setBounds(183, 54, 183, 57);
 		registerPanel.add(editLivingLabel);
 		
 		JLabel wifiLabel = new JLabel("Wifi");
@@ -90,7 +90,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(wifiLabel);
 
 		wifiRadioBtn = new JRadioButton("Wifi", false);
-		wifiRadioBtn.setBounds(364, 146, 21, 23);
+		wifiRadioBtn.setBounds(375, 146, 21, 23);
 		registerPanel.add(wifiRadioBtn);
 		
 		JLabel televisionLabel = new JLabel("Television");
@@ -99,7 +99,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(televisionLabel);
 
 		televisionRadioBtn = new JRadioButton("Television", false);
-		televisionRadioBtn.setBounds(364, 199, 21, 23);
+		televisionRadioBtn.setBounds(375, 199, 21, 23);
 		registerPanel.add(televisionRadioBtn);
 		
 		JLabel satelliteLabel = new JLabel("Satellite");
@@ -108,7 +108,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(satelliteLabel);
 
 		satelliteRadioBtn = new JRadioButton("Satellite", false);
-		satelliteRadioBtn.setBounds(364, 262, 21, 23);
+		satelliteRadioBtn.setBounds(375, 262, 21, 23);
 		registerPanel.add(satelliteRadioBtn);
 		
 		JLabel streamingLabel = new JLabel("Streaming");
@@ -117,7 +117,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(streamingLabel);
 
 		streamingRadioBtn = new JRadioButton("Streaming", false);
-		streamingRadioBtn.setBounds(364, 310, 21, 23);
+		streamingRadioBtn.setBounds(375, 310, 21, 23);
 		registerPanel.add(streamingRadioBtn);
 		
 		JLabel dvdPlayerLabel = new JLabel("DVD Player");
@@ -126,7 +126,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(dvdPlayerLabel);
 				
 		dvdPlayerRadioBtn = new JRadioButton("DVD Player", false);
-		dvdPlayerRadioBtn.setBounds(364, 380, 21, 23);
+		dvdPlayerRadioBtn.setBounds(375, 380, 21, 23);
 		registerPanel.add(dvdPlayerRadioBtn);
 		
 		JLabel boardGamesLabel = new JLabel("Board Games");
@@ -135,7 +135,7 @@ public class EditLiving extends JFrame{
 		registerPanel.add(boardGamesLabel);
 		
 		boardGamesRadioBtn = new JRadioButton("Board Games", false);
-		boardGamesRadioBtn.setBounds(364, 435, 21, 23);
+		boardGamesRadioBtn.setBounds(375, 435, 21, 23);
 		registerPanel.add(boardGamesRadioBtn);
 
 		addLiving = new JButton("Save");
@@ -144,8 +144,13 @@ public class EditLiving extends JFrame{
 				addLivingDetails();
 			}
 		});
-		addLiving.setBounds(275, 500, 91, 23);
+		addLiving.setBounds(256, 502, 91, 23);
 		registerPanel.add(addLiving);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(26, 76, 91, 23);
+		registerPanel.add(backButton);
 		
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

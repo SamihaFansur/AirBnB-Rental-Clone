@@ -45,7 +45,7 @@ public class EditSleeping extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public EditSleeping(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditSleeping();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -110,6 +110,15 @@ public class EditSleeping extends JFrame{
 		});
 		addBedroomButton.setBounds(199, 405, 209, 46);
 		registerPanel.add(addBedroomButton);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(27, 69, 91, 23);
+		registerPanel.add(backButton);
+		
+		JButton saveSleeping = new JButton("Save");
+		saveSleeping.setBounds(248, 331, 91, 23);
+		registerPanel.add(saveSleeping);
 
 
 		frame.setBounds(100, 100, 600, 700);
