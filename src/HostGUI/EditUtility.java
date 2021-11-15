@@ -55,6 +55,8 @@ public class EditUtility extends JFrame{
 	 private JButton addUtility;
 	 private int idAfter;
 	 
+	 private boolean heating, washingMachine, dryingMaching, fireExtinguisher, smokeAlarm, firstAidKit;
+	 
 	Connection connection = null;
 
 	 public EditUtility(MainModule mainModule, Controller controller, Model model) {
@@ -91,12 +93,37 @@ public class EditUtility extends JFrame{
 		utilityLabel.setBounds(248, 47, 183, 57);
 		editUtilityPanel.add(utilityLabel);
 		
+		try {
+			connection = ConnectionManager.getConnection();
+			
+			String selectUtilityRecord = "select heating, washingMachine, dryingMachine, fireExtinguisher, "
+										+ "smokeAlarm, firstAidKit from Utility where utility_id=?";
+			
+			PreparedStatement selectingUtilityValues= connection.prepareStatement(selectUtilityRecord);
+			
+			selectingUtilityValues.setInt(1, id);
+			ResultSet rs = selectingUtilityValues.executeQuery();
+			
+			while (rs.next()) {
+				heating = rs.getBoolean("heating");
+                washingMachine = rs.getBoolean("washingMachine");
+                dryingMaching = rs.getBoolean("dryingMaching");
+                fireExtinguisher = rs.getBoolean("fireExtinguisher");
+                smokeAlarm = rs.getBoolean("smokeAlarm");
+                firstAidKit = rs.getBoolean("firstAidKit");
+            }		
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+		
 		JLabel heatingLabel = new JLabel("Heating");
 		heatingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		heatingLabel.setBounds(146, 135, 167, 34);
 		editUtilityPanel.add(heatingLabel);
 		
-		heatingRadioBtn = new JRadioButton("Heating", false);
+		heatingRadioBtn = new JRadioButton("Heating", heating);
 		heatingRadioBtn.setBounds(395, 146, 21, 23);
 		editUtilityPanel.add(heatingRadioBtn);
 		
@@ -105,7 +132,7 @@ public class EditUtility extends JFrame{
 		washingMachineLabel.setBounds(146, 188, 167, 34);
 		editUtilityPanel.add(washingMachineLabel);
 
-		washingMachineRadioBtn = new JRadioButton("Washing machine", false);
+		washingMachineRadioBtn = new JRadioButton("Washing machine", washingMachine);
 		washingMachineRadioBtn.setBounds(395, 199, 21, 23);
 		editUtilityPanel.add(washingMachineRadioBtn);
 		
@@ -114,7 +141,7 @@ public class EditUtility extends JFrame{
 		fireExtinguisherLabel.setBounds(146, 254, 167, 34);
 		editUtilityPanel.add(fireExtinguisherLabel);
 		
-		fireExtinguisherRadioBtn = new JRadioButton("fire extinguisher", false);
+		fireExtinguisherRadioBtn = new JRadioButton("fire extinguisher", fireExtinguisher);
 		fireExtinguisherRadioBtn.setBounds(395, 262, 21, 23);
 		editUtilityPanel.add(fireExtinguisherRadioBtn);
 		
@@ -123,7 +150,7 @@ public class EditUtility extends JFrame{
 		dryingMachineLabel.setBounds(146, 310, 167, 34);
 		editUtilityPanel.add(dryingMachineLabel);
 
-		dryingMachineRadioBtn = new JRadioButton("Drying machine", false);
+		dryingMachineRadioBtn = new JRadioButton("Drying machine", dryingMaching);
 		dryingMachineRadioBtn.setBounds(395, 310, 21, 23);
 		editUtilityPanel.add(dryingMachineRadioBtn);
 		
@@ -132,7 +159,7 @@ public class EditUtility extends JFrame{
 		smokeAlarmLabel.setBounds(146, 369, 167, 34);
 		editUtilityPanel.add(smokeAlarmLabel);
 		
-		smokeAlarmRadioBtn = new JRadioButton("Smoke alarm", false);
+		smokeAlarmRadioBtn = new JRadioButton("Smoke alarm", smokeAlarm);
 		smokeAlarmRadioBtn.setBounds(395, 380, 21, 23);
 		editUtilityPanel.add(smokeAlarmRadioBtn);				
 		
@@ -141,7 +168,7 @@ public class EditUtility extends JFrame{
 		firstAidKitLabel.setBounds(146, 424, 167, 34);
 		editUtilityPanel.add(firstAidKitLabel);
 		
-		firstAidKitRadioBtn = new JRadioButton("First aid kit", false);
+		firstAidKitRadioBtn = new JRadioButton("First aid kit", firstAidKit);
 		firstAidKitRadioBtn.setBounds(395, 435, 21, 23);
 		editUtilityPanel.add(firstAidKitRadioBtn);
 		
