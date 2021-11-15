@@ -46,7 +46,7 @@ public class HostAccount extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public HostAccount(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		initializeHostAccount();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -100,10 +100,9 @@ public class HostAccount extends JFrame{
 		bookingsButton.setBounds(203, 351, 183, 34);
 		registerPanel.add(bookingsButton);
 		
-		//I dont think this should be in the host account section-Samiha
-//		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
-//		provisionalBookingsButton.setBounds(203, 406, 183, 34);
-//		registerPanel.add(provisionalBookingsButton);
+		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
+		provisionalBookingsButton.setBounds(203, 406, 183, 34);
+		registerPanel.add(provisionalBookingsButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

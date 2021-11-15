@@ -59,7 +59,7 @@ public class EditKitchen extends JFrame{
 	 
 	 
 	 public EditKitchen(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
+		//initializeEditKitchen();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -88,7 +88,7 @@ public class EditKitchen extends JFrame{
 
 		JLabel editKitchenLabel = new JLabel("Add Kitchen facility");
 		editKitchenLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editKitchenLabel.setBounds(248, 47, 183, 57);
+		editKitchenLabel.setBounds(186, 48, 261, 57);
 		registerPanel.add(editKitchenLabel);
 		
 		JLabel refrigeratorLabel = new JLabel("Refrigerator");
@@ -97,7 +97,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(refrigeratorLabel);
 		
 		refrigeratorRadioBtn = new JRadioButton("Refrigerator", false);
-		refrigeratorRadioBtn.setBounds(364, 146, 21, 23);
+		refrigeratorRadioBtn.setBounds(387, 147, 21, 23);
 		registerPanel.add(refrigeratorRadioBtn);
 		
 		JLabel microwaveLabel = new JLabel("Microwave");
@@ -106,7 +106,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(microwaveLabel);
 
 		microwaveRadioBtn = new JRadioButton("Microwave", false);
-		microwaveRadioBtn.setBounds(364, 199, 21, 23);
+		microwaveRadioBtn.setBounds(387, 200, 21, 23);
 		registerPanel.add(microwaveRadioBtn);
 		
 		JLabel ovenLabel = new JLabel("Oven");
@@ -115,7 +115,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(ovenLabel);
 		
 		ovenRadioBtn = new JRadioButton("Oven", false);
-		ovenRadioBtn.setBounds(364, 262, 21, 23);
+		ovenRadioBtn.setBounds(387, 263, 21, 23);
 		registerPanel.add(ovenRadioBtn);
 		
 		JLabel stoveLabel = new JLabel("Stove");
@@ -124,7 +124,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(stoveLabel);
 
 		stoveRadioBtn = new JRadioButton("Stove", false);
-		stoveRadioBtn.setBounds(364, 310, 21, 23);
+		stoveRadioBtn.setBounds(387, 311, 21, 23);
 		registerPanel.add(stoveRadioBtn);
 		
 		JLabel dishwasherLabel = new JLabel("Dishwasher");
@@ -133,7 +133,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(dishwasherLabel);
 
 		dishwasherRadioBtn = new JRadioButton("Dishwasher", false);
-		dishwasherRadioBtn.setBounds(364, 380, 21, 23);
+		dishwasherRadioBtn.setBounds(387, 381, 21, 23);
 		registerPanel.add(dishwasherRadioBtn);
 		
 		JLabel tablewareLabel = new JLabel("Tableware");
@@ -142,7 +142,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(tablewareLabel);
 
 		tablewareRadioBtn = new JRadioButton("Tableware", false);
-		tablewareRadioBtn.setBounds(364, 435, 21, 23);
+		tablewareRadioBtn.setBounds(387, 436, 21, 23);
 		registerPanel.add(tablewareRadioBtn);
 		
 		JLabel CookwareLabel = new JLabel("Cookware");
@@ -151,7 +151,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(CookwareLabel);
 
 		cookwareRadioBtn = new JRadioButton("Cookware", false);
-		cookwareRadioBtn.setBounds(364, 488, 21, 23);
+		cookwareRadioBtn.setBounds(387, 489, 21, 23);
 		registerPanel.add(cookwareRadioBtn);
 		
 		JLabel lblBasicProvisions = new JLabel("Basic Provisions");
@@ -160,7 +160,7 @@ public class EditKitchen extends JFrame{
 		registerPanel.add(lblBasicProvisions);
 
 		basicProvisionsRadioBtn = new JRadioButton("Basic Provisions", false);
-		basicProvisionsRadioBtn.setBounds(364, 551, 21, 23);
+		basicProvisionsRadioBtn.setBounds(387, 552, 21, 23);
 		registerPanel.add(basicProvisionsRadioBtn);
 		
 		addKitchen= new JButton("Save");
@@ -169,8 +169,13 @@ public class EditKitchen extends JFrame{
 				updateKitchenDetails();
 			}
 		});
-		addKitchen.setBounds(275, 500, 91, 23);
+		addKitchen.setBounds(248, 602, 91, 23);
 		registerPanel.add(addKitchen);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(31, 58, 91, 23);
+		registerPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -282,6 +282,11 @@ public class AddFacility extends JFrame{
 		});
 		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
 		registerPanel.add(btnAddOutdoorsFacility);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(22, 75, 91, 23);
+		registerPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);
