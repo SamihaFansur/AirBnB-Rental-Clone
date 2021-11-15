@@ -59,7 +59,6 @@ public class Review extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeReview() {
-		mainModule.currentState = STATE.LOGIN;
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
