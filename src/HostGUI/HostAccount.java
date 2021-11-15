@@ -46,7 +46,7 @@ public class HostAccount extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public HostAccount(MainModule mainModule, Controller controller, Model model) {
-		initializeHostAccount();
+		//initializeHostAccount();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -66,24 +66,24 @@ public class HostAccount extends JFrame{
 		}
 		
 		
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel hostAccountPanel = new JPanel();
+		hostAccountPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(hostAccountPanel, BorderLayout.CENTER);
+		hostAccountPanel.setLayout(null);
 		
 
 		JLabel hostAccountLabel = new JLabel("Host Account");
 		hostAccountLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		hostAccountLabel.setBounds(222, 53, 183, 57);
-		registerPanel.add(hostAccountLabel);
+		hostAccountPanel.add(hostAccountLabel);
 		
 		JButton editAccountButton = new JButton("Edit Account");
 		editAccountButton.setBounds(203, 177, 183, 34);
-		registerPanel.add(editAccountButton);
+		hostAccountPanel.add(editAccountButton);
 		
 		JButton propertiesButton = new JButton("Properties List");
 		propertiesButton.setBounds(203, 235, 183, 34);
-		registerPanel.add(propertiesButton);
+		hostAccountPanel.add(propertiesButton);
 		
 		JButton addPropertyButton = new JButton("Add Property");
 		addPropertyButton.addActionListener(new ActionListener() {
@@ -94,15 +94,15 @@ public class HostAccount extends JFrame{
 			}
 		});
 		addPropertyButton.setBounds(203, 294, 183, 34);
-		registerPanel.add(addPropertyButton);
+		hostAccountPanel.add(addPropertyButton);
 		
 		JButton bookingsButton = new JButton("Bookings List");
 		bookingsButton.setBounds(203, 351, 183, 34);
-		registerPanel.add(bookingsButton);
+		hostAccountPanel.add(bookingsButton);
 		
 		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
 		provisionalBookingsButton.setBounds(203, 406, 183, 34);
-		registerPanel.add(provisionalBookingsButton);
+		hostAccountPanel.add(provisionalBookingsButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

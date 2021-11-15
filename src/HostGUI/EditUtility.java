@@ -81,69 +81,69 @@ public class EditUtility extends JFrame{
 		System.out.println("id after in init edit utility func = "+idAfter);
 		
 		
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editUtilityPanel = new JPanel();
+		editUtilityPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editUtilityPanel, BorderLayout.CENTER);
+		editUtilityPanel.setLayout(null);
 
 		JLabel utilityLabel = new JLabel("Add Utilities");
 		utilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		utilityLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(utilityLabel);
+		editUtilityPanel.add(utilityLabel);
 		
 		JLabel heatingLabel = new JLabel("Heating");
 		heatingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		heatingLabel.setBounds(146, 135, 167, 34);
-		registerPanel.add(heatingLabel);
+		editUtilityPanel.add(heatingLabel);
 		
 		heatingRadioBtn = new JRadioButton("Heating", false);
 		heatingRadioBtn.setBounds(395, 146, 21, 23);
-		registerPanel.add(heatingRadioBtn);
+		editUtilityPanel.add(heatingRadioBtn);
 		
 		JLabel washingMachineLabel = new JLabel("Washing Machine");
 		washingMachineLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		washingMachineLabel.setBounds(146, 188, 167, 34);
-		registerPanel.add(washingMachineLabel);
+		editUtilityPanel.add(washingMachineLabel);
 
 		washingMachineRadioBtn = new JRadioButton("Washing machine", false);
 		washingMachineRadioBtn.setBounds(395, 199, 21, 23);
-		registerPanel.add(washingMachineRadioBtn);
+		editUtilityPanel.add(washingMachineRadioBtn);
 		
 		JLabel fireExtinguisherLabel = new JLabel("Fire Extinguisher");
 		fireExtinguisherLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		fireExtinguisherLabel.setBounds(146, 254, 167, 34);
-		registerPanel.add(fireExtinguisherLabel);
+		editUtilityPanel.add(fireExtinguisherLabel);
 		
 		fireExtinguisherRadioBtn = new JRadioButton("fire extinguisher", false);
 		fireExtinguisherRadioBtn.setBounds(395, 262, 21, 23);
-		registerPanel.add(fireExtinguisherRadioBtn);
+		editUtilityPanel.add(fireExtinguisherRadioBtn);
 		
 		JLabel dryingMachineLabel = new JLabel("Drying Machine");
 		dryingMachineLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		dryingMachineLabel.setBounds(146, 310, 167, 34);
-		registerPanel.add(dryingMachineLabel);
+		editUtilityPanel.add(dryingMachineLabel);
 
 		dryingMachineRadioBtn = new JRadioButton("Drying machine", false);
 		dryingMachineRadioBtn.setBounds(395, 310, 21, 23);
-		registerPanel.add(dryingMachineRadioBtn);
+		editUtilityPanel.add(dryingMachineRadioBtn);
 		
 		JLabel smokeAlarmLabel = new JLabel("Smoke Alarm");
 		smokeAlarmLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		smokeAlarmLabel.setBounds(146, 369, 167, 34);
-		registerPanel.add(smokeAlarmLabel);
+		editUtilityPanel.add(smokeAlarmLabel);
 		
 		smokeAlarmRadioBtn = new JRadioButton("Smoke alarm", false);
 		smokeAlarmRadioBtn.setBounds(395, 380, 21, 23);
-		registerPanel.add(smokeAlarmRadioBtn);				
+		editUtilityPanel.add(smokeAlarmRadioBtn);				
 		
 		JLabel firstAidKitLabel = new JLabel("First Aid Kit");
 		firstAidKitLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		firstAidKitLabel.setBounds(146, 424, 167, 34);
-		registerPanel.add(firstAidKitLabel);
+		editUtilityPanel.add(firstAidKitLabel);
 		
 		firstAidKitRadioBtn = new JRadioButton("First aid kit", false);
 		firstAidKitRadioBtn.setBounds(395, 435, 21, 23);
-		registerPanel.add(firstAidKitRadioBtn);
+		editUtilityPanel.add(firstAidKitRadioBtn);
 		
 		addUtility = new JButton("Save");
 		addUtility.addActionListener(new ActionListener() {
@@ -152,12 +152,12 @@ public class EditUtility extends JFrame{
 			}
 		});
 		addUtility.setBounds(248, 500, 91, 23);
-		registerPanel.add(addUtility);
+		editUtilityPanel.add(addUtility);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(29, 66, 91, 23);
-		registerPanel.add(backButton);
+		editUtilityPanel.add(backButton);
 		
 
 		frame.setBounds(100, 100, 600, 700);

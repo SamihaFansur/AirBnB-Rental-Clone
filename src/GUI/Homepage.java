@@ -66,15 +66,15 @@ public class Homepage extends JFrame{
 					System.err.println(e.getMessage());
 				}	
 			
-			JPanel loginPanel = new JPanel();
-			loginPanel.setBackground(new Color(204, 255, 255));
-			frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
-			loginPanel.setLayout(null);
+			JPanel homepagePanel = new JPanel();
+			homepagePanel.setBackground(new Color(204, 255, 255));
+			frame.getContentPane().add(homepagePanel, BorderLayout.CENTER);
+			homepagePanel.setLayout(null);
 			
 			JLabel homePageLabel = new JLabel("Home Page");
 			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
 			homePageLabel.setBounds(202, -27, 222, 152);
-			loginPanel.add(homePageLabel);
+			homepagePanel.add(homePageLabel);
 			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

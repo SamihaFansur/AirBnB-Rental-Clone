@@ -81,87 +81,87 @@ public class EditKitchen extends JFrame{
 		idAfter = id;
 		System.out.println("id after in init edit kitchen func = "+idAfter);
 		
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editKitchenPanel = new JPanel();
+		editKitchenPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editKitchenPanel, BorderLayout.CENTER);
+		editKitchenPanel.setLayout(null);
 
 		JLabel editKitchenLabel = new JLabel("Add Kitchen facility");
 		editKitchenLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editKitchenLabel.setBounds(186, 48, 261, 57);
-		registerPanel.add(editKitchenLabel);
+		editKitchenPanel.add(editKitchenLabel);
 		
 		JLabel refrigeratorLabel = new JLabel("Refrigerator");
 		refrigeratorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		refrigeratorLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(refrigeratorLabel);
+		editKitchenPanel.add(refrigeratorLabel);
 		
 		refrigeratorRadioBtn = new JRadioButton("Refrigerator", false);
 		refrigeratorRadioBtn.setBounds(387, 147, 21, 23);
-		registerPanel.add(refrigeratorRadioBtn);
+		editKitchenPanel.add(refrigeratorRadioBtn);
 		
 		JLabel microwaveLabel = new JLabel("Microwave");
 		microwaveLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		microwaveLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(microwaveLabel);
+		editKitchenPanel.add(microwaveLabel);
 
 		microwaveRadioBtn = new JRadioButton("Microwave", false);
 		microwaveRadioBtn.setBounds(387, 200, 21, 23);
-		registerPanel.add(microwaveRadioBtn);
+		editKitchenPanel.add(microwaveRadioBtn);
 		
 		JLabel ovenLabel = new JLabel("Oven");
 		ovenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		ovenLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(ovenLabel);
+		editKitchenPanel.add(ovenLabel);
 		
 		ovenRadioBtn = new JRadioButton("Oven", false);
 		ovenRadioBtn.setBounds(387, 263, 21, 23);
-		registerPanel.add(ovenRadioBtn);
+		editKitchenPanel.add(ovenRadioBtn);
 		
 		JLabel stoveLabel = new JLabel("Stove");
 		stoveLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		stoveLabel.setBounds(170, 310, 167, 34);
-		registerPanel.add(stoveLabel);
+		editKitchenPanel.add(stoveLabel);
 
 		stoveRadioBtn = new JRadioButton("Stove", false);
 		stoveRadioBtn.setBounds(387, 311, 21, 23);
-		registerPanel.add(stoveRadioBtn);
+		editKitchenPanel.add(stoveRadioBtn);
 		
 		JLabel dishwasherLabel = new JLabel("Dishwasher");
 		dishwasherLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		dishwasherLabel.setBounds(170, 369, 167, 34);
-		registerPanel.add(dishwasherLabel);
+		editKitchenPanel.add(dishwasherLabel);
 
 		dishwasherRadioBtn = new JRadioButton("Dishwasher", false);
 		dishwasherRadioBtn.setBounds(387, 381, 21, 23);
-		registerPanel.add(dishwasherRadioBtn);
+		editKitchenPanel.add(dishwasherRadioBtn);
 		
 		JLabel tablewareLabel = new JLabel("Tableware");
 		tablewareLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tablewareLabel.setBounds(170, 424, 167, 34);
-		registerPanel.add(tablewareLabel);
+		editKitchenPanel.add(tablewareLabel);
 
 		tablewareRadioBtn = new JRadioButton("Tableware", false);
 		tablewareRadioBtn.setBounds(387, 436, 21, 23);
-		registerPanel.add(tablewareRadioBtn);
+		editKitchenPanel.add(tablewareRadioBtn);
 		
 		JLabel CookwareLabel = new JLabel("Cookware");
 		CookwareLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		CookwareLabel.setBounds(170, 480, 167, 34);
-		registerPanel.add(CookwareLabel);
+		editKitchenPanel.add(CookwareLabel);
 
 		cookwareRadioBtn = new JRadioButton("Cookware", false);
 		cookwareRadioBtn.setBounds(387, 489, 21, 23);
-		registerPanel.add(cookwareRadioBtn);
+		editKitchenPanel.add(cookwareRadioBtn);
 		
 		JLabel lblBasicProvisions = new JLabel("Basic Provisions");
 		lblBasicProvisions.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblBasicProvisions.setBounds(170, 543, 167, 34);
-		registerPanel.add(lblBasicProvisions);
+		editKitchenPanel.add(lblBasicProvisions);
 
 		basicProvisionsRadioBtn = new JRadioButton("Basic Provisions", false);
 		basicProvisionsRadioBtn.setBounds(387, 552, 21, 23);
-		registerPanel.add(basicProvisionsRadioBtn);
+		editKitchenPanel.add(basicProvisionsRadioBtn);
 		
 		addKitchen= new JButton("Save");
 		addKitchen.addActionListener(new ActionListener() {
@@ -170,12 +170,12 @@ public class EditKitchen extends JFrame{
 			}
 		});
 		addKitchen.setBounds(248, 602, 91, 23);
-		registerPanel.add(addKitchen);
+		editKitchenPanel.add(addKitchen);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(31, 58, 91, 23);
-		registerPanel.add(backButton);
+		editKitchenPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

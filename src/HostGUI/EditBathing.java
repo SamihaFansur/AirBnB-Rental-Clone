@@ -119,42 +119,42 @@ public class EditBathing extends JFrame{
 		});
 		navBarPanel.add(navLogoutButton);
 		*/
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editBathingPanel = new JPanel();
+		editBathingPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBathingPanel, BorderLayout.CENTER);
+		editBathingPanel.setLayout(null);
 
 		JLabel editBathingLabel = new JLabel("Add Bathing Facility");
 		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editBathingLabel.setBounds(170, 47, 261, 57);
-		registerPanel.add(editBathingLabel);
+		editBathingPanel.add(editBathingLabel);
 		
 		JLabel hairDryerLabel = new JLabel("Hair Dryer");
 		hairDryerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		hairDryerLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(hairDryerLabel);
+		editBathingPanel.add(hairDryerLabel);
 
 		hairDryerRadioBtn = new JRadioButton("Hair Dryer", false);
 		hairDryerRadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(hairDryerRadioBtn);
+		editBathingPanel.add(hairDryerRadioBtn);
 		
 		JLabel toiletPaperLabel = new JLabel("Toilet Paper");
 		toiletPaperLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		toiletPaperLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(toiletPaperLabel);
+		editBathingPanel.add(toiletPaperLabel);
 		
 		toiletPaperRadioBtn = new JRadioButton("Toilet paper", false);
 		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
-		registerPanel.add(toiletPaperRadioBtn);
+		editBathingPanel.add(toiletPaperRadioBtn);
 		
 		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
 		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(noOfBathroomsLabel);
+		editBathingPanel.add(noOfBathroomsLabel);
 		
 		noOfBathroomsTextField = new JTextField();
 		noOfBathroomsTextField.setBounds(347, 254, 106, 29);
-		registerPanel.add(noOfBathroomsTextField);
+		editBathingPanel.add(noOfBathroomsTextField);
 		noOfBathroomsTextField.setColumns(10);
 		
 		JButton addBathroomButton = new JButton("Add Bathroom");
@@ -165,7 +165,7 @@ public class EditBathing extends JFrame{
 			}
 		});
 		addBathroomButton.setBounds(207, 395, 209, 46);
-		registerPanel.add(addBathroomButton);
+		editBathingPanel.add(addBathroomButton);
 		
 		addBathing= new JButton("Save");
 		addBathing.addActionListener(new ActionListener() {
@@ -174,12 +174,12 @@ public class EditBathing extends JFrame{
 			}
 		});
 		addBathing.setBounds(258, 329, 91, 23);
-		registerPanel.add(addBathing);
+		editBathingPanel.add(addBathing);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(29, 57, 91, 23);
-		registerPanel.add(backButton);
+		editBathingPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

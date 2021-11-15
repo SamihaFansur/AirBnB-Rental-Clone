@@ -79,69 +79,69 @@ public class EditLiving extends JFrame{
 		idAfter = id;
 		System.out.println("id after in init edit living func = "+idAfter);
 
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editLivingPanel = new JPanel();
+		editLivingPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editLivingPanel, BorderLayout.CENTER);
+		editLivingPanel.setLayout(null);
 
 		JLabel editLivingLabel = new JLabel("Add Living facility");
 		editLivingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editLivingLabel.setBounds(183, 54, 183, 57);
-		registerPanel.add(editLivingLabel);
+		editLivingPanel.add(editLivingLabel);
 		
 		JLabel wifiLabel = new JLabel("Wifi");
 		wifiLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		wifiLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(wifiLabel);
+		editLivingPanel.add(wifiLabel);
 
 		wifiRadioBtn = new JRadioButton("Wifi", false);
 		wifiRadioBtn.setBounds(375, 146, 21, 23);
-		registerPanel.add(wifiRadioBtn);
+		editLivingPanel.add(wifiRadioBtn);
 		
 		JLabel televisionLabel = new JLabel("Television");
 		televisionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		televisionLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(televisionLabel);
+		editLivingPanel.add(televisionLabel);
 
 		televisionRadioBtn = new JRadioButton("Television", false);
 		televisionRadioBtn.setBounds(375, 199, 21, 23);
-		registerPanel.add(televisionRadioBtn);
+		editLivingPanel.add(televisionRadioBtn);
 		
 		JLabel satelliteLabel = new JLabel("Satellite");
 		satelliteLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		satelliteLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(satelliteLabel);
+		editLivingPanel.add(satelliteLabel);
 
 		satelliteRadioBtn = new JRadioButton("Satellite", false);
 		satelliteRadioBtn.setBounds(375, 262, 21, 23);
-		registerPanel.add(satelliteRadioBtn);
+		editLivingPanel.add(satelliteRadioBtn);
 		
 		JLabel streamingLabel = new JLabel("Streaming");
 		streamingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		streamingLabel.setBounds(170, 310, 167, 34);
-		registerPanel.add(streamingLabel);
+		editLivingPanel.add(streamingLabel);
 
 		streamingRadioBtn = new JRadioButton("Streaming", false);
 		streamingRadioBtn.setBounds(375, 310, 21, 23);
-		registerPanel.add(streamingRadioBtn);
+		editLivingPanel.add(streamingRadioBtn);
 		
 		JLabel dvdPlayerLabel = new JLabel("DVD Player");
 		dvdPlayerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		dvdPlayerLabel.setBounds(170, 369, 167, 34);
-		registerPanel.add(dvdPlayerLabel);
+		editLivingPanel.add(dvdPlayerLabel);
 				
 		dvdPlayerRadioBtn = new JRadioButton("DVD Player", false);
 		dvdPlayerRadioBtn.setBounds(375, 380, 21, 23);
-		registerPanel.add(dvdPlayerRadioBtn);
+		editLivingPanel.add(dvdPlayerRadioBtn);
 		
 		JLabel boardGamesLabel = new JLabel("Board Games");
 		boardGamesLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		boardGamesLabel.setBounds(170, 424, 167, 34);
-		registerPanel.add(boardGamesLabel);
+		editLivingPanel.add(boardGamesLabel);
 		
 		boardGamesRadioBtn = new JRadioButton("Board Games", false);
 		boardGamesRadioBtn.setBounds(375, 435, 21, 23);
-		registerPanel.add(boardGamesRadioBtn);
+		editLivingPanel.add(boardGamesRadioBtn);
 
 		addLiving = new JButton("Save");
 		addLiving.addActionListener(new ActionListener() {
@@ -150,12 +150,12 @@ public class EditLiving extends JFrame{
 			}
 		});
 		addLiving.setBounds(256, 502, 91, 23);
-		registerPanel.add(addLiving);
+		editLivingPanel.add(addLiving);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(26, 76, 91, 23);
-		registerPanel.add(backButton);
+		editLivingPanel.add(backButton);
 		
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

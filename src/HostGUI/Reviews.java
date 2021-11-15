@@ -25,13 +25,13 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class Properties extends JFrame{
+public class Reviews extends JFrame{
 
 
 	private JFrame frame;
-	private JTable propertiesTable;
+	private JTable reviewsTable;
 	private NavHost navForHost = new NavHost();
-	 
+	
 	public void close() {
 		frame.dispose();
 	}
@@ -40,11 +40,11 @@ public class Properties extends JFrame{
 	 * Create the application.
 	 */
 
-	private Controller controller;
+	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-	 public Properties(MainModule mainModule, Controller controller, Model model) {
-		//initializeProperties();
+	 public Reviews(MainModule mainModule, Controller controller, Model model) {
+		//initializeReviews();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -53,10 +53,7 @@ public class Properties extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeProperties() {
-		
-		
-
+	public void initializeReviews() {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -64,32 +61,32 @@ public class Properties extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
 
-		JPanel propertiesPanel = new JPanel();
-		propertiesPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(propertiesPanel, BorderLayout.CENTER);
-		propertiesPanel.setLayout(null);
+		JPanel reviewsPanel = new JPanel();
+		reviewsPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(reviewsPanel, BorderLayout.CENTER);
+		reviewsPanel.setLayout(null);
 
-		JLabel propertiesLabel = new JLabel("Properties");
-		propertiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		propertiesLabel.setBounds(237, 36, 183, 57);
-		propertiesPanel.add(propertiesLabel);
+		JLabel reviewsLabel = new JLabel("Reviews");
+		reviewsLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		reviewsLabel.setBounds(249, 39, 183, 57);
+		reviewsPanel.add(reviewsLabel);
 		
-		propertiesTable = new JTable();
-		propertiesTable.setBounds(55, 121, 485, 487);
-		propertiesPanel.add(propertiesTable);
+		reviewsTable = new JTable();
+		reviewsTable.setBounds(55, 121, 485, 487);
+		reviewsPanel.add(reviewsTable);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		backButton.setBounds(26, 47, 91, 23);
-		propertiesPanel.add(backButton);
+		backButton.setBounds(20, 58, 91, 23);
+		reviewsPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

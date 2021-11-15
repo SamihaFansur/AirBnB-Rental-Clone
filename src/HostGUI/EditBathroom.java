@@ -73,51 +73,51 @@ public class EditBathroom extends JFrame{
 			System.err.println(e.getMessage());
 		}
 		
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editBathroomPanel = new JPanel();
+		editBathroomPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBathroomPanel, BorderLayout.CENTER);
+		editBathroomPanel.setLayout(null);
 
 		JLabel editBathroomLabel = new JLabel("Add Bathroom facilities");
 		editBathroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editBathroomLabel.setBounds(170, 58, 290, 57);
-		registerPanel.add(editBathroomLabel);
+		editBathroomPanel.add(editBathroomLabel);
 		
 		JLabel toiletLabel = new JLabel("Toilet");
 		toiletLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		toiletLabel.setBounds(170, 150, 167, 34);
-		registerPanel.add(toiletLabel);
+		editBathroomPanel.add(toiletLabel);
 
 		toiletRadioBtn = new JRadioButton("Toilet", false);
 		toiletRadioBtn.setBounds(387, 161, 21, 23);
-		registerPanel.add(toiletRadioBtn);
+		editBathroomPanel.add(toiletRadioBtn);
 		
 		JLabel bathLabel = new JLabel("Bath");
 		bathLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bathLabel.setBounds(170, 226, 167, 34);
-		registerPanel.add(bathLabel);
+		editBathroomPanel.add(bathLabel);
 
 		bathRadioBtn = new JRadioButton("Bath", false);
 		bathRadioBtn.setBounds(387, 237, 21, 23);
-		registerPanel.add(bathRadioBtn);
+		editBathroomPanel.add(bathRadioBtn);
 		
 		JLabel showerLabel = new JLabel("Shower");
 		showerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		showerLabel.setBounds(170, 315, 167, 34);
-		registerPanel.add(showerLabel);
+		editBathroomPanel.add(showerLabel);
 
 		showerRadioBtn = new JRadioButton("Shower", false);
 		showerRadioBtn.setBounds(387, 315, 21, 23);
-		registerPanel.add(showerRadioBtn);
+		editBathroomPanel.add(showerRadioBtn);
 		
 		JLabel sharedHostLabel = new JLabel("Shared Bathroom with host");
 		sharedHostLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sharedHostLabel.setBounds(170, 395, 196, 34);
-		registerPanel.add(sharedHostLabel);		
+		editBathroomPanel.add(sharedHostLabel);		
 		
 		sharedBathroomRadioBtn = new JRadioButton("Shared bathroom", false);
 		sharedBathroomRadioBtn.setBounds(387, 403, 21, 23);
-		registerPanel.add(sharedBathroomRadioBtn);
+		editBathroomPanel.add(sharedBathroomRadioBtn);
 
 
 		addBathType = new JButton("Save");
@@ -127,12 +127,12 @@ public class EditBathroom extends JFrame{
 			}
 		});
 		addBathType.setBounds(259, 482, 91, 23);
-		registerPanel.add(addBathType);
+		editBathroomPanel.add(addBathType);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(24, 77, 91, 23);
-		registerPanel.add(backButton);
+		editBathroomPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

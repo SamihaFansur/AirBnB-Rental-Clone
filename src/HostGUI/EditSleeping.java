@@ -63,42 +63,42 @@ public class EditSleeping extends JFrame{
 			System.err.println(e.getMessage());
 		}
 		
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editSleepingPanel = new JPanel();
+		editSleepingPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editSleepingPanel, BorderLayout.CENTER);
+		editSleepingPanel.setLayout(null);
 
 		JLabel editSleepingLabel = new JLabel("Sleeping");
 		editSleepingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editSleepingLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(editSleepingLabel);
+		editSleepingPanel.add(editSleepingLabel);
 		
 		JLabel bedLinenLabel = new JLabel("Bed Linen");
 		bedLinenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bedLinenLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(bedLinenLabel);
+		editSleepingPanel.add(bedLinenLabel);
 		
 		JLabel towelsLabel = new JLabel("Towels");
 		towelsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		towelsLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(towelsLabel);
+		editSleepingPanel.add(towelsLabel);
 		
 		JLabel noOfBedroomsLabel = new JLabel("Number Of Bedrooms");
 		noOfBedroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		noOfBedroomsLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(noOfBedroomsLabel);
+		editSleepingPanel.add(noOfBedroomsLabel);
 		
 		JRadioButton refrigeratorRadioBtn = new JRadioButton("");
 		refrigeratorRadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(refrigeratorRadioBtn);
+		editSleepingPanel.add(refrigeratorRadioBtn);
 		
 		JRadioButton microwaveRadioBtn = new JRadioButton("");
 		microwaveRadioBtn.setBounds(364, 199, 21, 23);
-		registerPanel.add(microwaveRadioBtn);
+		editSleepingPanel.add(microwaveRadioBtn);
 		
 		noOfBedroomsTextField = new JTextField();
 		noOfBedroomsTextField.setBounds(347, 254, 106, 29);
-		registerPanel.add(noOfBedroomsTextField);
+		editSleepingPanel.add(noOfBedroomsTextField);
 		noOfBedroomsTextField.setColumns(10);
 		
 		JButton addBedroomButton = new JButton("Add Bedroom");
@@ -109,16 +109,16 @@ public class EditSleeping extends JFrame{
 			}
 		});
 		addBedroomButton.setBounds(199, 405, 209, 46);
-		registerPanel.add(addBedroomButton);
+		editSleepingPanel.add(addBedroomButton);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(27, 69, 91, 23);
-		registerPanel.add(backButton);
+		editSleepingPanel.add(backButton);
 		
 		JButton saveSleeping = new JButton("Save");
 		saveSleeping.setBounds(248, 331, 91, 23);
-		registerPanel.add(saveSleeping);
+		editSleepingPanel.add(saveSleeping);
 
 
 		frame.setBounds(100, 100, 600, 700);

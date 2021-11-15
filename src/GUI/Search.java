@@ -71,53 +71,53 @@ public class Search extends JFrame{
 				}
 		 }
 			
-			JPanel loginPanel = new JPanel();
-			loginPanel.setBackground(new Color(204, 255, 255));
-			frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
-			loginPanel.setLayout(null);
+			JPanel searchPanel = new JPanel();
+			searchPanel.setBackground(new Color(204, 255, 255));
+			frame.getContentPane().add(searchPanel, BorderLayout.CENTER);
+			searchPanel.setLayout(null);
 			
 			JLabel minPriceFilterLabel = new JLabel("Min Price Per Night (£)");
 			minPriceFilterLabel.setBounds(30, 45, 130, 45);
-			loginPanel.add(minPriceFilterLabel);
+			searchPanel.add(minPriceFilterLabel);
 
 			minPriceFilter = new JTextField();
 			minPriceFilter.setColumns(10);
 			minPriceFilter.setBounds(170, 52, 70, 31);
-			loginPanel.add(minPriceFilter);
+			searchPanel.add(minPriceFilter);
 						
 			JLabel numberOfGuestsLabel = new JLabel("Number of Guests");
 			numberOfGuestsLabel.setBounds(30, 109, 130, 20);
-			loginPanel.add(numberOfGuestsLabel);
+			searchPanel.add(numberOfGuestsLabel);
 			
 			numberOfGuestsFilter = new JTextField();
 			numberOfGuestsFilter.setBounds(170, 106, 70, 31);
-			loginPanel.add(numberOfGuestsFilter);
+			searchPanel.add(numberOfGuestsFilter);
 			numberOfGuestsFilter.setColumns(10);
 
 			JLabel maxPriceFilterLabel = new JLabel("Max Price Per Night (£)");
 			maxPriceFilterLabel.setBounds(277, 55, 130, 20);
-			loginPanel.add(maxPriceFilterLabel);
+			searchPanel.add(maxPriceFilterLabel);
 
 			maxPriceFilter = new JTextField();
 			maxPriceFilter.setColumns(10);
 			maxPriceFilter.setBounds(490, 52, 70, 31);
-			loginPanel.add(maxPriceFilter);
+			searchPanel.add(maxPriceFilter);
 			
 			JLabel locationFilterLabel = new JLabel("Location");
 			locationFilterLabel.setBounds(277, 100, 115, 45);
-			loginPanel.add(locationFilterLabel);
+			searchPanel.add(locationFilterLabel);
 			
 			JComboBox locationComboBox = new JComboBox();
 			locationComboBox.setBounds(340, 106, 220, 33);
-			loginPanel.add(locationComboBox);
+			searchPanel.add(locationComboBox);
 			
 						
 			propertiesTable = new JTable();
 			propertiesTable.setBounds(41, 252, 524, 346);
-			loginPanel.add(propertiesTable);
+			searchPanel.add(propertiesTable);
 
 			filterButton.setBounds(165, 182, 141, 36);
-			loginPanel.add(filterButton);
+			searchPanel.add(filterButton);
 			
 			JButton resetFiltersButton = new JButton("Reset");
 			resetFiltersButton.addActionListener(new ActionListener() {
@@ -133,7 +133,7 @@ public class Search extends JFrame{
 				}
 			});
 			resetFiltersButton.setBounds(323, 182, 141, 36);
-			loginPanel.add(resetFiltersButton);
+			searchPanel.add(resetFiltersButton);
 			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			

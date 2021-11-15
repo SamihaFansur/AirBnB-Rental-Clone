@@ -62,24 +62,24 @@ public class Facilities extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel facilitiesPanel = new JPanel();
+		facilitiesPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(facilitiesPanel, BorderLayout.CENTER);
+		facilitiesPanel.setLayout(null);
 
 		JLabel facilitiesLabel = new JLabel("Facilities");
 		facilitiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		facilitiesLabel.setBounds(237, 36, 183, 57);
-		registerPanel.add(facilitiesLabel);
+		facilitiesPanel.add(facilitiesLabel);
 		
 		facilitiesTable = new JTable();
 		facilitiesTable.setBounds(55, 121, 485, 487);
-		registerPanel.add(facilitiesTable);
+		facilitiesPanel.add(facilitiesTable);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(20, 58, 91, 23);
-		registerPanel.add(backButton);
+		facilitiesPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

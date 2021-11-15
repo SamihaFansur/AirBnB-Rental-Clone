@@ -62,80 +62,80 @@ public class EditBedroom extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		JPanel editBedroomPanel = new JPanel();
+		editBedroomPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBedroomPanel, BorderLayout.CENTER);
+		editBedroomPanel.setLayout(null);
 
 		JLabel editBedroomLabel = new JLabel("Edit Bedroom");
 		editBedroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editBedroomLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(editBedroomLabel);
+		editBedroomPanel.add(editBedroomLabel);
 		
 		JLabel bed1Label = new JLabel("Bed 1:");
 		bed1Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bed1Label.setBounds(170, 135, 167, 34);
-		registerPanel.add(bed1Label);
+		editBedroomPanel.add(bed1Label);
 		
 		JLabel televisionLabel = new JLabel("Bed Type:");
 		televisionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		televisionLabel.setBounds(199, 188, 167, 34);
-		registerPanel.add(televisionLabel);
+		editBedroomPanel.add(televisionLabel);
 		
 		JLabel bed1NoOfPeopleLabel = new JLabel("No Of People");
 		bed1NoOfPeopleLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bed1NoOfPeopleLabel.setBounds(199, 251, 167, 34);
-		registerPanel.add(bed1NoOfPeopleLabel);
+		editBedroomPanel.add(bed1NoOfPeopleLabel);
 		
 		JLabel bed2Label = new JLabel("Bed 2:");
 		bed2Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bed2Label.setBounds(170, 310, 167, 34);
-		registerPanel.add(bed2Label);
+		editBedroomPanel.add(bed2Label);
 		
 		JLabel bed2TypeLabel = new JLabel("Bed Type");
 		bed2TypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bed2TypeLabel.setBounds(199, 369, 167, 34);
-		registerPanel.add(bed2TypeLabel);
+		editBedroomPanel.add(bed2TypeLabel);
 		
 		JRadioButton bed1RadioBtn = new JRadioButton("");
 		bed1RadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(bed1RadioBtn);
+		editBedroomPanel.add(bed1RadioBtn);
 		
 		JRadioButton bed2RadioBtn = new JRadioButton("");
 		bed2RadioBtn.setBounds(364, 310, 21, 23);
-		registerPanel.add(bed2RadioBtn);
+		editBedroomPanel.add(bed2RadioBtn);
 		
 		JLabel bed2NoOfPeopleLabel = new JLabel("No Of People");
 		bed2NoOfPeopleLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bed2NoOfPeopleLabel.setBounds(199, 435, 167, 34);
-		registerPanel.add(bed2NoOfPeopleLabel);
+		editBedroomPanel.add(bed2NoOfPeopleLabel);
 		
 		JComboBox Bed1TypeComboBox = new JComboBox();
 		Bed1TypeComboBox.setBounds(364, 196, 67, 22);
-		registerPanel.add(Bed1TypeComboBox);
+		editBedroomPanel.add(Bed1TypeComboBox);
 		
 		JComboBox Bed2TypeComboBox_1 = new JComboBox();
 		Bed2TypeComboBox_1.setBounds(364, 377, 67, 22);
-		registerPanel.add(Bed2TypeComboBox_1);
+		editBedroomPanel.add(Bed2TypeComboBox_1);
 		
 		Bed1NoOfPeopleTextField = new JTextField();
 		Bed1NoOfPeopleTextField.setBounds(364, 260, 67, 20);
-		registerPanel.add(Bed1NoOfPeopleTextField);
+		editBedroomPanel.add(Bed1NoOfPeopleTextField);
 		Bed1NoOfPeopleTextField.setColumns(10);
 		
 		Bed2NoOfPeopleTextField = new JTextField();
 		Bed2NoOfPeopleTextField.setColumns(10);
 		Bed2NoOfPeopleTextField.setBounds(364, 444, 67, 20);
-		registerPanel.add(Bed2NoOfPeopleTextField);
+		editBedroomPanel.add(Bed2NoOfPeopleTextField);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 69, 91, 23);
-		registerPanel.add(backButton);
+		editBedroomPanel.add(backButton);
 		
 		JButton addBedrooms = new JButton("Save");
 		addBedrooms.setBounds(264, 518, 91, 23);
-		registerPanel.add(addBedrooms);
+		editBedroomPanel.add(addBedrooms);
 
 
 		frame.setBounds(100, 100, 600, 700);

@@ -70,15 +70,16 @@ public class AddFacility extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
+		
+		JPanel addFacilityPanel = new JPanel();
+		addFacilityPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(addFacilityPanel, BorderLayout.CENTER);
+		addFacilityPanel.setLayout(null);
 
 		JLabel addFacilityLabel = new JLabel("Add Facility");
 		addFacilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		addFacilityLabel.setBounds(222, 53, 183, 57);
-		registerPanel.add(addFacilityLabel);
+		addFacilityPanel.add(addFacilityLabel);
 //		
 //		JButton addSleepingButton = new JButton("Add Sleeping Facility");
 //		addSleepingButton.addActionListener(new ActionListener() {
@@ -145,7 +146,7 @@ public class AddFacility extends JFrame{
 			}
 		});
 		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
-		registerPanel.add(btnAddKitchenfacility);
+		addFacilityPanel.add(btnAddKitchenfacility);
 		
 		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
 		btnAddUtilityFacility.addActionListener(new ActionListener() {
@@ -190,7 +191,7 @@ public class AddFacility extends JFrame{
 			}
 		});
 		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
-		registerPanel.add(btnAddUtilityFacility);
+		addFacilityPanel.add(btnAddUtilityFacility);
 		
 		JButton btnAddLivingFacility = new JButton("Add Living Facility");
 		btnAddLivingFacility.addActionListener(new ActionListener() {
@@ -236,7 +237,7 @@ public class AddFacility extends JFrame{
 			}
 		});
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
-		registerPanel.add(btnAddLivingFacility);
+		addFacilityPanel.add(btnAddLivingFacility);
 		
 		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
 		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
@@ -281,12 +282,12 @@ public class AddFacility extends JFrame{
 			}
 		});
 		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
-		registerPanel.add(btnAddOutdoorsFacility);
+		addFacilityPanel.add(btnAddOutdoorsFacility);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
-		registerPanel.add(backButton);
+		addFacilityPanel.add(backButton);
 
 
 		frame.setBounds(100, 100, 600, 700);

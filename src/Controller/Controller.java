@@ -1,5 +1,4 @@
 package Controller;
-import GUI.Account;
 
 import GUI.Homepage;
 import GUI.Login;
@@ -35,7 +34,6 @@ public class Controller extends MainModule{
 	private Homepage homepage;
 	private Register register;
 	private Search search;
-	private Account account;
 	private Login login;
 	private Contact contact;
 	
@@ -62,7 +60,6 @@ public class Controller extends MainModule{
 			Homepage homepage, 
 			Register register, 
 			Search search, 
-			Account account, 
 			Login login, 
 			Contact contact,
 			
@@ -87,7 +84,6 @@ public class Controller extends MainModule{
 		this.homepage=homepage;
 		this.register=register;
 		this.search=search;
-		this.account=account;
 		this.login=login;
 		this.contact=contact;
 		this.addFacility=addFacility;
@@ -177,10 +173,6 @@ public class Controller extends MainModule{
 		// (at the moment the window is made in SELF_REGISTRATION)
 		else if (mainModule.currentState == STATE.SELF_REGISTRATION && mainModule.userState==USER.ENQUIRER){
 			register.initializeRegister();
-		}
-		else if (mainModule.currentState == STATE.ACCOUNT && mainModule.userState==USER.ENQUIRER){
-			account.initializeAccount();
-			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 		}
 		else if (mainModule.currentState == STATE.LOGIN && mainModule.userState==USER.ENQUIRER){
 			login.initializeLogin();

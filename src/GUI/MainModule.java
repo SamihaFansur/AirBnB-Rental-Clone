@@ -28,7 +28,6 @@ public class MainModule {
 	private Model model;
 	public static Controller controller;
 	private Register register;
-	private Account Account;
 	private Homepage homepage;
 	private Login login;
 	private Search search;
@@ -54,7 +53,6 @@ public class MainModule {
 	public enum STATE{
 		HOMEPAGE,
 		SELF_REGISTRATION,
-		ACCOUNT, //not being used
 		/*property class also not being used*/
 		LOGIN,
 		SEARCH,
@@ -140,8 +138,6 @@ public class MainModule {
 		//creating an instance of login class
 		Login login = new Login(mainModule, controller, model);
 		//creating an instance of search class
-		Account account = new Account(mainModule, controller, model);
-		//creating an instance of search class
 		Search search = new Search(mainModule, controller, model);
 		//creating instance of contact class
 		Contact contact = new Contact(mainModule, controller, model);
@@ -164,7 +160,7 @@ public class MainModule {
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, account, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
