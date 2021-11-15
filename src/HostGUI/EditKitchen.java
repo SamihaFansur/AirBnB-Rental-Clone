@@ -96,23 +96,10 @@ public class EditKitchen extends JFrame{
 		editKitchenLabel.setBounds(186, 48, 261, 57);
 		editKitchenPanel.add(editKitchenLabel);
 		
-		JLabel refrigeratorLabel = new JLabel("Refrigerator");
-		refrigeratorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		refrigeratorLabel.setBounds(170, 135, 167, 34);
-		editKitchenPanel.add(refrigeratorLabel);
-		
 		try {
 			connection = ConnectionManager.getConnection();
 
 			System.out.println("id in try block where im tryna get values from db = "+id);
-//			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
-//			model.setMicrowave(microwaveRadioBtn.isSelected());
-//			model.setOven(ovenRadioBtn.isSelected());
-//			model.setStove(stoveRadioBtn.isSelected());
-//			model.setDishwasher(dishwasherRadioBtn.isSelected());
-//			model.setTableware(tablewareRadioBtn.isSelected());
-//			model.setCookware(cookwareRadioBtn.isSelected());
-//			model.setBasicProvisions(basicProvisionsRadioBtn.isSelected());
 			
 			String selectKitchenRecord = "select refrigerator, microwave, "
 										+ "oven, stove, dishwasher, tableware, "
@@ -147,8 +134,7 @@ public class EditKitchen extends JFrame{
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-	
-
+		
 		System.out.println("outside of rs loop thingi = "+refrigerator);
 		System.out.println("outside of rs loop thingi = "+microwave);
 		System.out.println("outside of rs loop thingi = "+oven);
@@ -157,6 +143,11 @@ public class EditKitchen extends JFrame{
 		System.out.println("outside of rs loop thingi = "+tableware);
 		System.out.println("outside of rs loop thingi = "+cookware);
 		System.out.println("outside of rs loop thingi = "+basicProvision);
+		
+		JLabel refrigeratorLabel = new JLabel("Refrigerator");
+		refrigeratorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		refrigeratorLabel.setBounds(170, 135, 167, 34);
+		editKitchenPanel.add(refrigeratorLabel);
 		
 		refrigeratorRadioBtn = new JRadioButton("Refrigerator", refrigerator);
 		refrigeratorRadioBtn.setBounds(387, 147, 21, 23);

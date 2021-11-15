@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -53,6 +54,8 @@ public class EditLiving extends JFrame{
 	 private JRadioButton boardGamesRadioBtn;	
 	 private int idAfter; 
 	 private JButton addLiving;
+	 
+	 private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
 	 
 	Connection connection = null;
 	
@@ -89,12 +92,44 @@ public class EditLiving extends JFrame{
 		editLivingLabel.setBounds(183, 54, 183, 57);
 		editLivingPanel.add(editLivingLabel);
 		
+		try {
+			connection = ConnectionManager.getConnection();
+
+			String selectLivingRecord = "select wifi, television, satellite, streaming, "
+										+ "dvdPlayer, boardGames from Living "
+										+ "where living_id=?";
+			
+			PreparedStatement selectingLivingValues= connection.prepareStatement(selectLivingRecord);
+			
+			selectingLivingValues.setInt(1, id);
+			ResultSet rs = selectingLivingValues.executeQuery();
+			
+			while (rs.next()) {
+				wifi = rs.getBoolean("wifi");
+                System.out.println(wifi);
+                television = rs.getBoolean("television");
+                System.out.println(television);
+                satellite = rs.getBoolean("satellite");
+                System.out.println(satellite);
+                streaming = rs.getBoolean("streaming");
+                System.out.println(streaming);
+                dvdPlayer = rs.getBoolean("dvdPlayer");
+                System.out.println(dvdPlayer);
+                boardGames = rs.getBoolean("boardGames");
+                System.out.println(boardGames);
+            }		
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+				
 		JLabel wifiLabel = new JLabel("Wifi");
 		wifiLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		wifiLabel.setBounds(170, 135, 167, 34);
 		editLivingPanel.add(wifiLabel);
 
-		wifiRadioBtn = new JRadioButton("Wifi", false);
+		wifiRadioBtn = new JRadioButton("Wifi", wifi);
 		wifiRadioBtn.setBounds(375, 146, 21, 23);
 		editLivingPanel.add(wifiRadioBtn);
 		
@@ -103,7 +138,7 @@ public class EditLiving extends JFrame{
 		televisionLabel.setBounds(170, 191, 167, 34);
 		editLivingPanel.add(televisionLabel);
 
-		televisionRadioBtn = new JRadioButton("Television", false);
+		televisionRadioBtn = new JRadioButton("Television", television);
 		televisionRadioBtn.setBounds(375, 199, 21, 23);
 		editLivingPanel.add(televisionRadioBtn);
 		
@@ -112,7 +147,7 @@ public class EditLiving extends JFrame{
 		satelliteLabel.setBounds(170, 254, 167, 34);
 		editLivingPanel.add(satelliteLabel);
 
-		satelliteRadioBtn = new JRadioButton("Satellite", false);
+		satelliteRadioBtn = new JRadioButton("Satellite", satellite);
 		satelliteRadioBtn.setBounds(375, 262, 21, 23);
 		editLivingPanel.add(satelliteRadioBtn);
 		
@@ -121,7 +156,7 @@ public class EditLiving extends JFrame{
 		streamingLabel.setBounds(170, 310, 167, 34);
 		editLivingPanel.add(streamingLabel);
 
-		streamingRadioBtn = new JRadioButton("Streaming", false);
+		streamingRadioBtn = new JRadioButton("Streaming", streaming);
 		streamingRadioBtn.setBounds(375, 310, 21, 23);
 		editLivingPanel.add(streamingRadioBtn);
 		
@@ -130,7 +165,7 @@ public class EditLiving extends JFrame{
 		dvdPlayerLabel.setBounds(170, 369, 167, 34);
 		editLivingPanel.add(dvdPlayerLabel);
 				
-		dvdPlayerRadioBtn = new JRadioButton("DVD Player", false);
+		dvdPlayerRadioBtn = new JRadioButton("DVD Player", dvdPlayer);
 		dvdPlayerRadioBtn.setBounds(375, 380, 21, 23);
 		editLivingPanel.add(dvdPlayerRadioBtn);
 		
@@ -139,7 +174,7 @@ public class EditLiving extends JFrame{
 		boardGamesLabel.setBounds(170, 424, 167, 34);
 		editLivingPanel.add(boardGamesLabel);
 		
-		boardGamesRadioBtn = new JRadioButton("Board Games", false);
+		boardGamesRadioBtn = new JRadioButton("Board Games", boardGames);
 		boardGamesRadioBtn.setBounds(375, 435, 21, 23);
 		editLivingPanel.add(boardGamesRadioBtn);
 
