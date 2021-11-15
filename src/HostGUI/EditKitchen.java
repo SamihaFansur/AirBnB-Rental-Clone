@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -55,6 +56,10 @@ public class EditKitchen extends JFrame{
 	private JRadioButton cookwareRadioBtn;
 	private JButton addKitchen;
 	private int idAfter;
+	
+	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvision;
+	
+	
 	Connection connection = null;
 	 
 	 
@@ -96,7 +101,64 @@ public class EditKitchen extends JFrame{
 		refrigeratorLabel.setBounds(170, 135, 167, 34);
 		editKitchenPanel.add(refrigeratorLabel);
 		
-		refrigeratorRadioBtn = new JRadioButton("Refrigerator", false);
+		try {
+			connection = ConnectionManager.getConnection();
+
+			System.out.println("id in try block where im tryna get values from db = "+id);
+//			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
+//			model.setMicrowave(microwaveRadioBtn.isSelected());
+//			model.setOven(ovenRadioBtn.isSelected());
+//			model.setStove(stoveRadioBtn.isSelected());
+//			model.setDishwasher(dishwasherRadioBtn.isSelected());
+//			model.setTableware(tablewareRadioBtn.isSelected());
+//			model.setCookware(cookwareRadioBtn.isSelected());
+//			model.setBasicProvisions(basicProvisionsRadioBtn.isSelected());
+			
+			String selectKitchenRecord = "select refrigerator, microwave, "
+										+ "oven, stove, dishwasher, tableware, "
+										+ "cookware, basicProvision from Kitchen "
+										+ "where kitchen_id=?";
+			
+			PreparedStatement selectingKitchenValues= connection.prepareStatement(selectKitchenRecord);
+			
+			selectingKitchenValues.setInt(1, id);
+			ResultSet rs = selectingKitchenValues.executeQuery();
+			
+			while (rs.next()) {
+				refrigerator = rs.getBoolean("refrigerator");
+                System.out.println(refrigerator);
+                microwave = rs.getBoolean("microwave");
+                System.out.println(microwave);
+                oven = rs.getBoolean("oven");
+                System.out.println(oven);
+                stove = rs.getBoolean("stove");
+                System.out.println(stove);
+                dishwasher = rs.getBoolean("dishwasher");
+                System.out.println(dishwasher);
+                tableware = rs.getBoolean("tableware");
+                System.out.println(tableware);
+                cookware = rs.getBoolean("cookware");
+                System.out.println(cookware);
+                basicProvision = rs.getBoolean("basicProvision");
+                System.out.println(basicProvision);
+            }		
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	
+
+		System.out.println("outside of rs loop thingi = "+refrigerator);
+		System.out.println("outside of rs loop thingi = "+microwave);
+		System.out.println("outside of rs loop thingi = "+oven);
+		System.out.println("outside of rs loop thingi = "+stove);
+		System.out.println("outside of rs loop thingi = "+dishwasher);
+		System.out.println("outside of rs loop thingi = "+tableware);
+		System.out.println("outside of rs loop thingi = "+cookware);
+		System.out.println("outside of rs loop thingi = "+basicProvision);
+		
+		refrigeratorRadioBtn = new JRadioButton("Refrigerator", refrigerator);
 		refrigeratorRadioBtn.setBounds(387, 147, 21, 23);
 		editKitchenPanel.add(refrigeratorRadioBtn);
 		
@@ -105,7 +167,7 @@ public class EditKitchen extends JFrame{
 		microwaveLabel.setBounds(170, 191, 167, 34);
 		editKitchenPanel.add(microwaveLabel);
 
-		microwaveRadioBtn = new JRadioButton("Microwave", false);
+		microwaveRadioBtn = new JRadioButton("Microwave", microwave);
 		microwaveRadioBtn.setBounds(387, 200, 21, 23);
 		editKitchenPanel.add(microwaveRadioBtn);
 		
@@ -114,7 +176,7 @@ public class EditKitchen extends JFrame{
 		ovenLabel.setBounds(170, 254, 167, 34);
 		editKitchenPanel.add(ovenLabel);
 		
-		ovenRadioBtn = new JRadioButton("Oven", false);
+		ovenRadioBtn = new JRadioButton("Oven", oven);
 		ovenRadioBtn.setBounds(387, 263, 21, 23);
 		editKitchenPanel.add(ovenRadioBtn);
 		
@@ -123,7 +185,7 @@ public class EditKitchen extends JFrame{
 		stoveLabel.setBounds(170, 310, 167, 34);
 		editKitchenPanel.add(stoveLabel);
 
-		stoveRadioBtn = new JRadioButton("Stove", false);
+		stoveRadioBtn = new JRadioButton("Stove", stove);
 		stoveRadioBtn.setBounds(387, 311, 21, 23);
 		editKitchenPanel.add(stoveRadioBtn);
 		
@@ -132,7 +194,7 @@ public class EditKitchen extends JFrame{
 		dishwasherLabel.setBounds(170, 369, 167, 34);
 		editKitchenPanel.add(dishwasherLabel);
 
-		dishwasherRadioBtn = new JRadioButton("Dishwasher", false);
+		dishwasherRadioBtn = new JRadioButton("Dishwasher", dishwasher);
 		dishwasherRadioBtn.setBounds(387, 381, 21, 23);
 		editKitchenPanel.add(dishwasherRadioBtn);
 		
@@ -141,7 +203,7 @@ public class EditKitchen extends JFrame{
 		tablewareLabel.setBounds(170, 424, 167, 34);
 		editKitchenPanel.add(tablewareLabel);
 
-		tablewareRadioBtn = new JRadioButton("Tableware", false);
+		tablewareRadioBtn = new JRadioButton("Tableware", tableware);
 		tablewareRadioBtn.setBounds(387, 436, 21, 23);
 		editKitchenPanel.add(tablewareRadioBtn);
 		
@@ -150,7 +212,7 @@ public class EditKitchen extends JFrame{
 		CookwareLabel.setBounds(170, 480, 167, 34);
 		editKitchenPanel.add(CookwareLabel);
 
-		cookwareRadioBtn = new JRadioButton("Cookware", false);
+		cookwareRadioBtn = new JRadioButton("Cookware", cookware);
 		cookwareRadioBtn.setBounds(387, 489, 21, 23);
 		editKitchenPanel.add(cookwareRadioBtn);
 		
@@ -159,7 +221,7 @@ public class EditKitchen extends JFrame{
 		lblBasicProvisions.setBounds(170, 543, 167, 34);
 		editKitchenPanel.add(lblBasicProvisions);
 
-		basicProvisionsRadioBtn = new JRadioButton("Basic Provisions", false);
+		basicProvisionsRadioBtn = new JRadioButton("Basic Provisions", basicProvision);
 		basicProvisionsRadioBtn.setBounds(387, 552, 21, 23);
 		editKitchenPanel.add(basicProvisionsRadioBtn);
 		
