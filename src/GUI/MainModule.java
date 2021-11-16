@@ -99,6 +99,7 @@ public class MainModule {
 		EDIT_UTILITY,
 		EDIT_BATHROOM,
 		EDIT_BEDROOM,
+		PROPERTIES
 	}
 	
 	public enum USER {

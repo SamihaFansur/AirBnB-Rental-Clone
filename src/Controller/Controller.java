@@ -53,7 +53,6 @@ public class Controller extends MainModule{
 	private HostAccount hostAccount;
 	private Properties properties;
 	private EditAccount editAccount;
-
 //	private Properties properties;
 	
 	
@@ -103,8 +102,8 @@ public class Controller extends MainModule{
 		this.hostAccount=hostAccount;
 		this.properties=properties;
 		this.editAccount = editAccount;
-		
 	}
+	
 	public void setTitle(String title){
 		model.setTitle(title);
 	}
@@ -234,6 +233,10 @@ public class Controller extends MainModule{
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
 			editBathroom.initializeEditBathroom(id);
+		}
+	
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
+			properties.initializeProperties();
 		}
 		
 	}

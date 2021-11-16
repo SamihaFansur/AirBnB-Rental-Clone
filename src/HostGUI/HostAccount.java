@@ -90,6 +90,13 @@ public class HostAccount extends JFrame{
 		hostAccountPanel.add(editAccountButton);
 		
 		JButton propertiesButton = new JButton("Properties List");
+		propertiesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+				MainModule.controller.editPropertyView(0);
+				frame.dispose();
+			}
+		});
 		propertiesButton.setBounds(203, 235, 183, 34);
 		hostAccountPanel.add(propertiesButton);
 		
