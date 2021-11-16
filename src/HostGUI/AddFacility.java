@@ -95,7 +95,35 @@ public class AddFacility extends JFrame{
 		btnAddBathingFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
-				MainModule.controller.editPropertyView(0);
+				int id=0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
+												+ " values(?,?,?)";
+					PreparedStatement ps_bathing = connection.prepareStatement(insertBathingQuery, Statement.RETURN_GENERATED_KEYS);
+					
+					ps_bathing.setBoolean(1, false);
+					ps_bathing.setBoolean(2, false);
+					ps_bathing.setInt(3, 0);
+
+					System.out.println(ps_bathing);
+					ps_bathing.executeUpdate();
+					
+					ResultSet rs=ps_bathing.getGeneratedKeys();
+					if(rs.next()){
+						id=rs.getInt(1);
+					}
+					
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("IDDDDDDDDDDDD = "+id);
+				
+				
+				MainModule.controller.editPropertyView(id);
 			}
 		});
 		btnAddBathingFacility.setBounds(190, 222, 196, 51);
