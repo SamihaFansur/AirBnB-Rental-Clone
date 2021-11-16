@@ -78,6 +78,14 @@ public class HostAccount extends JFrame{
 		hostAccountPanel.add(hostAccountLabel);
 		
 		JButton editAccountButton = new JButton("Edit Account");
+		editAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState=STATE.EDIT_ACCOUNT;
+				MainModule.controller.drawNewView();
+				frame.dispose();
+				
+			}
+		});
 		editAccountButton.setBounds(203, 177, 183, 34);
 		hostAccountPanel.add(editAccountButton);
 		

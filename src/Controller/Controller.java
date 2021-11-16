@@ -6,6 +6,7 @@ import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
 import GUI.Contact;
+import GUI.EditAccount;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.*;
@@ -51,6 +52,7 @@ public class Controller extends MainModule{
 	private Facilities facilities;
 	private HostAccount hostAccount;
 	private Properties properties;
+	private EditAccount editAccount;
 
 //	private Properties properties;
 	
@@ -75,7 +77,8 @@ public class Controller extends MainModule{
 			EditUtility editUtility,
 			Facilities facilities,
 			HostAccount hostAccount,
-			Properties properties) {
+			Properties properties,
+			EditAccount editAccount){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -99,6 +102,7 @@ public class Controller extends MainModule{
 		this.facilities=facilities;
 		this.hostAccount=hostAccount;
 		this.properties=properties;
+		this.editAccount = editAccount;
 		
 	}
 	public void setTitle(String title){
@@ -183,16 +187,18 @@ public class Controller extends MainModule{
 			search.initializeSearch();
 		}
 		else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState==USER.ENQUIRER){
-			System.out.println("HEREEE");
 			contact.initializeContact();
 		}
 		//added for HOST GUI:
 		else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState==USER.HOST){
-			System.out.println("HEREEE");
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			hostAccount.initializeHostAccount();
 		}
-		
+		else if (mainModule.currentState == STATE.EDIT_ACCOUNT && mainModule.userState==USER.HOST){
+			System.out.println("HEREEE");
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
+			editAccount.initializeEditAccount();
+		}
 	}
 	
 	public void editPropertyView(int id) {
@@ -224,11 +230,12 @@ public class Controller extends MainModule{
 			editOutdoors.initializeEditOutdoors(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BEDROOM){
-			editBedroom.initializeEditBedroom(id);
+			editBedroom.initializeEditBedroom();
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
 			editBathroom.initializeEditBathroom(id);
 		}
+		
 	}
  	
 //	public static void SendEmail() { //doesn't work yet
