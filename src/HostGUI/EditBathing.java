@@ -147,33 +147,35 @@ public class EditBathing extends JFrame{
 		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
 		editBathingPanel.add(toiletPaperRadioBtn);
 		
-		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
-		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
-		editBathingPanel.add(noOfBathroomsLabel);
+//		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
+//		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+//		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
+//		editBathingPanel.add(noOfBathroomsLabel);
+//		
+//		noOfBathroomsTextField = new JTextField();
+//		noOfBathroomsTextField.setBounds(347, 254, 106, 29);
+//		editBathingPanel.add(noOfBathroomsTextField);
+//		noOfBathroomsTextField.setColumns(10);
+//		
+//		JButton addBathroomButton = new JButton("Add Bathroom");
+//		addBathroomButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
+//				MainModule.controller.editPropertyView(0);
+//			}
+//		});
+//		addBathroomButton.setBounds(207, 395, 209, 46);
+//		editBathingPanel.add(addBathroomButton);
 		
-		noOfBathroomsTextField = new JTextField();
-		noOfBathroomsTextField.setBounds(347, 254, 106, 29);
-		editBathingPanel.add(noOfBathroomsTextField);
-		noOfBathroomsTextField.setColumns(10);
-		
-		JButton addBathroomButton = new JButton("Add Bathroom");
-		addBathroomButton.addActionListener(new ActionListener() {
+		addBathing= new JButton("Add Bathrooms");
+		addBathing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				addBathingDetails();
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
 				MainModule.controller.editPropertyView(0);
 			}
 		});
-		addBathroomButton.setBounds(207, 395, 209, 46);
-		editBathingPanel.add(addBathroomButton);
-		
-		addBathing= new JButton("Save");
-		addBathing.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addBathingDetails();
-			}
-		});
-		addBathing.setBounds(258, 329, 91, 23);
+		addBathing.setBounds(258, 329, 200, 23);
 		editBathingPanel.add(addBathing);
 		
 		JButton backButton = new JButton("Back");
@@ -186,32 +188,32 @@ public class EditBathing extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addBathingDetails() {
-		try {
-			connection = ConnectionManager.getConnection();
-
-			model.setHairDryer(hairDryerRadioBtn.isSelected());
-			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
-			model.setNoOfBathrooms(Integer.parseInt(noOfBathroomsTextField.getText().toString()));
-			
-			String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
-										+ " values(?,?,?)";
-			PreparedStatement ps_bathing= connection.prepareStatement(insertBathingQuery);
-			
-			ps_bathing.setBoolean(1, model.getHairDryer());
-			ps_bathing.setBoolean(2, model.getToiletPaper());
-			ps_bathing.setInt(3, model.getNoOfBathrooms());
-
-			System.out.println(ps_bathing);
-			ps_bathing.executeUpdate();
-			
-			
-		} catch(Exception e) {
-			System.err.println("Got an exception!");
-			System.err.println(e.getMessage());
-		}
-	}
-	
+//	public void addBathingDetails() { //has to be fixed to exclude noOfBathrooms
+//		try {
+//			connection = ConnectionManager.getConnection();
+//
+//			model.setHairDryer(hairDryerRadioBtn.isSelected());
+//			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
+//			model.setNoOfBathrooms(Integer.parseInt(noOfBathroomsTextField.getText().toString()));
+//			
+//			String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
+//										+ " values(?,?,?)";
+//			PreparedStatement ps_bathing= connection.prepareStatement(insertBathingQuery);
+//			
+//			ps_bathing.setBoolean(1, model.getHairDryer());
+//			ps_bathing.setBoolean(2, model.getToiletPaper());
+//			ps_bathing.setInt(3, model.getNoOfBathrooms());
+//
+//			System.out.println(ps_bathing);
+//			ps_bathing.executeUpdate();
+//			
+//			
+//		} catch(Exception e) {
+//			System.err.println("Got an exception!");
+//			System.err.println(e.getMessage());
+//		}
+//	}
+//	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

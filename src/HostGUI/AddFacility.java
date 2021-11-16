@@ -80,26 +80,26 @@ public class AddFacility extends JFrame{
 		addFacilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		addFacilityLabel.setBounds(222, 53, 183, 57);
 		addFacilityPanel.add(addFacilityLabel);
-//		
-//		JButton addSleepingButton = new JButton("Add Sleeping Facility");
-//		addSleepingButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
-//				MainModule.controller.editPropertyView();
-//			}
-//		});
-//		addSleepingButton.setBounds(190, 160, 196, 51);
-//		registerPanel.add(addSleepingButton);
-//		
-//		JButton btnAddBathingFacility = new JButton("Add Bathing Facility");
-//		btnAddBathingFacility.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
-//				MainModule.controller.editPropertyView();
-//			}
-//		});
-//		btnAddBathingFacility.setBounds(190, 222, 196, 51);
-//		registerPanel.add(btnAddBathingFacility);
+		
+		JButton addSleepingButton = new JButton("Add Sleeping Facility");
+		addSleepingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
+				MainModule.controller.editPropertyView(0);
+			}
+		});
+		addSleepingButton.setBounds(190, 160, 196, 51);
+		addFacilityPanel.add(addSleepingButton);
+		
+		JButton btnAddBathingFacility = new JButton("Add Bathing Facility");
+		btnAddBathingFacility.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
+				MainModule.controller.editPropertyView(0);
+			}
+		});
+		btnAddBathingFacility.setBounds(190, 222, 196, 51);
+		addFacilityPanel.add(btnAddBathingFacility);
 		
 		JButton btnAddKitchenfacility = new JButton("Add Kitchen Facility");
 		btnAddKitchenfacility.addActionListener(new ActionListener() {
@@ -132,8 +132,6 @@ public class AddFacility extends JFrame{
 						id=rs.getInt(1);
 					}
 					
-					//create public id var
-					//call it in editKitchen, set it as the id using select k_id from k where
 					
 				} catch(Exception s) {
 					System.err.println("Got an exception!");

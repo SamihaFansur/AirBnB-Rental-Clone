@@ -26,7 +26,7 @@ public class Model {
 	
 	//bathing variables
 	private boolean hairDryer, toiletPaper;
-	private int noOfBathrooms;
+	private int noOfBathrooms, bathroomId;
 	
 	//account getters and setters
 	public void setTitle(String title) {
@@ -354,7 +354,14 @@ public class Model {
 	}
 	
 	//bathtype getters and setters
+	public void setBathroomId(int bathroomId) {
+		this.bathroomId = bathroomId;
+	}
 
+	public int getBathroomId() {
+		return bathroomId;
+	}
+	
 	public void setToilet(boolean toilet) {
 		this.toilet = toilet;
 	}
