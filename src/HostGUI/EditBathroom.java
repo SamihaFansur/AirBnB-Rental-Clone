@@ -206,6 +206,8 @@ public class EditBathroom extends JFrame{
 	               model.setValueAt(bath.getText(), i, 2);
 	               model.setValueAt(shower.getText(), i, 3);
 	               model.setValueAt(shared.getText(), i, 4);
+	               
+	               updateBathTypeDetails();
 	            }
 	        });
 		
@@ -278,9 +280,9 @@ public class EditBathroom extends JFrame{
 			model.setShower(Boolean.parseBoolean(shower.getText()));
 			model.setShared(Boolean.parseBoolean(shared.getText()));
 			
-			String insertBathTypeQuery = "insert into BathType (bathtype_id, toilet, bath, shower, shared)"
+			String updateBathTypeQuery = "insert into BathType (bathType_id, toilet, bath, shower, shared)"
 										+ " values(?,?,?,?,?)";
-			PreparedStatement ps_bathType= connection.prepareStatement(insertBathTypeQuery);
+			PreparedStatement ps_bathType= connection.prepareStatement(updateBathTypeQuery);
 
 			ps_bathType.setInt(1, model.getBathroomId());
 			ps_bathType.setBoolean(2, model.getToilet());
@@ -297,7 +299,37 @@ public class EditBathroom extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-//	
+	
+	public void updateBathTypeDetails() {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
+			model.setToilet(Boolean.parseBoolean(toilet.getText()));
+			model.setBath(Boolean.parseBoolean(bath.getText()));
+			model.setShower(Boolean.parseBoolean(shower.getText()));
+			model.setShared(Boolean.parseBoolean(shared.getText()));
+
+			String updateBathTypeQuery = "update BathType set toilet=?, bath=?, shower=?, shared=? where bathType_id=?";
+			
+			PreparedStatement ps_bathType= connection.prepareStatement(updateBathTypeQuery);
+
+			ps_bathType.setBoolean(1, model.getToilet());
+			ps_bathType.setBoolean(2, model.getBath());
+			ps_bathType.setBoolean(3, model.getShower());
+			ps_bathType.setBoolean(4, model.getShared());
+			ps_bathType.setInt(5, model.getBathroomId());
+
+			System.out.println(ps_bathType);
+			ps_bathType.executeUpdate();
+			
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
