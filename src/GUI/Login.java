@@ -89,7 +89,7 @@ public class Login extends JFrame{
 		
 
 		JButton loginButton = new JButton("Login");
-		loginButton.setBounds(124, 432, 100, 36);
+		loginButton.setBounds(200, 432, 100, 36);
 		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -101,8 +101,10 @@ public class Login extends JFrame{
 				
 				userName_login = model.getEmail();
 				password_login = model.getPassword();
+
+			
+					logUserIn();
 				
-				logUserIn();
 				
 				
 //				mainModule.currentState = STATE.HOST_ACCOUNT;
@@ -122,17 +124,7 @@ public class Login extends JFrame{
 			}
 
 		});
-		
-		JButton registerButton = new JButton("Register");
-		registerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				close();
-			//	Register sp = new Register();
-			}
-		});
-		
-		registerButton.setBounds(253, 432, 100, 36);
-		loginPanel.add(registerButton);
+	
 		
 		JButton resetLogin = new JButton("Reset");
 		resetLogin.addActionListener(new ActionListener() {
@@ -142,7 +134,7 @@ public class Login extends JFrame{
 			}
 		});
 		
-		resetLogin.setBounds(381, 432, 100, 36);
+		resetLogin.setBounds(320, 432, 100, 36);
 		loginPanel.add(resetLogin);
 		
 		JLabel loginLabel = new JLabel("Login");
@@ -162,6 +154,7 @@ public class Login extends JFrame{
 	
 	private PreparedStatement loginQuery = null;
 	private ResultSet rs = null;
+	
 	
 	public void logUserIn(){
 		

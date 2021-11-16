@@ -180,15 +180,11 @@ public class Register extends JFrame{
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Boolean check=false;
-				
 				Boolean validateFirstNameInput =  validateName(firstNameTextField.getText());
 				Boolean valudateSurnameInput = validateName(surnameTextField.getText());
 				
-				// EMAIL VALIDATION CURRENTLY NOT WORKING SO SET TO TRUE
-			//	Boolean validateEmailInput = validateEmail(emailAddressTextField.getText());
-				Boolean validateEmailInput = true;
-				
+				Boolean validateEmailInput = validateEmail(emailAddressTextField.getText());
+
 				// assumes UK number
 				Boolean validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
 				
@@ -311,8 +307,8 @@ public class Register extends JFrame{
 	}
 
 	public boolean validateEmail(String email) {
-		// [A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}
-		if (!email.matches("[a-zA-Z0-9]*" + "@[a-zA-Z0-9]*" + "[a-zA-Z]{2,}")) {
+		// https://www.regular-expressions.info/email.html
+		if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}")) {
 			System.out.println(email+" IS NOT VALID");	
 			return false;
 		}else{
