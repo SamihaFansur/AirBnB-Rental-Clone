@@ -332,14 +332,9 @@ public class EditBedroom extends JFrame{
 			model.setBed2Type(bed2ChoiceField.getText());
 			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
 			
-
-			System.out.println("bed1 set yes/no = "+bed1.getText());
-			System.out.println("bed1 set  type = "+bed1ChoiceField.getText());
-			System.out.println("bed1 set capacity= "+bed1People.getText());
-			
 			String updateSleepingBedTypeQuery = "insert into Sleeping_BedType (sleeping_id, bedType_id, bed1, "
-										+ "bed1ChoiceField, bed1People, bed2, bed2ChoiceField, bed2People)"
-										+ " values(?,?,?,?,?,?,?,?)";
+												+ "bed1ChoiceField, bed1People, bed2, bed2ChoiceField, bed2People)"
+												+ " values(?,?,?,?,?,?,?,?)";
 			PreparedStatement ps_sleepingBedType= connection.prepareStatement(updateSleepingBedTypeQuery);
 
 			ps_sleepingBedType.setInt(1, id);
@@ -350,10 +345,6 @@ public class EditBedroom extends JFrame{
 			ps_sleepingBedType.setBoolean(6, model.getBed2());
 			ps_sleepingBedType.setString(7, model.getBed2Type());
 			ps_sleepingBedType.setInt(8, model.getBed2Capacity());
-
-			System.out.println("bed1 yes/no = "+model.getBed1());
-			System.out.println("bed1 type = "+model.getBed1Type());
-			System.out.println("bed1 capacity= "+model.getBed1Capacity());
 			
 			System.out.println(ps_sleepingBedType);
 			ps_sleepingBedType.executeUpdate();
@@ -363,7 +354,6 @@ public class EditBedroom extends JFrame{
 			String getNoOfBedroomsAddedInSleepingBedType = "select * from Sleeping_BedType where sleeping_id = ?";
 			
 			PreparedStatement ps_gettingNoOfbedroomsAddedInSleepingBedType = connection.prepareStatement(getNoOfBedroomsAddedInSleepingBedType);
-			
 			ps_gettingNoOfbedroomsAddedInSleepingBedType.setInt(1, id);
 			
 			int noOfBedroomsAdded = 0;
@@ -371,18 +361,44 @@ public class EditBedroom extends JFrame{
 			while (rs.next()) {
 				noOfBedroomsAdded = rs.getRow();
 				System.out.println("LENGTH OF RESULT SET IS = "+rs.getRow());
-				System.out.println("no of bathrooms added var = "+noOfBedroomsAdded);
+				System.out.println("no of bedrooms added var = "+noOfBedroomsAdded);
             }	
 
 			System.out.println("no of bedrooms added var outside = "+noOfBedroomsAdded);
 			
 			PreparedStatement ps_addingNoOfBedroomsInSleeping = connection.prepareStatement(addNoOfBedroomsInSleeping);
 			
-			ps_addingNoOfBedroomsInSleeping.setInt(1, noOfBedroomsAdded); //add length of resultset as 2nd param
+			ps_addingNoOfBedroomsInSleeping.setInt(1, noOfBedroomsAdded);
 			ps_addingNoOfBedroomsInSleeping.setInt(2, id);
 
 			System.out.println(ps_addingNoOfBedroomsInSleeping);
 			ps_addingNoOfBedroomsInSleeping.executeUpdate();
+			
+			String addNoOfPeopleInBedroom = "select bed1People, bed2People from Sleeping_BedType where sleeping_id=?";
+			PreparedStatement getNoOfPeopleInBedroom = connection.prepareStatement(addNoOfPeopleInBedroom);
+			getNoOfPeopleInBedroom.setInt(1, id);
+			
+			int bed1People = 0;
+			int bed2People = 0;
+			int peopleInBedroom = 0;
+			ResultSet totalPeople = getNoOfPeopleInBedroom.executeQuery();
+			while (totalPeople.next()) {
+				bed1People = totalPeople.getInt(1);
+				bed2People = totalPeople.getInt(2);
+            }
+			peopleInBedroom = bed1People + bed2People;
+			System.out.println("no of people totally added var outside = "+peopleInBedroom);
+			
+			String addNoOfPeopleInSleepingBedType = "update Sleeping_BedType set peopleInBedroom=? where sleeping_id=? and bedType_id=?";
+			
+			PreparedStatement ps_addingNoOfPeopleInSleepingBedType = connection.prepareStatement(addNoOfPeopleInSleepingBedType);
+			
+			ps_addingNoOfPeopleInSleepingBedType.setInt(1,peopleInBedroom);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(2, id);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(3, model.getBedroomId());
+
+			System.out.println(ps_addingNoOfPeopleInSleepingBedType);
+			ps_addingNoOfPeopleInSleepingBedType.executeUpdate();
 			
 			
 		} catch(Exception e) {
@@ -421,6 +437,32 @@ public class EditBedroom extends JFrame{
 			
 			System.out.println(ps_SleepingBedType);
 			ps_SleepingBedType.executeUpdate();
+			
+			String addNoOfPeopleInBedroom = "select bed1People, bed2People from Sleeping_BedType where sleeping_id=?";
+			PreparedStatement getNoOfPeopleInBedroom = connection.prepareStatement(addNoOfPeopleInBedroom);
+			getNoOfPeopleInBedroom.setInt(1, id);
+			
+			int bed1People = 0;
+			int bed2People = 0;
+			int peopleInBedroom = 0;
+			ResultSet totalPeople = getNoOfPeopleInBedroom.executeQuery();
+			while (totalPeople.next()) {
+				bed1People = totalPeople.getInt(1);
+				bed2People = totalPeople.getInt(2);
+            }
+			peopleInBedroom = bed1People + bed2People;
+			System.out.println("no of people totally added var outside = "+peopleInBedroom);
+			
+			String addNoOfPeopleInSleepingBedType = "update Sleeping_BedType set peopleInBedroom=? where sleeping_id=? and bedType_id=?";
+			
+			PreparedStatement ps_addingNoOfPeopleInSleepingBedType = connection.prepareStatement(addNoOfPeopleInSleepingBedType);
+			
+			ps_addingNoOfPeopleInSleepingBedType.setInt(1,peopleInBedroom);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(2, id);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(3, model.getBedroomId());
+
+			System.out.println(ps_addingNoOfPeopleInSleepingBedType);
+			ps_addingNoOfPeopleInSleepingBedType.executeUpdate();
 			
 			
 		} catch(Exception e) {
