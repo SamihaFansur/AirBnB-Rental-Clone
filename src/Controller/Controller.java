@@ -230,7 +230,7 @@ public class Controller extends MainModule{
 			editOutdoors.initializeEditOutdoors(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BEDROOM){
-			editBedroom.initializeEditBedroom();
+			editBedroom.initializeEditBedroom(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
 			editBathroom.initializeEditBathroom(id);

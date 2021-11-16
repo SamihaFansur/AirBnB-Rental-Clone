@@ -87,7 +87,7 @@ public class EditBathing extends JFrame{
 
 		JLabel editBathingLabel = new JLabel("Add Bathing Facility");
 		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBathingLabel.setBounds(170, 47, 261, 57);
+		editBathingLabel.setBounds(185, 57, 261, 57);
 		editBathingPanel.add(editBathingLabel);
 		
 		try {
@@ -114,20 +114,20 @@ public class EditBathing extends JFrame{
 		
 		JLabel hairDryerLabel = new JLabel("Hair Dryer");
 		hairDryerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		hairDryerLabel.setBounds(170, 135, 167, 34);
+		hairDryerLabel.setBounds(170, 188, 167, 34);
 		editBathingPanel.add(hairDryerLabel);
 
 		hairDryerRadioBtn = new JRadioButton("Hair Dryer", hairDryer);
-		hairDryerRadioBtn.setBounds(364, 146, 21, 23);
+		hairDryerRadioBtn.setBounds(364, 188, 21, 23);
 		editBathingPanel.add(hairDryerRadioBtn);
 		
 		JLabel toiletPaperLabel = new JLabel("Toilet Paper");
 		toiletPaperLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		toiletPaperLabel.setBounds(170, 191, 167, 34);
+		toiletPaperLabel.setBounds(170, 285, 167, 34);
 		editBathingPanel.add(toiletPaperLabel);
 		
 		toiletPaperRadioBtn = new JRadioButton("Toilet paper", toiletPaper);
-		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
+		toiletPaperRadioBtn.setBounds(364, 296, 21, 23);
 		editBathingPanel.add(toiletPaperRadioBtn);
 		
 //		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
@@ -160,12 +160,12 @@ public class EditBathing extends JFrame{
 				MainModule.controller.editPropertyView(id);
 			}
 		});
-		addBathing.setBounds(258, 329, 200, 23);
+		addBathing.setBounds(185, 480, 200, 23);
 		editBathingPanel.add(addBathing);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		backButton.setBounds(29, 57, 91, 23);
+		backButton.setBounds(44, 76, 91, 23);
 		editBathingPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
