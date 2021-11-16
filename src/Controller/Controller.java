@@ -244,6 +244,9 @@ public class Controller extends MainModule{
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS){
 			reviews.initializeReviews();
 		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.FACILITIES){
+			facilities.initializeFacilities();
+		}
 		
 	}
  	

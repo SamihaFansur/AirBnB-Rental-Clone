@@ -100,7 +100,8 @@ public class MainModule {
 		EDIT_BATHROOM,
 		EDIT_BEDROOM,
 		PROPERTIES,
-		REVIEWS
+		REVIEWS,
+		FACILITIES
 	}
 	
 	public enum USER {

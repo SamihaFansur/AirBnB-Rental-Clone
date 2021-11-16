@@ -87,6 +87,13 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(editPropertyLabel);
 		
 		JButton facilitiesButton = new JButton("Facilities");
+		facilitiesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
+				MainModule.controller.editPropertyView(0);
+				close();
+			}
+		});
 		facilitiesButton.setBounds(203, 163, 183, 34);
 		editPropertyPanel.add(facilitiesButton);
 		
