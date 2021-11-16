@@ -137,14 +137,6 @@ public class EditProperty extends JFrame{
 		houseNameNumberTextField.setBounds(202, 460, 274, 34);
 		editPropertyPanel.add(houseNameNumberTextField);
 		
-		addEditPropertyButton = new JButton("Save");
-		addEditPropertyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addEditPropertyDetails();
-			}
-		});
-		addEditPropertyButton.setBounds(385, 611, 91, 23);
-		editPropertyPanel.add(addEditPropertyButton);
 		
 		
 		resetEditPropertyButton = new JButton("Reset");
@@ -178,12 +170,33 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(guestCapacityTextField);
 		
 		JButton reviewsButton = new JButton("Reviews");
+		reviewsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
+				MainModule.controller.editPropertyView(0);
+				close();
+			}
+		});
 		reviewsButton.setBounds(203, 118, 183, 34);
+		
 		editPropertyPanel.add(reviewsButton);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+				mainModule.currentState=STATE.HOST_ACCOUNT;
+				mainModule.userState=USER.HOST;
+				MainModule.controller.drawNewView();
+//				close();
+				frame.dispose();
+				
+			}
+		});
+		
 		editPropertyPanel.add(backButton);
 		
 		JButton addChargeBandsButton = new JButton("Charge Bands");
@@ -191,6 +204,27 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(addChargeBandsButton);
 
 
+		
+		addEditPropertyButton = new JButton("Save");
+			addEditPropertyButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					Boolean validateGuestCapacityInput = validateGuestCapacity(guestCapacityTextField.getText());
+					//System.out.println(guestCapacityTextField.getSelectedText());
+					
+					if (validateGuestCapacityInput) {
+						addEditPropertyDetails();
+						
+					}else {
+						JOptionPane.showMessageDialog(guestCapacityTextField,"Guest capacity must be a number greater than 0");
+					}
+					
+				}
+			});
+		addEditPropertyButton.setBounds(385, 611, 91, 23);
+		editPropertyPanel.add(addEditPropertyButton);
+		
+	
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -342,6 +376,23 @@ public class EditProperty extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public boolean validateGuestCapacity(String guestCapacity) {
+		System.out.println("HERE****************");	
+
+		if (guestCapacity.matches("[1-9]*") && (guestCapacity.length() >= 1)) {
+			//System.out.println("First name contains a characters not between a-z or A-Z");
+			System.out.println(guestCapacity+" IS  VALID****************");	
+
+			return true;
+		}
+		else {
+			System.out.println(guestCapacity+" IS NOT VALID***************");
+			return false;
+		}
+
+	}
+	
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

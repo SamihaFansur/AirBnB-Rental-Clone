@@ -8,6 +8,7 @@ import Controller.Controller;
 import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -190,6 +191,19 @@ public class EditLiving extends JFrame{
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(26, 76, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
+				mainModule.userState=USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
+				MainModule.controller.editPropertyView(1);
+//				close();
+				frame.dispose();
+				
+			}
+		});	
 		editLivingPanel.add(backButton);
 		
 		frame.setBounds(100, 100, 600, 700);

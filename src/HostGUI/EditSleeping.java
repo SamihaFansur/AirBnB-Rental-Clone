@@ -84,7 +84,7 @@ public class EditSleeping extends JFrame{
 
 		JLabel editSleepingLabel = new JLabel("Add Sleeping Facility");
 		editSleepingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editSleepingLabel.setBounds(248, 47, 183, 57);
+		editSleepingLabel.setBounds(197, 50, 249, 57);
 		editSleepingPanel.add(editSleepingLabel);
 		
 		try {
@@ -111,20 +111,20 @@ public class EditSleeping extends JFrame{
 		
 		JLabel bedLinenLabel = new JLabel("Bed Linen");
 		bedLinenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bedLinenLabel.setBounds(170, 135, 167, 34);
+		bedLinenLabel.setBounds(170, 167, 167, 34);
 		editSleepingPanel.add(bedLinenLabel);
 
 		bedLinenRadioBtn = new JRadioButton("Bed Linen", bedLinen);
-		bedLinenRadioBtn.setBounds(364, 146, 21, 23);
+		bedLinenRadioBtn.setBounds(398, 177, 21, 23);
 		editSleepingPanel.add(bedLinenRadioBtn);
 		
 		JLabel towelsLabel = new JLabel("Towels");
 		towelsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		towelsLabel.setBounds(170, 191, 167, 34);
+		towelsLabel.setBounds(170, 265, 167, 34);
 		editSleepingPanel.add(towelsLabel);
 				
 		towelsRadioBtn = new JRadioButton("Towels", towels);
-		towelsRadioBtn.setBounds(364, 199, 21, 23);
+		towelsRadioBtn.setBounds(398, 264, 21, 23);
 		editSleepingPanel.add(towelsRadioBtn);
 		
 		JButton addBedroomButton = new JButton("Add Bedrooms");
@@ -137,13 +137,28 @@ public class EditSleeping extends JFrame{
 				MainModule.controller.editPropertyView(id);
 			}
 		});
-		addBedroomButton.setBounds(199, 405, 209, 46);
+		addBedroomButton.setBounds(197, 405, 209, 46);
 		editSleepingPanel.add(addBedroomButton);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(27, 69, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
+				mainModule.userState=USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
+				MainModule.controller.editPropertyView(1);
+//				close();
+				frame.dispose();
+				
+			}
+		});	
 		editSleepingPanel.add(backButton);
+		
+		
 		
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -64,6 +64,8 @@ public class EditAccount extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeEditAccount() {
+		System.out.println("0");
+		
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -104,6 +106,7 @@ public class EditAccount extends JFrame{
 		surnameTextField.setBounds(207, 402, 274, 34);
 		editACcountPanel.add(surnameTextField);
 		
+		System.out.println("1");
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setBounds(104, 456, 93, 34);
 		editACcountPanel.add(passwordLabel);
@@ -126,16 +129,19 @@ public class EditAccount extends JFrame{
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
 		editACcountPanel.add(backButton);
-
+		System.out.println("2");
+		
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
 		
 		titleComboBox = new JComboBox(titles);
-		titleComboBox.setBounds(217, 93, 276, 23);
-		titleComboBox.add(titleComboBox);
+		titleComboBox.setBounds(207, 274, 276, 23);
+		editACcountPanel.add(titleComboBox);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		System.out.println("3");
 	}
 	
 	public void addEditAccountDetails() {
