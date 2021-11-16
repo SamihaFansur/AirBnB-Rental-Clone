@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.*;
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
@@ -19,6 +20,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -29,9 +33,15 @@ public class EditSleeping extends JFrame{
 
 
 	private JFrame frame;
-	private JTextField noOfBedroomsTextField;
 	private NavHost navForHost = new NavHost();
+	private JRadioButton towelsRadioBtn;
+	private JRadioButton bedLinenRadioBtn;
 
+	private int idAfter;
+	
+	private boolean bedLinen, towels;
+	
+	Connection connection = null;
 
 	public void close() {
 		frame.dispose();
@@ -54,7 +64,7 @@ public class EditSleeping extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditSleeping() {
+	public void initializeEditSleeping(int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -62,50 +72,69 @@ public class EditSleeping extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+
+		System.out.println("sleeping record id in edit sleepingfacility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit sleepingfunc = "+idAfter);
 		
 		JPanel editSleepingPanel = new JPanel();
 		editSleepingPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editSleepingPanel, BorderLayout.CENTER);
 		editSleepingPanel.setLayout(null);
 
-		JLabel editSleepingLabel = new JLabel("Sleeping");
+		JLabel editSleepingLabel = new JLabel("Add Sleeping Facility");
 		editSleepingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editSleepingLabel.setBounds(248, 47, 183, 57);
 		editSleepingPanel.add(editSleepingLabel);
+		
+		try {
+			connection = ConnectionManager.getConnection();
+
+			System.out.println("id in try block where im tryna get values from db = "+id);
+			
+			String selectSleepingRecord = "select bedLinen, towels from Sleeping "
+										+ "where sleeping_id=?";
+			
+			PreparedStatement selectingSleepingValues= connection.prepareStatement(selectSleepingRecord);
+			
+			selectingSleepingValues.setInt(1, id);
+			ResultSet rs = selectingSleepingValues.executeQuery();
+			while (rs.next()) {
+				bedLinen = rs.getBoolean("bedLinen");
+                towels = rs.getBoolean("towels");
+            }		
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
 		
 		JLabel bedLinenLabel = new JLabel("Bed Linen");
 		bedLinenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bedLinenLabel.setBounds(170, 135, 167, 34);
 		editSleepingPanel.add(bedLinenLabel);
+
+		bedLinenRadioBtn = new JRadioButton("Bed Linen", bedLinen);
+		bedLinenRadioBtn.setBounds(364, 146, 21, 23);
+		editSleepingPanel.add(bedLinenRadioBtn);
 		
 		JLabel towelsLabel = new JLabel("Towels");
 		towelsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		towelsLabel.setBounds(170, 191, 167, 34);
 		editSleepingPanel.add(towelsLabel);
+				
+		towelsRadioBtn = new JRadioButton("Towels", towels);
+		towelsRadioBtn.setBounds(364, 199, 21, 23);
+		editSleepingPanel.add(towelsRadioBtn);
 		
-		JLabel noOfBedroomsLabel = new JLabel("Number Of Bedrooms");
-		noOfBedroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		noOfBedroomsLabel.setBounds(170, 254, 167, 34);
-		editSleepingPanel.add(noOfBedroomsLabel);
-		
-		JRadioButton refrigeratorRadioBtn = new JRadioButton("");
-		refrigeratorRadioBtn.setBounds(364, 146, 21, 23);
-		editSleepingPanel.add(refrigeratorRadioBtn);
-		
-		JRadioButton microwaveRadioBtn = new JRadioButton("");
-		microwaveRadioBtn.setBounds(364, 199, 21, 23);
-		editSleepingPanel.add(microwaveRadioBtn);
-		
-		noOfBedroomsTextField = new JTextField();
-		noOfBedroomsTextField.setBounds(347, 254, 106, 29);
-		editSleepingPanel.add(noOfBedroomsTextField);
-		noOfBedroomsTextField.setColumns(10);
-		
-		JButton addBedroomButton = new JButton("Add Bedroom");
+		JButton addBedroomButton = new JButton("Add Bedrooms");
 		addBedroomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("printing id in add bedroom btn before calling updateSleepingDetails func = "+id);
+				System.out.println("printing idAfter in add bedroom btn before calling updateSleepingDetails func = "+idAfter);
+				updateSleepingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BEDROOM;
-				MainModule.controller.editPropertyView(0);
+				MainModule.controller.editPropertyView(id);
 			}
 		});
 		addBedroomButton.setBounds(199, 405, 209, 46);
@@ -116,14 +145,35 @@ public class EditSleeping extends JFrame{
 		backButton.setBounds(27, 69, 91, 23);
 		editSleepingPanel.add(backButton);
 		
-		JButton saveSleeping = new JButton("Save");
-		saveSleeping.setBounds(248, 331, 91, 23);
-		editSleepingPanel.add(saveSleeping);
-
-
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	public void updateSleepingDetails(int id) {
+		System.out.println("Printing id fed into updateSleepingDetails = "+id);
+		try {
+			connection = ConnectionManager.getConnection();
+
+			System.out.println("id after in updateSleeping func = "+idAfter);
+			model.setBedLinen(bedLinenRadioBtn.isSelected());
+			model.setTowels(towelsRadioBtn.isSelected());
+			
+			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=? "
+										+ "where sleeping_id=?";
+			
+			PreparedStatement updatingSleepingValues= connection.prepareStatement(updateSleepingRecord);
+			updatingSleepingValues.setBoolean(1, model.getBedLinen());
+			updatingSleepingValues.setBoolean(2, model.getTowels());
+			updatingSleepingValues.setInt(3, idAfter);
+			updatingSleepingValues.executeUpdate();
+			System.out.println(updatingSleepingValues.toString());
+			
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
 	}
 }
 

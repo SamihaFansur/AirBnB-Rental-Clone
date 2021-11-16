@@ -85,7 +85,35 @@ public class AddFacility extends JFrame{
 		addSleepingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
-				MainModule.controller.editPropertyView(0);
+				int id=0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBedrooms)"
+												+ " values(?,?,?)";
+					PreparedStatement ps_sleeping = connection.prepareStatement(insertSleepingQuery, Statement.RETURN_GENERATED_KEYS);
+					
+					ps_sleeping.setBoolean(1, false);
+					ps_sleeping.setBoolean(2, false);
+					ps_sleeping.setInt(3, 0);
+
+					System.out.println(ps_sleeping);
+					ps_sleeping.executeUpdate();
+					
+					ResultSet rs=ps_sleeping.getGeneratedKeys();
+					if(rs.next()){
+						id=rs.getInt(1);
+					}
+					
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("IDDDDDDDDDDDD = "+id);
+				
+				
+				MainModule.controller.editPropertyView(id);
 			}
 		});
 		addSleepingButton.setBounds(190, 160, 196, 51);

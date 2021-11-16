@@ -101,7 +101,7 @@ public class EditBathroom extends JFrame{
 		frame.getContentPane().add(editBathroomPanel, BorderLayout.CENTER);
 		editBathroomPanel.setLayout(null);
 
-		JLabel editBathroomLabel = new JLabel("Add Bathroom facilities");
+		JLabel editBathroomLabel = new JLabel("Add Bathrooms");
 		editBathroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editBathroomLabel.setBounds(220, 58, 290, 57);
 		editBathroomPanel.add(editBathroomLabel);
@@ -136,21 +136,21 @@ public class EditBathroom extends JFrame{
 		  editBathroomPanel.add(shared);
 		  shared.setColumns(10);
 		  
-		  JLabel lblName = new JLabel("Bathroom ID");
-		  lblName.setBounds(151, 11, 95, 20);
-		  editBathroomPanel.add(lblName);
+		  JLabel lblBathroomId= new JLabel("Bathroom ID");
+		  lblBathroomId.setBounds(151, 11, 95, 20);
+		  editBathroomPanel.add(lblBathroomId);
 		  
-		  JLabel lblPassword = new JLabel("Toilet");
-		  lblPassword.setBounds(151, 42, 95, 20);
-		  editBathroomPanel.add(lblPassword);
+		  JLabel lblToilet = new JLabel("Toilet");
+		  lblToilet.setBounds(151, 42, 95, 20);
+		  editBathroomPanel.add(lblToilet);
 		  
-		  JLabel lblEmpId = new JLabel("Bath");
-		  lblEmpId.setBounds(151, 73, 95, 20);
-		  editBathroomPanel.add(lblEmpId);
+		  JLabel lblBath = new JLabel("Bath");
+		  lblBath.setBounds(151, 73, 95, 20);
+		  editBathroomPanel.add(lblBath);
 
-		  JLabel lblEmpSalary = new JLabel("Shower");
-		  lblEmpSalary.setBounds(151, 104, 95, 20);
-		  editBathroomPanel.add(lblEmpSalary);
+		  JLabel lblShower = new JLabel("Shower");
+		  lblShower.setBounds(151, 104, 95, 20);
+		  editBathroomPanel.add(lblShower);
 		  
 		  JLabel lblShared = new JLabel("Shared");
 		  lblShared.setBounds(151, 135, 95, 20);

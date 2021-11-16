@@ -80,54 +80,6 @@ public class EditBathing extends JFrame{
 		idAfter = id;
 		System.out.println("id after in init edit bathing func = "+idAfter);
 		
-		/*
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
-
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
-
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
-
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = USER.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
-		*/
 		JPanel editBathingPanel = new JPanel();
 		editBathingPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editBathingPanel, BorderLayout.CENTER);
@@ -151,7 +103,6 @@ public class EditBathing extends JFrame{
 			selectingBathingValues.setInt(1, id);
 			ResultSet rs = selectingBathingValues.executeQuery();
 			while (rs.next()) {
-//				System.out.println("LENGTH OF RESULT SET IS = "+rs.getRow());
 				hairDryer = rs.getBoolean("hairDryer");
                 toiletPaper = rs.getBoolean("toiletPaper");
             }		

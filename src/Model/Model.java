@@ -28,6 +28,15 @@ public class Model {
 	private boolean hairDryer, toiletPaper;
 	private int noOfBathrooms, bathroomId;
 	
+	//sleeping variables
+	private boolean bedLinen, towels;
+	private int noOfBedrooms, bedroomId;
+	
+	//bedType variables
+	private boolean bed1, bed2 ;
+	private String bed1Type, bed2Type;
+	private int bed1Capacity, bed2Capacity;
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
@@ -419,4 +428,89 @@ public class Model {
 	public int getNoOfBathrooms() {
 		return noOfBathrooms;
 	}
+	
+
+	//sleeping getters and setters
+
+	public void setBedLinen(boolean bedLinen) {
+		this.bedLinen = bedLinen;
+	}
+
+	public boolean getBedLinen() {
+		return bedLinen;
+	}
+	
+	public void setTowels(boolean towels) {
+		this.towels = towels;
+	}
+
+	public boolean getTowels() {
+		return towels;
+	}
+	
+	public void setNoOfBedrooms(int noOfBedrooms) {
+		this.noOfBedrooms= noOfBedrooms;
+	}
+
+	public int getNoOfBedrooms() {
+		return noOfBedrooms;
+	}
+	
+	//bedType getters and setters
+	public void setBedroomId(int bedroomId) {
+		this.bedroomId = bedroomId;
+	}
+
+	public int getBedroomId() {
+		return bedroomId;
+	}
+
+	public void setBed1(boolean bed1) {
+		this.bed1 = bed1;
+	}
+
+	public boolean getBed1() {
+		return bed1;
+	}
+	
+	public void setBed1Type(String bed1Type) {
+		this.bed1Type = bed1Type;
+	}
+
+	public String getBed1Type() {
+		return bed1Type;
+	}
+	
+	public void setBed1Capacity(int bed1Capacity) {
+		this.bed1Capacity = bed1Capacity;
+	}
+
+	public int getBed1Capacity() {
+		return bed1Capacity;
+	}
+
+	public void setBed2(boolean bed2) {
+		this.bed2 = bed2;
+	}
+
+	public boolean getBed2() {
+		return bed2;
+	}
+	
+	public void setBed2Type(String bed2Type) {
+		this.bed2Type = bed2Type;
+	}
+
+	public String getBed2Type() {
+		return bed2Type;
+	}
+	
+	public void setBed2Capacity(int bed2Capacity) {
+		this.bed2Capacity = bed2Capacity;
+	}
+
+	public int getBed2Capacity() {
+		return bed2Capacity;
+	}
+	
 }

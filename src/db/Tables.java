@@ -45,9 +45,9 @@ public class Tables {
 				+ "utility_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, heating BOOL, washingMachine BOOL, "
 				+ "dryingMachine BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
 
-		String createBedTypeTable = "CREATE TABLE BedType("
-				+ "bedType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-				+ "bed1ChoiceField VARCHAR(255), bed2ChoiceField VARCHAR(255), bed1People INT, bed2People INT)";
+//		String createBedTypeTable = "CREATE TABLE BedType("
+//				+ "bedType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+//				+ "bed1ChoiceField VARCHAR(255), bed2ChoiceField VARCHAR(255), bed1People INT, bed2People INT)";
 
 		String createSleepingTable = "CREATE TABLE Sleeping("
 				+ "sleeping_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bedLinen BOOL, towels BOOL, noOfBedrooms INT)";
@@ -55,11 +55,8 @@ public class Tables {
 		String createSleeping_BedTypeTable = "CREATE TABLE Sleeping_BedType("
 				+ "PRIMARY KEY (sleeping_id, bedType_id), sleeping_id INT, "
 				+ "FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), bedType_id INT, "
-				+ "FOREIGN KEY (bedType_id) REFERENCES BedType(bedType_id), peopleInBedroom INT)";
-
-//		String createBathTypeTable = "CREATE TABLE BathType("
-//				+ "bathType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-//				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
+				+ "peopleInBedroom INT, bed1 BOOL, bed2 BOOL, bed1ChoiceField VARCHAR(255), bed2ChoiceField VARCHAR(255), "
+				+ "bed1People INT, bed2People INT)";
 
 		String createBathingTable = "CREATE TABLE Bathing("
 				+ "bathing_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, hairDryer BOOL, "
@@ -104,9 +101,9 @@ public class Tables {
 //		
 
 				String[] allDropQueries = { "DROP TABLE IF EXISTS HostAccount", "DROP TABLE IF EXISTS GuestAccount","DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Outdoors",
-				"DROP TABLE IF EXISTS Living", "DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility", "DROP TABLE IF EXISTS BathType",
+				"DROP TABLE IF EXISTS Living", "DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility",
 				"DROP TABLE IF EXISTS Bathing", "DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Sleeping",
-				"DROP TABLE IF EXISTS BedType","DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property","DROP TABLE IF EXISTS Address"};
+				"DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property","DROP TABLE IF EXISTS Address"};
 //				"DROP TABLE IF EXISTS Review","DROP TABLE IF EXISTS ChargeBands" , "DROP TABLE IF EXISTS Booking", "DROP TABLE IF EXISTS ACCOUNT"};
 //		dropAllTables(allDropQueries);
 
@@ -114,7 +111,7 @@ public class Tables {
 							createGuestAccountTable, createOutdoorsTable,createLivingTable, 
 							createKitchenTable,createUtilityTable,
 							createBathingTable, createBathing_BathTypeTable, createSleepingTable, 
-							createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, 
+							createSleeping_BedTypeTable, createFacilitiesTable, 
 							createPropertyTable};
 		createAllTables(create);
 	}
