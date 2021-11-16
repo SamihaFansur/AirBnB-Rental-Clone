@@ -128,19 +128,6 @@ public class EditAccount extends JFrame{
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.userState=USER.HOST;
-				MainModule.controller.drawNewView();
-//				close();
-				frame.dispose();
-				
-			}
-		});
-		
 		editACcountPanel.add(backButton);
 		System.out.println("2");
 		

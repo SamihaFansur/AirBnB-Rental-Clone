@@ -53,6 +53,7 @@ public class Controller extends MainModule{
 	private HostAccount hostAccount;
 	private Properties properties;
 	private EditAccount editAccount;
+	private Reviews reviews;
 //	private Properties properties;
 	
 	
@@ -77,7 +78,8 @@ public class Controller extends MainModule{
 			Facilities facilities,
 			HostAccount hostAccount,
 			Properties properties,
-			EditAccount editAccount){
+			EditAccount editAccount,
+			Reviews reviews){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -102,6 +104,7 @@ public class Controller extends MainModule{
 		this.hostAccount=hostAccount;
 		this.properties=properties;
 		this.editAccount = editAccount;
+		this.reviews = reviews;
 	}
 	
 	public void setTitle(String title){
@@ -237,6 +240,9 @@ public class Controller extends MainModule{
 	
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
 			properties.initializeProperties();
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS){
+			reviews.initializeReviews();
 		}
 		
 	}

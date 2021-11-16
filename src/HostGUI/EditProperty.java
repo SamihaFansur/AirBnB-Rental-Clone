@@ -178,7 +178,15 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(guestCapacityTextField);
 		
 		JButton reviewsButton = new JButton("Reviews");
+		reviewsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
+				MainModule.controller.editPropertyView(0);
+				close();
+			}
+		});
 		reviewsButton.setBounds(203, 118, 183, 34);
+		
 		editPropertyPanel.add(reviewsButton);
 		
 		JButton backButton = new JButton("Back");
