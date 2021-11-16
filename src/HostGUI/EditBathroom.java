@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -301,6 +302,32 @@ public class EditBathroom extends JFrame{
 
 			System.out.println(ps_bathingBathType);
 			ps_bathingBathType.executeUpdate();
+			
+
+			String addNoOfBathroomsInBathing = "update Bathing set noOfBathrooms=? where bathing_id=?";
+			String getNoOfBathroomsAddedInBathingBathType = "select * from Bathing_BathType where bathing_id = ?";
+			
+			PreparedStatement ps_gettingNoOfBathroomsAddedInBathingBathType = connection.prepareStatement(getNoOfBathroomsAddedInBathingBathType);
+			
+			ps_gettingNoOfBathroomsAddedInBathingBathType.setInt(1, id);
+			
+			int noOfBathroomsAdded = 0;
+			ResultSet rs = ps_gettingNoOfBathroomsAddedInBathingBathType.executeQuery();
+			while (rs.next()) {
+				noOfBathroomsAdded = rs.getRow();
+				System.out.println("LENGTH OF RESULT SET IS = "+rs.getRow());
+				System.out.println("no of bathrooms added var = "+noOfBathroomsAdded);
+            }	
+
+			System.out.println("no of bathrooms added var outside = "+noOfBathroomsAdded);
+			
+			PreparedStatement ps_addingNoOfBathroomsInBathing = connection.prepareStatement(addNoOfBathroomsInBathing);
+			
+			ps_addingNoOfBathroomsInBathing.setInt(1, noOfBathroomsAdded); //add length of resultset as 2nd param
+			ps_addingNoOfBathroomsInBathing.setInt(2, id);
+
+			System.out.println(ps_addingNoOfBathroomsInBathing);
+			ps_addingNoOfBathroomsInBathing.executeUpdate();
 			
 			
 		} catch(Exception e) {
