@@ -179,8 +179,95 @@ public class Register extends JFrame{
 		registerButton.setBounds(321, 553, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				Boolean check=false;
+				
+				Boolean validateFirstNameInput =  validateName(firstNameTextField.getText());
+				Boolean valudateSurnameInput = validateName(surnameTextField.getText());
+				
+				// EMAIL VALIDATION CURRENTLY NOT WORKING SO SET TO TRUE
+			//	Boolean validateEmailInput = validateEmail(emailAddressTextField.getText());
+				Boolean validateEmailInput = true;
+				
+				// assumes UK number
+				Boolean validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
+				
+				// first checking if the street number is a house name or number
+				Boolean validateHouseNameNumberInput=false;
+				//first checking if it's a number
+				String houseNameNumberInput = houseNumberTextField.getText();
+				for(int k=0;k<houseNameNumberInput.length();k++) {
+					//going through the input 
+					
+					if(Character.isDigit(houseNameNumberInput.charAt(k))==false) {
+						//System.out.println(houseNameNumberInput+" IS NOT VALID");
+						System.out.println(houseNameNumberInput+" is a string not an integer. So break out of here");
+						validateHouseNameNumberInput = false;
+						break;	//breaks out of loop if it finds something that is not a digit
+						//k=houseNameNumberInput.length();
+					}
+					else {
+						validateHouseNameNumberInput = true;
+					}
+				}
+				if(validateHouseNameNumberInput==true) {
+					System.out.println(houseNameNumberInput+" IS A NUMBER ONLY AND IS VALID");	
+				}
+				
+				//if not a number then it must be a String
+				if(validateHouseNameNumberInput==false) {
+					String[] houseNameNumberInputArray = houseNumberTextField.getText().split(" ");
+					for(int i=0;i<houseNameNumberInputArray.length;i++) {
+						// validating one string at a time:
+						System.out.println(i);
+						validateHouseNameNumberInput = validateName(houseNameNumberInputArray[i]);
+						if (validateHouseNameNumberInput == false) {
+							// if one of the strings is not between a-z or A-Z then 
+							System.out.println(houseNameNumberInputArray+" IS NOT VALID");	
+							System.out.println(houseNameNumberInputArray[i]+"does not contain a-z or A-Z");
+							i = houseNameNumberInputArray.length;
+							break;
+						}else {
+							System.out.println(i+"time");
+							validateHouseNameNumberInput = true;
+						}
+					}
+				}
+				
+				//looping through the street name to validate each of the stings:
+				Boolean validateStreetNameInput = false; //validateName(streetNameTextField.getText());
+				String[] streetNameInputArray = streetNameTextField.getText().split(" ");
+				for(int i=0;i<streetNameInputArray.length;i++) {
+					// validating one string at a time:
+					System.out.println("HEREEE");
+					System.out.println(streetNameInputArray[i]);
+					validateStreetNameInput = validateName(streetNameInputArray[i]);
+					if (validateStreetNameInput == false) {
+						// if one of the strings is not between a-z or A-Z then 
+						i = streetNameInputArray.length;
+						break;
+					}else {
+						validateStreetNameInput = true;
+					}
+				}
+				
+				Boolean validateCityNameInput = validateName(cityTextField.getText());
+				
+				// see postcode method for the validation for this.
+				Boolean validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
+			
+				
+				System.out.println("end result for streetName: "+validateStreetNameInput);
+				
+				if(validateFirstNameInput && valudateSurnameInput && validateEmailInput && validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput && validateCityNameInput && validatePostcodeInput) {
+					submit();
+					Login sp = new Login(mainModule, controller, model);
+				}
+			/*
+				
 				submit();
 				Login sp = new Login(mainModule,controller,model);
+			*/
 			}
 		});
 		registerPanel.add(registerButton);
@@ -209,6 +296,61 @@ public class Register extends JFrame{
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
+	
+	
+	
+	public boolean validateName(String name) {
+		if (!name.matches("[a-zA-Z]*")) {
+			System.out.println(name+" IS NOT VALID NAME");	
+			return false;
+		}
+		else{
+			System.out.println(name+" IS VALID");	
+			return true;
+		}
+	}
+
+	public boolean validateEmail(String email) {
+		// [A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}
+		if (!email.matches("[a-zA-Z0-9]*" + "@[a-zA-Z0-9]*" + "[a-zA-Z]{2,}")) {
+			System.out.println(email+" IS NOT VALID");	
+			return false;
+		}else{
+			System.out.println(email+" IS VALID");	
+			return true;
+		}
+	}
+
+	public boolean validateMobileNumber(String mobile) {
+		if (mobile.matches("[0-9]*") && (mobile.length() == 11)) {
+			//System.out.println("First name contains a characters not between a-z or A-Z");
+			System.out.println(mobile+" IS  VALID");	
+
+			return true;
+		}
+		else {
+			System.out.println(mobile+" IS NOT VALID");	
+			return false;
+		}
+
+	}
+
+
+
+	public boolean validatePostcode(String postcode) {
+		if(postcode.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$")) {
+			/* regular expressions for postcode copied used from this java website:
+			https://howtodoinjava.com/java/regex/uk-postcode-validation/
+				*/
+			System.out.println(postcode+" IS VALID");	
+			return true;
+		}else {
+			System.out.println(postcode+" IS NOT VALID");	
+			return false;
+		}
+	}
+		
+	
 	
 	public void submit() {
 		try {
