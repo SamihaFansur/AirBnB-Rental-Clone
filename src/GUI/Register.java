@@ -181,7 +181,7 @@ public class Register extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				Boolean validateFirstNameInput =  validateName(firstNameTextField.getText());
-				Boolean valudateSurnameInput = validateName(surnameTextField.getText());
+				Boolean validateSurnameInput = validateName(surnameTextField.getText());
 				
 				Boolean validateEmailInput = validateEmail(emailAddressTextField.getText());
 
@@ -255,7 +255,18 @@ public class Register extends JFrame{
 				
 				System.out.println("end result for streetName: "+validateStreetNameInput);
 				
-				if(validateFirstNameInput && valudateSurnameInput && validateEmailInput && validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput && validateCityNameInput && validatePostcodeInput) {
+				if(validateFirstNameInput && validateSurnameInput && validateEmailInput && validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput && validateCityNameInput && validatePostcodeInput) {
+					model.setTitle(registerTitleComboBox.getSelectedItem().toString());
+					model.setFirstName(firstNameTextField.getText());
+					model.setSurname(surnameTextField.getText());
+					model.setEmail(emailAddressTextField.getText());
+					model.setMobileNumber(mobileNumberTextField.getText());
+					model.setPassword(passwordTextField.getText());
+					model.setHouseNameNum(houseNumberTextField.getText());
+					model.setStreetName(streetNameTextField.getText());
+					model.setCity(cityTextField.getText()); 
+					model.setPostcode(postcodeTextField.getText());
+					model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 					submit();
 					Login sp = new Login(mainModule, controller, model);
 				}
@@ -358,17 +369,6 @@ public class Register extends JFrame{
 			String insertIntoGuestAccountTable = "insert into GuestAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";			
 
-			model.setTitle(registerTitleComboBox.getSelectedItem().toString());
-			model.setFirstName(firstNameTextField.getText());
-			model.setSurname(surnameTextField.getText());
-			model.setEmail(emailAddressTextField.getText());
-			model.setMobileNumber(mobileNumberTextField.getText());
-			model.setPassword(passwordTextField.getText());
-			model.setHouseNameNum(houseNumberTextField.getText());
-			model.setStreetName(streetNameTextField.getText());
-			model.setCity(cityTextField.getText()); 
-			model.setPostcode(postcodeTextField.getText());
-			model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 			PreparedStatement ps_account = connection.prepareStatement(insertAccountQuery);
 			
 			ps_account.setString(1, model.getEmail());
