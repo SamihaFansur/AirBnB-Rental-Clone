@@ -227,7 +227,7 @@ public class Controller extends MainModule{
 			editBedroom.initializeEditBedroom();
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
-			editBathroom.initializeEditBathroom();
+			editBathroom.initializeEditBathroom(id);
 		}
 	}
  	

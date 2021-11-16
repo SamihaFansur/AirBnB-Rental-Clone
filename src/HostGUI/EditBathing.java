@@ -150,8 +150,8 @@ public class EditBathing extends JFrame{
 			
 			selectingBathingValues.setInt(1, id);
 			ResultSet rs = selectingBathingValues.executeQuery();
-			
 			while (rs.next()) {
+//				System.out.println("LENGTH OF RESULT SET IS = "+rs.getRow());
 				hairDryer = rs.getBoolean("hairDryer");
                 toiletPaper = rs.getBoolean("toiletPaper");
             }		
@@ -202,9 +202,11 @@ public class EditBathing extends JFrame{
 		addBathing= new JButton("Add Bathrooms");
 		addBathing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateBathingDetails();
+				System.out.println("printing id in add bathroom btn before calling updateBathingDetails func = "+id);
+				System.out.println("printing idAfter in add bathroom btn before calling updateBathingDetails func = "+idAfter);
+				updateBathingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
-				MainModule.controller.editPropertyView(0);
+				MainModule.controller.editPropertyView(id);
 			}
 		});
 		addBathing.setBounds(258, 329, 200, 23);
@@ -220,7 +222,8 @@ public class EditBathing extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void updateBathingDetails() {
+	public void updateBathingDetails(int id) {
+		System.out.println("Printing id fed into updateBathingDetails = "+id);
 		try {
 			connection = ConnectionManager.getConnection();
 

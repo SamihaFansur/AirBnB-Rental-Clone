@@ -57,9 +57,9 @@ public class Tables {
 				+ "FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), bedType_id INT, "
 				+ "FOREIGN KEY (bedType_id) REFERENCES BedType(bedType_id), peopleInBedroom INT)";
 
-		String createBathTypeTable = "CREATE TABLE BathType("
-				+ "bathType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
+//		String createBathTypeTable = "CREATE TABLE BathType("
+//				+ "bathType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+//				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
 
 		String createBathingTable = "CREATE TABLE Bathing("
 				+ "bathing_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, hairDryer BOOL, "
@@ -68,7 +68,7 @@ public class Tables {
 		String createBathing_BathTypeTable = "CREATE TABLE Bathing_BathType("
 				+ "PRIMARY KEY (bathing_id, bathType_id), bathing_id INT, bathType_id INT, "
 				+ "FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
-				+ "FOREIGN KEY (bathType_id) REFERENCES BathType(bathType_id))";
+				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
 
 		String createFacilitiesTable = "CREATE TABLE Facilities("
 				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, kitchen_id INT,"
@@ -108,11 +108,11 @@ public class Tables {
 				"DROP TABLE IF EXISTS Bathing", "DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Sleeping",
 				"DROP TABLE IF EXISTS BedType","DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property","DROP TABLE IF EXISTS Address"};
 //				"DROP TABLE IF EXISTS Review","DROP TABLE IF EXISTS ChargeBands" , "DROP TABLE IF EXISTS Booking", "DROP TABLE IF EXISTS ACCOUNT"};
-		dropAllTables(allDropQueries);
+//		dropAllTables(allDropQueries);
 
 		String[] create = {createAddressTable, createAccountTable, createHostAccountTable, 
 							createGuestAccountTable, createOutdoorsTable,createLivingTable, 
-							createKitchenTable,createUtilityTable, createBathTypeTable, 
+							createKitchenTable,createUtilityTable,
 							createBathingTable, createBathing_BathTypeTable, createSleepingTable, 
 							createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, 
 							createPropertyTable};

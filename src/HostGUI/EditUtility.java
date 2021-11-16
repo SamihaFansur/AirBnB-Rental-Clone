@@ -55,7 +55,7 @@ public class EditUtility extends JFrame{
 	 private JButton addUtility;
 	 private int idAfter;
 	 
-	 private boolean heating, washingMachine, dryingMaching, fireExtinguisher, smokeAlarm, firstAidKit;
+	 private boolean heating, washingMachine, dryingMachine, fireExtinguisher, smokeAlarm, firstAidKit;
 	 
 	Connection connection = null;
 
@@ -107,7 +107,7 @@ public class EditUtility extends JFrame{
 			while (rs.next()) {
 				heating = rs.getBoolean("heating");
                 washingMachine = rs.getBoolean("washingMachine");
-                dryingMaching = rs.getBoolean("dryingMaching");
+                dryingMachine = rs.getBoolean("dryingMachine");
                 fireExtinguisher = rs.getBoolean("fireExtinguisher");
                 smokeAlarm = rs.getBoolean("smokeAlarm");
                 firstAidKit = rs.getBoolean("firstAidKit");
@@ -150,7 +150,7 @@ public class EditUtility extends JFrame{
 		dryingMachineLabel.setBounds(146, 310, 167, 34);
 		editUtilityPanel.add(dryingMachineLabel);
 
-		dryingMachineRadioBtn = new JRadioButton("Drying machine", dryingMaching);
+		dryingMachineRadioBtn = new JRadioButton("Drying machine", dryingMachine);
 		dryingMachineRadioBtn.setBounds(395, 310, 21, 23);
 		editUtilityPanel.add(dryingMachineRadioBtn);
 		
@@ -207,7 +207,7 @@ public class EditUtility extends JFrame{
 			
 			
 			String updateUtilityRecord = "update Utility set heating=?, washingMachine=?, "
-					+ "dryingMaching=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? "
+					+ "dryingMachine=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? "
 					+ "where utility_id=?";
 			
 			PreparedStatement ps_utility = connection.prepareStatement(updateUtilityRecord);

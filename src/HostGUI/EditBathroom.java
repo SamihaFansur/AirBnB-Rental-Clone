@@ -69,6 +69,8 @@ public class EditBathroom extends JFrame{
 	 
 	Connection connection = null;
 	
+	int idAfter;
+	
 	 public EditBathroom(MainModule mainModule, Controller controller, Model model) {
 		//initializeEditBathroom();
 		this.model=model;
@@ -79,7 +81,7 @@ public class EditBathroom extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBathroom() {
+	public void initializeEditBathroom(int id) {
 		
 		try {
 			frame = new JFrame();
@@ -88,6 +90,10 @@ public class EditBathroom extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+
+		System.out.println("bathingBathType record id in edit bathingBathTypefacility page = "+id);
+		idAfter = id;
+		System.out.println("id after in init edit bathingBathType func = "+idAfter);
 		
 		JPanel editBathroomPanel = new JPanel();
 		editBathroomPanel.setBackground(new Color(204, 255, 255));
@@ -169,7 +175,8 @@ public class EditBathroom extends JFrame{
 	                         shared.getText()
 	                   }
 	              );
-	              addBathTypeDetails();
+	              System.out.println("idAfter in addbtn before calling addBathTypeDetails = "+idAfter);
+	              addBathTypeDetails(idAfter);
 	              //Delete form after adding data
 	              bathroomId.setText("");
 	              toilet.setText("");
@@ -207,7 +214,7 @@ public class EditBathroom extends JFrame{
 	               model.setValueAt(shower.getText(), i, 3);
 	               model.setValueAt(shared.getText(), i, 4);
 	               
-	               updateBathTypeDetails();
+	               updateBathTypeDetails(idAfter);
 	            }
 	        });
 		
@@ -270,7 +277,8 @@ public class EditBathroom extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void addBathTypeDetails() {
+	public void addBathTypeDetails(int id) {
+        System.out.println("id fed into addBathTypeDetails func = "+id);
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -280,18 +288,19 @@ public class EditBathroom extends JFrame{
 			model.setShower(Boolean.parseBoolean(shower.getText()));
 			model.setShared(Boolean.parseBoolean(shared.getText()));
 			
-			String updateBathTypeQuery = "insert into BathType (bathType_id, toilet, bath, shower, shared)"
-										+ " values(?,?,?,?,?)";
-			PreparedStatement ps_bathType= connection.prepareStatement(updateBathTypeQuery);
+			String updateBathingBathTypeQuery = "insert into Bathing_BathType (bathing_id, bathType_id, toilet, bath, shower, shared)"
+										+ " values(?,?,?,?,?,?)";
+			PreparedStatement ps_bathingBathType= connection.prepareStatement(updateBathingBathTypeQuery);
 
-			ps_bathType.setInt(1, model.getBathroomId());
-			ps_bathType.setBoolean(2, model.getToilet());
-			ps_bathType.setBoolean(3, model.getBath());
-			ps_bathType.setBoolean(4, model.getShower());
-			ps_bathType.setBoolean(5, model.getShared());
+			ps_bathingBathType.setInt(1, id);
+			ps_bathingBathType.setInt(2, model.getBathroomId());
+			ps_bathingBathType.setBoolean(3, model.getToilet());
+			ps_bathingBathType.setBoolean(4, model.getBath());
+			ps_bathingBathType.setBoolean(5, model.getShower());
+			ps_bathingBathType.setBoolean(6, model.getShared());
 
-			System.out.println(ps_bathType);
-			ps_bathType.executeUpdate();
+			System.out.println(ps_bathingBathType);
+			ps_bathingBathType.executeUpdate();
 			
 			
 		} catch(Exception e) {
@@ -300,7 +309,8 @@ public class EditBathroom extends JFrame{
 		}
 	}
 	
-	public void updateBathTypeDetails() {
+	public void updateBathTypeDetails(int id) {
+        System.out.println("id fed into updateBathTypeDetails func = "+id);
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -310,18 +320,19 @@ public class EditBathroom extends JFrame{
 			model.setShower(Boolean.parseBoolean(shower.getText()));
 			model.setShared(Boolean.parseBoolean(shared.getText()));
 
-			String updateBathTypeQuery = "update BathType set toilet=?, bath=?, shower=?, shared=? where bathType_id=?";
+			String updateBathingBathTypeQuery = "update Bathing_BathType set toilet=?, bath=?, shower=?, shared=? where bathType_id=? and bathing_id=?";
 			
-			PreparedStatement ps_bathType= connection.prepareStatement(updateBathTypeQuery);
+			PreparedStatement ps_BathingBathType= connection.prepareStatement(updateBathingBathTypeQuery);
 
-			ps_bathType.setBoolean(1, model.getToilet());
-			ps_bathType.setBoolean(2, model.getBath());
-			ps_bathType.setBoolean(3, model.getShower());
-			ps_bathType.setBoolean(4, model.getShared());
-			ps_bathType.setInt(5, model.getBathroomId());
+			ps_BathingBathType.setBoolean(1, model.getToilet());
+			ps_BathingBathType.setBoolean(2, model.getBath());
+			ps_BathingBathType.setBoolean(3, model.getShower());
+			ps_BathingBathType.setBoolean(4, model.getShared());
+			ps_BathingBathType.setInt(5, model.getBathroomId());
+			ps_BathingBathType.setInt(6, id);
 
-			System.out.println(ps_bathType);
-			ps_bathType.executeUpdate();
+			System.out.println(ps_BathingBathType);
+			ps_BathingBathType.executeUpdate();
 			
 			
 		} catch(Exception e) {
