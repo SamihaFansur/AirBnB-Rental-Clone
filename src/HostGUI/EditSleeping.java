@@ -143,7 +143,22 @@ public class EditSleeping extends JFrame{
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(27, 69, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
+				mainModule.userState=USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
+				MainModule.controller.editPropertyView(1);
+//				close();
+				frame.dispose();
+				
+			}
+		});	
 		editSleepingPanel.add(backButton);
+		
+		
 		
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

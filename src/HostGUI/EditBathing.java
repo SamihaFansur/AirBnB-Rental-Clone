@@ -166,6 +166,19 @@ public class EditBathing extends JFrame{
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(44, 76, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
+				mainModule.userState=USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
+				MainModule.controller.editPropertyView(1);
+//				close();
+				frame.dispose();
+				
+			}
+		});	
 		editBathingPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
