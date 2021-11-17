@@ -54,6 +54,7 @@ public class EditOutdoors extends JFrame{
 	 private JRadioButton patioRadioButton;
 	 private JRadioButton barbequeRadioButton;
 	 private int idAfter;
+	private int facilitiesidAfter;
 	 
 	 private boolean freeOnSiteParking, onRoadParking, paidCarPark, patio, barbeque;
 		
@@ -70,7 +71,7 @@ public class EditOutdoors extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditOutdoors(int id) {
+	public void initializeEditOutdoors(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -79,9 +80,10 @@ public class EditOutdoors extends JFrame{
 			System.err.println(e.getMessage());
 		}
 		
-		System.out.println("Outdoors record id in edit Outdoors facility page = "+id);
 		idAfter = id;
-		System.out.println("id after in init edit Outdoors func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING OUTDOORS RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit OUTDOORS func = "+idAfter);
 		
 		JPanel editOutdoorsPanel = new JPanel();
 		editOutdoorsPanel.setBackground(new Color(204, 255, 255));
@@ -182,7 +184,7 @@ public class EditOutdoors extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -221,6 +223,15 @@ public class EditOutdoors extends JFrame{
 			
 			System.out.println(updatingOutdoorsValues);
 			updatingOutdoorsValues.executeUpdate();
+			
+			String updateOutdoorsIdInFacilities = "update Facilities set outdoors_id=? where facilities_id=?";
+			
+			PreparedStatement updatingOutdoorsIdInFacilities = connection.prepareStatement(updateOutdoorsIdInFacilities);
+			updatingOutdoorsIdInFacilities.setInt(1, idAfter);
+			updatingOutdoorsIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingOutdoorsIdInFacilities.executeUpdate();
+			System.out.println(updatingOutdoorsIdInFacilities.toString());		
 			
 			
 		} catch(Exception e) {
