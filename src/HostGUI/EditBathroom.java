@@ -70,7 +70,8 @@ public class EditBathroom extends JFrame{
 	 
 	Connection connection = null;
 	
-	int idAfter;
+	private int idAfter;
+	private int facilitiesidAfter;
 	
 	 public EditBathroom(MainModule mainModule, Controller controller, Model model) {
 		//initializeEditBathroom();
@@ -82,7 +83,7 @@ public class EditBathroom extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBathroom(int id) {
+	public void initializeEditBathroom(int facilitiesId, int id) {
 		
 		try {
 			frame = new JFrame();
@@ -92,9 +93,11 @@ public class EditBathroom extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
-		System.out.println("bathingBathType record id in edit bathingBathTypefacility page = "+id);
+
 		idAfter = id;
-		System.out.println("id after in init edit bathingBathType func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING BATHING RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit BATHING func = "+idAfter);
 		
 		JPanel editBathroomPanel = new JPanel();
 		editBathroomPanel.setBackground(new Color(204, 255, 255));

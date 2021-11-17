@@ -217,7 +217,7 @@ public class Controller extends MainModule{
 			editSleeping.initializeEditSleeping(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHING){
-			editBathing.initializeEditBathing(id);
+			editBathing.initializeEditBathing(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_KITCHEN){
 			editKitchen.initializeEditKitchen(facilitiesId, id);
@@ -235,7 +235,7 @@ public class Controller extends MainModule{
 			editBedroom.initializeEditBedroom(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
-			editBathroom.initializeEditBathroom(id);
+			editBathroom.initializeEditBathroom(facilitiesId, id);
 		}
 	
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){

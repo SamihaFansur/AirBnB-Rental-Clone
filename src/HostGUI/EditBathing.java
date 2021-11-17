@@ -40,6 +40,7 @@ public class EditBathing extends JFrame{
 	private NavHost navForHost = new NavHost();
 
 	private int idAfter;
+	private int facilitiesidAfter;
 	
 	private boolean hairDryer, toiletPaper;
 	
@@ -66,7 +67,7 @@ public class EditBathing extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBathing(int id) {
+	public void initializeEditBathing(int facilitiesId, int id) {
 		
 		try {
 			frame = new JFrame();
@@ -75,10 +76,11 @@ public class EditBathing extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
-		System.out.println("bathing record id in edit bathingfacility page = "+id);
+
 		idAfter = id;
-		System.out.println("id after in init edit bathing func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING BATHING RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit BATHING func = "+idAfter);
 		
 		JPanel editBathingPanel = new JPanel();
 		editBathingPanel.setBackground(new Color(204, 255, 255));
@@ -157,7 +159,7 @@ public class EditBathing extends JFrame{
 				System.out.println("printing idAfter in add bathroom btn before calling updateBathingDetails func = "+idAfter);
 				updateBathingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilitiesidAfter, id);
 			}
 		});
 		addBathing.setBounds(185, 480, 200, 23);
@@ -173,7 +175,7 @@ public class EditBathing extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -204,6 +206,16 @@ public class EditBathing extends JFrame{
 			updatingBathingValues.setInt(3, idAfter);
 			updatingBathingValues.executeUpdate();
 			System.out.println(updatingBathingValues.toString());
+			
+
+			String updateBathingIdInFacilities = "update Facilities set bathing_id=? where facilities_id=?";
+			
+			PreparedStatement updatingBathingIdInFacilities = connection.prepareStatement(updateBathingIdInFacilities);
+			updatingBathingIdInFacilities.setInt(1, idAfter);
+			updatingBathingIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingBathingIdInFacilities.executeUpdate();
+			System.out.println(updatingBathingIdInFacilities.toString());		
 			
 			
 		} catch(Exception e) {
