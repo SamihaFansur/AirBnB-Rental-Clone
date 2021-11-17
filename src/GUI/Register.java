@@ -323,11 +323,30 @@ public class Register extends JFrame{
 			System.out.println(email+" IS NOT VALID");	
 			return false;
 		}else{
-			System.out.println(email+" IS VALID");	
-			return true;
+			return emailExists(email);
+
 		}
 	}
 
+	public boolean emailExists(String email) {
+		boolean exists = false;
+		try {
+			connection = ConnectionManager.getConnection();
+			String emailCheckQuery = "SELECT email from Account where email = ?";			
+			model.setEmail(emailAddressTextField.getText());
+			PreparedStatement email_check = connection.prepareStatement(emailCheckQuery);
+			email_check.setString(1, email);
+			ResultSet rs = email_check.executeQuery();
+			if (rs.next()) {
+				exists =  false;		
+			} else {
+				exists =  true;
+			}
+		} catch (Exception e) {
+			System.out.println("error");
+		}
+		return exists; 
+	}
 	public boolean validateMobileNumber(String mobile) {
 		if (mobile.matches("[0-9]*") && (mobile.length() == 11)) {
 			//System.out.println("First name contains a characters not between a-z or A-Z");
