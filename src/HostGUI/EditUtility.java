@@ -55,6 +55,7 @@ public class EditUtility extends JFrame{
 	 private JRadioButton firstAidKitRadioBtn;
 	 private JButton addUtility;
 	 private int idAfter;
+	 private int facilitiesidAfter;
 	 
 	 private boolean heating, washingMachine, dryingMachine, fireExtinguisher, smokeAlarm, firstAidKit;
 	 
@@ -70,7 +71,7 @@ public class EditUtility extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditUtility(int id) {
+	public void initializeEditUtility(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -79,9 +80,10 @@ public class EditUtility extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
-		System.out.println("utility record id in edit utility facility page = "+id);
 		idAfter = id;
-		System.out.println("id after in init edit utility func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING UTILITY RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit UTILITY func = "+idAfter);
 		
 		
 		JPanel editUtilityPanel = new JPanel();
@@ -192,7 +194,7 @@ public class EditUtility extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -237,6 +239,14 @@ public class EditUtility extends JFrame{
 			System.out.println(ps_utility);
 			ps_utility.executeUpdate();
 			
+			String updateUtilityIdInFacilities = "update Facilities set utility_id=? where facilities_id=?";
+			
+			PreparedStatement updatingUtilityIdInFacilities = connection.prepareStatement(updateUtilityIdInFacilities);
+			updatingUtilityIdInFacilities.setInt(1, idAfter);
+			updatingUtilityIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingUtilityIdInFacilities.executeUpdate();
+			System.out.println(updatingUtilityIdInFacilities.toString());		
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");

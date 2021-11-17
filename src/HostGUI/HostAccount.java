@@ -93,7 +93,7 @@ public class HostAccount extends JFrame{
 		propertiesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-				MainModule.controller.editPropertyView(0);
+				MainModule.controller.editPropertyView(0, 0);
 				frame.dispose();
 			}
 		});
@@ -104,7 +104,7 @@ public class HostAccount extends JFrame{
 		addPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				MainModule.controller.editPropertyView(0);
+				MainModule.controller.editPropertyView(0, 0);
 				frame.dispose();
 			}
 		});

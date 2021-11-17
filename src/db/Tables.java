@@ -68,20 +68,21 @@ public class Tables {
 				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
 
 		String createFacilitiesTable = "CREATE TABLE Facilities("
-				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, kitchen_id INT,"
-				+ "FOREIGN KEY (kitchen_id) REFERENCES Kitchen(kitchen_id), "
-				+ "sleeping_id INT, FOREIGN KEY (sleeping_id) references Sleeping(sleeping_id), "
-				+ "bathing_id INT, FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
-				+ "living_id INT, FOREIGN KEY (living_id) REFERENCES Living(living_id), "
-				+ "utility_id INT, FOREIGN KEY (utility_id) REFERENCES Utility(utility_id), "
-				+ "outdoors_id INT, FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
+				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+				+ "property_id INT NULL, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "kitchen_id INT NULL, FOREIGN KEY (kitchen_id) REFERENCES Kitchen(kitchen_id), "
+				+ "sleeping_id INT NULL, FOREIGN KEY (sleeping_id) references Sleeping(sleeping_id), "
+				+ "bathing_id INT NULL, FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
+				+ "living_id INT NULL, FOREIGN KEY (living_id) REFERENCES Living(living_id), "
+				+ "utility_id INT NULL, FOREIGN KEY (utility_id) REFERENCES Utility(utility_id), "
+				+ "outdoors_id INT NULL, FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
 
 		String createPropertyTable = "CREATE TABLE Property("
 				+ "property_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, houseNameNumber VARCHAR(255), postcode VARCHAR(255), "
 				+ "FOREIGN KEY (houseNameNumber, postcode) REFERENCES Address(houseNameNumber, postcode), "
 				+ "FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
 				+ "host_id INT , FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
-				+ "facilities_id INT, FOREIGN KEY (facilities_id) REFERENCES Facilities(facilities_id), "
+//				+ "facilities_id INT, FOREIGN KEY (facilities_id) REFERENCES Facilities(facilities_id), "
 //				+ "review_id INT REFERENCES Review, "
 				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT)";
 //

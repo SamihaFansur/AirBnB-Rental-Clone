@@ -60,7 +60,8 @@ public class AddFacility extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeAddFacility() {
+	public void initializeAddFacility(int facilityId, int id) {
+		int facilityIdAfter = facilityId;
 		
 		try {
 			frame = new JFrame();
@@ -113,7 +114,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityId, id);
 			}
 		});
 		addSleepingButton.setBounds(190, 160, 196, 51);
@@ -151,7 +152,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityId, id);
 			}
 		});
 		btnAddBathingFacility.setBounds(190, 222, 196, 51);
@@ -196,7 +197,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityIdAfter, id);
 			}
 		});
 		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
@@ -211,7 +212,7 @@ public class AddFacility extends JFrame{
 				try {
 					connection = ConnectionManager.getConnection();
 					
-					String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMaching, " //change to machine spelling
+					String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMachine, " //change to machine spelling
 												+ "fireExtinguisher, smokeAlarm, firstAidKit)"
 												+ " values(?,?,?,?,?,?) ";
 					PreparedStatement ps_utility = connection.prepareStatement(insertUtilityQuery, Statement.RETURN_GENERATED_KEYS);
@@ -241,7 +242,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityIdAfter, id);
 			}
 		});
 		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
@@ -287,7 +288,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityId, id);
 			}
 		});
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
@@ -332,7 +333,7 @@ public class AddFacility extends JFrame{
 				System.out.println("IDDDDDDDDDDDD = "+id);
 				
 				frame.dispose();
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilityId, id);
 			}
 		});
 		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
@@ -349,7 +350,7 @@ public class AddFacility extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilityId, 0); //need to check what 2nd param is
 //				close();
 				frame.dispose();
 				

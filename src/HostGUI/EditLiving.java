@@ -54,6 +54,7 @@ public class EditLiving extends JFrame{
 	 private JRadioButton dvdPlayerRadioBtn;
 	 private JRadioButton boardGamesRadioBtn;	
 	 private int idAfter; 
+	private int facilitiesidAfter;
 	 private JButton addLiving;
 	 
 	 private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
@@ -70,7 +71,7 @@ public class EditLiving extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditLiving(int id) {
+	public void initializeEditLiving(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -78,10 +79,11 @@ public class EditLiving extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
-		System.out.println("kitchen record id in edit living facility page = "+id);
+
 		idAfter = id;
-		System.out.println("id after in init edit living func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING LIVING RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit LIVING func = "+idAfter);
 
 		JPanel editLivingPanel = new JPanel();
 		editLivingPanel.setBackground(new Color(204, 255, 255));
@@ -198,7 +200,7 @@ public class EditLiving extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -238,6 +240,15 @@ public class EditLiving extends JFrame{
 			updatingLivingValues.executeUpdate();
 			System.out.println(updatingLivingValues.toString());
 			
+
+			String updateLivingIdInFacilities = "update Facilities set Living_id=? where facilities_id=?";
+			
+			PreparedStatement updatingLivingIdInFacilities = connection.prepareStatement(updateLivingIdInFacilities);
+			updatingLivingIdInFacilities.setInt(1, idAfter);
+			updatingLivingIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingLivingIdInFacilities.executeUpdate();
+			System.out.println(updatingLivingIdInFacilities.toString());	
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
