@@ -57,6 +57,7 @@ public class EditKitchen extends JFrame{
 	private JRadioButton cookwareRadioBtn;
 	private JButton addKitchen;
 	private int idAfter;
+	private int facilitiesidAfter;
 	
 	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvision;
 	
@@ -74,7 +75,7 @@ public class EditKitchen extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditKitchen(int id) {
+	public void initializeEditKitchen(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -83,8 +84,9 @@ public class EditKitchen extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
-		System.out.println("kitchen record id in edit kitchen facility page = "+id);
 		idAfter = id;
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING KITCHEN RN = "+facilitiesidAfter);
 		System.out.println("id after in init edit kitchen func = "+idAfter);
 		
 		JPanel editKitchenPanel = new JPanel();
@@ -114,37 +116,20 @@ public class EditKitchen extends JFrame{
 			
 			while (rs.next()) {
 				refrigerator = rs.getBoolean("refrigerator");
-                System.out.println(refrigerator);
                 microwave = rs.getBoolean("microwave");
-                System.out.println(microwave);
                 oven = rs.getBoolean("oven");
-                System.out.println(oven);
                 stove = rs.getBoolean("stove");
-                System.out.println(stove);
                 dishwasher = rs.getBoolean("dishwasher");
-                System.out.println(dishwasher);
                 tableware = rs.getBoolean("tableware");
-                System.out.println(tableware);
                 cookware = rs.getBoolean("cookware");
-                System.out.println(cookware);
                 basicProvision = rs.getBoolean("basicProvision");
-                System.out.println(basicProvision);
             }		
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-		
-		System.out.println("outside of rs loop thingi = "+refrigerator);
-		System.out.println("outside of rs loop thingi = "+microwave);
-		System.out.println("outside of rs loop thingi = "+oven);
-		System.out.println("outside of rs loop thingi = "+stove);
-		System.out.println("outside of rs loop thingi = "+dishwasher);
-		System.out.println("outside of rs loop thingi = "+tableware);
-		System.out.println("outside of rs loop thingi = "+cookware);
-		System.out.println("outside of rs loop thingi = "+basicProvision);
-		
+				
 		JLabel refrigeratorLabel = new JLabel("Refrigerator");
 		refrigeratorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		refrigeratorLabel.setBounds(170, 135, 167, 34);
@@ -236,7 +221,7 @@ public class EditKitchen extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -254,6 +239,7 @@ public class EditKitchen extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			System.out.println("id after in updateKitchen func = "+idAfter);
+			System.out.println("facilities id after in updateKitchen func = "+facilitiesidAfter);
 			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
 			model.setMicrowave(microwaveRadioBtn.isSelected());
 			model.setOven(ovenRadioBtn.isSelected());
@@ -281,22 +267,14 @@ public class EditKitchen extends JFrame{
 			updatingKitchenValues.executeUpdate();
 			System.out.println(updatingKitchenValues.toString());
 			
-//			String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
-//										+ "stove, dishwasher, tableware, cookware, basicProvision)"
-//										+ " values(?,?,?,?,?,?,?,?) ";
-//			PreparedStatement ps_kitchen = connection.prepareStatement(insertKitchenQuery);
-//			
-//			ps_kitchen.setBoolean(1, model.getRefrigerator());
-//			ps_kitchen.setBoolean(2, model.getMicrowave());
-//			ps_kitchen.setBoolean(3, model.getOven());
-//			ps_kitchen.setBoolean(4, model.getStove());
-//			ps_kitchen.setBoolean(5, model.getDishwasher());
-//			ps_kitchen.setBoolean(6, model.getTableware());
-//			ps_kitchen.setBoolean(7, model.getCookware());
-//			ps_kitchen.setBoolean(8, model.getBasicProvisions());
-//
-//			System.out.println(ps_kitchen);
-//			ps_kitchen.executeUpdate();
+			String updateKitchenIdInFacilities = "update Facilities set kitchen_id=? where facilities_id=?";
+			
+			PreparedStatement updatingKitchenIdInFacilities = connection.prepareStatement(updateKitchenIdInFacilities);
+			updatingKitchenIdInFacilities.setInt(1, idAfter);
+			updatingKitchenIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingKitchenIdInFacilities.executeUpdate();
+			System.out.println(updatingKitchenIdInFacilities.toString());		
 			
 			
 		} catch(Exception e) {

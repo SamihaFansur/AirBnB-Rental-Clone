@@ -85,28 +85,60 @@ public class EditProperty extends JFrame{
 		editPropertyLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editPropertyLabel.setBounds(222, 53, 183, 57);
 		editPropertyPanel.add(editPropertyLabel);
-		
-		JButton facilitiesButton = new JButton("Facilities");
-		facilitiesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
-				MainModule.controller.editPropertyView(0);
-				close();
-			}
-		});
-		facilitiesButton.setBounds(203, 163, 183, 34);
-		editPropertyPanel.add(facilitiesButton);
-		
+				
 		JButton addFacilityButton = new JButton("Add Facility");
 		addFacilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(0);
+				int facilitiesId = 0;
+				try {
+					connection = ConnectionManager.getConnection();
+					
+					String insertFacilitiesId = "insert into Facilities(kitchen_id, sleeping_id, bathing_id, "
+												+ "living_id, utility_id, outdoors_id) values(?,?,?,?,?,?)";
+					PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId, Statement.RETURN_GENERATED_KEYS);
+
+					ps_facilities.setNull(1, 0);
+					ps_facilities.setNull(2, 0);
+					ps_facilities.setNull(3, 0);
+					ps_facilities.setNull(4, 0);
+					ps_facilities.setNull(5, 0);
+					ps_facilities.setNull(6, 0);
+
+					System.out.println(ps_facilities);
+					ps_facilities.executeUpdate();
+					
+					ResultSet rs=ps_facilities.getGeneratedKeys();
+					if(rs.next()){
+						facilitiesId=rs.getInt(1);
+					}
+					
+					
+				} catch(Exception s) {
+					System.err.println("Got an exception!");
+					System.err.println(s.getMessage());
+				}
+				System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
+				
+				frame.dispose();
+				MainModule.controller.editPropertyView(facilitiesId, 0);
 				close();
 			}
 		});
 		addFacilityButton.setBounds(203, 212, 183, 34);
 		editPropertyPanel.add(addFacilityButton);
+		
+
+		JButton facilitiesButton = new JButton("Facilities");
+		facilitiesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
+				MainModule.controller.editPropertyView(0, 0); //fix the params
+				close();
+			}
+		});
+		facilitiesButton.setBounds(203, 163, 183, 34);
+		editPropertyPanel.add(facilitiesButton);
 				
 		JLabel postcodeLabel = new JLabel("Postcode:");
 		postcodeLabel.setBounds(104, 325, 93, 34);
@@ -180,7 +212,7 @@ public class EditProperty extends JFrame{
 		reviewsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
-				MainModule.controller.editPropertyView(0);
+				MainModule.controller.editPropertyView(0,0); //fix params
 				close();
 			}
 		});

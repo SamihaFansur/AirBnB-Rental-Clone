@@ -203,15 +203,15 @@ public class Controller extends MainModule{
 		}
 	}
 	
-	public void editPropertyView(int id) {
+	public void editPropertyView(int facilitiesId, int id) {
 		System.out.println("in editPropertyView");
 		System.out.println("1----------"+mainModule.editPropertyState);
-		System.out.println("editPropertyView--id from add facility = "+id);
+		System.out.println("editPropertyView--facility id from add facility = "+facilitiesId+" and "+id);
 		if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_PROPERTY){
 			editProperty.initializeEditProperty();
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.ADD_FACILITY){
-			addFacility.initializeAddFacility();
+			addFacility.initializeAddFacility(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_SLEEPING){
 			editSleeping.initializeEditSleeping(id);
@@ -220,13 +220,13 @@ public class Controller extends MainModule{
 			editBathing.initializeEditBathing(id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_KITCHEN){
-			editKitchen.initializeEditKitchen(id);
+			editKitchen.initializeEditKitchen(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_UTILITY){
-			editUtility.initializeEditUtility(id);
+			editUtility.initializeEditUtility(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_LIVING){
-			editLiving.initializeEditLiving(id);
+			editLiving.initializeEditLiving( id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_OUTDOORS){
 			editOutdoors.initializeEditOutdoors(id);
