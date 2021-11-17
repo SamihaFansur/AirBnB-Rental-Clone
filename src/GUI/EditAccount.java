@@ -39,8 +39,7 @@ public class EditAccount extends JFrame{
 	private JTextField surnameTextField;
 	private JTextField passwordTextField;
 	private JButton addEditPropertyButton;
-	String titles[] = { "", "Mr", "Mrs", "Miss", "Ms", "Dr" };
-	private JComboBox titleComboBox = new JComboBox(titles);
+	private JComboBox titleComboBox;
 
 	private String title, firstName, surname, password;
 	Connection connection = null;
@@ -112,6 +111,20 @@ public class EditAccount extends JFrame{
 		TitleLabel.setBounds(104, 268, 93, 34);
 		editACcountPanel.add(TitleLabel);
 		
+		
+		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
+
+		System.out.println(titles[2] + title);
+		for(int i = 0; i<titles.length; i++) {  
+			if (titles[i].equals(title)) {
+				System.out.println(titles[i]);
+				String temp = titles[0];
+				titles[0] = titles[i];
+				titles[i] = temp;
+			}
+		}  
+		
+		JComboBox titleComboBox = new JComboBox(titles);
 		JLabel firstNameLabel = new JLabel("First Name:");
 		firstNameLabel.setBounds(104, 336, 93, 34);
 		editACcountPanel.add(firstNameLabel);
