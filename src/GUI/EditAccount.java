@@ -35,7 +35,7 @@ public class EditAccount extends JFrame{
 
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
-	private JTextField firstNameField;
+	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
 	private JTextField passwordTextField;
 	private JButton addEditPropertyButton;
@@ -92,10 +92,10 @@ public class EditAccount extends JFrame{
 		firstNameLabel.setBounds(104, 336, 93, 34);
 		editACcountPanel.add(firstNameLabel);
 		
-		firstNameField = new JTextField();
-		firstNameField.setColumns(10);
-		firstNameField.setBounds(207, 336, 274, 34);
-		editACcountPanel.add(firstNameField);
+		firstNameTextField = new JTextField();
+		firstNameTextField.setColumns(10);
+		firstNameTextField.setBounds(207, 336, 274, 34);
+		editACcountPanel.add(firstNameTextField);
 		
 		JLabel surnameLabel = new JLabel("Surname:");
 		surnameLabel.setBounds(104, 402, 93, 34);
@@ -119,7 +119,15 @@ public class EditAccount extends JFrame{
 		addEditPropertyButton = new JButton("Save");
 		addEditPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addEditAccountDetails();
+				boolean validateFirstNameInput =  validateName(firstNameTextField.getText());
+				boolean validateSurnameInput = validateName(surnameTextField.getText());
+				if (validateFirstNameInput && validateSurnameInput) {
+					model.setTitle(titleComboBox.getSelectedItem().toString());
+					model.setFirstName(firstNameTextField.getText());
+					model.setSurname(surnameTextField.getText());
+					model.setPassword(passwordTextField.getText());
+					addEditAccountDetails();
+				}
 			}
 		});
 		addEditPropertyButton.setBounds(245, 548, 91, 23);
@@ -144,10 +152,33 @@ public class EditAccount extends JFrame{
 		System.out.println("3");
 	}
 	
-	public void addEditAccountDetails() {
-		
+	public boolean validateName(String name) {
+		if (!name.matches("[a-zA-Z]*")) {
+			System.out.println(name+" IS NOT VALID NAME");	
+			return false;
+		}
+		else {
+			System.out.println(name + " IS VALID");
+			return true;
 		}
 	}
+
+	public void addEditAccountDetails() {
+		try {
+			connection = ConnectionManager.getConnection();
+			String updateAccountQuery = "";
+			PreparedStatement ps_account = connection.prepareStatement(updateAccountQuery);
+			int i  = ps_account.executeUpdate();
+			if(i>0) {
+				System.out.println(this);
+				// remove later 
+			}
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+}
 
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
