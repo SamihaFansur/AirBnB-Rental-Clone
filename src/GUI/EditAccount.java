@@ -73,6 +73,7 @@ public class EditAccount extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+		System.out.println("email"  + model.getEmail());
 		
 		JPanel editACcountPanel = new JPanel();
 		editACcountPanel.setBackground(new Color(204, 255, 255));
@@ -166,9 +167,15 @@ public class EditAccount extends JFrame{
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
-			String updateAccountQuery = "";
-			PreparedStatement ps_account = connection.prepareStatement(updateAccountQuery);
-			int i  = ps_account.executeUpdate();
+			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = ? where email = ?";
+			PreparedStatement updateAccount = connection.prepareStatement(updateAccountQuery);
+			updateAccount.setString(1, model.getTitle());
+			updateAccount.setString(2, model.getFirstName());
+			updateAccount.setString(3, model.getSurname());
+			updateAccount.setString(4, model.getPassword());
+			updateAccount.setString(5, model.getEmail());
+			
+			int i  = updateAccount.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
 				// remove later 
