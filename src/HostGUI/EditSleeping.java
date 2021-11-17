@@ -38,6 +38,7 @@ public class EditSleeping extends JFrame{
 	private JRadioButton bedLinenRadioBtn;
 
 	private int idAfter;
+	private int facilitiesidAfter;
 	
 	private boolean bedLinen, towels;
 	
@@ -64,7 +65,7 @@ public class EditSleeping extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditSleeping(int id) {
+	public void initializeEditSleeping(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -73,9 +74,11 @@ public class EditSleeping extends JFrame{
 			System.err.println(e.getMessage());
 		}
 
-		System.out.println("sleeping record id in edit sleepingfacility page = "+id);
+
 		idAfter = id;
-		System.out.println("id after in init edit sleepingfunc = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING SLEEPING RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit SLEEPING func = "+idAfter);
 		
 		JPanel editSleepingPanel = new JPanel();
 		editSleepingPanel.setBackground(new Color(204, 255, 255));
@@ -134,7 +137,7 @@ public class EditSleeping extends JFrame{
 				System.out.println("printing idAfter in add bedroom btn before calling updateSleepingDetails func = "+idAfter);
 				updateSleepingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BEDROOM;
-				MainModule.controller.editPropertyView(id);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 			}
 		});
 		addBedroomButton.setBounds(197, 405, 209, 46);
@@ -150,7 +153,7 @@ public class EditSleeping extends JFrame{
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				MainModule.controller.editPropertyView(1);
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
 				
@@ -184,6 +187,15 @@ public class EditSleeping extends JFrame{
 			updatingSleepingValues.executeUpdate();
 			System.out.println(updatingSleepingValues.toString());
 			
+
+			String updateSleepingIdInFacilities = "update Facilities set sleeping_id=? where facilities_id=?";
+			
+			PreparedStatement updatingSleepingIdInFacilities = connection.prepareStatement(updateSleepingIdInFacilities);
+			updatingSleepingIdInFacilities.setInt(1, idAfter);
+			updatingSleepingIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingSleepingIdInFacilities.executeUpdate();
+			System.out.println(updatingSleepingIdInFacilities.toString());		
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");

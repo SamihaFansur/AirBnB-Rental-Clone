@@ -51,8 +51,9 @@ public class EditBedroom extends JFrame{
 	 
 	 
 	Connection connection = null;
-	
-	int idAfter;
+
+	private int idAfter;
+	private int facilitiesidAfter;
 	
 	public void close() {
 		frame.dispose();
@@ -76,7 +77,7 @@ public class EditBedroom extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBedroom(int id) {
+	public void initializeEditBedroom(int facilitiesId, int id) {
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -84,10 +85,11 @@ public class EditBedroom extends JFrame{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
-		System.out.println("bedroomBathType record id in edit sleepingBedTypefacility page = "+id);
+
 		idAfter = id;
-		System.out.println("id after in init edit sleepingBedType func = "+idAfter);
+		facilitiesidAfter = facilitiesId;
+		System.out.println("FACILITY ID FOR WHICH AM CREATING BATHING RN = "+facilitiesidAfter);
+		System.out.println("id after in init edit BATHING func = "+idAfter);
 		
 		JPanel editBedroomPanel = new JPanel();
 		editBedroomPanel.setBackground(new Color(204, 255, 255));
