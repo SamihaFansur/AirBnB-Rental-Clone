@@ -37,6 +37,15 @@ public class Model {
 	private String bed1Type, bed2Type;
 	private int bed1Capacity, bed2Capacity;
 	
+	//facilities variables:
+	private int kitchenId;
+	private int sleepingId;
+	private int bathingId;
+	private int utilityId;
+	private int livingId;
+	private int outdoorsId;
+	
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
@@ -512,5 +521,51 @@ public class Model {
 	public int getBed2Capacity() {
 		return bed2Capacity;
 	}
+	/*
+	private int sleepingId;
+	private int bathingId;
+	private int utilityId;
+	private int livingId;
+	private int outdoorsId;
+	*/
+	public void setCurrentKitchedId(int kitchedId) {
+		this.kitchenId=kitchedId;
+	}
+	public int getCurrentKitchedId() {
+		return kitchenId;
+	}
+	public void setCurrentBathingId(int bathingId) {
+		this.bathingId=bathingId;
+	}
+	public int getCurentBathingId() {
+		return bathingId;
+	}
+	public void setCurrentUtilityId(int utilityId) {
+		this.utilityId=utilityId;
+	}
+	public int getCurrentUtilityId() {
+		return utilityId;
+	}
+	public void setCurrentLivingId(int livingId) {
+		this.livingId=livingId;
+	}
+	public int getCurrentLivingId() {
+		return livingId;
+	}
+	public void setCurrentOutdoorsId(int outdoorsId) {
+		this.outdoorsId=outdoorsId;
+	}
+	public int getCurrentOutdoorsId() {
+		return outdoorsId;
+	}
+	public void setCurrentSleepingId(int sleepingId) {
+		this.sleepingId=sleepingId;
+	}
+	public int getCurrentSleepingId() {
+		return sleepingId;
+	}
+	
+	
+	
 	
 }

@@ -67,6 +67,10 @@ public class EditProperty extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	 public void test(){
+		 JOptionPane.showMessageDialog(this, "You must save a property before adding a facility");
+	}
+	
 	public void initializeEditProperty() {
 		try {
 			frame = new JFrame();
@@ -87,42 +91,69 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(editPropertyLabel);
 				
 		JButton addFacilityButton = new JButton("Add Facility");
+		
+
+		
 		addFacilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
 				int facilitiesId = 0;
-				try {
-					connection = ConnectionManager.getConnection();
+				
+				if (model.getEditPropertyPostcode() == null) {
+					test();
+				}else {
+				
 					
-					String insertFacilitiesId = "insert into Facilities(kitchen_id, sleeping_id, bathing_id, "
-												+ "living_id, utility_id, outdoors_id) values(?,?,?,?,?,?)";
-					PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId, Statement.RETURN_GENERATED_KEYS);
-
-					ps_facilities.setNull(1, 0);
-					ps_facilities.setNull(2, 0);
-					ps_facilities.setNull(3, 0);
-					ps_facilities.setNull(4, 0);
-					ps_facilities.setNull(5, 0);
-					ps_facilities.setNull(6, 0);
-
-					System.out.println(ps_facilities);
-					ps_facilities.executeUpdate();
-					
-					ResultSet rs=ps_facilities.getGeneratedKeys();
-					if(rs.next()){
-						facilitiesId=rs.getInt(1);
+					try {
+						connection = ConnectionManager.getConnection();
+						int tempId = 0;
+						Statement getPropertyId = connection.createStatement();
+						ResultSet propertyIds = getPropertyId.executeQuery("SELECT * FROM Property");
+						while(propertyIds.next()){
+							tempId = propertyIds.getInt(1);
+							System.out.println("THIS IS THE ID: "+tempId);
+						}
+						System.out.println("THIS IS THE LAST ID: "+tempId);
+						System.out.println("THIS RSULT SET OF IDS "+propertyIds);
+//						String getLastPropertyId = "SELECT propert_id FROM Property";
+//						PreparedStatement ps_getLastPropertyId = getLastPropertyId.executeQuery();
+//						
+//						
+						
+						String insertFacilitiesId = "insert into Facilities(property_id, kitchen_id, sleeping_id, bathing_id, "
+													+ "living_id, utility_id, outdoors_id) values(?,?,?,?,?,?,?)";
+						PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId, Statement.RETURN_GENERATED_KEYS);
+	
+						ps_facilities.setInt(1, tempId);
+						ps_facilities.setNull(2, 0);
+						ps_facilities.setNull(3, 0);
+						ps_facilities.setNull(4, 0);
+						ps_facilities.setNull(5, 0);
+						ps_facilities.setNull(6, 0);
+						ps_facilities.setNull(7, 0);
+	
+						System.out.println(ps_facilities);
+						ps_facilities.executeUpdate();
+						
+						ResultSet rs=ps_facilities.getGeneratedKeys();
+						if(rs.next()){
+							facilitiesId=rs.getInt(1);
+						}
+						
+						//get propertyID and put into the Fcailties table. By default it's the latest 
+						
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
 					}
 					
+					System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
 					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilitiesId, 0);
+					close();
 				}
-				System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
-				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilitiesId, 0);
-				close();
 			}
 		});
 		addFacilityButton.setBounds(203, 212, 183, 34);
@@ -231,6 +262,7 @@ public class EditProperty extends JFrame{
 				mainModule.userState=USER.HOST;
 				MainModule.controller.drawNewView();
 //				close();
+				model.setEditPropertyPostcode(null);
 				frame.dispose();
 				
 			}
@@ -252,6 +284,13 @@ public class EditProperty extends JFrame{
 					//System.out.println(guestCapacityTextField.getSelectedText());
 					
 					if (validateGuestCapacityInput) {
+						//setting all temp facility id's to zero so host can get access to fill in each facility once
+						
+						model.setCurrentKitchedId(0);
+						model.setCurrentBathingId(0);
+						model.setCurrentLivingId(0);
+						model.setCurrentUtilityId(0);
+						model.setCurrentOutdoorsId(0);
 						addEditPropertyDetails();
 						
 					}else {
@@ -325,6 +364,15 @@ public class EditProperty extends JFrame{
 			hostIDInProperty.executeUpdate();
 			System.out.println(hostIDInProperty.toString());
 			
+			
+			
+			//get the propertyID for the property that's just been saved and put into the Facilties table
+			
+			
+			
+			//After user has clicked on the add facility button, add kitchen facility, save, back, add kitched facility
+			// AT THIS POINT, check if the Facilties table has a propertyID and FacilityID present. If so, 
+			// dont let it add another one of these facilties. 
 			
 //			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
 //			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);

@@ -35,7 +35,14 @@ public class AddFacility extends JFrame{
 
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
-
+	private int kitchenId;
+	private int sleepingId;
+	private int bathingId;
+	private int utilityId;
+	private int livingId;
+	private int outdoorsId;
+	
+	
 	Connection connection = null;
 	
 	public void close() {
@@ -86,35 +93,44 @@ public class AddFacility extends JFrame{
 		addSleepingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBedrooms)"
-												+ " values(?,?,?)";
-					PreparedStatement ps_sleeping = connection.prepareStatement(insertSleepingQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_sleeping.setBoolean(1, false);
-					ps_sleeping.setBoolean(2, false);
-					ps_sleeping.setInt(3, 0);
-
-					System.out.println(ps_sleeping);
-					ps_sleeping.executeUpdate();
-					
-					ResultSet rs=ps_sleeping.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
-					}
-					
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
-				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
 				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityId, id);
+				//checking value of sleeping id. Once it's been completed for the first time the host wont have access to edit this facility from here.
+				
+				if(model.getCurrentSleepingId()==0) {
+					
+					
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBedrooms)"
+													+ " values(?,?,?)";
+						PreparedStatement ps_sleeping = connection.prepareStatement(insertSleepingQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_sleeping.setBoolean(1, false);
+						ps_sleeping.setBoolean(2, false);
+						ps_sleeping.setInt(3, 0);
+	
+						System.out.println(ps_sleeping);
+						ps_sleeping.executeUpdate();
+						
+						ResultSet rs=ps_sleeping.getGeneratedKeys();
+						if(rs.next()){
+							sleepingId=rs.getInt(1);
+						}
+						model.setCurrentSleepingId(sleepingId);
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
+					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurrentSleepingId());
+					
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityId, model.getCurrentSleepingId());
+					}
+				else {
+					displayMessageAlreadyMade();
+				}
 			}
 		});
 		addSleepingButton.setBounds(190, 160, 196, 51);
@@ -124,80 +140,104 @@ public class AddFacility extends JFrame{
 		btnAddBathingFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
-												+ " values(?,?,?)";
-					PreparedStatement ps_bathing = connection.prepareStatement(insertBathingQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_bathing.setBoolean(1, false);
-					ps_bathing.setBoolean(2, false);
-					ps_bathing.setInt(3, 0);
-
-					System.out.println(ps_bathing);
-					ps_bathing.executeUpdate();
-					
-					ResultSet rs=ps_bathing.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
-					}
-					
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
-				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
 				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityId, id);
+				//checking value of bathing id. Once it's been completed for the first time the host wont have access to edit this facility from here.
+				if(model.getCurentBathingId()==0) {
+				
+				
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
+													+ " values(?,?,?)";
+						PreparedStatement ps_bathing = connection.prepareStatement(insertBathingQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_bathing.setBoolean(1, false);
+						ps_bathing.setBoolean(2, false);
+						ps_bathing.setInt(3, 0);
+	
+						System.out.println(ps_bathing);
+						ps_bathing.executeUpdate();
+						
+						ResultSet rs=ps_bathing.getGeneratedKeys();
+						if(rs.next()){
+							bathingId=rs.getInt(1);
+						}
+						//sets bathing id to new row value
+						model.setCurrentBathingId(bathingId);
+						
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
+					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurentBathingId());
+					
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityId, model.getCurentBathingId());
+					}
+				else {
+					displayMessageAlreadyMade();
+				}
 			}
 		});
 		btnAddBathingFacility.setBounds(190, 222, 196, 51);
 		addFacilityPanel.add(btnAddBathingFacility);
+		
+		//int kitchenId = 0;
 		
 		JButton btnAddKitchenfacility = new JButton("Add Kitchen Facility");
 		btnAddKitchenfacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_KITCHEN;
 				//create a record and set values to null
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
-												+ "stove, dishwasher, tableware, cookware, basicProvision)"
-												+ " values(?,?,?,?,?,?,?,?) ";
-					PreparedStatement ps_kitchen = connection.prepareStatement(insertKitchenQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_kitchen.setBoolean(1, false);
-					ps_kitchen.setBoolean(2, false);
-					ps_kitchen.setBoolean(3, false);
-					ps_kitchen.setBoolean(4, false);
-					ps_kitchen.setBoolean(5, false);
-					ps_kitchen.setBoolean(6, false);
-					ps_kitchen.setBoolean(7, false);
-					ps_kitchen.setBoolean(8, false);
-
-					System.out.println(ps_kitchen);
-					ps_kitchen.executeUpdate();
-					
-					ResultSet rs=ps_kitchen.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
-					}
-					
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
-				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
+				//int kitchenId=0;
+				//model.setCurrentKitchedId(0);
+				//setting 
+				//kitchenId = 0;
 				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityIdAfter, id);
+				if (model.getCurrentKitchedId()== 0) {
+						
+					
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
+													+ "stove, dishwasher, tableware, cookware, basicProvision)"
+													+ " values(?,?,?,?,?,?,?,?) ";
+						PreparedStatement ps_kitchen = connection.prepareStatement(insertKitchenQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_kitchen.setBoolean(1, false);
+						ps_kitchen.setBoolean(2, false);
+						ps_kitchen.setBoolean(3, false);
+						ps_kitchen.setBoolean(4, false);
+						ps_kitchen.setBoolean(5, false);
+						ps_kitchen.setBoolean(6, false);
+						ps_kitchen.setBoolean(7, false);
+						ps_kitchen.setBoolean(8, false);
+	
+						System.out.println(ps_kitchen);
+						ps_kitchen.executeUpdate();
+						
+						ResultSet rs=ps_kitchen.getGeneratedKeys();
+						if(rs.next()){
+							kitchenId=rs.getInt(1);
+						}
+						model.setCurrentKitchedId(kitchenId);
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
+					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurrentKitchedId());
+					
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityIdAfter, model.getCurrentKitchedId());
+				}
+				else {
+					displayMessageAlreadyMade();
+				}
+					System.out.println("KITCHEN IS IS*************"+kitchenId);
 			}
 		});
 		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
@@ -207,42 +247,47 @@ public class AddFacility extends JFrame{
 		btnAddUtilityFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
-				//create a record and set values to null
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMachine, " //change to machine spelling
-												+ "fireExtinguisher, smokeAlarm, firstAidKit)"
-												+ " values(?,?,?,?,?,?) ";
-					PreparedStatement ps_utility = connection.prepareStatement(insertUtilityQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_utility.setBoolean(1, false);
-					ps_utility.setBoolean(2, false);
-					ps_utility.setBoolean(3, false);
-					ps_utility.setBoolean(4, false);
-					ps_utility.setBoolean(5, false);
-					ps_utility.setBoolean(6, false);
-
-					System.out.println(ps_utility);
-					ps_utility.executeUpdate();
-					
-					ResultSet rs=ps_utility.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
-					}
-					
-					//create public id var
-					//call it in editUtility, set it as the id using select k_id from k where
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
-				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
 				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityIdAfter, id);
+				if(model.getCurrentUtilityId()==0) {
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMachine, " //change to machine spelling
+													+ "fireExtinguisher, smokeAlarm, firstAidKit)"
+													+ " values(?,?,?,?,?,?) ";
+						PreparedStatement ps_utility = connection.prepareStatement(insertUtilityQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_utility.setBoolean(1, false);
+						ps_utility.setBoolean(2, false);
+						ps_utility.setBoolean(3, false);
+						ps_utility.setBoolean(4, false);
+						ps_utility.setBoolean(5, false);
+						ps_utility.setBoolean(6, false);
+	
+						System.out.println(ps_utility);
+						ps_utility.executeUpdate();
+						
+						ResultSet rs=ps_utility.getGeneratedKeys();
+						if(rs.next()){
+							utilityId=rs.getInt(1);
+						}
+						model.setCurrentUtilityId(utilityId);
+						
+						//create public id var
+						//call it in editUtility, set it as the id using select k_id from k where
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
+					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurrentUtilityId());
+					
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityIdAfter, model.getCurrentUtilityId());
+					}
+				else {
+					displayMessageAlreadyMade();
+				}
 			}
 		});
 		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
@@ -253,42 +298,49 @@ public class AddFacility extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
 				//create a record and set values to null
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertLivingQuery = "insert into Living (wifi, television, satellite, "
-												+ "streaming, dvdPlayer, boardGames)"
-												+ " values(?,?,?,?,?,?) ";
-
-					PreparedStatement ps_living = connection.prepareStatement(insertLivingQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_living.setBoolean(1, false);
-					ps_living.setBoolean(2, false);
-					ps_living.setBoolean(3, false);
-					ps_living.setBoolean(4, false);
-					ps_living.setBoolean(5, false);
-					ps_living.setBoolean(6, false);
-
-					System.out.println(ps_living);
-					ps_living.executeUpdate();
-					
-					ResultSet rs=ps_living.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
-					}
-					
-					//create public id var
-					//call it in editKitchen, set it as the id using select k_id from k where
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
-				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
 				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityId, id);
+				if(model.getCurrentLivingId()==0) {
+				
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertLivingQuery = "insert into Living (wifi, television, satellite, "
+													+ "streaming, dvdPlayer, boardGames)"
+													+ " values(?,?,?,?,?,?) ";
+	
+						PreparedStatement ps_living = connection.prepareStatement(insertLivingQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_living.setBoolean(1, false);
+						ps_living.setBoolean(2, false);
+						ps_living.setBoolean(3, false);
+						ps_living.setBoolean(4, false);
+						ps_living.setBoolean(5, false);
+						ps_living.setBoolean(6, false);
+	
+						System.out.println(ps_living);
+						ps_living.executeUpdate();
+						
+						ResultSet rs=ps_living.getGeneratedKeys();
+						if(rs.next()){
+							livingId=rs.getInt(1);
+						}
+						model.setCurrentLivingId(livingId);
+						
+						//create public id var
+						//call it in editKitchen, set it as the id using select k_id from k where
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
+					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurrentLivingId());
+					
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityId, model.getCurrentLivingId());
+					}
+				else{
+					displayMessageAlreadyMade();
+				}
 			}
 		});
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
@@ -299,41 +351,45 @@ public class AddFacility extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
 				//create a record and set values to null
-				int id=0;
-				try {
-					connection = ConnectionManager.getConnection();
-					
-					String insertOutdoorsQuery = "insert into Outdoors (freeOnSiteParking, onRoadParking, paidCarPark, "
-												+ "patio, barbeque) "
-												+ " values(?,?,?,?,?) ";
-
-					PreparedStatement ps_outdoors = connection.prepareStatement(insertOutdoorsQuery, Statement.RETURN_GENERATED_KEYS);
-					
-					ps_outdoors.setBoolean(1, false);
-					ps_outdoors.setBoolean(2, false);
-					ps_outdoors.setBoolean(3, false);
-					ps_outdoors.setBoolean(4, false);
-					ps_outdoors.setBoolean(5, false);
-
-					System.out.println(ps_outdoors);
-					ps_outdoors.executeUpdate();
-					
-					ResultSet rs=ps_outdoors.getGeneratedKeys();
-					if(rs.next()){
-						id=rs.getInt(1);
+				if(model.getCurrentOutdoorsId()==0) {
+					try {
+						connection = ConnectionManager.getConnection();
+						
+						String insertOutdoorsQuery = "insert into Outdoors (freeOnSiteParking, onRoadParking, paidCarPark, "
+													+ "patio, barbeque) "
+													+ " values(?,?,?,?,?) ";
+	
+						PreparedStatement ps_outdoors = connection.prepareStatement(insertOutdoorsQuery, Statement.RETURN_GENERATED_KEYS);
+						
+						ps_outdoors.setBoolean(1, false);
+						ps_outdoors.setBoolean(2, false);
+						ps_outdoors.setBoolean(3, false);
+						ps_outdoors.setBoolean(4, false);
+						ps_outdoors.setBoolean(5, false);
+	
+						System.out.println(ps_outdoors);
+						ps_outdoors.executeUpdate();
+						
+						ResultSet rs=ps_outdoors.getGeneratedKeys();
+						if(rs.next()){
+							outdoorsId=rs.getInt(1);
+						}
+						model.setCurrentOutdoorsId(outdoorsId);
+						//create public id var
+						//call it in editKitchen, set it as the id using select k_id from k where
+						
+					} catch(Exception s) {
+						System.err.println("Got an exception!");
+						System.err.println(s.getMessage());
 					}
+					System.out.println("IDDDDDDDDDDDD = "+model.getCurrentOutdoorsId());
 					
-					//create public id var
-					//call it in editKitchen, set it as the id using select k_id from k where
-					
-				} catch(Exception s) {
-					System.err.println("Got an exception!");
-					System.err.println(s.getMessage());
+					frame.dispose();
+					MainModule.controller.editPropertyView(facilityId, model.getCurrentOutdoorsId());
+					}
+				else {
+					displayMessageAlreadyMade();
 				}
-				System.out.println("IDDDDDDDDDDDD = "+id);
-				
-				frame.dispose();
-				MainModule.controller.editPropertyView(facilityId, id);
 			}
 		});
 		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
@@ -363,6 +419,10 @@ public class AddFacility extends JFrame{
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	public void displayMessageAlreadyMade(){
+		 JOptionPane.showMessageDialog(this, "You have already saved this facility. Go to Facilties to edit this facility");
 	}
 }
 
