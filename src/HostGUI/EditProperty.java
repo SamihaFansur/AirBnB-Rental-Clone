@@ -103,7 +103,6 @@ public class EditProperty extends JFrame{
 					test();
 				}else {
 				
-					
 					try {
 						connection = ConnectionManager.getConnection();
 						int tempId = 0;
@@ -117,14 +116,27 @@ public class EditProperty extends JFrame{
 						System.out.println("THIS RSULT SET OF IDS "+propertyIds);
 //						String getLastPropertyId = "SELECT propert_id FROM Property";
 //						PreparedStatement ps_getLastPropertyId = getLastPropertyId.executeQuery();
-//						
-//						
+						
+						String currentPostcode = model.getEditPropertyPostcode();
+						System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
+						String getCurrentPropertyId = "select property_id from Property where postcode=?";
+						PreparedStatement gettingCurrentPropertyId = connection.prepareStatement(getCurrentPropertyId);
+						
+						gettingCurrentPropertyId.setString(1, currentPostcode);
+						
+						int property_id = 0;
+						
+						ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
+						while (prop_id.next()) {
+							property_id = prop_id.getInt("property_id");
+			            }
+						System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
 						
 						String insertFacilitiesId = "insert into Facilities(property_id, kitchen_id, sleeping_id, bathing_id, "
 													+ "living_id, utility_id, outdoors_id) values(?,?,?,?,?,?,?)";
 						PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId, Statement.RETURN_GENERATED_KEYS);
 	
-						ps_facilities.setInt(1, tempId);
+						ps_facilities.setInt(1, property_id);
 						ps_facilities.setNull(2, 0);
 						ps_facilities.setNull(3, 0);
 						ps_facilities.setNull(4, 0);
@@ -363,100 +375,6 @@ public class EditProperty extends JFrame{
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
 			System.out.println(hostIDInProperty.toString());
-			
-			
-			
-			//get the propertyID for the property that's just been saved and put into the Facilties table
-			
-			
-			
-			//After user has clicked on the add facility button, add kitchen facility, save, back, add kitched facility
-			// AT THIS POINT, check if the Facilties table has a propertyID and FacilityID present. If so, 
-			// dont let it add another one of these facilties. 
-			
-//			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
-//			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
-//			
-//			
-//			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
-//			hostIDInProperty.setInt(1, model.getEditPropertyHouseNameNum());
-//			hostIDInProperty.setString(2, model.getEditPropertyPostcode());
-//
-//			int v = hostIDInProperty.executeUpdate();
-//			if(v>0) {
-//				System.out.println(this);
-//				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
-//			}
-			
-//			String finalQuery = "insert into Property(houseNameNumber, postcode, host_id) "
-//								+ "select houseNameNumber, postcode, host_id "
-//								+ "from Account, HostAccount "
-//								+ "where email=?";
-			
-//			String finalQuery = "insert into Property(host_id) "
-////					+ "select houseNameNumber, postcode from Address"
-//					+ "select host_id from HostAccount"
-//					+ "where email=?";
-////					+ "select houseNameNumber, postcode from Address"
-////					+ "where host_id =";
-//			
-//			PreparedStatement finalQ = connection.prepareStatement(finalQuery);
-//			finalQ.setString(1, model.getEmail());
-//			
-//			int i  = finalQ.executeUpdate();
-//			if(i>0) {
-//				System.out.println("7");
-//				System.out.println(this);
-//				 //remove later
-//			}
-//			
-//			String getHostIDOfUser = "select host_id from HostAccount where email=?";			
-//			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
-//			hostIDfromHostAccountTable.setString(1, model.getEmail());
-//			
-//			String insertHostIDInProperty = "insert into Property (host_id) values (?)";			
-//			PreparedStatement insertingHostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
-//			
-//			String getHouseNameHumAndPostcodeOfUser = "select houseNameNumber, postcode from Address where email=?";			
-//			PreparedStatement houseNameNumAndPostcodeFromAccountTable = connection.prepareStatement(getHouseNameHumAndPostcodeOfUser);
-//			houseNameNumAndPostcodeFromAccountTable.setString(1, model.getEmail());
-//			
-//			String insertHouseNameNumAndPostcodeInProperty = "insert into Property (houseNameNumber, postcode) values (?,?)";			
-//			PreparedStatement insertingHouseNameNumAndPostcodeInProperty = connection.prepareStatement(insertHouseNameNumAndPostcodeInProperty);
-//			
-//			int id = 0;
-//			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
-//			while (h_id.next()) {
-//			 id = h_id.getInt(1);
-//			 System.out.println("host id = "+id);
-//			}
-//			 System.out.println("host id  after = "+id);
-//			 
-//			insertingHostIDInProperty.setInt(1, id);
-//			int  w = insertingHostIDInProperty.executeUpdate();
-//			if(w>0) {
-//				System.out.println(this);
-//				JOptionPane.showMessageDialog(this, "inserted host id into property!"); //remove later
-//			}
-//			
-//			String hnhn = "";
-//			String pc = "";
-//			ResultSet h_hnhmAndPc = houseNameNumAndPostcodeFromAccountTable.executeQuery();
-//			while (h_hnhmAndPc.next()) {
-//				 hnhn = h_hnhmAndPc.getString(1);
-//				 pc = h_hnhmAndPc.getString(2);
-//			 System.out.println("host hmhm = "+hnhn+" postcode = "+pc);
-//			}
-//			 System.out.println("host hmhm after = "+hnhn+" postcode after = "+pc);
-//			 
-//			 insertingHouseNameNumAndPostcodeInProperty.setString(1, hnhn);
-//			 insertingHouseNameNumAndPostcodeInProperty.setString(2, pc);
-//			int  z = insertingHouseNameNumAndPostcodeInProperty.executeUpdate();
-//			if(z>0) {
-//				System.out.println(this);
-//				JOptionPane.showMessageDialog(this, "inserted hnhn and pc into property!"); //remove later
-//			}
-			 
 			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
