@@ -27,7 +27,7 @@ public class Login extends JFrame{
 
 	private JButton loginButton;
 	private JButton registerButton;
-	private JTextField passwordField;
+	private JPasswordField passwordField;
 	private JTextField usernameField;
 	private JLabel passwordLabel;
 	private JPanel registerPanel;
@@ -79,7 +79,7 @@ public class Login extends JFrame{
 		loginPanel.add(usernameField);
 		usernameField.setColumns(10);
 		
-		JTextField passwordField = new JTextField();
+		JTextField passwordField = new JPasswordField();
 		passwordField.setBounds(168, 323, 295, 31);
 		loginPanel.add(passwordField);
 

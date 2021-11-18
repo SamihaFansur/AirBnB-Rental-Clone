@@ -25,7 +25,7 @@ import java.awt.Font;
 public class Register extends JFrame{
 
 	private JButton registerButton = new JButton("Register");
-	private JTextField passwordTextField;
+	private JPasswordField passwordTextField;
 	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
 	private JTextField streetNameTextField;
@@ -131,7 +131,7 @@ public class Register extends JFrame{
 		passwordLabel.setBounds(82, 289, 75, 14);
 		registerPanel.add(passwordLabel);
 
-		passwordTextField = new JTextField();
+		passwordTextField = new JPasswordField();
 		passwordTextField.setBounds(217, 283, 276, 26);
 		registerPanel.add(passwordTextField);
 				
