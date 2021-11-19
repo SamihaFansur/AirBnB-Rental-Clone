@@ -185,6 +185,9 @@ public class EditAccount extends JFrame{
 		deleteAccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteAccount();
+				mainModule.currentState = STATE.HOMEPAGE;
+				mainModule.userState = USER.ENQUIRER;
+				MainModule.controller.drawNewView();
 				}	
 		}
 
