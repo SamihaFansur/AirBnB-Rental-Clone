@@ -47,7 +47,6 @@ public class GuestAccount extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public GuestAccount(MainModule mainModule, Controller controller, Model model) {
-		initializeGuestAccount();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
