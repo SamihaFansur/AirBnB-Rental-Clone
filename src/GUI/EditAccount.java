@@ -178,8 +178,18 @@ public class EditAccount extends JFrame{
 		System.out.println("2");
 		
 		
-		
+		JButton deleteAccountButton = new JButton("Delete Account");
+		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		deleteAccountButton.setBounds(100, 548, 91, 23);
+		editACcountPanel.add(deleteAccountButton);
+		deleteAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteAccount();
+				}	
+		}
 
+		);
+		
 		titleComboBox.setBounds(207, 274, 276, 23);
 		editACcountPanel.add(titleComboBox);
 
@@ -201,6 +211,7 @@ public class EditAccount extends JFrame{
 		}
 	}
 
+
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
@@ -213,6 +224,41 @@ public class EditAccount extends JFrame{
 			updateAccount.setString(5, model.getEmail());
 			
 			int i  = updateAccount.executeUpdate();
+			if(i>0) {
+				System.out.println(this);
+				// remove later 
+			}
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+	public void deleteAccount() {
+		try {
+			connection = ConnectionManager.getConnection();
+
+	//		String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE EXISTS (SELECT * FROM Account WHERE Account.email = HostAccount.email and email = ?)";
+			String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
+			PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
+			deleteHostAccount.setString(1, model.getEmail());
+			System.out.println("do u work");
+			int j = deleteHostAccount.executeUpdate();
+			if(j>0) {
+				System.out.println(this);
+				// remove later 
+			}			
+			String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
+			PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
+			deleteGuestAccount.setString(1, model.getEmail());
+			int k = deleteGuestAccount.executeUpdate();
+			if(k>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
+			PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
+			deleteAccount.setString(1, model.getEmail());
+			int i  = deleteAccount.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
 				// remove later 
