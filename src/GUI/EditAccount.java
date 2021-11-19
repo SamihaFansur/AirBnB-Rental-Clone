@@ -11,6 +11,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import HostGUI.NavHost;
+import GuestGUI.NavGuest;
 import Model.Model;
 
 import java.awt.SystemColor;
@@ -34,6 +35,7 @@ import java.awt.Font;
 public class EditAccount extends JFrame{
 
 	private NavHost navForHost = new NavHost();
+	private NavGuest navForGuest = new NavGuest();
 	private JFrame frame;
 	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
@@ -69,8 +71,11 @@ public class EditAccount extends JFrame{
 		
 		try {
 			frame = new JFrame();
+			if (mainModule.userState == USER.GUEST) {
+			navForGuest.addGuestNav(frame, mainModule);
+			} else {
 			navForHost.addHostNav(frame, mainModule);
-			
+			}
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
