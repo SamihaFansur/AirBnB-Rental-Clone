@@ -2,6 +2,7 @@ package GUI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -27,4 +28,19 @@ public class ConnectionManager {
 	}
 	
 	
+	
+	
+	public static void deleteProperty(int id){
+        String sql = "DELETE FROM Property WHERE property_id=?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
+	
+	

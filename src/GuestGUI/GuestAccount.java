@@ -86,7 +86,7 @@ public class GuestAccount extends JFrame{
 		provisionalBookingsLabel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				MainModule.controller.editPropertyView(0);
+				//MainModule.controller.editPropertyView(0);
 				frame.dispose();
 			}
 		});

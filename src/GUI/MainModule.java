@@ -162,7 +162,7 @@ public class MainModule {
 		EditUtility editUtility = new EditUtility(mainModule, controller, model);
 		Facilities facilities = new Facilities(mainModule, controller, model);
 		HostAccount hostAccount = new HostAccount(mainModule, controller, model);
-		Properties properties = new Properties(mainModule, controller, model);
+		Properties properties = new Properties();
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
 		Reviews reviews = new Reviews(mainModule, controller, model);	
 		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);

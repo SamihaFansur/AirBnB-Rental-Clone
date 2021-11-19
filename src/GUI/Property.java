@@ -24,7 +24,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Property extends JFrame{
 
@@ -39,7 +40,38 @@ public class Property extends JFrame{
 	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
 	private JFrame frame ;
+	private int id;
+	private String houseNameNumber;
+	private String postcode;
+	private String shortName;
 
+	 public int getId() {
+	        return id;
+	    }
+	    public void setId(int id) {
+	        this.id = id;
+	    }
+	    public String getHouseNameNumber() {
+	        return houseNameNumber;
+	    }
+	    public void setHouseNameNumber(String houseNameNumber) {
+	        this.houseNameNumber = houseNameNumber;
+	    }
+	    public String getPostcode() {
+	        return postcode;
+	    }
+	    public void setPostcode(String postcode) {
+	        this.postcode = postcode;
+	    }
+	    public String getShortName() {
+	        return shortName;
+	    }
+	    public void setShortName(String shortName) {
+	        this.shortName = shortName;
+	    }
+	
+	
+	
 	
 	public Property(MainModule mainModule, Controller controller, Model model) {
 		initializeProperty();
@@ -48,6 +80,8 @@ public class Property extends JFrame{
 		this.model=model;
 	}
 
+	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */

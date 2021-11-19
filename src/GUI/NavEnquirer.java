@@ -32,6 +32,8 @@ import java.awt.Insets;
 import java.awt.Font;
 
 public class NavEnquirer extends JFrame{
+	public NavEnquirer() {
+	}
 
 	public JFrame frame;
 	private MainModule mainModule;
