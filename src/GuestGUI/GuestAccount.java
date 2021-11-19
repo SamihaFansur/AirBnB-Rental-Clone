@@ -9,7 +9,7 @@ import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.NavEnquirer;
-import HostGUI.NavHost;
+import GuestGUI.NavGuest;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
@@ -32,7 +32,7 @@ import java.awt.Font;
 public class GuestAccount extends JFrame{
 
 
-	private NavHost navForHost = new NavHost();
+	private NavGuest navForGuest = new NavGuest();
 	private JFrame frame;
 
 	public void close() {
@@ -59,7 +59,7 @@ public class GuestAccount extends JFrame{
 
 		try {
 			frame = new JFrame();
-			navForHost.addHostNav(frame, mainModule);
+			navForGuest.addGuestNav(frame, mainModule);
 			
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
