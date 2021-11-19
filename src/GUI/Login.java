@@ -183,6 +183,7 @@ public class Login extends JFrame {
 
 				if (hostLogin && guestLogin) {
 					String[] options = { "Host", "Guest" };
+					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					accountSelected = JOptionPane.showOptionDialog(this, "Please log in as a Host or Guest", "Message",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 					System.out.println("THE RESULT: " + accountSelected);
@@ -194,7 +195,7 @@ public class Login extends JFrame {
 						mainModule.currentState = STATE.GUEST_ACCOUNT;
 						mainModule.userState = USER.GUEST;
 					}
-					JOptionPane.showMessageDialog(this, "You have successfully logged in");
+
 					System.out.println("logggin in: " + model.getEmail());
 					frame.dispose();
 				} else if (hostLogin) {

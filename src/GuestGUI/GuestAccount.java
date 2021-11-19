@@ -78,6 +78,14 @@ public class GuestAccount extends JFrame{
 		registerPanel.add(guestAccountLabel);
 		
 		JButton editAccountButton = new JButton("Edit Account");
+		editAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState=STATE.EDIT_ACCOUNT;
+				MainModule.controller.drawNewView();
+				frame.dispose();
+				
+			}
+		});
 		editAccountButton.setBounds(203, 177, 183, 34);
 		registerPanel.add(editAccountButton);
 		
