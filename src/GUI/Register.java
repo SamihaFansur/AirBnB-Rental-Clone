@@ -1,6 +1,7 @@
 package GUI;
 import Controller.*;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.*;
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -268,6 +269,10 @@ public class Register extends JFrame{
 					model.setPostcode(postcodeTextField.getText());
 					model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 					submit();
+					frame.dispose();
+					mainModule.currentState = STATE.HOMEPAGE;
+					mainModule.userState = USER.ENQUIRER;
+					MainModule.controller.drawNewView();
 					Login sp = new Login(mainModule, controller, model);
 				}
 			/*
@@ -417,7 +422,8 @@ public class Register extends JFrame{
 			if(y>0) {
 				System.out.println("tryagain");
 				System.out.println(this);
-				JOptionPane.showMessageDialog(this, "Successful registration!"); //remove later
+				JOptionPane.showMessageDialog(this, "Successful registration!");
+				//remove later
 			}
 			
 
