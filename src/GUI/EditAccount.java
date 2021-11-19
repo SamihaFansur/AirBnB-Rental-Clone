@@ -168,7 +168,7 @@ public class EditAccount extends JFrame{
 				}
 			}
 		});
-		addEditPropertyButton.setBounds(245, 548, 91, 23);
+		addEditPropertyButton.setBounds(368, 548, 113, 23);
 		editACcountPanel.add(addEditPropertyButton);
 		
 		JButton backButton = new JButton("Back");
@@ -179,8 +179,8 @@ public class EditAccount extends JFrame{
 		
 		
 		JButton deleteAccountButton = new JButton("Delete Account");
-		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		deleteAccountButton.setBounds(100, 548, 91, 23);
+		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		deleteAccountButton.setBounds(207, 548, 113, 23);
 		editACcountPanel.add(deleteAccountButton);
 		deleteAccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
