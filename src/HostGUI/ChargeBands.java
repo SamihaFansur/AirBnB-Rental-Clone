@@ -236,8 +236,8 @@ public class ChargeBands extends JFrame{
 	            }
 	        });
 		
-		editChargebandButton.setBounds(245, 548, 91, 23);
-		chargeBandsPanel.add(editChargebandButton);
+//		editChargebandButton.setBounds(245, 548, 91, 23);
+//		chargeBandsPanel.add(editChargebandButton);
 		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
