@@ -185,6 +185,10 @@ public class EditAccount extends JFrame{
 		deleteAccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteAccount();
+				frame.dispose();
+				mainModule.currentState = STATE.HOMEPAGE;
+				mainModule.userState = USER.ENQUIRER;
+				MainModule.controller.drawNewView();
 				}	
 		}
 
@@ -237,6 +241,94 @@ public class EditAccount extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
+			String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE (SELECT outdoors_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
+			deleteOutdoors.setString(1, model.getHouseNameNum());
+			deleteOutdoors.setString(2, model.getPostcode());
+			int z = deleteOutdoors.executeUpdate();
+			if(z>0) {
+				System.out.println(this);
+				// remove later 
+			}
+
+			String deleteKitchenQuery = "DELETE FROM Kitchen WHERE (SELECT kitchen_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
+			deleteKitchen.setString(1, model.getHouseNameNum());
+			deleteKitchen.setString(2, model.getPostcode());
+			int a = deleteKitchen.executeUpdate();
+			if(a>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteLivingQuery = "DELETE FROM Living WHERE (SELECT living_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
+			deleteLiving.setString(1, model.getHouseNameNum());
+			deleteLiving.setString(2, model.getPostcode());
+			int b = deleteKitchen.executeUpdate();
+			if(b>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteUtilityQuery = "DELETE FROM Utility WHERE (SELECT utility_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
+			deleteUtility.setString(1, model.getHouseNameNum());
+			deleteUtility.setString(2, model.getPostcode());
+			int c =deleteUtility.executeUpdate();
+			if(c>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteSleepingQuery = "DELETE FROM Sleeping WHERE (SELECT sleeping_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
+			deleteSleeping.setString(1, model.getHouseNameNum());
+			deleteSleeping.setString(2, model.getPostcode());
+			int d = deleteSleeping.executeUpdate();
+			if(d>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteBathingQuery = "DELETE FROM Bathing WHERE (SELECT bathing_id FROM Property WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?))";
+			PreparedStatement deleteBathing = connection.prepareStatement(deleteBathingQuery);
+			deleteBathing.setString(1, model.getHouseNameNum());
+			deleteBathing.setString(2, model.getPostcode());
+			int e = deleteBathing.executeUpdate();
+			if(e>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteFacilitiesQuery ="DELETE FROM Facilities WHERE (SELECT property_id FROM Property WHERE houseNameNumber = ? AND postcode = ?)";
+			PreparedStatement deleteFacilities = connection.prepareStatement(deleteFacilitiesQuery);
+			deleteFacilities.setString(1, model.getHouseNameNum());
+			deleteFacilities.setString(2, model.getPostcode());
+			int y = deleteFacilities.executeUpdate();
+			if(y>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deletePropertyQuery ="DELETE FROM Property WHERE houseNameNumber = ? AND postcode = ?";
+			PreparedStatement deleteProperty = connection.prepareStatement(deletePropertyQuery);
+			deleteProperty.setString(1, model.getHouseNameNum());
+			deleteProperty.setString(2, model.getPostcode());
+			int x = deleteProperty.executeUpdate();
+			if(x>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			
+			String deleteAddressQuery ="DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
+			PreparedStatement deleteAddress = connection.prepareStatement(deleteAddressQuery);
+			deleteAddress.setString(1, model.getHouseNameNum());
+			deleteAddress.setString(2, model.getPostcode());
+			int l = deleteAddress.executeUpdate();
+			if(l>0) {
+				System.out.println(this);
+				// remove later 
+			}
 	//		String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE EXISTS (SELECT * FROM Account WHERE Account.email = HostAccount.email and email = ?)";
 			String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
 			PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
@@ -263,7 +355,8 @@ public class EditAccount extends JFrame{
 				System.out.println(this);
 				// remove later 
 			}
-		} catch (Exception e) {
+
+			} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
