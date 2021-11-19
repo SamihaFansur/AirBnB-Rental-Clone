@@ -282,10 +282,22 @@ public class EditProperty extends JFrame{
 		
 		editPropertyPanel.add(backButton);
 		
-		JButton addChargeBandsButton = new JButton("Charge Bands");
+		JButton addChargeBandsButton = new JButton("Add Charge Bands");
 		addChargeBandsButton.setBounds(203, 261, 183, 34);
+		addChargeBandsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState = EDITPROPERTY.CHARGEBANDS;
+				mainModule.userState=USER.HOST;
+				System.out.println("£££££££££££££££££££££££ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
+				MainModule.controller.editPropertyView(0,0);
+//				close();
+//				model.setEditPropertyPostcode(null);
+				frame.dispose();
+				close();
+				
+			}
+		});
 		editPropertyPanel.add(addChargeBandsButton);
-
 
 		
 		addEditPropertyButton = new JButton("Save");

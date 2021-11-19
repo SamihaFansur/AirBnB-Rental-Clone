@@ -54,6 +54,7 @@ public class Controller extends MainModule{
 	private Properties properties;
 	private EditAccount editAccount;
 	private Reviews reviews;
+	private ChargeBands chargebands;
 //	private Properties properties;
 	
 	
@@ -79,7 +80,8 @@ public class Controller extends MainModule{
 			HostAccount hostAccount,
 			Properties properties,
 			EditAccount editAccount,
-			Reviews reviews){
+			Reviews reviews,
+			ChargeBands chargebands){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -105,6 +107,7 @@ public class Controller extends MainModule{
 		this.properties=properties;
 		this.editAccount = editAccount;
 		this.reviews = reviews;
+		this.chargebands = chargebands;
 	}
 	
 	public void setTitle(String title){
@@ -172,6 +175,7 @@ public class Controller extends MainModule{
 	public void drawNewView() {
 		System.out.println("in drawNewView");
 		System.out.println("1----------"+mainModule.currentState);
+		System.out.println("2----------"+mainModule.editPropertyState);
 		if (mainModule.currentState == STATE.HOMEPAGE && mainModule.userState==USER.ENQUIRER){
 			homepage.initializeHomePage();
 		}
@@ -247,6 +251,11 @@ public class Controller extends MainModule{
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.FACILITIES){
 			facilities.initializeFacilities();
 		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.CHARGEBANDS){
+			System.out.println("CMONNNNNNNNNNN");
+			chargebands.initializeChargeBands();
+		}
+		
 		
 	}
  	

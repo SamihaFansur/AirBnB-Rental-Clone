@@ -54,7 +54,7 @@ public class ChargeBands extends JFrame{
 
 	 
 	 public ChargeBands(MainModule mainModule, Controller controller, Model model) {
-		initializeChargeBands();
+//		initializeChargeBands();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -64,6 +64,7 @@ public class ChargeBands extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeChargeBands() {
+		System.out.println("IN CHARGE BANDS.JAVA");
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);

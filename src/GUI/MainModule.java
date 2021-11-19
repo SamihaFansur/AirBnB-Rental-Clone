@@ -49,6 +49,7 @@ public class MainModule {
 	private Properties properties;
 	private EditAccount editAccount;
 	private Reviews reviews;
+	private ChargeBands chargeBands;
 	
 	//Page user is on
 	public enum STATE{
@@ -101,7 +102,8 @@ public class MainModule {
 		EDIT_BEDROOM,
 		PROPERTIES,
 		REVIEWS,
-		FACILITIES
+		FACILITIES,
+		CHARGEBANDS
 	}
 	
 	public enum USER {
@@ -162,12 +164,13 @@ public class MainModule {
 		HostAccount hostAccount = new HostAccount(mainModule, controller, model);
 		Properties properties = new Properties(mainModule, controller, model);
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
-		Reviews reviews = new Reviews(mainModule, controller, model);				
+		Reviews reviews = new Reviews(mainModule, controller, model);	
+		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);
 		
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties, editAccount, reviews);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties, editAccount, reviews, chargeBands);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
