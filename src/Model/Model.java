@@ -37,13 +37,12 @@ public class Model {
 	private String bed1Type, bed2Type;
 	private int bed1Capacity, bed2Capacity;
 	
-	//facilities variables:
-	private int kitchenId;
-	private int sleepingId;
-	private int bathingId;
-	private int utilityId;
-	private int livingId;
-	private int outdoorsId;
+	//facilities variables
+	private int kitchenId, sleepingId, bathingId, utilityId, livingId, outdoorsId;
+	
+	//chargeband variables
+	private String startDate, endDate;
+	private double pricePerNight, serviceCharge, cleaningCharge;
 	
 	
 	//account getters and setters
@@ -565,7 +564,36 @@ public class Model {
 		return sleepingId;
 	}
 	
-	
-	
+	//chargeband getts and setters
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setPricePerNight(double pricePerNight) {
+		this.pricePerNight = pricePerNight;
+	}
+	public double getPricePerNight() {
+		return pricePerNight;
+	}
+	public void setServiceCharge(double serviceCharge) {
+		this.serviceCharge = serviceCharge;
+	}
+	public double getServiceCharge() {
+		return serviceCharge;
+	}
+	public void setCleaningCharge(double cleaningCharge) {
+		this.cleaningCharge = cleaningCharge;
+	}
+	public double getCleaningCharge() {
+		return cleaningCharge;
+	}
 	
 }

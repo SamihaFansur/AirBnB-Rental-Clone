@@ -91,10 +91,11 @@ public class Tables {
 //                + "guest_id INT REFERENCES GuestAccount, review_id INT REFERENCES Review, "
 //                + "provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
 //
-//		String createChargeBandsTable = "CREATE TABLE ChargeBands"
-//				+ "(PRIMARY KEY (property_id, startDate), property_id INT REFERENCES Property, "
-//				+ "startDate DATE, endDate DATE, pricePerNight DOUBLE, serviceCharge DOUBLE, "
-//				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
+		String createChargeBandsTable = "CREATE TABLE ChargeBands"
+				+ "(PRIMARY KEY (property_id, startDate), "
+				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
+				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
 //
 //		String[] allCreateQueries = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable, createReviewTable, 
 //				createOutdoorsTable, createLivingTable, createKitchenTable,createUtilityTable, createBathTypeTable, createBathingTable, 
@@ -113,7 +114,7 @@ public class Tables {
 							createKitchenTable,createUtilityTable,
 							createBathingTable, createBathing_BathTypeTable, createSleepingTable, 
 							createSleeping_BedTypeTable, createFacilitiesTable, 
-							createPropertyTable};
+							createPropertyTable, createChargeBandsTable};
 		createAllTables(create);
 	}
 

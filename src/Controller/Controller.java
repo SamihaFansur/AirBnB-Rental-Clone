@@ -207,7 +207,7 @@ public class Controller extends MainModule{
 		}
 	}
 	
-	public void editPropertyView(int facilitiesId, int id) {
+	public void editPropertyView(int facilitiesId, int id) { //facilities id is property_id when using 'add chargebands'
 		System.out.println("in editPropertyView");
 		System.out.println("1----------"+mainModule.editPropertyState);
 		System.out.println("editPropertyView--facility id from add facility = "+facilitiesId+" and "+id);
@@ -253,7 +253,7 @@ public class Controller extends MainModule{
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.CHARGEBANDS){
 			System.out.println("CMONNNNNNNNNNN");
-			chargebands.initializeChargeBands();
+			chargebands.initializeChargeBands(facilitiesId, id);
 		}
 		
 		
