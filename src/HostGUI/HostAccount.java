@@ -6,6 +6,7 @@ import javax.swing.*;
 
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.NavEnquirer;
@@ -22,6 +23,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -33,6 +37,9 @@ public class HostAccount extends JFrame{
 
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
+	
+
+	Connection connection = null;
 
 	public void close() {
 		frame.dispose();
@@ -93,7 +100,29 @@ public class HostAccount extends JFrame{
 		propertiesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-				MainModule.controller.editPropertyView(0, 0);
+				int id = 0;
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				try {
+
+					connection = ConnectionManager.getConnection();
+					
+					String getHostIDOfUser = "select host_id from HostAccount where email=?";	
+					
+					PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+					hostIDfromHostAccountTable.setString(1, model.getEmail());
+					
+					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+					while (h_id.next()) {
+					 id = h_id.getInt(1);
+					 System.out.println("host id = "+id);
+					}
+					 System.out.println("host id  after = "+id);
+				}catch(Exception ex) {
+					System.err.println(ex.getMessage());
+				}
+				 
+				System.out.println(model.getEmail());
+				MainModule.controller.editPropertyView(id, 0);
 				frame.dispose();
 			}
 		});

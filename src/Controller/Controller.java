@@ -243,7 +243,7 @@ public class Controller extends MainModule{
 		}
 	
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
-			properties.initializeProperties();
+			properties.initializeProperties(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS){
 			reviews.initializeReviews();

@@ -60,18 +60,15 @@ public class Properties extends javax.swing.JFrame {
        }
    }
         
-   
    	
    
  // get a list of users from mysql database
-   public ArrayList<PropertyObject> getUsersList()
-   {
-	   
-	 
+   public ArrayList<PropertyObject> getUsersList() {
        ArrayList<PropertyObject> propertiesList = new ArrayList<PropertyObject>();
        Connection connection = getConnection();
-       
-       String query = "SELECT * FROM  `Property`";
+       System.out.println("you got this !!! cmonnn " + temp);
+       String query = "SELECT * FROM `Property` WHERE host_id = "+temp;
+       System.out.println(query);
        Statement st;
        ResultSet rs;
        
@@ -422,7 +419,9 @@ public class Properties extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void initializeProperties() {
+    public void initializeProperties(int pId, int id) {
+    	temp = pId;
+    	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH PROPERTY ID :"+temp);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -479,6 +478,7 @@ public class Properties extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_shortName;
     private javax.swing.JTextField jTextField_guestCapacity;
     private JButton backButton;
+    private static int temp;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
