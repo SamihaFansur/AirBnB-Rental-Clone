@@ -38,7 +38,7 @@ public class Register extends JFrame {
 	private JTextField mobileNumberTextField;
 	private JComboBox accountTypeComboBox;
 	private JComboBox registerTitleComboBox;
-
+	private JPanel registerPanel = new JPanel();
 //	private JFrame frame;
 	private Model model;
 	private Controller controller;
@@ -62,6 +62,15 @@ public class Register extends JFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	Boolean validateFirstNameInput = false;
+	Boolean validateSurnameInput = false;
+	Boolean validateEmailInput = false;
+	Boolean validateMobileNumberInput = false;
+	Boolean validateHouseNameNumberInput = false;
+	Boolean validateStreetNameInput = false;
+	Boolean validateCityNameInput = false;
+	Boolean validatePostcodeInput = false;
+
 	public void initializeRegister() {
 		mainModule.currentState = STATE.SELF_REGISTRATION;
 		try {
@@ -74,7 +83,6 @@ public class Register extends JFrame {
 			System.err.println(e.getMessage());
 		}
 
-		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
@@ -181,21 +189,17 @@ public class Register extends JFrame {
 		registerButton.setBounds(321, 553, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if (emptyString(firstNameTextField.getText())) {
-					
-					
-				}
-				Boolean validateFirstNameInput = validateName(firstNameTextField.getText());
-				Boolean validateSurnameInput = validateName(surnameTextField.getText());
 
-				Boolean validateEmailInput = validateEmail(emailAddressTextField.getText());
+				validateFirstNameInput = validateName(firstNameTextField.getText());
+				validateSurnameInput = validateName(surnameTextField.getText());
+
+				validateEmailInput = validateEmail(emailAddressTextField.getText());
 
 				// assumes UK number
-				Boolean validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
+				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
 
 				// first checking if the street number is a house name or number
-				Boolean validateHouseNameNumberInput = false;
+
 				// first checking if it's a number
 				String houseNameNumberInput = houseNumberTextField.getText();
 				for (int k = 0; k < houseNameNumberInput.length(); k++) {
@@ -236,7 +240,7 @@ public class Register extends JFrame {
 				}
 
 				// looping through the street name to validate each of the stings:
-				Boolean validateStreetNameInput = false; // validateName(streetNameTextField.getText());
+				// validateName(streetNameTextField.getText());
 				String[] streetNameInputArray = streetNameTextField.getText().split(" ");
 				for (int i = 0; i < streetNameInputArray.length; i++) {
 					// validating one string at a time:
@@ -252,10 +256,10 @@ public class Register extends JFrame {
 					}
 				}
 
-				Boolean validateCityNameInput = validateName(cityTextField.getText());
+				validateCityNameInput = validateName(cityTextField.getText());
 
 				// see postcode method for the validation for this.
-				Boolean validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
+				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
 
 				System.out.println("end result for streetName: " + validateStreetNameInput);
 
@@ -279,14 +283,17 @@ public class Register extends JFrame {
 					mainModule.userState = USER.ENQUIRER;
 					MainModule.controller.drawNewView();
 					Login sp = new Login(mainModule, controller, model);
+					/*
+					 * 
+					 * submit(); Login sp = new Login(mainModule,controller,model);
+					 */
+				} else {
+					displayError();
 				}
-				/*
-				 * 
-				 * submit(); Login sp = new Login(mainModule,controller,model);
-				 */
 			}
 		});
 		registerPanel.add(registerButton);
+
 
 		JButton resetRegisterButton = new JButton("Reset");
 		resetRegisterButton.addActionListener(new ActionListener() {
@@ -311,14 +318,6 @@ public class Register extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-	}
-
-	public boolean emptyString(String name) {
-		if (name == "") {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public boolean validateName(String name) {
@@ -389,8 +388,11 @@ public class Register extends JFrame {
 			return false;
 		}
 	}
-
+	public void displayError() {
+		JOptionPane.showMessageDialog(this, "Invalid input, please try again.");
+	}
 	public void submit() {
+
 		try {
 			connection = ConnectionManager.getConnection();
 			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,?,?)";
