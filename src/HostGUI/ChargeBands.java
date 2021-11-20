@@ -24,6 +24,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +40,7 @@ import java.awt.Font;
 import java.util.Date;
 import java.time.Month;
 import java.time.LocalDate;
+import java.math.RoundingMode;
 
 public class ChargeBands extends JFrame{
 
@@ -171,83 +173,180 @@ public class ChargeBands extends JFrame{
 	            public void actionPerformed(ActionEvent e) {
 	            	
 	            
-	            //checking date format: 
-	            	
-	            Boolean startDateValidation = startDate.getText().matches("\\d{2}/\\d{2}/\\d{4}");
-	            Boolean endDateValidation = endDate.getText().matches("\\d{2}/\\d{2}/\\d{4}");
-	            //creating DATE objects:
-	            Date formattedStartDate = parseDate(startDate.getText());
-	            Date formattedEndDate = parseDate(endDate.getText());
-	            //checking if start date < end date
-	              Boolean timeCheck = formattedStartDate.before(formattedEndDate);
+	            //checking if strings are empty:
+	            Boolean startDateIsEmpty = startDate.getText().isBlank();
+	            Boolean endDateIsEmpty = endDate.getText().isBlank();
+	            Boolean serviceChargeIsEmpty = serviceCharge.getText().isBlank();
+	            Boolean cleaningChargeIsEmpty = cleaningCharge.getText().isBlank();
+	            Boolean pricePerNightIsEmpty = pricePerNight.getText().isBlank();
+	            
+	            System.out.println("CODE RUNNING 1");
+	            System.out.println(startDateIsEmpty+" "+endDateIsEmpty+" "+serviceChargeIsEmpty+" "+cleaningChargeIsEmpty+" "+pricePerNightIsEmpty);
+	            
+	            
+	            
+	            //checking id input fields are empty:
+	            if (!startDateIsEmpty && !endDateIsEmpty && !serviceChargeIsEmpty && !cleaningChargeIsEmpty && !pricePerNightIsEmpty) {
+	            	//checking date format: 	
+		            Boolean startDateValidation = startDate.getText().matches("\\d{2}/\\d{2}/\\d{4}");
+		            Boolean endDateValidation = endDate.getText().matches("\\d{2}/\\d{2}/\\d{4}");
+		            //checking for doubles
+		            Boolean pricePerNightIsDouble = checkForDouble(pricePerNight.getText());
+		            Boolean cleaningChargeIsDouble = checkForDouble(cleaningCharge.getText());
+		            Boolean serviceChargeIsDouble = checkForDouble(serviceCharge.getText());
+		          
+		            //checking if date matches DATE object format and if prices can exist as doubles:
+		            if (startDateValidation && endDateValidation && pricePerNightIsDouble && cleaningChargeIsDouble && serviceChargeIsDouble) {
+		            	Date formattedStartDate = parseDate(startDate.getText());
+		 	            Date formattedEndDate = parseDate(endDate.getText());
+		 	            //checking if start date < end date
+		 	            //NOTE: cant do the following time check until dates are converted to date objects
+		 	            Boolean timeCheck = formattedStartDate.before(formattedEndDate);
+		 	           
+		 	            //making all prices into doubles:
+		 	            Double pricePerNightDoubleValidation = Double.parseDouble(pricePerNight.getText());
+		 	            Double serviceChargeDoubleValidation = Double.parseDouble(serviceCharge.getText());
+		 	            Double cleaningChargeDoubleValidation = Double.parseDouble(cleaningCharge.getText());
+		 	            pricePerNightDoubleValidation = round(pricePerNightDoubleValidation,2);
+		 	            serviceChargeDoubleValidation = round(serviceChargeDoubleValidation,2);
+		 	            cleaningChargeDoubleValidation = round(cleaningChargeDoubleValidation,2);
+		 	            
+		 	            // checking if dates are in the year 2022
+		 	           String startDateParts[] = startDate.getText().split("/");
+			              String endDateParts[] = endDate.getText().split("/");
+			              
+			              
+			              // Getting day, month, and year for start date:
+			              int startDay = Integer.parseInt(startDateParts[0]);
+			              int startMonth = Integer.parseInt(startDateParts[1]);
+			              int startYear = Integer.parseInt(startDateParts[2]);
+			              
+			              
+			              //getting day, month, and year for end date:
+			              int endDay = Integer.parseInt(endDateParts[0]);
+			              int endMonth = Integer.parseInt(endDateParts[1]);
+			              int endYear = Integer.parseInt(endDateParts[2]);
+			              
+			       
+			              // Printing the day, month, and year
+			              System.out.println("Day: " + startDay);
+			              System.out.println("Month: " + startMonth);
+			              
+			              System.out.println("Year: " + startYear);
+			          
+			              System.out.println("propertyidAfter in addbtn before calling addAChargeBand = "+propertyIdAfter);
+			              
+			              //call function to validate the date:
+			              Boolean startDateAccepted = validateDate(startDay, startMonth, startYear);
+			              Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
+			           
+		 	            
+		 	            // finally checking if the start time is less than the end time:
+		 	            if (timeCheck && startDateAccepted && endDateAccepted) {
+		 	            	//System.out.println(pricePerNightDoubleValidation+" "+serviceChargeDoubleValidation+" "+cleaningChargeDoubleValidation);
+		 	            	System.out.println("REACHED ALL SUCCESSFUL CHECKS");
+		 	            	 model.addRow(
+				   	                   new Object[]{
+				   	                         startDate.getText(), 
+				   	                         endDate.getText(),
+				   	                         pricePerNight.getText(),
+				   	                         serviceCharge.getText(),
+				   	                         cleaningCharge.getText()
+				   	                      
+				   	                   }
+				   	                   
+				   	              );
+			            	  System.out.println("Start date in model: "+startDate.getText());
+			            	  
+			            	  addAChargeBand(propertyIdAfter);
+				              //Delete form after adding data
+				              startDate.setText("");
+				              endDate.setText("");
+				              pricePerNight.setText("");
+				              serviceCharge.setText("");
+				              cleaningCharge.setText("");
+		 	            }else {
+		 	            	displayInvalidStartEndTimeMessage();
+		 	            }
+		 	            
+		            }else {
+		            	displayInvalidDateMessage();
+			 	            
+		            }
+ 	            	
+	            }else {
+	            	displayEmptyStringsMessage();
+	            }
+	            
+	            System.out.println("CODE RUNNING 2");
 	            
 	             
 	              
-	              
-	              ///----------------for validating in dd/mm/yyyy format and to check if dates dont overlap etc
-	              String startDateParts[] = startDate.getText().split("/");
-	              String endDateParts[] = endDate.getText().split("/");
-	              
-	              
-	              // Getting day, month, and year for start date:
-	              int startDay = Integer.parseInt(startDateParts[0]);
-	              int startMonth = Integer.parseInt(startDateParts[1]);
-	              int startYear = Integer.parseInt(startDateParts[2]);
-	              
-	              
-	              //getting day, month, and year for end date:
-	              int endDay = Integer.parseInt(endDateParts[0]);
-	              int endMonth = Integer.parseInt(endDateParts[1]);
-	              int endYear = Integer.parseInt(endDateParts[2]);
-	              
-	       
-	              // Printing the day, month, and year
-	              System.out.println("Day: " + startDay);
-	              System.out.println("Month: " + startMonth);
-	              
-	              System.out.println("Year: " + startYear);
-	          
-	              System.out.println("propertyidAfter in addbtn before calling addAChargeBand = "+propertyIdAfter);
-	              
-	              //call function to validate the date:
-	              Boolean startDateAccepted = validateDate(startDay, startMonth, startYear);
-	              Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
-	              
-	              
+//	              ///----------------for validating in dd/mm/yyyy format and to check if dates dont overlap etc
+//	              String startDateParts[] = startDate.getText().split("/");
+//	              String endDateParts[] = endDate.getText().split("/");
+//	              
+//	              
+//	              // Getting day, month, and year for start date:
+//	              int startDay = Integer.parseInt(startDateParts[0]);
+//	              int startMonth = Integer.parseInt(startDateParts[1]);
+//	              int startYear = Integer.parseInt(startDateParts[2]);
+//	              
+//	              
+//	              //getting day, month, and year for end date:
+//	              int endDay = Integer.parseInt(endDateParts[0]);
+//	              int endMonth = Integer.parseInt(endDateParts[1]);
+//	              int endYear = Integer.parseInt(endDateParts[2]);
+//	              
+//	       
+//	              // Printing the day, month, and year
+//	              System.out.println("Day: " + startDay);
+//	              System.out.println("Month: " + startMonth);
+//	              
+//	              System.out.println("Year: " + startYear);
+//	          
+//	              System.out.println("propertyidAfter in addbtn before calling addAChargeBand = "+propertyIdAfter);
+//	              
+//	              //call function to validate the date:
+//	              Boolean startDateAccepted = validateDate(startDay, startMonth, startYear);
+//	              Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
+//	              
+//	              Boolean timeCheck=false;
+//	              
 	              //validating money:
 //	              Boolean pricePerNightValidation = validatePricingFields(pricePerNightTextField.getText());
 //	              Boolean serviceChargeValidation = validatePricingFields(serviceChargeTextField.getText());
 //	              Boolean cleaningChargeValidation = validatePricingFields(cleaningChargeTextField.getText());
-//	              
-	              if(startDateAccepted && endDateAccepted && timeCheck) {
-	            	  model.addRow(
-		   	                   new Object[]{
-		   	                         startDate.getText(), 
-		   	                         endDate.getText(),
-		   	                         pricePerNight.getText(),
-		   	                         serviceCharge.getText(),
-		   	                         cleaningCharge.getText()
-		   	                      
-		   	                   }
-		   	                   
-		   	              );
-		   	      
-	            	  System.out.println("Start date in model: "+startDate.getText());
-	            	  
-	            	  addAChargeBand(propertyIdAfter);
-		              //Delete form after adding data
-		              startDate.setText("");
-		              endDate.setText("");
-		              pricePerNight.setText("");
-		              serviceCharge.setText("");
-		              cleaningCharge.setText("");
-		           
-	              }else if (!timeCheck) {
-	            	  displayInvalidStartEndTimeMessage();
-	              }
-	              else {
-	            	  displayInvalidDateMessage();
-	              }
+////	              
+//	              if(startDateAccepted && endDateAccepted && timeCheck) {
+//	            	  model.addRow(
+//		   	                   new Object[]{
+//		   	                         startDate.getText(), 
+//		   	                         endDate.getText(),
+//		   	                         pricePerNight.getText(),
+//		   	                         serviceCharge.getText(),
+//		   	                         cleaningCharge.getText()
+//		   	                      
+//		   	                   }
+//		   	                   
+//		   	              );
+//		   	      
+//	            	  System.out.println("Start date in model: "+startDate.getText());
+//	            	  
+//	            	  addAChargeBand(propertyIdAfter);
+//		              //Delete form after adding data
+//		              startDate.setText("");
+//		              endDate.setText("");
+//		              pricePerNight.setText("");
+//		              serviceCharge.setText("");
+//		              cleaningCharge.setText("");
+//		           
+//	              }else if (!timeCheck) {
+//	            	  displayInvalidStartEndTimeMessage();
+//	              }
+//	              else {
+//	            	  displayInvalidDateMessage();
+//	              }
 	            }
 	        });
 		  addButton.setBounds(223, 366, 142, 23);
@@ -458,22 +557,22 @@ public class ChargeBands extends JFrame{
      }
      
      public void displayInvalidDateMessage(){
-		 JOptionPane.showMessageDialog(this, "Your start date or end date is inavlid. Please input in the format DD/MM/YYYY. All dates for 2022 are accepted.");
+		 JOptionPane.showMessageDialog(this, "Please check entries for prices and dates. Prices should be numbers or decimals. Please type dates in the format DD/MM/YYYY.");
 	}
      public void displayInvalidStartEndTimeMessage(){
-		 JOptionPane.showMessageDialog(this, "The start date is after end date.");
+		 JOptionPane.showMessageDialog(this, "The start date is after end date or the dates you have picked are not in 2022. ");
 	}
     public boolean validatePricingFields(String money) {
     	System.out.println(" HEREE VALID");	
 
  		if (money.matches("[0-9]*") && (money.length() >= 1)) {
  			//System.out.println("First name contains a characters not between a-z or A-Z");
- 			System.out.println(money+" IS  VALID");	
+ 			System.out.println(money+" IS  VALID (MONEY)");	
 
  			return true;
  		}
  		else {
- 			System.out.println(money+" IS NOT VALID");	
+ 			System.out.println(money+" IS NOT VALID (MONEY)");	
  			return false;
  		}
 
@@ -482,7 +581,34 @@ public class ChargeBands extends JFrame{
     public void displayInvalidMoneyMessage(){
 		 JOptionPane.showMessageDialog(this, "The value for service charge per night, price per night, and cleaning charge per night must be an integer.");
 	}
+    
+    public void displayEmptyStringsMessage(){
+		 JOptionPane.showMessageDialog(this, "All fields must be completed to add a chargeband");
+	}
+    
+    public Boolean checkForDouble(String money) {
+    	Boolean isDouble;
+    	try
+    	{
+    	  Double.parseDouble(money);
+    	  isDouble=true;
+    	}
+    	catch(NumberFormatException e)
+    	{
+    	  isDouble= false;
+    	}
+    	return true;
+    }
+    
+    //function to round double values copied from:
+    // https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 	
 }
 
