@@ -42,6 +42,7 @@ public class EditProperty extends JFrame{
 	private JButton addEditPropertyButton;
 	private JTextField shortNameTextField;
 	 private JTextField guestCapacityTextField;
+	 private JTextField descriptionTextField;
 	 
 	Connection connection = null;
 
@@ -240,20 +241,29 @@ public class EditProperty extends JFrame{
 		JLabel shortNameLabel = new JLabel("Short Name:");
 		shortNameLabel.setBounds(104, 508, 93, 34);
 		editPropertyPanel.add(shortNameLabel);
-		
-		JLabel guestCapacityLabel = new JLabel("Guest Capacity");
-		guestCapacityLabel.setBounds(104, 549, 93, 34);
-		editPropertyPanel.add(guestCapacityLabel);
-		
+
 		shortNameTextField = new JTextField();
 		shortNameTextField.setColumns(10);
 		shortNameTextField.setBounds(202, 508, 274, 34);
 		editPropertyPanel.add(shortNameTextField);
 		
+		JLabel guestCapacityLabel = new JLabel("Guest Capacity");
+		guestCapacityLabel.setBounds(104, 549, 93, 34);
+		editPropertyPanel.add(guestCapacityLabel);
+		
 		guestCapacityTextField = new JTextField();
 		guestCapacityTextField.setColumns(10);
 		guestCapacityTextField.setBounds(202, 553, 274, 34);
 		editPropertyPanel.add(guestCapacityTextField);
+
+		JLabel descriptionLabel = new JLabel("Description"); //fix text box dimensions
+		descriptionLabel.setBounds(104, 598, 93, 34);
+		editPropertyPanel.add(descriptionLabel);
+		
+		descriptionTextField = new JTextField();
+		descriptionTextField.setColumns(10);
+		descriptionTextField.setBounds(202, 598, 274, 120);
+		editPropertyPanel.add(descriptionTextField);
 		
 		JButton reviewsButton = new JButton("Reviews");
 		reviewsButton.addActionListener(new ActionListener() {
@@ -341,6 +351,7 @@ public class EditProperty extends JFrame{
 						model.setCurrentLivingId(0);
 						model.setCurrentUtilityId(0);
 						model.setCurrentOutdoorsId(0);
+						System.out.println("btn pressed");
 						addEditPropertyDetails();
 						
 					}else {
@@ -349,7 +360,7 @@ public class EditProperty extends JFrame{
 					
 				}
 			});
-		addEditPropertyButton.setBounds(385, 611, 91, 23);
+		addEditPropertyButton.setBounds(415, 701, 91, 23);
 		editPropertyPanel.add(addEditPropertyButton);
 		
 	
@@ -359,39 +370,42 @@ public class EditProperty extends JFrame{
 	}
 	
 	public void addEditPropertyDetails() {
+		System.out.println("in btn addprop func");
 		try {
 			connection = ConnectionManager.getConnection();
-			String insertPropertyAddressQuery = "insert into Address values(?,?,?,?) ";	
-			String insertPropertyAddressInPropertyQuery = "insert into Property (houseNameNumber, postcode) values(?,?) ";	
-			
+
 			model.setEditPropertyHouseNameNum(houseNameNumberTextField.getText());
 			model.setEditPropertyStreetName(streetNameTextField.getText());
 			model.setEditPropertyCity(cityTextField.getText()); 
 			model.setEditPropertyPostcode(postcodeTextField.getText());
+			model.setEditPropertyShortName(shortNameTextField.getText());
+			model.setEditPropertyGuestCapacity(Integer.parseInt(guestCapacityTextField.getText()));
+			model.setEditPropertyDescription(descriptionTextField.getText());
 			
+			
+			String insertPropertyAddressQuery = "insert into Address values(?,?,?,?) ";	
+						
 			PreparedStatement propertyAddress = connection.prepareStatement(insertPropertyAddressQuery);
 			propertyAddress.setString(1, model.getEditPropertyHouseNameNum());
 			propertyAddress.setString(2, model.getEditPropertyStreetName());
 			propertyAddress.setString(3, model.getEditPropertyCity());
 			propertyAddress.setString(4, model.getEditPropertyPostcode());
 			
-			int  y = propertyAddress.executeUpdate();
-			if(y>0) {
-				System.out.println(this);
-				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
-			}
+			propertyAddress.executeUpdate();
+			System.out.println(propertyAddress.toString());
+
+			String insertPropertyAddressInPropertyQuery = "insert into Property (houseNameNumber, postcode, shortName, guestCapacity, description) values(?,?,?,?,?) ";	
 			
 			PreparedStatement propertyAddressInProperty = connection.prepareStatement(insertPropertyAddressInPropertyQuery);
 			propertyAddressInProperty.setString(1, model.getEditPropertyHouseNameNum());
 			propertyAddressInProperty.setString(2, model.getEditPropertyPostcode());
+			propertyAddressInProperty.setString(3, model.getEditPropertyShortName());
+			propertyAddressInProperty.setInt(4, model.getEditPropertyGuestCapacity());
+			propertyAddressInProperty.setString(5, model.getEditPropertyDescription());
 
-			int  u = propertyAddressInProperty.executeUpdate();
-			if(u>0) {
-				System.out.println(this);
-				JOptionPane.showMessageDialog(this, "Saved property address!"); //remove later
-			}
-
-
+			propertyAddressInProperty.executeUpdate();
+			System.out.println(propertyAddressInProperty.toString());
+			
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ = "+model.getEmail());
 			
 			

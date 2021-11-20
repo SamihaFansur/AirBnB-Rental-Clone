@@ -7,7 +7,8 @@ public class Model {
 					streetName, city, postcode, accType, mobileNumber;
 	
 	//edit property variables
-	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode;
+	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode, editPropertyShortName, editPropertyDescription;
+	private int editPropertyGuestCapacity;
 	
 	//utility variables
 	private boolean heating, washingMachine, fireExtinguisher, dryingMachine, smokeAlarm, firstAidKit;
@@ -160,13 +161,37 @@ public class Model {
 	public String getEditPropertyCity() {
 		return editPropertyCity;
 	}
-	
+
 	public void setEditPropertyPostcode(String editPropertyPostcode) {
 		this.editPropertyPostcode = editPropertyPostcode;
 	}
 
 	public String getEditPropertyPostcode() {
 		return editPropertyPostcode;
+	}
+	
+	public void setEditPropertyShortName(String editPropertyShortName) {
+		this.editPropertyShortName = editPropertyShortName;
+	}
+
+	public String getEditPropertyShortName() {
+		return editPropertyShortName;
+	}
+
+	public void setEditPropertyDescription(String editPropertyDescription) {
+		this.editPropertyDescription = editPropertyDescription;
+	}
+
+	public String getEditPropertyDescription() {
+		return editPropertyDescription;
+	}
+
+	public void setEditPropertyGuestCapacity(int editPropertyGuestCapacity) {
+		this.editPropertyGuestCapacity = editPropertyGuestCapacity;
+	}
+
+	public int getEditPropertyGuestCapacity() {
+		return editPropertyGuestCapacity;
 	}
 	
 	//getters and setters for utility facility
