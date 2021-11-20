@@ -9,7 +9,7 @@ import Controller.Controller;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.NavEnquirer;
-import HostGUI.NavHost;
+import GuestGUI.NavGuest;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
@@ -32,7 +32,7 @@ import java.awt.Font;
 public class GuestAccount extends JFrame{
 
 
-	private NavHost navForHost = new NavHost();
+	private NavGuest navForGuest = new NavGuest();
 	private JFrame frame;
 
 	public void close() {
@@ -47,7 +47,6 @@ public class GuestAccount extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public GuestAccount(MainModule mainModule, Controller controller, Model model) {
-		initializeGuestAccount();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -60,7 +59,7 @@ public class GuestAccount extends JFrame{
 
 		try {
 			frame = new JFrame();
-			navForHost.addHostNav(frame, mainModule);
+			navForGuest.addGuestNav(frame, mainModule);
 			
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
@@ -79,6 +78,14 @@ public class GuestAccount extends JFrame{
 		registerPanel.add(guestAccountLabel);
 		
 		JButton editAccountButton = new JButton("Edit Account");
+		editAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState=STATE.EDIT_ACCOUNT;
+				MainModule.controller.drawNewView();
+				frame.dispose();
+				
+			}
+		});
 		editAccountButton.setBounds(203, 177, 183, 34);
 		registerPanel.add(editAccountButton);
 		

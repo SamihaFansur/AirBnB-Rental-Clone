@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import Controller.Controller;
+import GuestGUI.GuestAccount;
 import Model.Model;
 import HostGUI.*;
 import HostGUI.AddFacility;
@@ -50,6 +51,7 @@ public class MainModule {
 	private EditAccount editAccount;
 	private Reviews reviews;
 	private ChargeBands chargeBands;
+	
 	
 	//Page user is on
 	public enum STATE{
@@ -162,6 +164,7 @@ public class MainModule {
 		EditUtility editUtility = new EditUtility(mainModule, controller, model);
 		Facilities facilities = new Facilities(mainModule, controller, model);
 		HostAccount hostAccount = new HostAccount(mainModule, controller, model);
+		GuestAccount guestAccount = new GuestAccount(mainModule, controller, model);
 		Properties properties = new Properties();
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
 		Reviews reviews = new Reviews(mainModule, controller, model);	
@@ -170,7 +173,7 @@ public class MainModule {
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties, editAccount, reviews, chargeBands);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();

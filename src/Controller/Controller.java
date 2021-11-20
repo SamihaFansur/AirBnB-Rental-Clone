@@ -5,6 +5,7 @@ import GUI.Login;
 import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
+import GuestGUI.GuestAccount;
 import GUI.Contact;
 import GUI.EditAccount;
 import GUI.MainModule.STATE;
@@ -56,7 +57,8 @@ public class Controller extends MainModule{
 	private Reviews reviews;
 	private ChargeBands chargebands;
 //	private Properties properties;
-	
+	private GuestAccount guestAccount;
+
 	
 	public Controller(MainModule mainModule, 
 			Model model, 
@@ -81,7 +83,8 @@ public class Controller extends MainModule{
 			Properties properties,
 			EditAccount editAccount,
 			Reviews reviews,
-			ChargeBands chargebands){
+			ChargeBands chargebands,
+			GuestAccount guestAccount){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -108,6 +111,7 @@ public class Controller extends MainModule{
 		this.editAccount = editAccount;
 		this.reviews = reviews;
 		this.chargebands = chargebands;
+		this.guestAccount = guestAccount;
 	}
 	
 	public void setTitle(String title){
@@ -188,7 +192,7 @@ public class Controller extends MainModule{
 			login.initializeLogin();
 			//login.initia
 		}
-		else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState==USER.ENQUIRER || mainModule.userState==USER.HOST)){
+		else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState==USER.ENQUIRER || mainModule.userState==USER.HOST || mainModule.userState == USER.GUEST)){
 			//System.out.println("HEREEE");
 			search.initializeSearch();
 		}
@@ -200,7 +204,11 @@ public class Controller extends MainModule{
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			hostAccount.initializeHostAccount();
 		}
-		else if (mainModule.currentState == STATE.EDIT_ACCOUNT && mainModule.userState==USER.HOST){
+		else if (mainModule.currentState == STATE.GUEST_ACCOUNT && mainModule.userState==USER.GUEST){
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
+			guestAccount.initializeGuestAccount();
+		}
+		else if (mainModule.currentState == STATE.EDIT_ACCOUNT && (mainModule.userState==USER.HOST || mainModule.userState==USER.GUEST)){
 			System.out.println("HEREEE");
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			editAccount.initializeEditAccount();
