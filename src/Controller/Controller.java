@@ -192,7 +192,7 @@ public class Controller extends MainModule{
 			login.initializeLogin();
 			//login.initia
 		}
-		else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState==USER.ENQUIRER || mainModule.userState==USER.HOST)){
+		else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState==USER.ENQUIRER || mainModule.userState==USER.HOST || mainModule.userState == USER.GUEST)){
 			//System.out.println("HEREEE");
 			search.initializeSearch();
 		}

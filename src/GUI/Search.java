@@ -1,5 +1,6 @@
 package GUI;
 import HostGUI.*;
+import GuestGUI.*;
 import Controller.*;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
@@ -34,6 +35,7 @@ public class Search extends JFrame{
 	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin;
 	private NavHost navHost;
+	private NavGuest navGuest;
 	private JFrame frame ;
 	
 	public Search(MainModule mainModule, Controller controller, Model model) {
@@ -62,13 +64,23 @@ public class Search extends JFrame{
 			}
 		 }else if(mainModule.userState==USER.HOST) {
 			 try {
-				frame = new JFrame();
-				navHost = new NavHost();
-				navHost.addHostNav(frame, mainModule);
+					frame = new JFrame();
+					navHost = new NavHost();
+					navHost.addHostNav(frame, mainModule);
 				
 				}catch(Exception e) {
 					System.err.println(e.getMessage());
 				}
+		 } else if (mainModule.userState == USER.GUEST) {
+			 try {
+
+					frame = new JFrame();
+					navGuest = new NavGuest();
+					navGuest.addGuestNav(frame, mainModule);
+					
+					}catch(Exception e) {
+						System.err.println(e.getMessage());
+					}
 		 }
 			
 			JPanel searchPanel = new JPanel();
@@ -76,7 +88,7 @@ public class Search extends JFrame{
 			frame.getContentPane().add(searchPanel, BorderLayout.CENTER);
 			searchPanel.setLayout(null);
 			
-			JLabel minPriceFilterLabel = new JLabel("Min Price Per Night (£)");
+			JLabel minPriceFilterLabel = new JLabel("Min Price Per Night (ï¿½)");
 			minPriceFilterLabel.setBounds(30, 45, 130, 45);
 			searchPanel.add(minPriceFilterLabel);
 
@@ -94,7 +106,7 @@ public class Search extends JFrame{
 			searchPanel.add(numberOfGuestsFilter);
 			numberOfGuestsFilter.setColumns(10);
 
-			JLabel maxPriceFilterLabel = new JLabel("Max Price Per Night (£)");
+			JLabel maxPriceFilterLabel = new JLabel("Max Price Per Night (ï¿½)");
 			maxPriceFilterLabel.setBounds(277, 55, 130, 20);
 			searchPanel.add(maxPriceFilterLabel);
 
