@@ -12,6 +12,7 @@ public class PropertyObject {
 	    private int host_id;
 	    
 	    
+	    
 	    /**
 	     * @wbp.parser.entryPoint
 	     */

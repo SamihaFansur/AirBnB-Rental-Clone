@@ -94,7 +94,7 @@ public class EditKitchen extends JFrame{
 		frame.getContentPane().add(editKitchenPanel, BorderLayout.CENTER);
 		editKitchenPanel.setLayout(null);
 
-		JLabel editKitchenLabel = new JLabel("Add Kitchen facility");
+		JLabel editKitchenLabel = new JLabel("Kitchen facility");
 		editKitchenLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editKitchenLabel.setBounds(186, 48, 261, 57);
 		editKitchenPanel.add(editKitchenLabel);

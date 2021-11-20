@@ -177,16 +177,16 @@ public class EditProperty extends JFrame{
 		editPropertyPanel.add(addFacilityButton);
 		
 
-		JButton facilitiesButton = new JButton("Facilities");
-		facilitiesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
-				MainModule.controller.editPropertyView(0, 0); //fix the params
-				close();
-			}
-		});
-		facilitiesButton.setBounds(203, 163, 183, 34);
-		editPropertyPanel.add(facilitiesButton);
+//		JButton facilitiesButton = new JButton("Facilities");
+//		facilitiesButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
+//				MainModule.controller.editPropertyView(0, 0); //fix the params
+//				close();
+//			}
+//		});
+//		facilitiesButton.setBounds(203, 163, 183, 34);
+//		editPropertyPanel.add(facilitiesButton);
 				
 		JLabel postcodeLabel = new JLabel("Postcode:");
 		postcodeLabel.setBounds(104, 325, 93, 34);
@@ -223,20 +223,6 @@ public class EditProperty extends JFrame{
 		houseNameNumberTextField.setColumns(10);
 		houseNameNumberTextField.setBounds(202, 460, 274, 34);
 		editPropertyPanel.add(houseNameNumberTextField);
-		
-		
-		
-		resetEditPropertyButton = new JButton("Reset");
-		resetEditPropertyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				houseNameNumberTextField.setText("");
-				streetNameTextField.setText("");
-				cityTextField.setText("");
-				postcodeTextField.setText("");
-			}
-		});
-		resetEditPropertyButton.setBounds(201, 611, 91, 23);
-		editPropertyPanel.add(resetEditPropertyButton);
 		
 		JLabel shortNameLabel = new JLabel("Short Name:");
 		shortNameLabel.setBounds(104, 508, 93, 34);
@@ -363,7 +349,19 @@ public class EditProperty extends JFrame{
 		addEditPropertyButton.setBounds(415, 701, 91, 23);
 		editPropertyPanel.add(addEditPropertyButton);
 		
-	
+
+		resetEditPropertyButton = new JButton("Reset");
+		resetEditPropertyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				houseNameNumberTextField.setText("");
+				streetNameTextField.setText("");
+				cityTextField.setText("");
+				postcodeTextField.setText("");
+			}
+		});
+		resetEditPropertyButton.setBounds(201, 611, 91, 23);
+		editPropertyPanel.add(resetEditPropertyButton);
+		
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

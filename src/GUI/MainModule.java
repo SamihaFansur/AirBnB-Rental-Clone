@@ -105,7 +105,8 @@ public class MainModule {
 		PROPERTIES,
 		REVIEWS,
 		FACILITIES,
-		CHARGEBANDS
+		CHARGEBANDS,
+		EDIT_PROPERTY_FACILITIES
 	}
 	
 	public enum USER {
@@ -119,21 +120,8 @@ public class MainModule {
 	public USER userState = USER.ENQUIRER;
 	public EDITPROPERTY editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 	
-	public MainModule() {
-		/*
-		this.currentState = STATE.SELF_REGISTRATION;
-		Model model = new Model();
-		SelfRegistration selfRegistration = new SelfRegistration();
-		System.out.println("testing");
-		Homepage homepage = new Homepage();
-		System.out.println("reached here");
-		System.out.println("sffvdf");
-		*/
-	}
-	
 	public static void main (String [] args) {
 	
-		
 		MainModule mainModule = new MainModule();
 		
 		//creating the model
@@ -163,9 +151,10 @@ public class MainModule {
 		EditSleeping editSleeping = new EditSleeping(mainModule, controller, model);
 		EditUtility editUtility = new EditUtility(mainModule, controller, model);
 		Facilities facilities = new Facilities(mainModule, controller, model);
+		EditAPropertysFacilities editAPropertysFacilities = new EditAPropertysFacilities(mainModule, controller, model);
 		HostAccount hostAccount = new HostAccount(mainModule, controller, model);
 		GuestAccount guestAccount = new GuestAccount(mainModule, controller, model);
-		Properties properties = new Properties();
+		Properties properties = new Properties(mainModule, controller, model);
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
 		Reviews reviews = new Reviews(mainModule, controller, model);	
 		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);
@@ -173,7 +162,7 @@ public class MainModule {
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();

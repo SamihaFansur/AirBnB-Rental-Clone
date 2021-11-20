@@ -51,12 +51,12 @@ public class Controller extends MainModule{
 	private EditSleeping editSleeping;
 	private EditUtility editUtility;
 	private Facilities facilities;
+	private EditAPropertysFacilities editAPropertysFacilities;
 	private HostAccount hostAccount;
 	private Properties properties;
 	private EditAccount editAccount;
 	private Reviews reviews;
 	private ChargeBands chargebands;
-//	private Properties properties;
 	private GuestAccount guestAccount;
 
 	
@@ -79,11 +79,13 @@ public class Controller extends MainModule{
 			EditSleeping editSleeping,
 			EditUtility editUtility,
 			Facilities facilities,
+			EditAPropertysFacilities editAPropertysFacilities,
 			HostAccount hostAccount,
 			Properties properties,
 			EditAccount editAccount,
 			Reviews reviews,
 			ChargeBands chargebands,
+			
 			GuestAccount guestAccount){
 		
 		System.out.println("now in controller");
@@ -106,6 +108,7 @@ public class Controller extends MainModule{
 		this.editSleeping=editSleeping;
 		this.editUtility=editUtility;
 		this.facilities=facilities;
+		this.editAPropertysFacilities = editAPropertysFacilities;
 		this.hostAccount=hostAccount;
 		this.properties=properties;
 		this.editAccount = editAccount;
@@ -249,7 +252,6 @@ public class Controller extends MainModule{
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_BATHROOM){
 			editBathroom.initializeEditBathroom(facilitiesId, id);
 		}
-	
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
 			properties.initializeProperties(facilitiesId, id);
 		}
@@ -257,7 +259,10 @@ public class Controller extends MainModule{
 			reviews.initializeReviews();
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.FACILITIES){
-			facilities.initializeFacilities();
+			facilities.initializeFacilities(facilitiesId, id);
+		}
+		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_PROPERTY_FACILITIES){
+			editAPropertysFacilities.initializeEditAPropertysFacilities(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.CHARGEBANDS){
 			System.out.println("CMONNNNNNNNNNN");

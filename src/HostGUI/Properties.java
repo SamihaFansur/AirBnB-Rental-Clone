@@ -16,6 +16,7 @@ import javax.swing.table.TableModel;
 
 import Controller.Controller;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import Model.Model;
 import javax.swing.GroupLayout.Alignment;
@@ -31,13 +32,20 @@ import java.awt.Font;
  * @author 1bestcsharp.blogspot.com
  */
 public class Properties extends javax.swing.JFrame {
-
-	
+		
     /**
      * Creates new form Java_Insert_Update_Delete_Display
      */
-    public Properties() {
-  	
+//
+	 private Controller controller;
+	 private Model model;
+	 private MainModule mainModule;
+	 
+    public Properties(MainModule mainModule, Controller controller, Model model) {
+    	this.model=model;
+		this.mainModule=mainModule;
+		this.controller=controller;
+		
         initComponents();
         Show_Users_In_JTable();
     }
@@ -66,8 +74,8 @@ public class Properties extends javax.swing.JFrame {
    public ArrayList<PropertyObject> getUsersList() {
        ArrayList<PropertyObject> propertiesList = new ArrayList<PropertyObject>();
        Connection connection = getConnection();
-       System.out.println("you got this !!! cmonnn " + temp);
-       String query = "SELECT * FROM `Property` WHERE host_id = "+temp;
+       System.out.println("you got this !!! cmonnn " + hostId);
+       String query = "SELECT * FROM `Property` WHERE host_id = "+hostId;
        System.out.println(query);
        Statement st;
        ResultSet rs;
@@ -166,6 +174,7 @@ public class Properties extends javax.swing.JFrame {
         jTable_Display_Properties = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
+        jButton_EditFacilities = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -284,6 +293,15 @@ public class Properties extends javax.swing.JFrame {
             }
         });
         
+        jButton_EditFacilities.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButton_EditFacilities.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
+        jButton_EditFacilities.setText("Edit Property Facilities");
+        jButton_EditFacilities.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditFacilitiesActionPerformed(evt);
+            }
+        });
+        
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
@@ -313,7 +331,8 @@ public class Properties extends javax.swing.JFrame {
         						.addGroup(jPanel1Layout.createSequentialGroup()
         							.addGap(99)
         							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
-        								.addComponent(jButton_Update, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            								.addComponent(jButton_Update, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            								.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         								.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         					.addGap(24)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
@@ -347,6 +366,7 @@ public class Properties extends javax.swing.JFrame {
         						.addComponent(jLabel4))
         					.addGap(69)
         					.addComponent(jButton_Update, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(jButton_EditFacilities, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         					.addComponent(jButton_Delete, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
         					.addGap(45))))
@@ -414,14 +434,23 @@ public class Properties extends javax.swing.JFrame {
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {                                               
         String query = "DELETE FROM `Property` WHERE property_id = "+jTextField_property_id.getText();
          executeSQlQuery(query, "Deleted");
-    }                                              
+    }  
+    
+    //Button Edit Facilities
+    private void jButton_EditFacilitiesActionPerformed(java.awt.event.ActionEvent evt) {                                               
+//        String query = "DELETE FROM `Property` WHERE property_id = "+jTextField_property_id.getText();
+//         executeSQlQuery(query, "Deleted");
+    	System.out.println("OK GOING TO EDIT FACILITIES PAGE");
+    	mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
+		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), 0); //fix the params
+    }  
 
     /**
      * @param args the command line arguments
      */
-    public void initializeProperties(int pId, int id) {
-    	temp = pId;
-    	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH PROPERTY ID :"+temp);
+    public void initializeProperties(int host_Id, int id) {
+    	hostId = host_Id;
+    	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH PROPERTY ID :"+hostId);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -451,7 +480,7 @@ public class Properties extends javax.swing.JFrame {
     		
             public void run() {
             
-                new Properties().setVisible(true);
+                new Properties(mainModule, controller, model).setVisible(true);
                 
             }
         });
@@ -460,6 +489,7 @@ public class Properties extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton_Delete;
     private javax.swing.JButton jButton_Update;
+    private javax.swing.JButton jButton_EditFacilities;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -478,7 +508,7 @@ public class Properties extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_shortName;
     private javax.swing.JTextField jTextField_guestCapacity;
     private JButton backButton;
-    private static int temp;
+    private static int hostId;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
