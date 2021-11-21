@@ -375,7 +375,8 @@ public class EditAccount extends JFrame{
 			int i  = deleteAccount.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
-				JOptionPane.showMessageDialog(this, "Account deleted.!");
+				frame.dispose();
+				JOptionPane.showMessageDialog(this, "Account deleted.");
 
 				// remove later 
 			}
