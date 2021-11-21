@@ -170,6 +170,18 @@ public class EditAccount extends JFrame{
 					model.setSurname(surnameTextField.getText());
 					model.setPassword(passwordTextField.getText());
 					addEditAccountDetails();
+					frame.dispose();
+
+					if (mainModule.userState == USER.GUEST) {
+						mainModule.currentState = STATE.GUEST_ACCOUNT;
+						mainModule.userState = USER.GUEST;
+					} else {
+						mainModule.currentState = STATE.HOST_ACCOUNT;
+						mainModule.userState = USER.HOST;
+					}
+					MainModule.controller.drawNewView();
+				}else {
+					displayError();
 				}
 			}
 		});
@@ -190,7 +202,6 @@ public class EditAccount extends JFrame{
 		deleteAccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteAccount();
-				frame.dispose();
 				mainModule.currentState = STATE.HOMEPAGE;
 				mainModule.userState = USER.ENQUIRER;
 				MainModule.controller.drawNewView();
@@ -210,7 +221,7 @@ public class EditAccount extends JFrame{
 	}
 	
 	public boolean validateName(String name) {
-		if (!name.matches("[a-zA-Z]*")) {
+		if (!name.matches("[a-zA-Z]*") || name.matches("")) {
 			System.out.println(name+" IS NOT VALID NAME");	
 			return false;
 		}
@@ -220,7 +231,10 @@ public class EditAccount extends JFrame{
 		}
 	}
 
-
+	public void displayError() {
+		JOptionPane.showMessageDialog(this, "Invalid input, please try again.");
+	}
+	
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
@@ -235,6 +249,9 @@ public class EditAccount extends JFrame{
 			int i  = updateAccount.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
+				frame.dispose();
+				JOptionPane.showMessageDialog(this, "Account details updated.");
+
 				// remove later 
 			}
 		} catch (Exception e) {
@@ -358,9 +375,11 @@ public class EditAccount extends JFrame{
 			int i  = deleteAccount.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
+				JOptionPane.showMessageDialog(this, "Account deleted.!");
+
 				// remove later 
 			}
-
+			
 			} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
