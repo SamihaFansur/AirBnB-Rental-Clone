@@ -160,16 +160,16 @@ public class EditProperty extends JFrame{
 						//get propertyID and put into the Fcailties table. By default it's the latest 
 						
 						
-					} catch(Exception s) {
-						System.err.println("Got an exception!");
-						System.err.println(s.getMessage());
-					}
-					
-					System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
-					
-					frame.dispose();
-					MainModule.controller.editPropertyView(facilitiesId, 0);
-					close();
+						} catch(Exception s) {
+							System.err.println("Got an exception!");
+							System.err.println(s.getMessage());
+						}
+						
+						System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
+						
+						frame.dispose();
+						MainModule.controller.editPropertyView(facilitiesId, 0);
+						close();
 				}
 			}
 		});
@@ -288,35 +288,42 @@ public class EditProperty extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.CHARGEBANDS;
 
+
 				int property_id = 0;
 			
-				try {
-					String currentPostcode = model.getEditPropertyPostcode();
-					System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
-					String getCurrentPropertyId = "select property_id from Property where postcode=?";
-					PreparedStatement gettingCurrentPropertyId = connection.prepareStatement(getCurrentPropertyId);
+				if (model.getEditPropertyPostcode() == null) {
+					adddingChargeband();
+				}else {
 					
-					gettingCurrentPropertyId.setString(1, currentPostcode);
-										
-					ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
-					while (prop_id.next()) {
-						property_id = prop_id.getInt("property_id");
-		            }
-					System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
 					
-				}catch(Exception s) {
-					System.err.print(s.getMessage());
-				}		
-				
-				System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
-				mainModule.userState=USER.HOST;
-				System.out.println("£££££££££££££££££££££££ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
-				MainModule.controller.editPropertyView(property_id,0);
-//				close();
-//				model.setEditPropertyPostcode(null);
-				frame.dispose();
-				close();
-				
+					
+					try {
+						String currentPostcode = model.getEditPropertyPostcode();
+						System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
+						String getCurrentPropertyId = "select property_id from Property where postcode=?";
+						PreparedStatement gettingCurrentPropertyId = connection.prepareStatement(getCurrentPropertyId);
+						
+						gettingCurrentPropertyId.setString(1, currentPostcode);
+											
+						ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
+						while (prop_id.next()) {
+							property_id = prop_id.getInt("property_id");
+			            }
+						System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
+						
+					}catch(Exception s) {
+						System.err.print(s.getMessage());
+					}		
+					
+					System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
+					mainModule.userState=USER.HOST;
+					System.out.println("£££££££££££££££££££££££ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
+					MainModule.controller.editPropertyView(property_id,0);
+	//				close();
+	//				model.setEditPropertyPostcode(null);
+					frame.dispose();
+					close();
+				}
 			}
 		});
 		editPropertyPanel.add(addChargeBandsButton);
