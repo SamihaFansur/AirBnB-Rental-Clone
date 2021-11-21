@@ -185,6 +185,10 @@ public class ChargeBands extends JFrame{
 	            
 	            
 	            
+	            
+	            
+	            
+	            
 	            //checking id input fields are empty:
 	            if (!startDateIsEmpty && !endDateIsEmpty && !serviceChargeIsEmpty && !cleaningChargeIsEmpty && !pricePerNightIsEmpty) {
 	            	//checking date format: 	
@@ -245,26 +249,37 @@ public class ChargeBands extends JFrame{
 		 	            if (timeCheck && startDateAccepted && endDateAccepted) {
 		 	            	//System.out.println(pricePerNightDoubleValidation+" "+serviceChargeDoubleValidation+" "+cleaningChargeDoubleValidation);
 		 	            	System.out.println("REACHED ALL SUCCESSFUL CHECKS");
-		 	            	 model.addRow(
-				   	                   new Object[]{
-				   	                         startDate.getText(), 
-				   	                         endDate.getText(),
-				   	                         pricePerNight.getText(),
-				   	                         serviceCharge.getText(),
-				   	                         cleaningCharge.getText()
-				   	                      
-				   	                   }
-				   	                   
-				   	              );
-			            	  System.out.println("Start date in model: "+startDate.getText());
-			            	  
-			            	  addAChargeBand(propertyIdAfter);
-				              //Delete form after adding data
-				              startDate.setText("");
-				              endDate.setText("");
-				              pricePerNight.setText("");
-				              serviceCharge.setText("");
-				              cleaningCharge.setText("");
+		 	            	
+		 	            	//checking if charge bands overlap here
+		 	            	
+		 	            	if(checkForOverlappingChargeBands(propertyId, formattedStartDate, formattedEndDate)) {
+		 	            		System.out.println("checking for overlapping charge bands: "+checkForOverlappingChargeBands(propertyId, formattedStartDate, formattedEndDate));
+		 	            		displayChargeBandNotPossibleMessage();
+		 	            	}else {
+		 	            		System.out.println("checking for overlapping charge bands: "+checkForOverlappingChargeBands(propertyId, formattedStartDate, formattedEndDate));
+		 	            		
+		 	            		 model.addRow(
+					   	                   new Object[]{
+					   	                         startDate.getText(), 
+					   	                         endDate.getText(),
+					   	                         pricePerNight.getText(),
+					   	                         serviceCharge.getText(),
+					   	                         cleaningCharge.getText()
+					   	                      
+					   	                   }
+					   	                   
+					   	              );
+				            	  System.out.println("Start date in model: "+startDate.getText());
+				            	  
+				            	  addAChargeBand(propertyIdAfter);
+					              //Delete form after adding data
+					              startDate.setText("");
+					              endDate.setText("");
+					              pricePerNight.setText("");
+					              serviceCharge.setText("");
+					              cleaningCharge.setText("");
+		 	            	}
+		 	            	
 		 	            }else {
 		 	            	displayInvalidStartEndTimeMessage();
 		 	            }
@@ -280,73 +295,7 @@ public class ChargeBands extends JFrame{
 	            
 	            System.out.println("CODE RUNNING 2");
 	            
-	             
-	              
-//	              ///----------------for validating in dd/mm/yyyy format and to check if dates dont overlap etc
-//	              String startDateParts[] = startDate.getText().split("/");
-//	              String endDateParts[] = endDate.getText().split("/");
-//	              
-//	              
-//	              // Getting day, month, and year for start date:
-//	              int startDay = Integer.parseInt(startDateParts[0]);
-//	              int startMonth = Integer.parseInt(startDateParts[1]);
-//	              int startYear = Integer.parseInt(startDateParts[2]);
-//	              
-//	              
-//	              //getting day, month, and year for end date:
-//	              int endDay = Integer.parseInt(endDateParts[0]);
-//	              int endMonth = Integer.parseInt(endDateParts[1]);
-//	              int endYear = Integer.parseInt(endDateParts[2]);
-//	              
-//	       
-//	              // Printing the day, month, and year
-//	              System.out.println("Day: " + startDay);
-//	              System.out.println("Month: " + startMonth);
-//	              
-//	              System.out.println("Year: " + startYear);
-//	          
-//	              System.out.println("propertyidAfter in addbtn before calling addAChargeBand = "+propertyIdAfter);
-//	              
-//	              //call function to validate the date:
-//	              Boolean startDateAccepted = validateDate(startDay, startMonth, startYear);
-//	              Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
-//	              
-//	              Boolean timeCheck=false;
-//	              
-	              //validating money:
-//	              Boolean pricePerNightValidation = validatePricingFields(pricePerNightTextField.getText());
-//	              Boolean serviceChargeValidation = validatePricingFields(serviceChargeTextField.getText());
-//	              Boolean cleaningChargeValidation = validatePricingFields(cleaningChargeTextField.getText());
-////	              
-//	              if(startDateAccepted && endDateAccepted && timeCheck) {
-//	            	  model.addRow(
-//		   	                   new Object[]{
-//		   	                         startDate.getText(), 
-//		   	                         endDate.getText(),
-//		   	                         pricePerNight.getText(),
-//		   	                         serviceCharge.getText(),
-//		   	                         cleaningCharge.getText()
-//		   	                      
-//		   	                   }
-//		   	                   
-//		   	              );
-//		   	      
-//	            	  System.out.println("Start date in model: "+startDate.getText());
-//	            	  
-//	            	  addAChargeBand(propertyIdAfter);
-//		              //Delete form after adding data
-//		              startDate.setText("");
-//		              endDate.setText("");
-//		              pricePerNight.setText("");
-//		              serviceCharge.setText("");
-//		              cleaningCharge.setText("");
-//		           
-//	              }else if (!timeCheck) {
-//	            	  displayInvalidStartEndTimeMessage();
-//	              }
-//	              else {
-//	            	  displayInvalidDateMessage();
-//	              }
+
 	            }
 	        });
 		  addButton.setBounds(223, 366, 142, 23);
@@ -395,6 +344,52 @@ public class ChargeBands extends JFrame{
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	//returns true if charge band overlaps with an existing charge band
+	public Boolean checkForOverlappingChargeBands(int propertyId, Date startDate, Date endDate) {
+		Boolean chargeBandNotPossible = false;
+		Statement chargeBandStmt = null;
+		try {
+			connection = ConnectionManager.getConnection();
+			
+			String getExistingChargeBandsQuery = "SELECT * FROM ChargeBands WHERE property_id = ?";
+			PreparedStatement checkExistingChargeBandStmt= connection.prepareStatement(getExistingChargeBandsQuery);
+			checkExistingChargeBandStmt.setInt(1, propertyId);
+			ResultSet resultSet = checkExistingChargeBandStmt.executeQuery();
+			
+			while(resultSet.next()) {
+				String startDateFromTable = resultSet.getString("startDate");
+				String endDateFromTable = resultSet.getString("endDate");
+
+				Date formattedStartDateFromTable = parseDate(startDateFromTable);
+ 	            Date formattedEndDateFromTable = parseDate(endDateFromTable);
+ 	            
+				//checking if start date and end dates are equal
+ 	            Boolean sameDates  = startDate.equals(formattedStartDateFromTable) || endDate.equals(formattedEndDateFromTable);
+ 	            // check if users start date is within an existing start date and end date
+ 	            Boolean startDateInsideABand = startDate.after(formattedStartDateFromTable) && startDate.before(formattedEndDateFromTable);
+ 	            // check if users end date is within an existing start date and end date
+ 	            Boolean endDateInsideABand = endDate.after(formattedStartDateFromTable) && endDate.before(formattedEndDateFromTable);
+ 	            //check if users start date and end date is AFTER and BEFORE an existing start date and end date respectively
+ 	            // (checking for a charge band period being made inside another charge band period)
+ 	            Boolean overlappingBandCheckOne = startDate.after(formattedStartDateFromTable) && endDate.before(formattedEndDateFromTable);
+ 	            //check if users start date and end date is BEFORE and AFTER an existing start date and end date respectively
+ 	            Boolean overlappingBandCheckTwo = startDate.before(formattedStartDateFromTable) && endDate.after(formattedEndDateFromTable);
+
+ 	            //if any of the above are true the band cannot be made
+ 	            chargeBandNotPossible = sameDates || startDateInsideABand || endDateInsideABand || overlappingBandCheckOne || overlappingBandCheckTwo;
+				if (chargeBandNotPossible) break;
+				
+			}
+			
+			checkExistingChargeBandStmt.close();
+			
+		} catch(Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+		return chargeBandNotPossible;
 	}
 	
 	public void addAChargeBand(int propertyId) {
@@ -585,6 +580,11 @@ public class ChargeBands extends JFrame{
     public void displayEmptyStringsMessage(){
 		 JOptionPane.showMessageDialog(this, "All fields must be completed to add a chargeband");
 	}
+    
+    public void displayChargeBandNotPossibleMessage(){
+		 JOptionPane.showMessageDialog(this, "A charge band already exists between these dates. Please choose different dates.");
+	}
+    
     
     public Boolean checkForDouble(String money) {
     	Boolean isDouble;
