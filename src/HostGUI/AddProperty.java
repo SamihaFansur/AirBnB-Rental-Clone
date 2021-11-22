@@ -30,7 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class EditProperty extends JFrame{
+public class AddProperty extends JFrame{
 
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
@@ -58,7 +58,7 @@ public class EditProperty extends JFrame{
 			frame.dispose();
 		}
 	 
-	 public EditProperty(MainModule mainModule, Controller controller, Model model) {
+	 public AddProperty(MainModule mainModule, Controller controller, Model model) {
 		//initializeEditProperty();
 		this.model=model;
 		this.mainModule=mainModule;

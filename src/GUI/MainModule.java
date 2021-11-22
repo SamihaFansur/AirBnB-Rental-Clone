@@ -14,7 +14,7 @@ import HostGUI.EditBedroom;
 import HostGUI.EditKitchen;
 import HostGUI.EditLiving;
 import HostGUI.EditOutdoors;
-import HostGUI.EditProperty;
+import HostGUI.AddProperty;
 import HostGUI.EditSleeping;
 import HostGUI.EditUtility;
 import HostGUI.Facilities;
@@ -42,7 +42,7 @@ public class MainModule {
 	private EditKitchen editKitchen;
 	private EditLiving editLiving;
 	private EditOutdoors editOutdoors;
-	private EditProperty editProperty;
+	private AddProperty editProperty;
 	private EditSleeping editSleeping;
 	private EditUtility editUtility;
 	private Facilities facilities;
@@ -147,7 +147,7 @@ public class MainModule {
 		EditKitchen editKitchen = new EditKitchen(mainModule, controller, model);
 		EditLiving editLiving = new EditLiving(mainModule, controller, model);
 		EditOutdoors editOutdoors = new EditOutdoors(mainModule, controller, model);
-		EditProperty editProperty = new EditProperty(mainModule, controller, model);
+		AddProperty editProperty = new AddProperty(mainModule, controller, model);
 		EditSleeping editSleeping = new EditSleeping(mainModule, controller, model);
 		EditUtility editUtility = new EditUtility(mainModule, controller, model);
 		Facilities facilities = new Facilities(mainModule, controller, model);

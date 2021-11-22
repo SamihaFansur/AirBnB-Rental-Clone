@@ -27,7 +27,7 @@ import java.sql.PreparedStatement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Property extends JFrame{
+public class EditProperty extends JFrame{
 
 	Connection connection = null;
 		 
@@ -73,7 +73,7 @@ public class Property extends JFrame{
 	
 	
 	
-	public Property(MainModule mainModule, Controller controller, Model model) {
+	public EditProperty(MainModule mainModule, Controller controller, Model model) {
 		initializeProperty();
 		this.mainModule=mainModule;
 		this.controller=controller;

@@ -19,7 +19,7 @@ import HostGUI.EditBedroom;
 import HostGUI.EditKitchen;
 import HostGUI.EditLiving;
 import HostGUI.EditOutdoors;
-import HostGUI.EditProperty;
+import HostGUI.AddProperty;
 import HostGUI.EditSleeping;
 import HostGUI.EditUtility;
 import HostGUI.Facilities;
@@ -47,7 +47,7 @@ public class Controller extends MainModule{
 	private EditKitchen editKitchen;
 	private EditLiving editLiving;
 	private EditOutdoors editOutdoors;
-	private EditProperty editProperty;
+	private AddProperty editProperty;
 	private EditSleeping editSleeping;
 	private EditUtility editUtility;
 	private Facilities facilities;
@@ -75,7 +75,7 @@ public class Controller extends MainModule{
 			EditKitchen editKitchen,
 			EditLiving editLiving,
 			EditOutdoors editOutdoors,
-			EditProperty editProperty,
+			AddProperty editProperty,
 			EditSleeping editSleeping,
 			EditUtility editUtility,
 			Facilities facilities,
