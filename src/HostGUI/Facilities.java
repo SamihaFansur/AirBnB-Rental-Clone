@@ -423,8 +423,6 @@ public class Facilities extends javax.swing.JFrame {
         
         jTextField_sleeping_id.setText(model.getValueAt(i,4).toString());
     }                                                 
-
-
    
 
  // Button Update

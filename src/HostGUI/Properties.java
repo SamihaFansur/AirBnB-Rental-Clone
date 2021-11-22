@@ -177,6 +177,7 @@ public class Properties extends javax.swing.JFrame {
         jButton_Update = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
         jButton_EditFacilities = new javax.swing.JButton();
+        jButton_EditChargeBands = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -304,6 +305,15 @@ public class Properties extends javax.swing.JFrame {
             }
         });
         
+        jButton_EditChargeBands.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButton_EditChargeBands.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
+        jButton_EditChargeBands.setText("Edit Property Charge Bands");
+        jButton_EditChargeBands.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButton_UpdateChargeBandsActionPerformed(evt);
+            }
+        });
+        
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         backButton.addActionListener(new ActionListener() {
@@ -352,6 +362,7 @@ public class Properties extends javax.swing.JFrame {
         							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
             								.addComponent(jButton_Update, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             								.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            								.addComponent(jButton_EditChargeBands, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         								.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         					.addGap(24)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
@@ -386,6 +397,7 @@ public class Properties extends javax.swing.JFrame {
         					.addGap(69)
         					.addComponent(jButton_Update, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
         					.addComponent(jButton_EditFacilities, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(jButton_EditChargeBands, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         					.addComponent(jButton_Delete, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
         					.addGap(45))))
@@ -440,7 +452,14 @@ public class Properties extends javax.swing.JFrame {
     }                                                 
 
 
-   
+ // Charge Bands Update
+    private void jButton_UpdateChargeBandsActionPerformed(java.awt.event.ActionEvent evt) {
+    	System.out.println("PROPERTY ID ENTERED IN TEXTBOX = "+jTextField_property_id.getText());
+		mainModule.editPropertyState= EDITPROPERTY.CHARGEBANDS;
+    //needs to take in the properyId and hostId
+		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), Integer.parseInt(jTextField_host_id.getText()));
+    }  
+    
 
  // Button Update
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {                                               
@@ -509,6 +528,7 @@ public class Properties extends javax.swing.JFrame {
     private javax.swing.JButton jButton_Delete;
     private javax.swing.JButton jButton_Update;
     private javax.swing.JButton jButton_EditFacilities;
+    private javax.swing.JButton jButton_EditChargeBands;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
