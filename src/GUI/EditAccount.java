@@ -188,12 +188,30 @@ public class EditAccount extends JFrame{
 		addEditPropertyButton.setBounds(368, 548, 113, 23);
 		editACcountPanel.add(addEditPropertyButton);
 		
+		
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+
+				if(mainModule.userState == USER.HOST) {
+					mainModule.currentState=STATE.HOST_ACCOUNT;
+					mainModule.userState=USER.HOST;
+				}else if (mainModule.userState == USER.GUEST){
+					mainModule.currentState=STATE.GUEST_ACCOUNT;
+					mainModule.userState=USER.GUEST;
+				}
+				MainModule.controller.drawNewView();
+//				close();
+				model.setEditPropertyPostcode(null);
+				frame.dispose();
+				
+			}
+		});
 		editACcountPanel.add(backButton);
-		System.out.println("2");
-		
+
 		
 		JButton deleteAccountButton = new JButton("Delete Account");
 		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));

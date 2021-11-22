@@ -18,6 +18,7 @@ import Controller.Controller;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.Model;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -40,6 +41,7 @@ public class Properties extends javax.swing.JFrame {
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
+	 private JFrame frame;
 	 
     public Properties(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
@@ -304,7 +306,24 @@ public class Properties extends javax.swing.JFrame {
         
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
 
+				mainModule.currentState=STATE.HOST_ACCOUNT;
+				mainModule.userState=USER.HOST;
+				MainModule.controller.drawNewView();
+//				close();
+				model.setEditPropertyPostcode(null);
+				//frame.dispose();
+				
+				//jPanel1.setVisible(false);
+				
+			}
+		});
+		
+        
+        
 		
 		
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
