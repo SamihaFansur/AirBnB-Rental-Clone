@@ -323,7 +323,7 @@ public class Facilities extends javax.swing.JFrame {
 				MainModule.controller.editPropertyView(model.getHostId(),model.getPropertyId());
 //				close();
 			//	model.setEditPropertyPostcode(null);
-				
+				setVisible(false);
 				
 			}
 		});

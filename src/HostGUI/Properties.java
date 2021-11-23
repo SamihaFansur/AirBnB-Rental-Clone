@@ -325,7 +325,7 @@ public class Properties extends javax.swing.JFrame {
 				MainModule.controller.drawNewView();
 //				close();
 				model.setEditPropertyPostcode(null);
-				//frame.dispose();
+				setVisible(false);
 				
 				//jPanel1.setVisible(false);
 				
@@ -460,6 +460,7 @@ public class Properties extends javax.swing.JFrame {
 		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
 		model.setHostId(Integer.parseInt(jTextField_host_id.getText()));
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), Integer.parseInt(jTextField_host_id.getText()));
+		setVisible(false);
     }  
     
 
@@ -483,6 +484,7 @@ public class Properties extends javax.swing.JFrame {
     	System.out.println("OK GOING TO EDIT FACILITIES PAGE");
     	mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), 0); //fix the params
+		setVisible(false);
     }  
 
     /**

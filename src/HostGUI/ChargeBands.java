@@ -355,8 +355,8 @@ public class ChargeBands extends JFrame{
 				MainModule.controller.editPropertyView(hostId,propertyId);
 //				close();
 			//	model.setEditPropertyPostcode(null);
-				
-				frame.dispose();
+				frame.setVisible(false);
+//				frame.dispose();
 				
 			}
 		});
