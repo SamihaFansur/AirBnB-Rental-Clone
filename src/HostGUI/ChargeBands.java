@@ -52,7 +52,7 @@ public class ChargeBands extends JFrame{
 	private JButton editChargebandButton;
 	private JComboBox titleComboBox = new JComboBox();
 	
-
+	
 	 private JTable table = new JTable();
 
 	 private JTextField startDate;
@@ -76,6 +76,8 @@ public class ChargeBands extends JFrame{
 
 //	private int idAfter;
 	private int propertyIdAfter;
+	private int hostId;
+	private int faciltiesId;
 	 
 	 public ChargeBands(MainModule mainModule, Controller controller, Model model) {
 //		initializeChargeBands();
@@ -97,7 +99,10 @@ public class ChargeBands extends JFrame{
 			System.err.println(e.getMessage());
 		}
 		
+		
+		faciltiesId = model.getFacilitiesId();
 		propertyIdAfter = propertyId;
+		hostId = id;
 		System.out.println("PROPERTY ID IN CHARGEBANDS = "+propertyIdAfter);
 		
 		JPanel chargeBandsPanel = new JPanel();
@@ -335,9 +340,27 @@ public class ChargeBands extends JFrame{
 //		editChargebandButton.setBounds(245, 548, 91, 23);
 //		chargeBandsPanel.add(editChargebandButton);
 		
+		 
+		  
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+				
+				mainModule.currentState=STATE.HOST_ACCOUNT;
+				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+				mainModule.userState=USER.HOST;
+				MainModule.controller.editPropertyView(hostId,propertyId);
+//				close();
+			//	model.setEditPropertyPostcode(null);
+				
+				frame.dispose();
+				
+			}
+		});
+		
 		chargeBandsPanel.add(backButton);
 		
 
@@ -394,6 +417,7 @@ public class ChargeBands extends JFrame{
 	
 	public void addAChargeBand(int propertyId) {
         System.out.println("id fed into addAChargeBand func = "+propertyId);
+        model.setPropertyId(propertyId);
 		try {
 			connection = ConnectionManager.getConnection();
 			

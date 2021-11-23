@@ -122,6 +122,8 @@ public class HostAccount extends JFrame{
 				}
 				 
 				System.out.println(model.getEmail());
+				model.setHostId(id);
+				
 				MainModule.controller.editPropertyView(id, 0);
 				frame.dispose();
 			}

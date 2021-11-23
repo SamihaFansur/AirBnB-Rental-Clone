@@ -136,6 +136,7 @@ public class AddProperty extends JFrame{
 							property_id = prop_id.getInt("property_id");
 			            }
 						System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
+						model.setPropertyId(property_id);
 						
 						String insertFacilitiesId = "insert into Facilities(property_id, kitchen_id, sleeping_id, bathing_id, "
 													+ "living_id, utility_id, outdoors_id) values(?,?,?,?,?,?,?)";
@@ -166,7 +167,7 @@ public class AddProperty extends JFrame{
 						}
 						
 						System.out.println("FACILITIES IDDDDDDDDDDDD = "+facilitiesId);
-						
+						model.setFacilitiesId(facilitiesId);
 						frame.dispose();
 						MainModule.controller.editPropertyView(facilitiesId, 0);
 						close();

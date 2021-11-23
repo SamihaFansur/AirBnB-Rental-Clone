@@ -457,6 +457,8 @@ public class Properties extends javax.swing.JFrame {
     	System.out.println("PROPERTY ID ENTERED IN TEXTBOX = "+jTextField_property_id.getText());
 		mainModule.editPropertyState= EDITPROPERTY.CHARGEBANDS;
     //needs to take in the properyId and hostId
+		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
+		model.setHostId(Integer.parseInt(jTextField_host_id.getText()));
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), Integer.parseInt(jTextField_host_id.getText()));
     }  
     

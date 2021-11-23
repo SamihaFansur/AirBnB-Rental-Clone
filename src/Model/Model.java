@@ -46,6 +46,10 @@ public class Model {
 	private double pricePerNight, serviceCharge, cleaningCharge;
 	
 	
+	private int propertyId;
+	private int hostId;
+	private int facilitiesId;
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
@@ -620,5 +624,25 @@ public class Model {
 	public double getCleaningCharge() {
 		return cleaningCharge;
 	}
+	public void setPropertyId(int propertyId) {
+		this.propertyId=propertyId;
+	}
 	
+	public int getPropertyId() {
+		return propertyId;
+	}
+	public void setHostId(int hostId) {
+		this.hostId=hostId;
+	}
+	
+	public int getHostId() {
+		return hostId;
+	}
+	public void setFacilitiesId(int facilitiesId) {
+		this.facilitiesId=facilitiesId;
+	}
+	
+	public int getFacilitiesId() {
+		return facilitiesId;
+	}
 }

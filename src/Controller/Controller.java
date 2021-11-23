@@ -253,7 +253,9 @@ public class Controller extends MainModule{
 			editBathroom.initializeEditBathroom(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
-			properties.initializeProperties(facilitiesId, id);
+			model.setFacilitiesId(facilitiesId);
+			//model.setHostId(id);
+			properties.initializeProperties(model.getHostId(), model.getPropertyId());
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS){
 			reviews.initializeReviews();
@@ -262,10 +264,16 @@ public class Controller extends MainModule{
 			facilities.initializeFacilities(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.EDIT_PROPERTY_FACILITIES){
+			model.setFacilitiesId(facilitiesId);
+			model.setHostId(id);
 			editAPropertysFacilities.initializeEditAPropertysFacilities(facilitiesId, id);
+			
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.CHARGEBANDS){
 			System.out.println("CMONNNNNNNNNNN");
+			//facilities id is property_id when using 'add chargebands'
+			model.setFacilitiesId(facilitiesId);
+			model.setHostId(id);
 			chargebands.initializeChargeBands(facilitiesId, id);
 		}
 		

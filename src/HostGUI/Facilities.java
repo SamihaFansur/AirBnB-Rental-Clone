@@ -18,6 +18,7 @@ import Controller.Controller;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
 import Model.Model;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -312,6 +313,20 @@ public class Facilities extends javax.swing.JFrame {
         
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Homepage sp = new Homepage();
+				
+				mainModule.currentState=STATE.HOST_ACCOUNT;
+				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+				mainModule.userState=USER.HOST;
+				MainModule.controller.editPropertyView(model.getHostId(),model.getPropertyId());
+//				close();
+			//	model.setEditPropertyPostcode(null);
+				
+				
+			}
+		});
 
 		
 		
