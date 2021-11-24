@@ -318,7 +318,7 @@ public class AddProperty extends JFrame{
 					
 					System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
 					mainModule.userState=USER.HOST;
-					System.out.println("£££££££££££££££££££££££ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
+					System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
 					MainModule.controller.editPropertyView(property_id,0);
 	//				close();
 	//				model.setEditPropertyPostcode(null);
@@ -389,7 +389,7 @@ public class AddProperty extends JFrame{
 			model.setEditPropertyDescription(descriptionTextField.getText());
 			
 			
-			String insertPropertyAddressQuery = "insert into Address values(?,?,?,?) ";	
+			String insertPropertyAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";	
 						
 			PreparedStatement propertyAddress = connection.prepareStatement(insertPropertyAddressQuery);
 			propertyAddress.setString(1, model.getEditPropertyHouseNameNum());
@@ -400,7 +400,7 @@ public class AddProperty extends JFrame{
 			propertyAddress.executeUpdate();
 			System.out.println(propertyAddress.toString());
 
-			String insertPropertyAddressInPropertyQuery = "insert into Property (houseNameNumber, postcode, shortName, guestCapacity, description) values(?,?,?,?,?) ";	
+			String insertPropertyAddressInPropertyQuery = "insert into Property (address_id , shortName, guestCapacity, description) values((SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?),?,?,?) ";	
 			
 			PreparedStatement propertyAddressInProperty = connection.prepareStatement(insertPropertyAddressInPropertyQuery);
 			propertyAddressInProperty.setString(1, model.getEditPropertyHouseNameNum());
@@ -426,7 +426,7 @@ public class AddProperty extends JFrame{
 			}
 			 System.out.println("host id  after = "+id);
 			 
-			String insertHostIDInProperty = "update Property set host_id=? where houseNameNumber=? AND postcode=?";
+			String insertHostIDInProperty = "update Property set host_id=? where (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
 			PreparedStatement hostIDInProperty= connection.prepareStatement(insertHostIDInProperty);
 			hostIDInProperty.setInt(1, id);
 			hostIDInProperty.setString(2, model.getEditPropertyHouseNameNum());
