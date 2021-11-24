@@ -43,7 +43,7 @@ public class AddProperty extends JFrame{
 	private JTextField shortNameTextField;
 	 private JTextField guestCapacityTextField;
 	 private JTextField descriptionTextField;
-	 
+	 private int propertyId;
 	Connection connection = null;
 
 	/**
@@ -299,27 +299,57 @@ public class AddProperty extends JFrame{
 					
 					
 					try {
-						String currentPostcode = model.getEditPropertyPostcode();
-						System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
-						String getCurrentPropertyId = "select property_id from Property where postcode=?";
-						PreparedStatement gettingCurrentPropertyId = connection.prepareStatement(getCurrentPropertyId);
 						
-						gettingCurrentPropertyId.setString(1, currentPostcode);
-											
-						ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
-						while (prop_id.next()) {
-							property_id = prop_id.getInt("property_id");
-			            }
-						System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
+						
+						
+						
+						
+						// START HERE
+						connection = ConnectionManager.getConnection();
+						int tempId = 0;
+						Statement getPropertyId = connection.createStatement();
+						ResultSet propertyIds = getPropertyId.executeQuery("SELECT * FROM Property");
+						while(propertyIds.next()){
+							tempId = propertyIds.getInt(1);
+							//System.out.println("THIS IS THE ID: "+tempId);
+						}
+						System.out.println("THIS IS THE LAST PROPERTY ID IN THE TABLE ID: "+tempId);
+						//System.out.println("THIS RSULT SET OF IDS "+propertyIds);
+//							String getLastPropertyId = "SELECT propert_id FROM Property";
+//							PreparedStatement ps_getLastPropertyId = getLastPropertyId.executeQuery();
+						
+						//String currentPostcode = model.getEditPropertyPostcode();
+						//System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
+						//String getCurrentPropertyId = "select property_id from Property where postcode=?";
+						//PreparedStatement gettingCurrentPropertyId = connection.prepareStatement(getCurrentPropertyId);
+						
+						//gettingCurrentPropertyId.setString(1, currentPostcode);
+						
+						//int property_id = 0;
+						
+						//ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
+						//while (prop_id.next()) {
+						//	property_id = prop_id.getInt("property_id");
+			            //}
+						//System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
+						propertyId = tempId;
+						model.setPropertyId(property_id);
+						
+						
+						//END HERE
+						
+
+						//System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
 						
 					}catch(Exception s) {
 						System.err.print(s.getMessage());
 					}		
 					
-					System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
+					//System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
 					mainModule.userState=USER.HOST;
-					System.out.println("�����������������������ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
-					MainModule.controller.editPropertyView(property_id,0);
+					//System.out.println("�����������������������ADD CHARGE BANDS BTN CLICKED "+mainModule.editPropertyState);
+					System.out.println("PROPERTY ID AT THE END OF ADD PROPERTY: "+propertyId);
+					MainModule.controller.editPropertyView(propertyId,0);
 	//				close();
 	//				model.setEditPropertyPostcode(null);
 					frame.dispose();

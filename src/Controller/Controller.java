@@ -271,6 +271,8 @@ public class Controller extends MainModule{
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.CHARGEBANDS){
 			System.out.println("CMONNNNNNNNNNN");
+			System.out.println("PROPERTY ID IN EDIT PROPERTY VIEW: "+model.getPropertyId());
+
 			//facilities id is property_id when using 'add chargebands'
 			model.setFacilitiesId(facilitiesId);
 			model.setHostId(id);
