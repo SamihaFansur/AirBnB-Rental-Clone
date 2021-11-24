@@ -9,13 +9,13 @@ public class Tables {
 
 	public static void main(String[] args) {
 		String createAddressTable = "CREATE TABLE Address("
-				+ "PRIMARY KEY (houseNameNumber, postcode), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
+				+ "address_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
 				+ "placeName VARCHAR(255), postcode VARCHAR(255))";
 
 		String createAccountTable = "CREATE TABLE Account("
 				+ "email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
 				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(255), "
-				+ "password VARCHAR(255), houseNameNumber VARCHAR(255) REFERENCES Address, postcode VARCHAR(255) REFERENCES Address)";
+				+ "password VARCHAR(255), address_id INT, FOREIGN KEY (address_id) REFERENCES Address(address_id))";
 
 		String createHostAccountTable = "CREATE TABLE HostAccount("
 				+ "host_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email), "
@@ -51,7 +51,7 @@ public class Tables {
 
 		String createSleepingTable = "CREATE TABLE Sleeping("
 				+ "sleeping_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bedLinen BOOL, towels BOOL, noOfBedrooms INT)";
-		
+
 		String createSleeping_BedTypeTable = "CREATE TABLE Sleeping_BedType("
 				+ "PRIMARY KEY (sleeping_id, bedType_id), sleeping_id INT, "
 				+ "FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), bedType_id INT, "
@@ -67,32 +67,31 @@ public class Tables {
 				+ "FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
 				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
 
-		String createFacilitiesTable = "CREATE TABLE Facilities("
-				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-				+ "property_id INT NULL, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
-				+ "kitchen_id INT NULL, FOREIGN KEY (kitchen_id) REFERENCES Kitchen(kitchen_id), "
-				+ "sleeping_id INT NULL, FOREIGN KEY (sleeping_id) references Sleeping(sleeping_id), "
-				+ "bathing_id INT NULL, FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
-				+ "living_id INT NULL, FOREIGN KEY (living_id) REFERENCES Living(living_id), "
-				+ "utility_id INT NULL, FOREIGN KEY (utility_id) REFERENCES Utility(utility_id), "
-				+ "outdoors_id INT NULL, FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
-
 		String createPropertyTable = "CREATE TABLE Property("
-				+ "property_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, houseNameNumber VARCHAR(255), postcode VARCHAR(255), "
-				+ "FOREIGN KEY (houseNameNumber, postcode) REFERENCES Address(houseNameNumber, postcode), "
-				+ "FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
+				+ "property_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, address_id INT, "
+				+ "FOREIGN KEY (address_id) REFERENCES Address(address_id), "
 				+ "host_id INT , FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
 //				+ "facilities_id INT, FOREIGN KEY (facilities_id) REFERENCES Facilities(facilities_id), "
 //				+ "review_id INT REFERENCES Review, "
 				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT)";
+
+		String createFacilitiesTable = "CREATE TABLE Facilities("
+				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+				+ "property_id INT , FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "kitchen_id INT , FOREIGN KEY (kitchen_id) REFERENCES Kitchen(kitchen_id), "
+				+ "sleeping_id INT , FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), "
+				+ "bathing_id INT , FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
+				+ "living_id INT , FOREIGN KEY (living_id) REFERENCES Living(living_id), "
+				+ "utility_id INT , FOREIGN KEY (utility_id) REFERENCES Utility(utility_id), "
+				+ "outdoors_id INT , FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
+
 //
 //        String createBookingTable = "CREATE TABLE Booking(booking_id INT NOT NULL PRIMARY KEY, "
 //                + "property_id INT REFERENCES Property, host_id INT REFERENCES HostAccount, "
 //                + "guest_id INT REFERENCES GuestAccount, review_id INT REFERENCES Review, "
 //                + "provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
 //
-		String createChargeBandsTable = "CREATE TABLE ChargeBands"
-				+ "(PRIMARY KEY (property_id, startDate), "
+		String createChargeBandsTable = "CREATE TABLE ChargeBands" + "(PRIMARY KEY (property_id, startDate), "
 				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
 				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
 				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
@@ -102,20 +101,22 @@ public class Tables {
 //				createBathing_BathTypeTable, createSleepingTable, createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, createPropertyTable, createChargeBandsTable, createBookingTable};
 //		
 
-				String[] allDropQueries = { "DROP TABLE IF EXISTS HostAccount", "DROP TABLE IF EXISTS GuestAccount","DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Outdoors",
+		String[] allDropQueries = { "DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Sleeping_BedType",
+				"DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Facilities",
+				"DROP TABLE IF EXISTS ChargeBands", "DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS Outdoors",
 				"DROP TABLE IF EXISTS Living", "DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility",
-				"DROP TABLE IF EXISTS Bathing", "DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Sleeping",
-				"DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property","DROP TABLE IF EXISTS Address"};
-//				"DROP TABLE IF EXISTS Review","DROP TABLE IF EXISTS ChargeBands" , "DROP TABLE IF EXISTS Booking", "DROP TABLE IF EXISTS ACCOUNT"};
-//		dropAllTables(allDropQueries);
+				"DROP TABLE IF EXISTS Sleeping", "DROP TABLE IF EXISTS Bathing", "DROP TABLE IF EXISTS HostAccount",
+				"DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Address" };
 
-		String[] create = {createAddressTable, createAccountTable, createHostAccountTable, 
-							createGuestAccountTable, createOutdoorsTable,createLivingTable, 
-							createKitchenTable,createUtilityTable,
-							createBathingTable, createBathing_BathTypeTable, createSleepingTable, 
-							createSleeping_BedTypeTable, createFacilitiesTable, 
-							createPropertyTable, createChargeBandsTable};
+		dropAllTables(allDropQueries);
+
+		String[] create = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable,
+				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
+				createBathing_BathTypeTable, createSleepingTable, createSleeping_BedTypeTable, createPropertyTable,
+				createFacilitiesTable, createChargeBandsTable };
+
 		createAllTables(create);
+
 	}
 
 	static void createTable(String query) {
@@ -143,15 +144,15 @@ public class Tables {
 			System.out.println("Dropped " + i + " in given database...");
 		}
 	}
-	
+
 	static void createAllTables(String[] allCreateQueries) {
-	
+
 		for (int i = 0; i < allCreateQueries.length; i++) {
 			createTable(allCreateQueries[i]);
 			System.out.println("Created " + i + " in given database...");
 		}
 	}
-	
+
 }
 
 //drop tables doesnt work
