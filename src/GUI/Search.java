@@ -111,16 +111,16 @@ public class Search extends javax.swing.JFrame {
 //       System.out.println("you got this !!! cmonnn " + hostId);
        double minPPN = 0;
        double maxPPN = 0;
-       int guestCap = 0;
+       int guestCap = 4;
        String sd = "";
        String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "test";//city field
+       String placeName = "";//city field
 
 //       double minPPN = 3;
 //       double maxPPN = 11;
-//       int guestCap = 6;
+//       int guestCap = 4;
 //       String sd = "03/11/2022";
 //       String ed = "11/11/2022"; 
 //       Date startd = parseDate(sd);
@@ -202,42 +202,43 @@ public class Search extends javax.swing.JFrame {
 //       }
        
      //guestCap
-//       if(minPPN == 0 && maxPPN == 0 && guestCap != 0 && sd == "" && ed =="" && placeName == "" ) {
-//    	   int propId;
-//    	   try {
-//    		   SearchObject search;
-//    		   
-//    		   String guestCapToPid = "Select property_id from Property where guestCapacity=?";
-//    		   PreparedStatement getPid = connection.prepareStatement(guestCapToPid);
-//    		   getPid.setInt(1, guestCap);
-//    		   System.out.println(getPid);
-//    		   
-//    		   ResultSet gettingPId = getPid.executeQuery();
-//    		   
-//    		   while(gettingPId.next()) {
-//    			   propId = gettingPId.getInt("property_id");
-//            	   System.out.println("property id min max = " + propId);
-//            	   
-//            	   String propertyFromPid = "Select property_id, houseNameNumber, postcode, description, shortName, guestCapacity from Property where property_id=?";
-//        		   
-//					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-//					getProperty.setInt(1, propId);
-//					ResultSet gettingProperty = getProperty.executeQuery();
-//					   
-//					while(gettingProperty.next()) {
-//						System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
-//							   
-//						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
-//												gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-//						searchList.add(search);
-//					}
-//    		   }
-//        	   
-//           }catch (Exception e) {
-//        	   e.printStackTrace();
-//           } 
-//       }
-//       
+       if(minPPN == 0 && maxPPN == 0 && guestCap != 0 && sd == "" && ed =="" && placeName == "" ) {
+    	   int addressId;
+           String houseNameNum, pc;
+    	   try {
+    		   SearchObject search;
+    		   
+    		   String guestCapToPid = "Select property_id, address_id, description, shortName, guestCapacity from Property where guestCapacity=?";
+    		   PreparedStatement getPid = connection.prepareStatement(guestCapToPid);
+    		   getPid.setInt(1, guestCap);
+    		   System.out.println(getPid);
+    		   
+    		   ResultSet gettingPId = getPid.executeQuery();
+    		   
+    		   while(gettingPId.next()) {
+    			   addressId = gettingPId.getInt("address_id");
+            	   
+            	   String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
+        		   
+					PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+					getHnhnPc.setInt(1, addressId);
+					ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+					   
+					while(gettingHnhnPc.next()) {
+						houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+						pc = gettingHnhnPc.getString("postcode");
+						
+						search = new SearchObject(gettingPId.getInt("property_id"), houseNameNum, pc, 
+												gettingPId.getString("description"), gettingPId.getString("shortName"),gettingPId.getInt("guestCapacity"));
+						searchList.add(search);
+					}
+    		   }
+        	   
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
+       
      //city
        if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName != "" ) {
   		   System.out.println("IN IF STMT");
