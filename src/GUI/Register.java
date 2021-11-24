@@ -395,31 +395,13 @@ public class Register extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,?,?)";
-			String insertAddressQuery = "insert into Address values(?,?,?,?) ";
+			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
+			String insertAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";
 			String insertIntoHostAccountTable = "insert into HostAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";
 			String insertIntoGuestAccountTable = "insert into GuestAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";
 
-			PreparedStatement ps_account = connection.prepareStatement(insertAccountQuery);
-
-			ps_account.setString(1, model.getEmail());
-			ps_account.setString(2, model.getTitle());
-			ps_account.setString(3, model.getFirstName());
-			ps_account.setString(4, model.getSurname());
-			ps_account.setString(5, model.getMobileNumber());
-			ps_account.setString(6, model.getPassword());
-			ps_account.setString(7, model.getHouseNameNum());
-			ps_account.setString(8, model.getPostcode());
-
-			System.out.println(ps_account);
-			int i = ps_account.executeUpdate();
-			if (i > 0) {
-				System.out.println("7");
-				System.out.println(this);
-				// remove later
-			}
 			PreparedStatement ps_address = connection.prepareStatement(insertAddressQuery);
 			ps_address.setString(1, model.getHouseNameNum());
 			ps_address.setString(2, model.getStreetName());
@@ -435,6 +417,26 @@ public class Register extends JFrame {
 				// remove later
 			}
 
+			PreparedStatement ps_account = connection.prepareStatement(insertAccountQuery);
+
+			ps_account.setString(1, model.getEmail());
+			ps_account.setString(2, model.getTitle());
+			ps_account.setString(3, model.getFirstName());
+			ps_account.setString(4, model.getSurname());
+			ps_account.setString(5, model.getMobileNumber());
+			ps_account.setString(6, model.getPassword());
+			ps_account.setString(7, model.getHouseNameNum());
+			ps_account.setString(8, model.getPostcode());
+
+
+
+			System.out.println(ps_account);
+			int i = ps_account.executeUpdate();
+			if (i > 0) {
+				System.out.println("7");
+				System.out.println(this);
+				// remove later
+			}
 			PreparedStatement ps_guestAccount = connection.prepareStatement(insertIntoGuestAccountTable);
 			PreparedStatement ps_hostAccount = connection.prepareStatement(insertIntoHostAccountTable);
 

@@ -109,7 +109,7 @@ public class Tables {
 				"DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Address" };
 
 		dropAllTables(allDropQueries);
-
+// make sure all tables created before facilities
 		String[] create = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable,
 				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
 				createBathing_BathTypeTable, createSleepingTable, createSleeping_BedTypeTable, createPropertyTable,
