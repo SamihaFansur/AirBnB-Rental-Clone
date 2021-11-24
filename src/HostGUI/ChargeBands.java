@@ -80,7 +80,7 @@ public class ChargeBands extends JFrame{
 	private int faciltiesId;
 	 
 	 public ChargeBands(MainModule mainModule, Controller controller, Model model) {
-//		initializeChargeBands();
+		//initializeChargeBands();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;

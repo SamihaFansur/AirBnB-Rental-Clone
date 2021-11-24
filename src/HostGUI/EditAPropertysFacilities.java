@@ -50,7 +50,7 @@ public class EditAPropertysFacilities extends JFrame{
 	 private MainModule mainModule;
 	 
 	 public EditAPropertysFacilities(MainModule mainModule, Controller controller, Model model) {
-		//initializeAddFacility();
+		//initializeEditAPropertysFacilities();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;

@@ -71,8 +71,8 @@ public class Facilities extends javax.swing.JFrame {
    public ArrayList<FacilitiesObject> getFacilitiesList() {
        ArrayList<FacilitiesObject> facilitiesList = new ArrayList<FacilitiesObject>();
        Connection connection = getConnection();
-       System.out.println("you got this !!! cmonnn " + propertyId);
-       String query = "SELECT * FROM `Facilities`WHERE facilities_id= "+propertyId;
+       
+       String query = "SELECT * FROM `Facilities` where property_id=" + propertyId;	
        System.out.println(query);
        Statement st;
        ResultSet rs;
