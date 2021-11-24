@@ -109,14 +109,14 @@ public class Search extends javax.swing.JFrame {
 	   Connection connection = getConnection();
        ArrayList<SearchObject> searchList = new ArrayList<SearchObject>();
 //       System.out.println("you got this !!! cmonnn " + hostId);
-       double minPPN = 0;
-       double maxPPN = 0;
-       int guestCap = 4;
+       double minPPN = 24;
+       double maxPPN = 27;
+       int guestCap = 0;
        String sd = "";
        String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "sheffield";//city field
+       String placeName = "";//city field
 
 //       double minPPN = 3;
 //       double maxPPN = 11;
@@ -164,7 +164,7 @@ public class Search extends javax.swing.JFrame {
 //       }
        
        
-       //minMax ppn ------------------CHECK IF THIS WORKS(CANT TEST ATM CZ CANT ADD CB)
+       //minMax ppn
        if(minPPN != 0 && maxPPN != 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
     	   int addressId;
     	   int propId;
@@ -203,8 +203,9 @@ public class Search extends javax.swing.JFrame {
 							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
 							pc = gettingHnhnPc.getString("postcode");
 							
-							search = new SearchObject(gettingPId.getInt("property_id"), houseNameNum, pc, 
-													gettingPId.getString("description"), gettingPId.getString("shortName"),gettingPId.getInt("guestCapacity"));
+							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+													gettingProperty.getInt("guestCapacity"));
 							searchList.add(search);
 						}
 					}
@@ -309,7 +310,9 @@ public class Search extends javax.swing.JFrame {
        
 //     //minMax, guestCap
 //       if(minPPN != 0 && maxPPN != 0 && guestCap != 0 && sd == "" && ed =="" && placeName == "" ) {
+//    	   int addressId;
 //    	   int propId;
+//           String houseNameNum, pc;
 //    	   int propIdFinalQuery;
 //    	   try {
 //    		   SearchObject search;
@@ -334,18 +337,17 @@ public class Search extends javax.swing.JFrame {
 //            	   while(gettingPidFromChargeBands.next()) {
 //            		   propIdFinalQuery = gettingPidFromChargeBands.getInt("property_id");
 //            		   
-//            		   String propertyFromPid = "Select property_id, houseNameNumber, postcode, description, shortName, guestCapacity from Property where property_id=?";
+//            		   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property where property_id=?";
 //            		   
 //    					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
 //    					getProperty.setInt(1, propIdFinalQuery);
 //    					ResultSet gettingProperty = getProperty.executeQuery();
 //    					   
 //    					while(gettingProperty.next()) {
-//    						System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
-//    							   
-//    						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
-//    												gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-//    						searchList.add(search);
+//    						search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, 
+//								   					pc, gettingProperty.getString("description"), 
+//							   						gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
+//					      searchList.add(search);
 //    					}   
 //            	   }   
 //    		   }
@@ -354,7 +356,7 @@ public class Search extends javax.swing.JFrame {
 //        	   e.printStackTrace();
 //           } 
 //       }
-//       
+       
 //     //minMax, city
 //       if(minPPN != 0 && maxPPN != 0 && guestCap == 0 && sd == "" && ed =="" && placeName != "" ) {
 //    	   int propId;
