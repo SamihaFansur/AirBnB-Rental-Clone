@@ -109,23 +109,23 @@ public class Search extends javax.swing.JFrame {
 	   Connection connection = getConnection();
        ArrayList<SearchObject> searchList = new ArrayList<SearchObject>();
 //       System.out.println("you got this !!! cmonnn " + hostId);
-       double minPPN = 6;
-       double maxPPN = 8;
-       int guestCap = 0;
+       double minPPN = 0;
+       double maxPPN = 0;
+       int guestCap = 4;
        String sd = "";
        String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "";//city field
+       String placeName = "sheffield";//city field
 
 //       double minPPN = 3;
 //       double maxPPN = 11;
-//       int guestCap = 4;
+//       int guestCap = 4 or 6;
 //       String sd = "03/11/2022";
 //       String ed = "11/11/2022"; 
 //       Date startd = parseDate(sd);
 //       Date endd = parseDate(ed);
-//       String placeName = "test";//city field
+//       String placeName = "test or sheffield";//city field
        
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
@@ -411,44 +411,46 @@ public class Search extends javax.swing.JFrame {
 //        	   e.printStackTrace();
 //           } 
 //       }
-//       
-//       //city, guest
-//       if(minPPN == 0 && maxPPN == 0 && guestCap != 0 && sd == "" && ed =="" && placeName != "" ) {
-//           String houseNameNum, pc;
-//    	   try {
-//    		   SearchObject search;
-//    		   
-//    		   String cityToHnhnPc = "SELECT houseNameNumber, postcode FROM `Address` WHERE placeName =?";
-//  			   String propertyFromPid = "Select property_id, houseNameNumber, postcode, description, shortName, guestCapacity from Property where houseNameNumber=? and postcode=? and guestCapacity=?";
-//  			   			 
-//  			   PreparedStatement getHnhnPc = connection.prepareStatement(cityToHnhnPc);
-//  			   getHnhnPc.setString(1, placeName);
-// 
-//  			   ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
-//  
-//	      	   while(gettingHnhnPc.next()) {
-//	      		   houseNameNum = gettingHnhnPc.getString("houseNameNumber");
-//	      		   pc = gettingHnhnPc.getString("postcode");
-//        		   
-//	      		   PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-//	      		   getProperty.setString(1, houseNameNum);
-//	      		   getProperty.setString(2, pc);
-//	      		   getProperty.setInt(3, guestCap);
-//	      		   
-//	      		   ResultSet gettingProperty = getProperty.executeQuery();
-//	      		   while(gettingProperty.next()) {
-//	      			   search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-//	                			 					gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
-//	              			   						gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-//	      			   searchList.add(search);
-//      			   }
-//      		   }
-//        	   
-//           }catch (Exception e) {
-//        	   e.printStackTrace();
-//           } 
-//       }
-//       
+       
+       //city, guest
+       if(minPPN == 0 && maxPPN == 0 && guestCap != 0 && sd == "" && ed =="" && placeName != "" ) {
+    	   int addressId;
+    	   int propId;
+           String houseNameNum, pc;
+    	   try {
+    		   SearchObject search;
+    		   
+    		   String cityToHnhnPc = "SELECT address_id, houseNameNumber, postcode FROM `Address` WHERE placeName =?";
+  			   String propertyFromPid = "Select property_id, description, shortName, guestCapacity from Property where address_id=? and guestCapacity=?";
+  			   			 
+  			   PreparedStatement getHnhnPc = connection.prepareStatement(cityToHnhnPc);
+  			   getHnhnPc.setString(1, placeName);
+ 
+  			   ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+  
+	      	   while(gettingHnhnPc.next()) {
+	      		   addressId = gettingHnhnPc.getInt("address_id");
+	      		   houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+	      		   pc = gettingHnhnPc.getString("postcode");
+        		   
+	      		   PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	      		   getProperty.setInt(1, addressId);
+	      		   getProperty.setInt(2, guestCap);
+	      		   
+	      		   ResultSet gettingProperty = getProperty.executeQuery();
+	      		   while(gettingProperty.next()) {
+	      			 search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, 
+							   					pc, gettingProperty.getString("description"), 
+						   						gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
+				      searchList.add(search);
+      			   }
+      		   }
+        	   
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
+       
 //       ///////////////////////////////////////// 3 search criteria queries/////////////////////////////////////////////
 //       
 //       //minMax, city, guest
