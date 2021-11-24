@@ -29,6 +29,7 @@ import javax.swing.JInternalFrame;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -44,6 +45,7 @@ public class Properties extends javax.swing.JFrame {
 	 private Model model;
 	 private MainModule mainModule;
 	 private JFrame frame;
+	 private NavHost navForHost = new NavHost();
 	 
     public Properties(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
@@ -151,9 +153,6 @@ public class Properties extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
-    	
-    	
     	
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -419,17 +418,70 @@ public class Properties extends javax.swing.JFrame {
         			.addContainerGap())
         );
         jPanel1.setLayout(jPanel1Layout);
+        
+        panel = new JPanel();
+        panel.setBackground(new Color(51, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+        		.addComponent(panel, GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        			.addComponent(panel, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 541, GroupLayout.PREFERRED_SIZE))
         );
+        	
+        	
+        	JButton navHomeButton = new JButton("Home");
+        	navHomeButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        	panel.add(navHomeButton);
+        	navHomeButton.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			//Homepage sp = new Homepage();
+
+        			mainModule.currentState=STATE.HOST_ACCOUNT;
+        			mainModule.userState=USER.HOST;
+        			MainModule.controller.drawNewView();
+//				close();
+        			setVisible(false);
+        		}
+        	});
+        	
+        	
+        	JButton navLogoutButton = new JButton("Logout");
+        	navLogoutButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        	navLogoutButton.setForeground(new Color(0, 0, 0));
+        	panel.add(navLogoutButton);
+        	navLogoutButton.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			mainModule.currentState = STATE.HOMEPAGE;
+        			mainModule.userState = USER.ENQUIRER;
+        			frame.dispose();
+        			MainModule.controller.drawNewView();
+//				close();
+        			setVisible(false);
+        		}
+        	});
+        
+        	
+        	JButton navSearchButton = new JButton("Search");
+        	navSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        	panel.add(navSearchButton);
+        	navSearchButton.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			mainModule.currentState=STATE.SEARCH;
+        			mainModule.userState=USER.HOST;
+        			MainModule.controller.drawNewView();
+//				close();
+        			setVisible(false);
+        		}
+        	});
+        getContentPane().setLayout(layout);
         
         
 
@@ -573,6 +625,7 @@ public class Properties extends javax.swing.JFrame {
     private JTextField jTextField_shortName_1;
     private JTextField jTextField_guestCapacity;
     private JLabel jLabel_guestCapacity;
+    private JPanel panel;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
