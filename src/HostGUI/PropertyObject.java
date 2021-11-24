@@ -4,23 +4,20 @@ package HostGUI;
 public class PropertyObject {
 	
 	    private int property_id;
-	    private String houseNameNumber;
 	    private String shortName;
 	    private String description;
-	    private String postcode;
 	    private int guestCapacity;
 	    private int host_id;
-	    
+	    private int address_id;
 	    
 	    
 	    /**
 	     * @wbp.parser.entryPoint
 	     */
-	    public PropertyObject(int property_id, String houseNameNumber, String postcode, int host_id, String description, String shortName, int guestCapacity)
+	    public PropertyObject(int property_id, int address_id, int host_id, String description, String shortName, int guestCapacity)
 	    {
 	        this.property_id = property_id;
-	        this.houseNameNumber = houseNameNumber;
-	        this.postcode = postcode;
+	        this.address_id = address_id;
 	        this.host_id = host_id;
 	        this.description = description;
 	        this.shortName = shortName;
@@ -33,14 +30,10 @@ public class PropertyObject {
 	        return property_id;
 	    }
 	    
-	    public String getHouseNameNumber()
-	    {
-	        return houseNameNumber;
-	    }
 	    
-	    public String getPostcode()
+	    public int getAddressId()
 	    {
-	        return postcode;
+	        return address_id;
 	    }
 	    public int getHostId()
 	    {

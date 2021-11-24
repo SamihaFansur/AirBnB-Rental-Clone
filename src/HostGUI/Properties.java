@@ -92,7 +92,7 @@ public class Properties extends javax.swing.JFrame {
            PropertyObject property;
            while(rs.next())
            {
-        	   property = new PropertyObject(rs.getInt("property_id"),rs.getString("houseNameNumber"),rs.getString("postcode"),rs.getInt("host_id"),rs.getString("description"),rs.getString("shortName"),rs.getInt("guestCapacity"));
+        	   property = new PropertyObject(rs.getInt("property_id"),rs.getInt("address_id"),rs.getInt("host_id"),rs.getString("description"),rs.getString("shortName"),rs.getInt("guestCapacity"));
                propertiesList.add(property);
            }
        } catch (Exception e) {
@@ -111,11 +111,10 @@ public class Properties extends javax.swing.JFrame {
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getPropertyId();
-           row[1] = list.get(i).getHouseNameNumber();
-           row[2] = list.get(i).getPostcode();
-           row[3] = list.get(i).getDescription();
-           row[4] = list.get(i).getShortName();
-           row[5] = list.get(i).getGuestCapacity();
+           row[1] = list.get(i).getAddressId();
+           row[2] = list.get(i).getDescription();
+           row[3] = list.get(i).getShortName();
+           row[4] = list.get(i).getGuestCapacity();
            
            model.addRow(row);
        }
@@ -249,7 +248,7 @@ public class Properties extends javax.swing.JFrame {
 
             },
             new String [] {
-                "property_id", "houseNameNumber", "postcode", "description", "shortName", "guestCapacity"
+                "property_id", "address_id", "description", "shortName", "guestCapacity"
             }
         ));
         

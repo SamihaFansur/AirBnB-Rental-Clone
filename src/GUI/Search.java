@@ -151,8 +151,7 @@ public class Search extends javax.swing.JFrame {
 					while(gettingProperty.next()) {
 						System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
 							   
-						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-												gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
+						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
 												gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
 						searchList.add(search);
 					}
@@ -189,8 +188,7 @@ public class Search extends javax.swing.JFrame {
 					while(gettingProperty.next()) {
 						System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
 							   
-						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-												gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
+						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
 												gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
 						searchList.add(search);
 					}
@@ -237,8 +235,7 @@ public class Search extends javax.swing.JFrame {
                          while(gettingProperty.next()) {
               			   System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
               			   
-                      	   search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-                      			   gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
+                      	   search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
                       			   gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
                              searchList.add(search);
                          }
@@ -284,8 +281,7 @@ public class Search extends javax.swing.JFrame {
     					while(gettingProperty.next()) {
     						System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
     							   
-    						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-    												gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
+    						search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getInt("address_id"), gettingProperty.getString("description"), 
     												gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
     						searchList.add(search);
     					}
@@ -374,11 +370,10 @@ public class Search extends javax.swing.JFrame {
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getPropertyId();
-           row[1] = list.get(i).getHouseNameNumber();
-           row[2] = list.get(i).getPostcode();
-           row[3] = list.get(i).getDescription();
-           row[4] = list.get(i).getShortName();
-           row[5] = list.get(i).getGuestCapacity();
+           row[1] = list.get(i).getAddressId();
+           row[2] = list.get(i).getDescription();
+           row[3] = list.get(i).getShortName();
+           row[4] = list.get(i).getGuestCapacity();
 //           row[6] = list.get(i).getStartDate();
 //           row[7] = list.get(i).getEndDate();
 //           row[8] = list.get(i).getPlaceName();

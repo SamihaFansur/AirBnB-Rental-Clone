@@ -4,10 +4,9 @@ package HostGUI;
 public class SearchObject {
 	
 	    private int property_id;
-	    private String houseNameNumber;
+	    private int address_id;
 	    private String shortName;
 	    private String description;
-	    private String postcode;
 	    private int guestCapacity;
 //	    private float minPrice;
 //	    private float maxPrice;
@@ -18,15 +17,14 @@ public class SearchObject {
 	    /**
 	     * @wbp.parser.entryPoint
 	     */
-	    public SearchObject(int property_id, String houseNameNumber, String postcode, String description, 
+	    public SearchObject(int property_id,int address_id, String description, 
     						String shortName, int guestCapacity
 //    						,float minPrice, float maxPrice, 
 //    						String placeName, String startDate, String endDate
     						) {
 	    	
 	        this.property_id = property_id;
-	        this.houseNameNumber = houseNameNumber;
-	        this.postcode = postcode;
+	        this.address_id = address_id;
 	        this.description = description;
 	        this.shortName = shortName;
 	        this.guestCapacity = guestCapacity;
@@ -42,13 +40,10 @@ public class SearchObject {
 	        return property_id;
 	    }
 	    
-	    public String getHouseNameNumber() {
-	        return houseNameNumber;
+	    public int getAddressId() {
+	        return address_id;
 	    }
-	    
-	    public String getPostcode() {
-	        return postcode;
-	    }
+
 	    
 	    public String getDescription() {
 	        return description;
