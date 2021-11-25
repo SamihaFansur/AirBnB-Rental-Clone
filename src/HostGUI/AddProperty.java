@@ -413,21 +413,6 @@ public class AddProperty extends JFrame {
 			propertyAddressInProperty.executeUpdate();
 			System.out.println(propertyAddressInProperty.toString());
 
-			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ = " + model.getEmail());
-
-			String getHostIDOfUser = "select host_id from HostAccount where email=?";
-			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
-			hostIDfromHostAccountTable.setString(1, model.getEmail());
-			int id = 0;
-			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
-			while (h_id.next()) {
-				id = h_id.getInt(1);
-				System.out.println("host id = " + id);
-			}
-			System.out.println("host id  after = " + id);
-			hostId=id;
-			model.setHostId(hostId);
-			
 			String insertHostIDInProperty = "update Property set host_id=? where address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
 			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
 			hostIDInProperty.setInt(1, model.getHostId());
