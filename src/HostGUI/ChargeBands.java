@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
@@ -51,7 +52,9 @@ public class ChargeBands extends JFrame{
 	private JTextField cleaningChargeTextField;
 	private JButton editChargebandButton;
 	private JComboBox titleComboBox = new JComboBox();
-	
+	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+//	String dateAsString = "25/12/2010";
+//	Date date = sourceFormat.parse(dateAsString);
 	
 	 private JTable table = new JTable();
 
@@ -206,8 +209,16 @@ public class ChargeBands extends JFrame{
 		          
 		            //checking if date matches DATE object format and if prices can exist as doubles:
 		            if (startDateValidation && endDateValidation && pricePerNightIsDouble && cleaningChargeIsDouble && serviceChargeIsDouble) {
-		            	Date formattedStartDate = parseDate(startDate.getText());
-		 	            Date formattedEndDate = parseDate(endDate.getText());
+		            	Date formattedStartDate = null;
+		            	Date formattedEndDate = null;
+						try {
+							formattedStartDate = sourceFormat.parse(startDate.getText());
+							formattedEndDate = sourceFormat.parse(endDate.getText());
+
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
+		 	            //Date formattedEndDate = parseDate(endDate.getText());
 		 	            //checking if start date < end date
 		 	            //NOTE: cant do the following time check until dates are converted to date objects
 		 	            Boolean timeCheck = formattedStartDate.before(formattedEndDate);
@@ -385,20 +396,36 @@ public class ChargeBands extends JFrame{
 				String startDateFromTable = resultSet.getString("startDate");
 				String endDateFromTable = resultSet.getString("endDate");
 
-				Date formattedStartDateFromTable = parseDate(startDateFromTable);
- 	            Date formattedEndDateFromTable = parseDate(endDateFromTable);
+				Date formattedStartDateFromTable = sourceFormat.parse(startDateFromTable);
+ 	            Date formattedEndDateFromTable = sourceFormat.parse(endDateFromTable);
+
+ 	            System.out.println(startDate);
+ 	            System.out.println(endDate);
+ 	            System.out.println(formattedStartDateFromTable);
+ 	            System.out.println(formattedStartDateFromTable);
  	            
 				//checking if start date and end dates are equal
  	            Boolean sameDates  = startDate.equals(formattedStartDateFromTable) || endDate.equals(formattedEndDateFromTable);
+ 	            System.out.println(sameDates);
  	            // check if users start date is within an existing start date and end date
  	            Boolean startDateInsideABand = startDate.after(formattedStartDateFromTable) && startDate.before(formattedEndDateFromTable);
+ 	            System.out.println(startDateInsideABand);
+
  	            // check if users end date is within an existing start date and end date
  	            Boolean endDateInsideABand = endDate.after(formattedStartDateFromTable) && endDate.before(formattedEndDateFromTable);
+ 	            System.out.println("endDate.after(formattedStartDateFromTable) " + endDate.after(formattedStartDateFromTable) );
+ 	            System.out.println("endDate.before(formattedEndDateFromTable) "+ endDate.before(formattedEndDateFromTable));
+
+ 	            System.out.println(endDateInsideABand);
+
  	            //check if users start date and end date is AFTER and BEFORE an existing start date and end date respectively
  	            // (checking for a charge band period being made inside another charge band period)
  	            Boolean overlappingBandCheckOne = startDate.after(formattedStartDateFromTable) && endDate.before(formattedEndDateFromTable);
+ 	            System.out.println(overlappingBandCheckOne);
+
  	            //check if users start date and end date is BEFORE and AFTER an existing start date and end date respectively
  	            Boolean overlappingBandCheckTwo = startDate.before(formattedStartDateFromTable) && endDate.after(formattedEndDateFromTable);
+ 	            System.out.println(overlappingBandCheckTwo);
 
  	            //if any of the above are true the band cannot be made
  	            chargeBandNotPossible = sameDates || startDateInsideABand || endDateInsideABand || overlappingBandCheckOne || overlappingBandCheckTwo;
