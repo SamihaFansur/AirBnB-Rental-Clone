@@ -109,14 +109,57 @@ public class Search extends javax.swing.JFrame {
 	   Connection connection = getConnection();
        ArrayList<SearchObject> searchList = new ArrayList<SearchObject>();
 //       System.out.println("you got this !!! cmonnn " + hostId);
-       double minPPN = 24;
-       double maxPPN = 27;
-       int guestCap = 6;
-       String sd = "03/11/2022";
-       String ed = "11/11/2022"; 
+       double minPPN = 0;
+       double maxPPN = 0;
+       int guestCap = 0;
+       String sd = "";
+       String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "s2";//city field
+       String placeName = "";//city field
+       
+       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
+       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
+    	   int addressId;
+    	   int propId;
+           String houseNameNum, pc;
+
+    	   try {
+    		   SearchObject search;
+    		   
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					   
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						
+	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
+	   		        		   
+	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+	   						getHnhnPc.setInt(1, addressId);
+	   						
+	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+	   						   
+	   						while(gettingHnhnPc.next()) {
+	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+	   							pc = gettingHnhnPc.getString("postcode");
+	   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+	   													gettingProperty.getInt("guestCapacity"));
+	   							searchList.add(search);
+	   						}
+	   					}   
+    			   
+    		   
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
        
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
@@ -1896,64 +1939,6 @@ public class Search extends javax.swing.JFrame {
            } 
        }
        
-//       try {
-//			 String cityToHnhnPc = "SELECT houseNameNumber, postcode FROM `Address` WHERE placeName =?";
-//			 String hnhnPcToPid = "Select property_id from Property where houseNameNumber=? and postcode=?";
-//			 String pidToSED  ="Select property_id from ChargeBands where property_id=? and startDate=?";
-//			 String propertyFromPid = "Select property_id, houseNameNumber, postcode, description, shortName, guestCapacity from Property where property_id=?";
-			 
-			 
-//    	   PreparedStatement getHnhnPc = connection.prepareStatement(cityToHnhnPc);
-//    	   getHnhnPc.setString(1, placeName);
-//
-//           ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
-//
-//           SearchObject search;
-//           String houseNameNum, pc;
-//           int p_id;
-//           int p_idFinal;
-//           
-//    	   while(gettingHnhnPc.next()) {
-//    		   houseNameNum = gettingHnhnPc.getString("houseNameNumber");
-//    		   pc = gettingHnhnPc.getString("postcode");
-//
-////    		   System.out.println("HNHN PC RS= "+houseNameNum+" pc = "+pc);
-//    		   
-//			   PreparedStatement getPid = connection.prepareStatement(hnhnPcToPid);
-//			   getPid.setString(1, houseNameNum);
-//			   getPid.setString(2, pc);
-//               ResultSet gettingPid = getPid.executeQuery();
-//    		   while(gettingPid.next()) {
-//    			   p_id = gettingPid.getInt("property_id");
-////    			   System.out.println("P_id = "+p_id);
-//    			   
-//    			   PreparedStatement getSED = connection.prepareStatement(pidToSED);
-//    			   getSED.setInt(1, p_id);
-//    			   getSED.setString(2, sd);
-//                   ResultSet gettingSED = getSED.executeQuery();
-//                   while(gettingSED.next()) {
-//                	   p_idFinal = gettingSED.getInt("property_id");
-////        			   System.out.println("final prop id ------"+p_idFinal);
-//        			   
-//        			   PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-//        			   getProperty.setInt(1, p_idFinal);
-//                       ResultSet gettingProperty = getProperty.executeQuery();
-//        			   
-//                       while(gettingProperty.next()) {
-//            			   System.out.println("final prop id ------"+gettingProperty.getInt("property_id"));
-//            			   
-//                    	   search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("houseNameNumber"), 
-//                    			   gettingProperty.getString("postcode"), gettingProperty.getString("description"), 
-//                    			   gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-//                           searchList.add(search);
-//                       }
-//                   }
-//    		   }
-//    	   }
-//           
-//       } catch (Exception e) {
-//           e.printStackTrace();
-//       }
        return searchList;
    }
    
