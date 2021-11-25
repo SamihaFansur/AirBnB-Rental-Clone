@@ -11,6 +11,7 @@ import Controller.Controller;
 import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -42,13 +43,14 @@ public class EditBedroom extends JFrame{
 	 private JTable table = new JTable();
 
 	 private JTextField bedroomId;
-	 private JTextField bed1;
-	 private JTextField bed2;
-	 private JTextField bed1ChoiceField;
-	 private JTextField bed2ChoiceField;
 	 private JTextField bed1People;
 	 private JTextField bed2People;
-	 
+	 private JComboBox BedType1ComboBox;
+	 private JComboBox BedType2ComboBox;
+	 private JRadioButton Bed1RadioButton;
+	 private JRadioButton Bed2RadioButton;
+	 private String bed1Value;
+	 private String bed2Value;
 	 
 	Connection connection = null;
 
@@ -68,7 +70,7 @@ public class EditBedroom extends JFrame{
 	 private MainModule mainModule;
 	 
 	 public EditBedroom(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditBedroom();
+	//	initializeEditBedroom();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -98,7 +100,7 @@ public class EditBedroom extends JFrame{
 
 		JLabel editBedroomLabel = new JLabel("Add beds in bedroom");
 		editBedroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBedroomLabel.setBounds(248, 47, 183, 57);
+		editBedroomLabel.setBounds(182, 55, 275, 57);
 		editBedroomPanel.add(editBedroomLabel);
 		
 		
@@ -108,72 +110,94 @@ public class EditBedroom extends JFrame{
 		  table.setModel(model);
 		  
 		  bedroomId = new JTextField();
-		  bedroomId.setBounds(10, 11, 133, 20);
+		  bedroomId.setBounds(146, 228, 133, 20);
 		  editBedroomPanel.add(bedroomId);
 		  bedroomId.setColumns(10);
 		  
-		  bed1 = new JTextField();
-		  bed1.setBounds(10, 42, 133, 20);
-		  editBedroomPanel.add(bed1);
-		  bed1.setColumns(10);
-
-		  bed1ChoiceField = new JTextField();
-		  bed1ChoiceField.setBounds(10, 73, 133, 20);
-		  editBedroomPanel.add(bed1ChoiceField);
-		  bed1ChoiceField.setColumns(10);
-		  
 		  bed1People= new JTextField();
-		  bed1People.setBounds(10, 104, 133, 20);
+		  bed1People.setBounds(146, 321, 133, 20);
 		  editBedroomPanel.add(bed1People);
 		  bed1People.setColumns(10);
-
-		  bed2 = new JTextField();
-		  bed2.setBounds(10, 135, 133, 20);
-		  editBedroomPanel.add(bed2);
-		  bed2.setColumns(10);
-
-		  bed2ChoiceField = new JTextField();
-		  bed2ChoiceField.setBounds(10, 166, 133, 20);
-		  editBedroomPanel.add(bed2ChoiceField);
-		  bed2ChoiceField.setColumns(10);
 		  
 		  bed2People = new JTextField();
-		  bed2People.setBounds(10, 197, 133, 20);
+		  bed2People.setBounds(146, 414, 133, 20);
 		  editBedroomPanel.add(bed2People);
 		  bed2People.setColumns(10);
 		  
 		  JLabel lblBedroomId = new JLabel("Bedroom ID");
-		  lblBedroomId.setBounds(151, 11, 95, 20);
+		  lblBedroomId.setBounds(316, 228, 95, 20);
 		  editBedroomPanel.add(lblBedroomId);
 		  
-		  JLabel lblBed1 = new JLabel("Bed 1");
-		  lblBed1.setBounds(151, 42, 95, 20);
-		  editBedroomPanel.add(lblBed1);
-		  
 		  JLabel lblBed1Type = new JLabel("Bed 1 Type");
-		  lblBed1Type.setBounds(151, 73, 95, 20);
+		  lblBed1Type.setBounds(316, 290, 95, 20);
 		  editBedroomPanel.add(lblBed1Type);
 
 		  JLabel lblBed1People= new JLabel("Bed 1 Capacity");
-		  lblBed1People.setBounds(151, 104, 95, 20);
+		  lblBed1People.setBounds(316, 321, 95, 20);
 		  editBedroomPanel.add(lblBed1People);
-		  	  
-		  JLabel lblBed2 = new JLabel("Bed 2");
-		  lblBed2.setBounds(151, 135, 95, 20);
-		  editBedroomPanel.add(lblBed2);
 		  
 		  JLabel lblBed2Type = new JLabel("Bed 2 Type");
-		  lblBed2Type.setBounds(151, 166, 95, 20);
+		  lblBed2Type.setBounds(316, 383, 95, 20);
 		  editBedroomPanel.add(lblBed2Type);
 
 		  JLabel lblBed2People= new JLabel("Bed 2 Capacity");
-		  lblBed2People.setBounds(151, 197, 95, 20);
+		  lblBed2People.setBounds(318, 414, 95, 20);
 		  editBedroomPanel.add(lblBed2People);
 		  
 		  
 		  JScrollPane scrollPane = new JScrollPane(table);
-		  scrollPane.setBounds(10, 220, 464, 115);
+		  scrollPane.setBounds(67, 470, 464, 115);
 		  editBedroomPanel.add(scrollPane);
+		  
+		  String bedTypes[] = { "King","Bunk", "Single", "Double" };
+		  
+		  BedType1ComboBox = new JComboBox(bedTypes);
+		  BedType1ComboBox.setBounds(146, 289, 133, 22);
+		  editBedroomPanel.add(BedType1ComboBox);
+			
+		  BedType2ComboBox = new JComboBox(bedTypes);
+		  BedType2ComboBox.setBounds(146, 381, 133, 22);
+		  editBedroomPanel.add(BedType2ComboBox);
+			
+		  Bed1RadioButton = new JRadioButton("Bed 1");
+		  Bed1RadioButton.addActionListener(new ActionListener() {
+		  	public void actionPerformed(ActionEvent e) {
+		  		if (Bed1RadioButton.isSelected()) {
+	                bed1Value = "Yes";
+	            } else {
+	            	bed1Value = "No";
+	            }
+		  	}
+		  });
+		  Bed1RadioButton.setBounds(146, 255, 111, 23);
+		  editBedroomPanel.add(Bed1RadioButton);
+			
+		  Bed2RadioButton = new JRadioButton("Bed 2");
+		  Bed2RadioButton.addActionListener(new ActionListener() {
+			  	public void actionPerformed(ActionEvent e) {
+			  		if (Bed2RadioButton.isSelected()) {
+		                bed2Value = "Yes";
+		            } else {
+		            	bed2Value = "No";
+		            }
+			  	}
+			  });
+		  Bed2RadioButton.setBounds(146, 348, 111, 23);
+		  editBedroomPanel.add(Bed2RadioButton);
+			
+		  JButton backButton = new JButton("Back");
+		  backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainModule.userState=USER.HOST;
+					mainModule.editPropertyState = EDITPROPERTY.EDIT_SLEEPING;
+					MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
+//					close();
+					frame.dispose();
+				}
+			});
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			backButton.setBounds(20, 27, 91, 23);
+			editBedroomPanel.add(backButton);
 		  
 		  JButton addButton = new JButton("Add Bed Details");
 	        JButton updateButton = new JButton("Update Bed Details");
@@ -185,11 +209,11 @@ public class EditBedroom extends JFrame{
 	              model.addRow(
 	                   new Object[]{
 	                		 bedroomId.getText(), 
-	                		 bed1.getText(),
-	                		 bed1ChoiceField.getText(),
+	                		 bed1Value,
+	                		 BedType1ComboBox.getSelectedItem(),
 	                		 bed1People.getText(),
-	                		 bed2.getText(),
-	                		 bed2ChoiceField.getText(),
+	                		 bed2Value,
+	                		 BedType2ComboBox.getSelectedItem(),
 	                		 bed2People.getText()
 	                   }
 	              );
@@ -197,18 +221,18 @@ public class EditBedroom extends JFrame{
 	              addBedTypeDetails(idAfter);
 	              //Delete form after adding data
 	              bedroomId.setText("");
-	              bed1.setText("");
-	              bed1ChoiceField.setText("");
+	              Bed1RadioButton.setSelected(false);
+	              BedType1ComboBox.setSelectedItem("King");
 	              bed1People.setText("");
-	              bed2.setText("");
-	              bed2ChoiceField.setText("");
+	              BedType1ComboBox.setSelectedItem("King");
+	              Bed2RadioButton.setSelected(false);
 	              bed2People.setText("");
 	            }
 	        });
-		  addButton.setBounds(230, 89, 140, 23);
+		  addButton.setBounds(220, 150, 140, 23);
 		  editBedroomPanel.add(addButton);
 
-		  updateButton.setBounds(230, 120, 140, 23);
+		  updateButton.setBounds(220, 184, 140, 23);
 		  editBedroomPanel.add(updateButton);
 		  
 		  table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 
@@ -216,11 +240,11 @@ public class EditBedroom extends JFrame{
 	          public void valueChanged(ListSelectionEvent e) {
 	                int i = table.getSelectedRow();
 	                bedroomId.setText((String)model.getValueAt(i, 0));
-	                bed1.setText((String)model.getValueAt(i, 1));
-	                bed1ChoiceField.setText((String)model.getValueAt(i, 2));
+	                Bed1RadioButton.setSelected((boolean) model.getValueAt(i, 1));
+	                BedType1ComboBox.setSelectedItem((String)model.getValueAt(i, 2));
 	                bed1People.setText((String)model.getValueAt(i, 3));
-	                bed2.setText((String)model.getValueAt(i, 4));
-	                bed2ChoiceField.setText((String)model.getValueAt(i, 5));
+	                BedType2ComboBox.setSelectedItem((String)model.getValueAt(i, 4));
+	                Bed2RadioButton.setSelected((boolean) model.getValueAt(i, 5));
 	                bed2People.setText((String)model.getValueAt(i, 6));
 	            }
 	        });
@@ -231,11 +255,11 @@ public class EditBedroom extends JFrame{
 	               //Update the form
 	               int i = table.getSelectedRow();
 	               model.setValueAt(bedroomId.getText(), i, 0);
-	               model.setValueAt(bed1.getText(), i, 1);
-	               model.setValueAt(bed1ChoiceField.getText(), i, 2);
+	               model.setValueAt(Bed1RadioButton.getText(), i, 1);
+	               model.setValueAt(BedType1ComboBox.getSelectedItem(), i, 2);
 	               model.setValueAt(bed1People.getText(), i, 3);
-	               model.setValueAt(bed2.getText(), i, 4);
-	               model.setValueAt(bed2ChoiceField.getText(), i, 5);
+	               model.setValueAt(Bed2RadioButton.getText(), i, 4);
+	               model.setValueAt(BedType2ComboBox.getSelectedItem(), i, 5);
 	               model.setValueAt(bed2People.getText(), i, 6);
 	               
 	               updateBedTypeDetails(idAfter);
@@ -312,8 +336,10 @@ public class EditBedroom extends JFrame{
 				//should just go back to addfaciltiy page
 			}
 		});
-		addBedrooms.setBounds(264, 518, 91, 23);
+		addBedrooms.setBounds(259, 604, 91, 23);
 		editBedroomPanel.add(addBedrooms);
+		
+		
 
 
 		frame.setBounds(100, 100, 600, 700);
@@ -327,11 +353,11 @@ public class EditBedroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBedroomId(Integer.parseInt(bedroomId.getText()));
-			model.setBed1(Boolean.parseBoolean(bed1.getText()));
-			model.setBed1Type(bed1ChoiceField.getText());
+			model.setBed1(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed1Type((String) BedType1ComboBox.getSelectedItem());
 			model.setBed1Capacity(Integer.parseInt(bed1People.getText()));
-			model.setBed2(Boolean.parseBoolean(bed2.getText()));
-			model.setBed2Type(bed2ChoiceField.getText());
+			model.setBed2(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed2Type((String) BedType2ComboBox.getSelectedItem());
 			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
 			
 			String updateSleepingBedTypeQuery = "insert into Sleeping_BedType (sleeping_id, bedType_id, bed1, "
@@ -415,11 +441,11 @@ public class EditBedroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBedroomId(Integer.parseInt(bedroomId.getText()));
-			model.setBed1(Boolean.parseBoolean(bed1.getText()));
-			model.setBed1Type(bed1ChoiceField.getText());
+			model.setBed1(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed1Type((String) BedType1ComboBox.getSelectedItem());
 			model.setBed1Capacity(Integer.parseInt(bed1People.getText()));
-			model.setBed2(Boolean.parseBoolean(bed2.getText()));
-			model.setBed2Type(bed2ChoiceField.getText());
+			model.setBed2(Boolean.parseBoolean(Bed2RadioButton.getText()));
+			model.setBed2Type((String) BedType2ComboBox.getSelectedItem());
 			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
 
 			String updateSleepingBedTypeQuery = "update Sleeping_BedType set bed1=?, bed1ChoiceField=?, bed1People=?, "
@@ -472,7 +498,6 @@ public class EditBedroom extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
