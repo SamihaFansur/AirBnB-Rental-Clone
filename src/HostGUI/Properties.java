@@ -500,7 +500,7 @@ public class Properties extends javax.swing.JFrame {
     
            Connection connection = getConnection();
            PreparedStatement updatePropertyStatement= connection.prepareStatement(updatePropertyQuery);
-    
+           
 
            updatePropertyStatement.setString(1, jTextField_Description.getText());
            updatePropertyStatement.setString(2,jTextField_shortName_1.getText());
