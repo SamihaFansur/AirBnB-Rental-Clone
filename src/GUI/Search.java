@@ -1040,53 +1040,6 @@ public class Search extends javax.swing.JFrame {
 	   					}   
     			   }
     		   }
-    		   
-    		   
-    		   String cityToHnhnPc = "Select address_id, houseNameNumber, postcode from Address where placeName =?";
-  			   String hnhnPcGcToPid = "Select property_id from Property where address_id=? and guestCapacity=?";
-  			   String pidFromChargeBands = "Select property_id from ChargeBands where totalPricePerNight>=? and totalPricePerNight<=? and property_id=?";
-  			   String propertyFromPid = "Select property_id, description, shortName, guestCapacity from Property where property_id=?";
-  			   			 
-  			   PreparedStatement getHnhnPc = connection.prepareStatement(cityToHnhnPc);
-  			   getHnhnPc.setString(1, placeName);
- 
-  			   ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
-  
-	      	   while(gettingHnhnPc.next()) {
-	      		   addressId = gettingHnhnPc.getInt("address_id");
-	      		   houseNameNum = gettingHnhnPc.getString("houseNameNumber");
-	      		   pc = gettingHnhnPc.getString("postcode");
-        		   
-	  			   PreparedStatement getPid = connection.prepareStatement(hnhnPcGcToPid);
-	  			   getPid.setInt(1, addressId);
-	  			   getPid.setInt(2, guestCap);
-	  			   
-	               ResultSet gettingPid = getPid.executeQuery();
-	      		   while(gettingPid.next()) {
-	      			   propId = gettingPid.getInt("property_id");
-	      			   
-	      			   PreparedStatement getPidFromChargeBands = connection.prepareStatement(pidFromChargeBands);
-	            	   getPidFromChargeBands.setDouble(1, minPPN);
-	            	   getPidFromChargeBands.setDouble(2, maxPPN);
-	            	   getPidFromChargeBands.setInt(3, propId); //getting chargebands where property id is propId
-	            	   
-	            	   ResultSet gettingPidFromChargeBands = getPidFromChargeBands.executeQuery();
-	            	   while(gettingPidFromChargeBands.next()) {
-	            		   propIdFinalQuery = gettingPidFromChargeBands.getInt("property_id");
-	            		   
-	            		   PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-	            		   getProperty.setInt(1, propIdFinalQuery);
-	            		   
-	                       ResultSet gettingProperty = getProperty.executeQuery();
-	                       while(gettingProperty.next()) {
-	                    	   search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, 
-	                    			   					pc, gettingProperty.getString("description"), 
-                    			   						gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-	                            searchList.add(search);
-	                       }
-	            	   }
-                  }
-      		   }
         	   
            }catch (Exception e) {
         	   e.printStackTrace();
