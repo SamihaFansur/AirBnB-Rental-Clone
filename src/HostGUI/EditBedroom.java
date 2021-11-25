@@ -70,7 +70,7 @@ public class EditBedroom extends JFrame{
 	 private MainModule mainModule;
 	 
 	 public EditBedroom(MainModule mainModule, Controller controller, Model model) {
-	//	initializeEditBedroom();
+		//initializeEditBedroom();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -353,10 +353,10 @@ public class EditBedroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBedroomId(Integer.parseInt(bedroomId.getText()));
-			model.setBed1(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed1(Bed1RadioButton.isSelected());
 			model.setBed1Type((String) BedType1ComboBox.getSelectedItem());
 			model.setBed1Capacity(Integer.parseInt(bed1People.getText()));
-			model.setBed2(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed2(Bed2RadioButton.isSelected());
 			model.setBed2Type((String) BedType2ComboBox.getSelectedItem());
 			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
 			

@@ -9,6 +9,7 @@ import Controller.Controller;
 import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
@@ -47,7 +48,7 @@ public class EditBathroom extends JFrame{
 		frame.dispose();
 	}
 
-	/**
+	/*
 	 * Create the application.
 	 */
 
@@ -60,12 +61,18 @@ public class EditBathroom extends JFrame{
 	 private JRadioButton sharedBathroomRadioBtn;
 	 private JButton addBathType;
 	 private JTable table = new JTable();
-
+	 private JRadioButton toiletRadioButton;
+	 private JRadioButton showerRadioButton;
+	 private JRadioButton bathRadioButton;
+	 private JRadioButton sharedRadioButton;
+	 private String toilet;
+	 private String shower;
+	 private String bath;
+	 private String shared;
+	 
+	 
+	 
 	 private JTextField bathroomId;
-	 private JTextField toilet;
-	 private JTextField bath;
-	 private JTextField shower;
-	 private JTextField shared;
 	 
 	 
 	Connection connection = null;
@@ -119,26 +126,6 @@ public class EditBathroom extends JFrame{
 		  editBathroomPanel.add(bathroomId);
 		  bathroomId.setColumns(10);
 		  
-		  toilet = new JTextField();
-		  toilet.setBounds(134, 229, 133, 20);
-		  editBathroomPanel.add(toilet);
-		  toilet.setColumns(10);
-		  
-		  bath = new JTextField();
-		  bath.setBounds(134, 260, 133, 20);
-		  editBathroomPanel.add(bath);
-		  bath.setColumns(10);
-		  
-		  shower = new JTextField();
-		  shower.setBounds(134, 291, 133, 20);
-		  editBathroomPanel.add(shower);
-		  shower.setColumns(10);
-		  
-		  shared = new JTextField();
-		  shared.setBounds(134, 321, 133, 20);
-		  editBathroomPanel.add(shared);
-		  shared.setColumns(10);
-		  
 		  JLabel lblBathroomId= new JLabel("Bathroom ID");
 		  lblBathroomId.setBounds(349, 197, 95, 20);
 		  editBathroomPanel.add(lblBathroomId);
@@ -173,20 +160,20 @@ public class EditBathroom extends JFrame{
 	              model.addRow(
 	                   new Object[]{
 	                         bathroomId.getText(), 
-	                         toilet.getText(),
-	                         bath.getText(),
-	                         shower.getText(),
-	                         shared.getText()
+	                         toiletRadioButton.getText(),
+	                         bathRadioButton.getText(),
+	                         showerRadioButton.getText(),
+	                         sharedRadioButton.getText()
 	                   }
 	              );
 	              System.out.println("idAfter in addbtn before calling addBathTypeDetails = "+idAfter);
 	              addBathTypeDetails(idAfter);
 	              //Delete form after adding data
 	              bathroomId.setText("");
-	              toilet.setText("");
-	              bath.setText("");
-	              shower.setText("");
-	              shared.setText("");
+	              toiletRadioButton.setText("");
+	              bathRadioButton.setText("");
+	              showerRadioButton.setText("");
+	              sharedRadioButton.setText("");
 	            }
 	        });
 		  addButton.setBounds(223, 366, 142, 23);
@@ -195,15 +182,29 @@ public class EditBathroom extends JFrame{
 		  updateButton.setBounds(223, 400, 142, 23);
 		  editBathroomPanel.add(updateButton);
 		  
+		  JButton backButton = new JButton("Back");
+		  backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainModule.userState=USER.HOST;
+					mainModule.editPropertyState = EDITPROPERTY.EDIT_SLEEPING;
+					MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
+//					close();
+					frame.dispose();
+				}
+			});
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			backButton.setBounds(20, 27, 91, 23);
+			editBathroomPanel.add(backButton);  
+		  
 		  table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 
 	          @Override
 	          public void valueChanged(ListSelectionEvent e) {
 	                int i = table.getSelectedRow();
 	                bathroomId.setText((String)model.getValueAt(i, 0));
-	                toilet.setText((String)model.getValueAt(i, 1));
-	                bath.setText((String)model.getValueAt(i, 2));
-	                shower.setText((String)model.getValueAt(i, 3));
-	                shared.setText((String)model.getValueAt(i, 4));
+	                toiletRadioButton.setText((String)model.getValueAt(i, 1));
+	                bathRadioButton.setText((String)model.getValueAt(i, 2));
+	                showerRadioButton.setText((String)model.getValueAt(i, 3));
+	                sharedRadioButton.setText((String)model.getValueAt(i, 4));
 	            }
 	        });
 		
@@ -213,10 +214,10 @@ public class EditBathroom extends JFrame{
 	               //Update the form
 	               int i = table.getSelectedRow();
 	               model.setValueAt(bathroomId.getText(), i, 0);
-	               model.setValueAt(toilet.getText(), i, 1);
-	               model.setValueAt(bath.getText(), i, 2);
-	               model.setValueAt(shower.getText(), i, 3);
-	               model.setValueAt(shared.getText(), i, 4);
+	               model.setValueAt(toiletRadioButton.getText(), i, 1);
+	               model.setValueAt(bathRadioButton.getText(), i, 2);
+	               model.setValueAt(showerRadioButton.getText(), i, 3);
+	               model.setValueAt(sharedRadioButton.getText(), i, 4);
 	               
 	               updateBathTypeDetails(idAfter);
 	            }
@@ -271,6 +272,60 @@ public class EditBathroom extends JFrame{
 		addBathType.setBounds(242, 572, 91, 23);
 		editBathroomPanel.add(addBathType);
 		
+		toiletRadioButton = new JRadioButton("Toilet");
+		toiletRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (toiletRadioButton.isSelected()) {
+	                toilet = "Yes";
+	            } else {
+	            	toilet = "No";
+	            }
+			}
+		});
+		toiletRadioButton.setBounds(134, 227, 111, 23);
+		editBathroomPanel.add(toiletRadioButton);
+		
+		bathRadioButton = new JRadioButton("Bath");
+		bathRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (bathRadioButton.isSelected()) {
+	                bath = "Yes";
+	            } else {
+	            	bath = "No";
+	            }
+			}
+		});
+		bathRadioButton.setBounds(134, 258, 111, 23);
+		editBathroomPanel.add(bathRadioButton);
+		
+		showerRadioButton = new JRadioButton("Shower");
+		showerRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (showerRadioButton.isSelected()) {
+	                shower = "Yes";
+	            } else {
+	            	shower = "No";
+	            }
+			}
+		});
+		showerRadioButton.setBounds(134, 289, 111, 23);
+		editBathroomPanel.add(showerRadioButton);
+		
+		sharedRadioButton = new JRadioButton("Shared with Host");
+		sharedRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (sharedRadioButton.isSelected()) {
+	                shared = "Yes";
+	            } else {
+	            	shared = "No";
+	            }
+		  	}
+		  });
+			
+
+		sharedRadioButton.setBounds(134, 320, 111, 23);
+		editBathroomPanel.add(sharedRadioButton);
+		
 //		JButton backButton = new JButton("Back");
 //		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 //		backButton.setBounds(24, 77, 91, 23);
@@ -287,10 +342,10 @@ public class EditBathroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
-			model.setToilet(Boolean.parseBoolean(toilet.getText()));
-			model.setBath(Boolean.parseBoolean(bath.getText()));
-			model.setShower(Boolean.parseBoolean(shower.getText()));
-			model.setShared(Boolean.parseBoolean(shared.getText()));
+			model.setToilet(Boolean.parseBoolean(toiletRadioButton.getText()));
+			model.setBath(Boolean.parseBoolean(bathRadioButton.getText()));
+			model.setShower(Boolean.parseBoolean(showerRadioButton.getText()));
+			model.setShared(Boolean.parseBoolean(sharedRadioButton.getText()));
 			
 			String updateBathingBathTypeQuery = "insert into Bathing_BathType (bathing_id, bathType_id, toilet, bath, shower, shared)"
 										+ " values(?,?,?,?,?,?)";
@@ -345,10 +400,10 @@ public class EditBathroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
-			model.setToilet(Boolean.parseBoolean(toilet.getText()));
-			model.setBath(Boolean.parseBoolean(bath.getText()));
-			model.setShower(Boolean.parseBoolean(shower.getText()));
-			model.setShared(Boolean.parseBoolean(shared.getText()));
+			model.setToilet(Boolean.parseBoolean(toiletRadioButton.getText()));
+			model.setBath(Boolean.parseBoolean(bathRadioButton.getText()));
+			model.setShower(Boolean.parseBoolean(showerRadioButton.getText()));
+			model.setShared(Boolean.parseBoolean(sharedRadioButton.getText()));
 
 			String updateBathingBathTypeQuery = "update Bathing_BathType set toilet=?, bath=?, shower=?, shared=? where bathType_id=? and bathing_id=?";
 			

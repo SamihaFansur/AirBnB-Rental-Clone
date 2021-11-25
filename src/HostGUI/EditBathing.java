@@ -160,6 +160,7 @@ public class EditBathing extends JFrame{
 				updateBathingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
 				MainModule.controller.editPropertyView(facilitiesidAfter, id);
+				frame.dispose();
 			}
 		});
 		addBathing.setBounds(185, 480, 200, 23);
