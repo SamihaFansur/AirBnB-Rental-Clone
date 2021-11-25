@@ -45,6 +45,7 @@ public class Model {
 	private String startDate, endDate;
 	private double pricePerNight, serviceCharge, cleaningCharge;
 	
+	private boolean previouslyInPropertiesList;
 	
 	private int propertyId;
 	private int hostId;
@@ -644,5 +645,14 @@ public class Model {
 	
 	public int getFacilitiesId() {
 		return facilitiesId;
+	}
+	
+	
+	public void setPreviouslyInPropertiesList(boolean previouslyInPropertiesList) {
+		this.previouslyInPropertiesList=previouslyInPropertiesList;
+	}
+	
+	public boolean getPreviouslyInPropertiesList() {
+		return previouslyInPropertiesList;
 	}
 }

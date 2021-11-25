@@ -255,6 +255,7 @@ public class Controller extends MainModule{
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.PROPERTIES){
 			model.setFacilitiesId(facilitiesId);
 			//model.setHostId(id);
+			model.setPreviouslyInPropertiesList(false);
 			properties.initializeProperties(model.getHostId(), model.getPropertyId());
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS) {

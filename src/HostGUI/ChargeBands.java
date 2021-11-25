@@ -55,6 +55,7 @@ public class ChargeBands extends JFrame{
 	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 //	String dateAsString = "25/12/2010";
 //	Date date = sourceFormat.parse(dateAsString);
+	private boolean previouslyInPropertiesList;
 	
 	 private JTable table = new JTable();
 
@@ -106,6 +107,8 @@ public class ChargeBands extends JFrame{
 		faciltiesId = model.getFacilitiesId();
 		propertyIdAfter = propertyId;
 		hostId = id;
+		previouslyInPropertiesList = model.getPreviouslyInPropertiesList();
+		
 		System.out.println("HOST ID IN CHARGEBANDS = "+hostId);
 
 		System.out.println("PROPERTY ID IN CHARGEBANDS = "+propertyIdAfter);
@@ -362,9 +365,15 @@ public class ChargeBands extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 				
-				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				
+				if(previouslyInPropertiesList) {
+					mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+					
+				}else {
+					mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
+					
+				}
+				
 				System.out.println("HOST ID IN CHARGEBANDS: "+hostId);
 				
 				

@@ -486,8 +486,8 @@ public class Properties extends javax.swing.JFrame {
     //needs to take in the properyId and hostId
 		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
 		System.out.println("This is the host id in PROPERTIES.JAVA: "+model.getHostId());
-		model.setHostId(Integer.parseInt(jTextField_Description.getText()));
-		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), Integer.parseInt(jTextField_Description.getText()));
+		model.setPreviouslyInPropertiesList(true);
+		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
 		setVisible(false);
     }  
     
