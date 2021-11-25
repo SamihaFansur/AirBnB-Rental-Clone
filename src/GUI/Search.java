@@ -1431,6 +1431,64 @@ public class Search extends javax.swing.JFrame {
         	   e.printStackTrace();
            } 
        }
+       
+     //startDate, endDate, city
+       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd != "" && ed !="" && placeName != "" ) {
+    	   int addressId;
+    	   int propId;
+           String houseNameNum, pc;
+
+    	   try {
+    		   SearchObject search;
+    		   
+    		   String allCb = "select property_id, startDate, endDate from ChargeBands";
+    		   PreparedStatement getAllCb = connection.prepareStatement(allCb);
+    		   getAllCb.setDouble(1, minPPN);
+    		   getAllCb.setDouble(2, maxPPN);
+    		   
+    		   ResultSet gettingAllCb = getAllCb.executeQuery();
+
+    		   System.out.println(getAllCb);
+    		   while(gettingAllCb.next()) {
+    			   if( parseDate(gettingAllCb.getString("startDate")).equals(startd) ||   startd.after(parseDate(gettingAllCb.getString("startDate"))) ||
+					   parseDate(gettingAllCb.getString("endDate")).equals(endd) ||   endd.before(parseDate(gettingAllCb.getString("endDate")))) {
+    				   propId = gettingAllCb.getInt("property_id");
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property where property_id=?";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					getProperty.setInt(1, propId);
+	   					getProperty.setInt(2, guestCap);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					   
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						
+	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=? and placeName=?";
+	   		        		   
+	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+	   						getHnhnPc.setInt(1, addressId);
+	   						getHnhnPc.setString(2, placeName);
+	   						
+	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+	   						   
+	   						while(gettingHnhnPc.next()) {
+	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+	   							pc = gettingHnhnPc.getString("postcode");
+	   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+	   													gettingProperty.getInt("guestCapacity"));
+	   							searchList.add(search);
+	   						}
+	   					}   
+    			   }
+    		   }
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
 
        /////////////////////////////////////////4 search criteria queries//////////////////////////////////////////////
      //minMax, startDate, endDate, guest
