@@ -49,6 +49,30 @@ public class Properties extends javax.swing.JFrame {
 	 private JFrame frame;
 	 private NavHost navForHost = new NavHost();
 	 
+	    // Variables declaration - do not modify                     
+	    private javax.swing.JButton jButton_Delete;
+	    private javax.swing.JButton jButton_Update;
+	    private javax.swing.JButton jButton_EditFacilities;
+	    private javax.swing.JButton jButton_EditChargeBands;
+	    private javax.swing.JLabel jLabel1;
+	    private javax.swing.JLabel jLabel_description;
+	    private javax.swing.JPanel jPanel1;
+	    private javax.swing.JScrollPane jScrollPane1;
+	    private javax.swing.JTable jTable_Display_Properties;
+	    private javax.swing.JTextField jTextField_Description;
+	    private javax.swing.JTextField jTextField_property_id;
+
+
+	    private JButton backButton;
+	    private static int hostId;
+	    private JLabel jLabel_shortname;
+	    private JTextField jTextField_shortName;
+	    private JTextField jTextField_shortName_1;
+	    private JTextField jTextField_guestCapacity;
+	    private JTextField jTextField_guestCapacity_1;
+	    private JLabel jLabel_guestCapacity;
+	    private JPanel panel;
+	    
     public Properties(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
 		this.mainModule=mainModule;
@@ -578,29 +602,7 @@ public class Properties extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
-    private javax.swing.JButton jButton_Delete;
-    private javax.swing.JButton jButton_Update;
-    private javax.swing.JButton jButton_EditFacilities;
-    private javax.swing.JButton jButton_EditChargeBands;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel_description;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_Display_Properties;
-    private javax.swing.JTextField jTextField_Description;
-    private javax.swing.JTextField jTextField_property_id;
 
-
-    private JButton backButton;
-    private static int hostId;
-    private JLabel jLabel_shortname;
-    private JTextField jTextField_shortName;
-    private JTextField jTextField_shortName_1;
-    private JTextField jTextField_guestCapacity;
-    private JTextField jTextField_guestCapacity_1;
-    private JLabel jLabel_guestCapacity;
-    private JPanel panel;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html

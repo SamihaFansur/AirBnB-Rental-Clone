@@ -427,9 +427,10 @@ public class AddProperty extends JFrame {
 			System.out.println("host id  after = " + id);
 			hostId=id;
 			model.setHostId(hostId);
-			String insertHostIDInProperty = "update Property set host_id=? where (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
+			
+			String insertHostIDInProperty = "update Property set host_id=? where address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
 			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
-			hostIDInProperty.setInt(1, id);
+			hostIDInProperty.setInt(1, model.getHostId());
 			hostIDInProperty.setString(2, model.getEditPropertyHouseNameNum());
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
