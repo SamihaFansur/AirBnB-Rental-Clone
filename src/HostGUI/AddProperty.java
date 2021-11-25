@@ -36,7 +36,7 @@ public class AddProperty extends JFrame {
 	private JFrame frame;
 	private JTextField postcodeTextField;
 	private JTextField streetNameTextField;
-	private JTextField cityTextField;
+	private JComboBox cityComboBox;
 	private JTextField houseNameNumberTextField;
 	private JButton resetEditPropertyButton;
 	private JButton addEditPropertyButton;
@@ -180,11 +180,17 @@ public class AddProperty extends JFrame {
 		JLabel cityLabel = new JLabel("City/Town:");
 		cityLabel.setBounds(104, 415, 93, 34);
 		editPropertyPanel.add(cityLabel);
-
-		cityTextField = new JTextField();
-		cityTextField.setColumns(10);
-		cityTextField.setBounds(202, 415, 274, 34);
-		editPropertyPanel.add(cityTextField);
+		
+		 String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
+					"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
+					"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
+					"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
+					"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", 
+					"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
+					"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
+	 	cityComboBox = new JComboBox(cityNames);
+		cityComboBox.setBounds(202, 415, 274, 34);
+		editPropertyPanel.add(cityComboBox);
 
 		JLabel houseNameNumberLabel = new JLabel("House Name/Number:");
 		houseNameNumberLabel.setBounds(104, 456, 93, 34);
@@ -358,7 +364,7 @@ public class AddProperty extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				houseNameNumberTextField.setText("");
 				streetNameTextField.setText("");
-				cityTextField.setText("");
+				cityComboBox.setSelectedItem("Bath");
 				postcodeTextField.setText("");
 			}
 		});
@@ -377,7 +383,7 @@ public class AddProperty extends JFrame {
 
 			model.setEditPropertyHouseNameNum(houseNameNumberTextField.getText());
 			model.setEditPropertyStreetName(streetNameTextField.getText());
-			model.setEditPropertyCity(cityTextField.getText());
+			model.setEditPropertyCity(cityComboBox.getSelectedItem().toString());
 			model.setEditPropertyPostcode(postcodeTextField.getText());
 			model.setEditPropertyShortName(shortNameTextField.getText());
 			model.setEditPropertyGuestCapacity(Integer.parseInt(guestCapacityTextField.getText()));
