@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
@@ -111,10 +113,9 @@ public class Properties extends javax.swing.JFrame {
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getPropertyId();
-           row[1] = list.get(i).getAddressId();
-           row[2] = list.get(i).getDescription();
-           row[3] = list.get(i).getShortName();
-           row[4] = list.get(i).getGuestCapacity();
+           row[1] = list.get(i).getDescription();
+           row[2] = list.get(i).getShortName();
+           row[3] = list.get(i).getGuestCapacity();
            
            model.addRow(row);
        }
@@ -155,15 +156,11 @@ public class Properties extends javax.swing.JFrame {
     	
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel_description = new javax.swing.JLabel();
        
         
         
         jTextField_property_id = new javax.swing.JTextField();
-        jTextField_houseNameNumber = new javax.swing.JTextField();
-        jTextField_postcode = new javax.swing.JTextField();
         jTextField_Description = new javax.swing.JTextField();
      
         jTextField_shortName = new javax.swing.JTextField();
@@ -183,12 +180,6 @@ public class Properties extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); 
         jLabel1.setText("Property ID:");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); 
-        jLabel2.setText("House Name/Number:");
-
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 18)); 
-        jLabel3.setText("Postcode:");
-
         jLabel_description.setFont(new java.awt.Font("Verdana", 0, 18)); 
         jLabel_description.setText("Description");
         
@@ -203,21 +194,7 @@ public class Properties extends javax.swing.JFrame {
  
         
 
-        jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
-
-        jTextField_houseNameNumber.setFont(new java.awt.Font("Verdana", 0, 14)); 
-        jTextField_houseNameNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_FirstNameActionPerformed(evt);
-            }
-        });
-
-        jTextField_postcode.setFont(new java.awt.Font("Verdana", 0, 14)); 
-        jTextField_postcode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_LastNameActionPerformed(evt);
-            }
-        });
+        jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
         jTextField_Description.setFont(new java.awt.Font("Verdana", 0, 14)); 
         jTextField_Description.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +225,7 @@ public class Properties extends javax.swing.JFrame {
 
             },
             new String [] {
-                "property_id", "address_id", "description", "shortName", "guestCapacity"
+                "property_id", "description", "shortName", "guestCapacity"
             }
         ));
         
@@ -321,8 +298,8 @@ public class Properties extends javax.swing.JFrame {
         jTextField_shortName_1 = new JTextField();
         jTextField_shortName_1.setFont(new Font("Verdana", Font.PLAIN, 14));
         
-        jTextField_guestCapacity = new JTextField();
-        jTextField_guestCapacity.setFont(new Font("Verdana", Font.PLAIN, 14));
+        jTextField_guestCapacity_1 = new JTextField();
+        jTextField_guestCapacity_1.setFont(new Font("Verdana", Font.PLAIN, 14));
         
         jLabel_guestCapacity = new JLabel();
         jLabel_guestCapacity.setText("Guest Capacity:");
@@ -341,33 +318,32 @@ public class Properties extends javax.swing.JFrame {
         				.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
         				.addGroup(jPanel1Layout.createSequentialGroup()
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        							.addComponent(jButton_EditChargeBands, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        							.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        							.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        							.addComponent(jButton_Update, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
         						.addGroup(jPanel1Layout.createSequentialGroup()
         							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
         								.addGroup(jPanel1Layout.createSequentialGroup()
-        									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(jLabel1)
-        										.addComponent(jLabel3)
-        										.addComponent(jLabel_description)
-        										.addComponent(jLabel_shortname, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-        									.addGap(97))
-        								.addGroup(jPanel1Layout.createSequentialGroup()
         									.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        										.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(jLabel2))
-        									.addGap(18)))
-        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jTextField_houseNameNumber, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jTextField_postcode, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jTextField_Description, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jTextField_shortName_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jTextField_guestCapacity, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-        							.addGap(24))
-        						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        							.addComponent(jButton_EditChargeBands, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-        							.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-        							.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-        							.addComponent(jButton_Update, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
+        										.addGroup(jPanel1Layout.createSequentialGroup()
+        											.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        												.addComponent(jLabel_description)
+        												.addComponent(jLabel_shortname, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+        											.addGap(97))
+        										.addGroup(jPanel1Layout.createSequentialGroup()
+        											.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+        											.addGap(18)))
+        									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        										.addComponent(jTextField_Description, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        										.addComponent(jTextField_shortName_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        										.addComponent(jTextField_guestCapacity_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+        								.addGroup(jPanel1Layout.createSequentialGroup()
+        									.addComponent(jLabel1)
+        									.addGap(111)
+        									.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+        							.addGap(24)))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap())
@@ -387,14 +363,6 @@ public class Properties extends javax.swing.JFrame {
         						.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jLabel1))
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(jTextField_houseNameNumber, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(jLabel2))
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jLabel3)
-        						.addComponent(jTextField_postcode, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-        					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(jLabel_description)
         						.addComponent(jTextField_Description, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
@@ -404,9 +372,9 @@ public class Properties extends javax.swing.JFrame {
         						.addComponent(jLabel_shortname, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jTextField_guestCapacity, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(jTextField_guestCapacity_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-        					.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
         					.addComponent(jButton_Update, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jButton_EditFacilities, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
@@ -487,14 +455,6 @@ public class Properties extends javax.swing.JFrame {
         pack();
     }                     
 
-    private void jTextField_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {                                                     
-        // TODO add your handling code here:
-    }                                                    
-
-    private void jTextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {                                                    
-        // TODO add your handling code here:
-    }                                                   
-
     private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
     }                                              
@@ -509,15 +469,11 @@ public class Properties extends javax.swing.JFrame {
          // Display Slected Row In JTexteFields
         jTextField_property_id.setText(model.getValueAt(i,0).toString());
 
-        jTextField_houseNameNumber.setText(model.getValueAt(i,1).toString());
-
-        jTextField_postcode.setText(model.getValueAt(i,2).toString());
-
-        jTextField_Description.setText(model.getValueAt(i,3).toString());
+        jTextField_Description.setText(model.getValueAt(i,1).toString());
         
-        jTextField_shortName_1.setText(model.getValueAt(i,4).toString());
+        jTextField_shortName_1.setText(model.getValueAt(i,2).toString());
         
-        jTextField_guestCapacity.setText(model.getValueAt(i,5).toString());
+        jTextField_guestCapacity_1.setText(model.getValueAt(i,3).toString());
         
         
     }                                                 
@@ -537,9 +493,31 @@ public class Properties extends javax.swing.JFrame {
 
  // Button Update
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {                                               
-       String query = "UPDATE `Property` SET `houseNameNumber`='"+jTextField_houseNameNumber.getText()+"',`postcode`='"+jTextField_postcode.getText()+"',`host_id`="+jTextField_Description.getText()+" WHERE `property_id` = "+jTextField_property_id.getText();
-       executeSQlQuery(query, "Updated");
-    }                                              
+    	 try {
+           String updatePropertyQuery = "update Property set  description=?, "
+    				+ "shortName=?, guestcapacity=? "
+    				+ "where property_id=?";
+    
+           Connection connection = getConnection();
+           PreparedStatement updatePropertyStatement= connection.prepareStatement(updatePropertyQuery);
+    
+
+           updatePropertyStatement.setString(1, jTextField_Description.getText());
+           updatePropertyStatement.setString(2,jTextField_shortName_1.getText());
+           updatePropertyStatement.setInt(3, Integer.parseInt(jTextField_guestCapacity_1.getText()));
+           updatePropertyStatement.setInt(4, Integer.parseInt(jTextField_property_id.getText()));
+    
+           updatePropertyStatement.executeUpdate();
+           
+        } catch(Exception e) {
+    		System.err.println("Got an exception!");
+    		System.err.println(e.getMessage());
+        }              
+    	 
+    	 	mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+			MainModule.controller.editPropertyView(model.getFacilitiesId(), 0);
+			setVisible(false);
+    }
 
 
  // Button Delete
@@ -605,16 +583,12 @@ public class Properties extends javax.swing.JFrame {
     private javax.swing.JButton jButton_EditFacilities;
     private javax.swing.JButton jButton_EditChargeBands;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_description;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Properties;
     private javax.swing.JTextField jTextField_Description;
-    private javax.swing.JTextField jTextField_houseNameNumber;
     private javax.swing.JTextField jTextField_property_id;
-    private javax.swing.JTextField jTextField_postcode;
 
 
     private JButton backButton;
@@ -623,6 +597,7 @@ public class Properties extends javax.swing.JFrame {
     private JTextField jTextField_shortName;
     private JTextField jTextField_shortName_1;
     private JTextField jTextField_guestCapacity;
+    private JTextField jTextField_guestCapacity_1;
     private JLabel jLabel_guestCapacity;
     private JPanel panel;
 }
