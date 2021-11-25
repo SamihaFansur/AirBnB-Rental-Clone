@@ -33,7 +33,7 @@ public class Register extends JFrame {
 	private JTextField streetNameTextField;
 	private JTextField postcodeTextField;
 	private JTextField houseNumberTextField;
-	private JTextField cityTextField;
+	private JComboBox cityComboBox;
 	private JTextField emailAddressTextField;
 	private JTextField mobileNumberTextField;
 	private JComboBox accountTypeComboBox;
@@ -68,7 +68,7 @@ public class Register extends JFrame {
 	Boolean validateMobileNumberInput = false;
 	Boolean validateHouseNameNumberInput = false;
 	Boolean validateStreetNameInput = false;
-	Boolean validateCityNameInput = false;
+//	Boolean validateCityNameInput = false;
 	Boolean validatePostcodeInput = false;
 
 	public void initializeRegister() {
@@ -165,9 +165,16 @@ public class Register extends JFrame {
 		cityLabel.setBounds(82, 408, 125, 14);
 		registerPanel.add(cityLabel);
 
-		cityTextField = new JTextField();
-		cityTextField.setBounds(217, 400, 276, 31);
-		registerPanel.add(cityTextField);
+		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
+								"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
+								"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
+								"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
+								"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", 
+								"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
+								"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
+		cityComboBox = new JComboBox(cityNames);
+		cityComboBox.setBounds(217, 400, 276, 31);
+		registerPanel.add(cityComboBox);
 
 		JLabel postcodeLabel = new JLabel("Postcode");
 		postcodeLabel.setBounds(82, 452, 125, 14);
@@ -256,7 +263,7 @@ public class Register extends JFrame {
 					}
 				}
 
-				validateCityNameInput = validateName(cityTextField.getText());
+//				validateCityNameInput = validateName(cityTextField.getText());
 
 				// see postcode method for the validation for this.
 				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
@@ -264,7 +271,8 @@ public class Register extends JFrame {
 				System.out.println("end result for streetName: " + validateStreetNameInput);
 
 				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && validateMobileNumberInput
-						&& validateHouseNameNumberInput && validateStreetNameInput && validateCityNameInput
+						&& validateHouseNameNumberInput && validateStreetNameInput
+//						&& validateCityNameInput
 						&& validatePostcodeInput) {
 					model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 					model.setFirstName(firstNameTextField.getText());
@@ -274,7 +282,7 @@ public class Register extends JFrame {
 					model.setPassword(passwordTextField.getText());
 					model.setHouseNameNum(houseNumberTextField.getText());
 					model.setStreetName(streetNameTextField.getText());
-					model.setCity(cityTextField.getText());
+					model.setCity(cityComboBox.getSelectedItem().toString());
 					model.setPostcode(postcodeTextField.getText());
 					model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 					submit();
@@ -306,7 +314,7 @@ public class Register extends JFrame {
 				passwordTextField.setText("");
 				houseNumberTextField.setText("");
 				streetNameTextField.setText("");
-				cityTextField.setText("");
+				cityComboBox.setSelectedItem("Bath");
 				postcodeTextField.setText("");
 				accountTypeComboBox.setSelectedItem("Host");
 			}
