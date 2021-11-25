@@ -109,58 +109,58 @@ public class Search extends javax.swing.JFrame {
 	   Connection connection = getConnection();
        ArrayList<SearchObject> searchList = new ArrayList<SearchObject>();
 //       System.out.println("you got this !!! cmonnn " + hostId);
-       double minPPN = 0;
-       double maxPPN = 0;
+       double minPPN = model.getMinPPN();
+       double maxPPN = model.getMaxPPN();
        int guestCap = 0;
        String sd = "";
        String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "";//city field
+       String placeName = model.getPlaceName();//city field
        
-       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
-       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
-    	   int addressId;
-    	   int propId;
-           String houseNameNum, pc;
-
-    	   try {
-    		   SearchObject search;
-    		   
-    				   
-    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property";
-            		   
-	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-	   					
-	   					ResultSet gettingProperty = getProperty.executeQuery();
-	   					   
-	   					while(gettingProperty.next()) {
-	   						addressId = gettingProperty.getInt("address_id");
-	   						
-	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
-	   		        		   
-	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
-	   						getHnhnPc.setInt(1, addressId);
-	   						
-	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
-	   						   
-	   						while(gettingHnhnPc.next()) {
-	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
-	   							pc = gettingHnhnPc.getString("postcode");
-	   							
-	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
-	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
-	   													gettingProperty.getInt("guestCapacity"));
-	   							searchList.add(search);
-	   						}
-	   					}   
-    			   
-    		   
-           }catch (Exception e) {
-        	   e.printStackTrace();
-           } 
-       }
-       
+//       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
+//       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
+//    	   int addressId;
+//    	   int propId;
+//           String houseNameNum, pc;
+//
+//    	   try {
+//    		   SearchObject search;
+//    		   
+//    				   
+//    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property";
+//            		   
+//	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+//	   					
+//	   					ResultSet gettingProperty = getProperty.executeQuery();
+//	   					   
+//	   					while(gettingProperty.next()) {
+//	   						addressId = gettingProperty.getInt("address_id");
+//	   						
+//	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
+//	   		        		   
+//	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+//	   						getHnhnPc.setInt(1, addressId);
+//	   						
+//	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+//	   						   
+//	   						while(gettingHnhnPc.next()) {
+//	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+//	   							pc = gettingHnhnPc.getString("postcode");
+//	   							
+//	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+//	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+//	   													gettingProperty.getInt("guestCapacity"));
+//	   							searchList.add(search);
+//	   						}
+//	   					}   
+//    			   
+//    		   
+//           }catch (Exception e) {
+//        	   e.printStackTrace();
+//           } 
+//       }
+//       
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
        //startDate
@@ -320,6 +320,7 @@ public class Search extends javax.swing.JFrame {
        
      //guestCap
        if(minPPN == 0 && maxPPN == 0 && guestCap != 0 && sd == "" && ed =="" && placeName == "" ) {
+    	   System.out.println("guest cap");
     	   int addressId;
            String houseNameNum, pc;
     	   try {
@@ -800,6 +801,7 @@ public class Search extends javax.swing.JFrame {
        
      //minMax, guestCap
        if(minPPN != 0 && maxPPN != 0 && guestCap != 0 && sd == "" && ed =="" && placeName == "" ) {
+    	   System.out.println("minmax, guest");
     	   int addressId;
     	   int propId;
            String houseNameNum, pc;
@@ -810,7 +812,7 @@ public class Search extends javax.swing.JFrame {
     		   String guestCapToPid = "Select property_id from Property where guestCapacity=?";
     		   PreparedStatement getPid = connection.prepareStatement(guestCapToPid);
     		   getPid.setInt(1, guestCap);
-    		   System.out.println(getPid);
+//    		   System.out.println(getPid);
     		   
     		   ResultSet gettingPId = getPid.executeQuery();
     		   
@@ -849,7 +851,7 @@ public class Search extends javax.swing.JFrame {
     							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, 
 									   					pc, gettingProperty.getString("description"), 
 								   						gettingProperty.getString("shortName"),gettingProperty.getInt("guestCapacity"));
-									      searchList.add(search);
+    							searchList.add(search);
     						}
     						
     					}   
@@ -1944,10 +1946,10 @@ public class Search extends javax.swing.JFrame {
    
    // Display Data In JTable
    
-   public void Show_Search_In_JTable()
-   {
+   public void Show_Search_In_JTable() {
        ArrayList<SearchObject> list = getSearchList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Search.getModel();
+       model.setRowCount(0);
        Object[] row = new Object[6];
        for(int i = 0; i < list.size(); i++)
        {
@@ -2038,6 +2040,20 @@ public class Search extends javax.swing.JFrame {
         
         btnNewButton = new JButton("View Property");
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				model.setMinPPN(Double.parseDouble(minPriceTextField.getText().toString()));	
+				model.setMaxPPN(Double.parseDouble(maxPriceTextField.getText().toString()));	
+//				model.setStartDate(startDateTextField.getText().toString());
+//				model.setEndDate(endDateTextField.getText().toString());
+//				model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText().toString()));
+				model.setPlaceName(locationComboBox.getSelectedItem().toString());
+				System.out.println("guest cap = "+guestCapacityTextField.getText().toString());
+				System.out.println("city = "+locationComboBox.getSelectedItem().toString());
+			       Show_Search_In_JTable();
+			}
+		});
+        
         
         minPriceTextField = new JTextField();
         minPriceTextField.setColumns(10);
@@ -2054,7 +2070,14 @@ public class Search extends javax.swing.JFrame {
         guestCapacityTextField = new JTextField();
         guestCapacityTextField.setColumns(10);
         
-        locationComboBox = new JComboBox();
+        String cityNames[] = { "", "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
+        						"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
+        						"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
+        						"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
+        						"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", 
+        						"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
+        						"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
+        locationComboBox = new JComboBox(cityNames);
         
         JLabel minPriceLabel = new JLabel("Minimum Price Per Night");
         minPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));

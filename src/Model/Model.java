@@ -51,6 +51,59 @@ public class Model {
 	private int hostId;
 	private int facilitiesId;
 	
+	//search page variables
+		private double minPPN, maxPPN;
+		private int guestCap;
+		private String sd, ed, placeName;
+		
+		public void setMinPPN(double minPPN) {
+			this.minPPN = minPPN;
+		}
+
+		public double getMinPPN() {
+			return minPPN;
+		}
+		
+		public void setMaxPPN(double maxPPN) {
+			this.maxPPN = maxPPN;
+		}
+
+		public double getMaxPPN() {
+			return maxPPN;
+		}
+		
+		public void setGuestCap(int guestCap) {
+			this.guestCap = guestCap;
+		}
+
+		public int getGuestCap() {
+			return guestCap;
+		}
+		
+		public void setSD(String sd) {
+			this.sd = sd;
+		}
+
+		public String getSD() {
+			return sd;
+		}
+		
+		public void setED(String ed) {
+			this.ed = ed;
+		}
+
+		public String getED() {
+			return ed;
+		}
+		
+		public void setPlaceName(String placeName) {
+			this.placeName = placeName;
+		}
+
+		public String getPlaceName() {
+			return placeName;
+		}
+	
 	//account getters and setters
 	public void setTitle(String title) {
 		this.title=title;
