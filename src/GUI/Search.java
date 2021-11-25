@@ -109,14 +109,14 @@ public class Search extends javax.swing.JFrame {
 	   Connection connection = getConnection();
        ArrayList<SearchObject> searchList = new ArrayList<SearchObject>();
 //       System.out.println("you got this !!! cmonnn " + hostId);
-       double minPPN = 24;
-       double maxPPN = 27;
-       int guestCap = 6;
-       String sd = "";
+       double minPPN = 0;
+       double maxPPN = 0;
+       int guestCap = 0;
+       String sd = "04/11/2022";
        String ed = ""; 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
-       String placeName = "s2";//city field
+       String placeName = "";//city field
 
 //       double minPPN = 24;
 //       double maxPPN = 27;
@@ -130,38 +130,65 @@ public class Search extends javax.swing.JFrame {
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
        //startDate
-//       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd != "" && ed =="" && placeName == "" ) {
-//    	   int propId;
-//
-//		   System.out.println("1");
-//    	   try {
-//    		   System.out.println("2");
-//    		   SearchObject search;
-//    		   
-//    		   String allCb = "select property_id, startDate from ChargeBands";
-//    		   PreparedStatement getAllCb = connection.prepareStatement(allCb);
-//    		   ResultSet gettingAllCb = getAllCb.executeQuery();
-//
-//    		   System.out.println(getAllCb);
-//    		   while(gettingAllCb.next()) {
-//        		   System.out.println("3");
-////    			   if( parseDate(gettingAllCb.getString("startDate")).equals(startd) ) {
-////    				   System.out.println("CB STARTDATE IS EQUAL TO USER STARTDATE = "+ gettingAllCb.getString("startDate"));
-////    			   }
-//    			   
+       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd != "" && ed =="" && placeName == "" ) {
+    	   int addressId;
+    	   int propId;
+           String houseNameNum, pc;
+
+    	   try {
+    		   SearchObject search;
+    		   
+    		   String allCb = "select property_id, startDate from ChargeBands";
+    		   PreparedStatement getAllCb = connection.prepareStatement(allCb);
+    		   ResultSet gettingAllCb = getAllCb.executeQuery();
+
+    		   System.out.println(getAllCb);
+    		   while(gettingAllCb.next()) {
+    			   if( parseDate(gettingAllCb.getString("startDate")).equals(startd) ||   startd.after(parseDate(gettingAllCb.getString("startDate")))) {
+    				   propId = gettingAllCb.getInt("property_id");
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property where property_id=?";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					getProperty.setInt(1, propId);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					   
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						
+	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
+	   		        		   
+	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+	   						getHnhnPc.setInt(1, addressId);
+	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+	   						   
+	   						while(gettingHnhnPc.next()) {
+	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+	   							pc = gettingHnhnPc.getString("postcode");
+	   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+	   													gettingProperty.getInt("guestCapacity"));
+	   							searchList.add(search);
+	   						}
+	   					}
+    				   
+    			   }
+    			   
 //    			   System.out.println("cb start dates = "+gettingAllCb.getString("startDate"));
-//    		   }
-//    		   
-//    		   
-////    		   String startDToPid = "select property_id from ChargeBands where "
-//    		   
-//    		   
-//    		  
-//        	   
-//           }catch (Exception e) {
-//        	   e.printStackTrace();
-//           } 
-//       }
+    		   }
+    		   
+    		   
+//    		   String startDToPid = "select property_id from ChargeBands where "
+    		   
+    		   
+    		  
+        	   
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
        
        
        //minMax ppn
