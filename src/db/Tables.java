@@ -91,7 +91,7 @@ public class Tables {
 //                + "guest_id INT REFERENCES GuestAccount, review_id INT REFERENCES Review, "
 //                + "provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
 //
-		String createChargeBandsTable = "CREATE TABLE ChargeBands" + "(PRIMARY KEY (property_id, startDate), "
+		String createChargeBandsTable = "CREATE TABLE ChargeBands(PRIMARY KEY (property_id, startDate), "
 				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
 				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
 				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
