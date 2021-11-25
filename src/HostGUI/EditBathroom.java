@@ -160,10 +160,10 @@ public class EditBathroom extends JFrame{
 	              model.addRow(
 	                   new Object[]{
 	                         bathroomId.getText(), 
-	                         toiletRadioButton.getText(),
-	                         bathRadioButton.getText(),
-	                         showerRadioButton.getText(),
-	                         sharedRadioButton.getText()
+	                         toilet,
+	                         bath,
+	                         shower,
+	                         shared
 	                   }
 	              );
 	              System.out.println("idAfter in addbtn before calling addBathTypeDetails = "+idAfter);
@@ -342,10 +342,10 @@ public class EditBathroom extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
-			model.setToilet(Boolean.parseBoolean(toiletRadioButton.getText()));
-			model.setBath(Boolean.parseBoolean(bathRadioButton.getText()));
-			model.setShower(Boolean.parseBoolean(showerRadioButton.getText()));
-			model.setShared(Boolean.parseBoolean(sharedRadioButton.getText()));
+			model.setToilet(toiletRadioButton.isSelected());
+			model.setBath(bathRadioButton.isSelected());
+			model.setShower(showerRadioButton.isSelected());
+			model.setShared(sharedRadioButton.isSelected());
 			
 			String updateBathingBathTypeQuery = "insert into Bathing_BathType (bathing_id, bathType_id, toilet, bath, shower, shared)"
 										+ " values(?,?,?,?,?,?)";
