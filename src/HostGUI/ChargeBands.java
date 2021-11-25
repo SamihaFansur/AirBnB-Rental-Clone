@@ -106,6 +106,8 @@ public class ChargeBands extends JFrame{
 		faciltiesId = model.getFacilitiesId();
 		propertyIdAfter = propertyId;
 		hostId = id;
+		System.out.println("HOST ID IN CHARGEBANDS = "+hostId);
+
 		System.out.println("PROPERTY ID IN CHARGEBANDS = "+propertyIdAfter);
 		
 		JPanel chargeBandsPanel = new JPanel();
@@ -361,8 +363,13 @@ public class ChargeBands extends JFrame{
 				//Homepage sp = new Homepage();
 				
 				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
+				System.out.println("HOST ID IN CHARGEBANDS: "+hostId);
+				
+				
+				
+				System.out.println("propertyID IN CHARGEBANDS: "+propertyId);
 				MainModule.controller.editPropertyView(hostId,propertyId);
 //				close();
 			//	model.setEditPropertyPostcode(null);
@@ -371,6 +378,7 @@ public class ChargeBands extends JFrame{
 				
 			}
 		});
+		
 		
 		chargeBandsPanel.add(backButton);
 		

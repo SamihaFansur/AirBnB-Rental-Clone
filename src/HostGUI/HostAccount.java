@@ -116,6 +116,7 @@ public class HostAccount extends JFrame{
 					 id = h_id.getInt(1);
 					 System.out.println("host id = "+id);
 					}
+					
 					 System.out.println("host id  after = "+id);
 				}catch(Exception ex) {
 					System.err.println(ex.getMessage());
@@ -135,7 +136,34 @@ public class HostAccount extends JFrame{
 		addPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				MainModule.controller.editPropertyView(0, 0);
+				
+				int id = 0;
+				try {
+
+					connection = ConnectionManager.getConnection();
+					
+					String getHostIDOfUser = "select host_id from HostAccount where email=?";	
+					
+					PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+					hostIDfromHostAccountTable.setString(1, model.getEmail());
+					
+					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+					while (h_id.next()) {
+					 id = h_id.getInt(1);
+					 System.out.println("host id = "+id);
+					}
+					
+				}catch(Exception ex) {
+					System.err.println(ex.getMessage());
+				}
+				 
+				System.out.println(model.getEmail());
+				model.setHostId(id);
+				
+				
+				
+				System.out.println("IN HOST ACCOUNT, HOST ID:: "+model.getHostId());
+				MainModule.controller.editPropertyView(0, model.getHostId());
 				frame.dispose();
 			}
 		});

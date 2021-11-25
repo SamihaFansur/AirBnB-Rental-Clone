@@ -44,6 +44,7 @@ public class AddProperty extends JFrame {
 	private JTextField guestCapacityTextField;
 	private JTextField descriptionTextField;
 	private int propertyId;
+	private int hostId;
 	Connection connection = null;
 
 	/**
@@ -312,7 +313,8 @@ public class AddProperty extends JFrame {
 					// System.out.println("�����������������������ADD CHARGE BANDS BTN CLICKED
 					// "+mainModule.editPropertyState);
 					System.out.println("PROPERTY ID AT THE END OF ADD PROPERTY: " + propertyId);
-					MainModule.controller.editPropertyView(propertyId, 0);
+					System.out.println("HOST ID IN ADD PROPERTY: "+model.getHostId());
+					MainModule.controller.editPropertyView(propertyId, model.getHostId());
 					// close();
 					// model.setEditPropertyPostcode(null);
 					frame.dispose();
@@ -417,7 +419,8 @@ public class AddProperty extends JFrame {
 				System.out.println("host id = " + id);
 			}
 			System.out.println("host id  after = " + id);
-
+			hostId=id;
+			model.setHostId(hostId);
 			String insertHostIDInProperty = "update Property set host_id=? where (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
 			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
 			hostIDInProperty.setInt(1, id);

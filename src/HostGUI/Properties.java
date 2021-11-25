@@ -485,6 +485,7 @@ public class Properties extends javax.swing.JFrame {
 		mainModule.editPropertyState= EDITPROPERTY.CHARGEBANDS;
     //needs to take in the properyId and hostId
 		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
+		System.out.println("This is the host id in PROPERTIES.JAVA: "+model.getHostId());
 		model.setHostId(Integer.parseInt(jTextField_Description.getText()));
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), Integer.parseInt(jTextField_Description.getText()));
 		setVisible(false);
@@ -500,7 +501,7 @@ public class Properties extends javax.swing.JFrame {
     
            Connection connection = getConnection();
            PreparedStatement updatePropertyStatement= connection.prepareStatement(updatePropertyQuery);
-           
+    
 
            updatePropertyStatement.setString(1, jTextField_Description.getText());
            updatePropertyStatement.setString(2,jTextField_shortName_1.getText());
