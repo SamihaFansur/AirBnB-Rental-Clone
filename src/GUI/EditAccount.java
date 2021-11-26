@@ -107,7 +107,7 @@ public class EditAccount extends JFrame{
                 surname = rs.getString("surname");
                 password = rs.getString("password");
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -272,6 +272,7 @@ public class EditAccount extends JFrame{
 
 				// remove later 
 			}
+			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -398,6 +399,7 @@ public class EditAccount extends JFrame{
 
 				// remove later 
 			}
+			connection.close();
 			
 			} catch (Exception e) {
 			System.err.println("Got an exception!");
