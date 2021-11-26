@@ -74,7 +74,7 @@ public class Search extends javax.swing.JFrame {
 		this.controller=controller;
 		
         initComponents();
-        Show_Search_In_JTable();
+       Show_Search_In_JTable();
     }
     
     // get the connection
@@ -102,7 +102,14 @@ public class Search extends javax.swing.JFrame {
          return null;
      }
   }
-	 
+	 private Date startd;
+	 private Date endd;
+	 private String sd;
+	 private String ed;
+	 private double minPPN;
+	 private double maxPPN;
+	 private String placeName;
+	 private int guestCap;
    
  // get a list of properties from mysql database
    public ArrayList<SearchObject> getSearchList() {
@@ -112,11 +119,18 @@ public class Search extends javax.swing.JFrame {
        double minPPN = model.getMinPPN();
        double maxPPN = model.getMaxPPN();
        int guestCap = 0;
-       String sd = "";
-       String ed = ""; 
+       String sd = model.getSD();
+       String ed = model.getED(); 
        Date startd = parseDate(sd);
        Date endd = parseDate(ed);
        String placeName = model.getPlaceName();//city field
+       System.out.println("minPPN "+minPPN);
+       System.out.println("maxPPN "+maxPPN);
+       System.out.println("sd "+sd);
+       System.out.println("ed "+ed);
+       System.out.println("startd "+startd);
+       System.out.println("endd "+endd);
+       
        
 //       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
 //       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
@@ -1947,6 +1961,13 @@ public class Search extends javax.swing.JFrame {
    // Display Data In JTable
    
    public void Show_Search_In_JTable() {
+	   model.setSD(startDateTextField.getText());
+	   model.setED(endDateTextField.getText());
+	   model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
+	   model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
+	   model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
+	   model.setPlaceName("");
+	   
        ArrayList<SearchObject> list = getSearchList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Search.getModel();
        model.setRowCount(0);
@@ -1968,6 +1989,10 @@ public class Search extends javax.swing.JFrame {
     }
        
    
+   private boolean validateMaxPrice() {
+	   return false;
+   }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1975,7 +2000,7 @@ public class Search extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
+    public void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -2042,35 +2067,81 @@ public class Search extends javax.swing.JFrame {
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
         btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.setMinPPN(Double.parseDouble(minPriceTextField.getText().toString()));	
-				model.setMaxPPN(Double.parseDouble(maxPriceTextField.getText().toString()));	
+				System.out.println("got to the button. ");
+				System.out.println("min price tesxt firled value: ");
+				
+				//checking for empty fields
+				// if minprice, maxprice, or guest capacity are empty then set them to 0
+				// if start date is empty set it to 01/01/2022 (set as string. Is converted later in the query)
+				// if end date is empty set to 31/12/2022
+				// location is not chosen then set to an empty string: ""
+				
+				//setting min price
+				if(minPriceTextField.getText().isEmpty()) {
+					model.setMinPPN(0);
+				}else {
+					model.setMinPPN(Double.parseDouble(minPriceTextField.getText().toString()));	
+				}
+				
+				//seting max price
+				if(maxPriceTextField.getText().isEmpty()) {
+					model.setMaxPPN(0);
+				}else {
+					model.setMaxPPN(Double.parseDouble(maxPriceTextField.getText().toString()));	
+				}
+				
+				//setting start date
+				if(startDateTextField.getText().isEmpty()) {
+					model.setSD("01/01/2022");; 
+				}else {
+					model.setSD(startDateTextField.getText().toString());	
+				}
+				
+				//setting end date
+				if(endDateTextField.getText().isEmpty()) {
+					model.setED("31/12/2022"); 
+				}else {
+					model.setED(endDateTextField.getText().toString());	
+				}
+				
+				//setting guest capacity
+				if(guestCapacityTextField.getText().isEmpty()) {
+					model.setGuestCap(0);
+				}else {
+					model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText().toString()));	
+				}
+				
 //				model.setStartDate(startDateTextField.getText().toString());
 //				model.setEndDate(endDateTextField.getText().toString());
 //				model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText().toString()));
 				model.setPlaceName(locationComboBox.getSelectedItem().toString());
 				System.out.println("guest cap = "+guestCapacityTextField.getText().toString());
 				System.out.println("city = "+locationComboBox.getSelectedItem().toString());
-			       Show_Search_In_JTable();
+			    Show_Search_In_JTable();
 			}
 		});
         
-        
         minPriceTextField = new JTextField();
+        minPriceTextField.setText("0");
         minPriceTextField.setColumns(10);
-        
+
         maxPriceTextField = new JTextField();
+        maxPriceTextField.setText("0");
         maxPriceTextField.setColumns(10);
-        
+
         startDateTextField = new JTextField();
+        startDateTextField.setText("01/01/2022");
         startDateTextField.setColumns(10);
-        
+
         endDateTextField = new JTextField();
+        endDateTextField.setText("31/12/2022");
         endDateTextField.setColumns(10);
-        
+
         guestCapacityTextField = new JTextField();
+        guestCapacityTextField.setText("0");
         guestCapacityTextField.setColumns(10);
         
-        String cityNames[] = { "", "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
+        String cityNames[] = { "","Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
         						"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
         						"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
         						"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
@@ -2078,6 +2149,7 @@ public class Search extends javax.swing.JFrame {
         						"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
         						"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
         locationComboBox = new JComboBox(cityNames);
+        locationComboBox.setSelectedItem("");
         
         JLabel minPriceLabel = new JLabel("Minimum Price Per Night");
         minPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -2197,7 +2269,6 @@ public class Search extends javax.swing.JFrame {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 666, GroupLayout.PREFERRED_SIZE))
         );
-        getContentPane().setLayout(layout);
         
         //NAVBAR	
     	JButton navHomeButton = new JButton("Home");
@@ -2244,6 +2315,7 @@ public class Search extends javax.swing.JFrame {
     			setVisible(false);
     		}
     	});
+        getContentPane().setLayout(layout);
 
         pack();
     }                     
