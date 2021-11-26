@@ -115,7 +115,7 @@ public class EditUtility extends JFrame{
                 smokeAlarm = rs.getBoolean("smokeAlarm");
                 firstAidKit = rs.getBoolean("firstAidKit");
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -247,7 +247,7 @@ public class EditUtility extends JFrame{
 
 			updatingUtilityIdInFacilities.executeUpdate();
 			System.out.println(updatingUtilityIdInFacilities.toString());		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
