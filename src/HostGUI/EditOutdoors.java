@@ -113,7 +113,7 @@ public class EditOutdoors extends JFrame{
                 patio = rs.getBoolean("patio");
                 barbeque = rs.getBoolean("barbeque");
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -233,7 +233,7 @@ public class EditOutdoors extends JFrame{
 			updatingOutdoorsIdInFacilities.executeUpdate();
 			System.out.println(updatingOutdoorsIdInFacilities.toString());		
 			
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
