@@ -150,10 +150,10 @@ public class BookProperty extends javax.swing.JFrame {
         
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message) {
-       Connection con = getConnection();
+       Connection connection = getConnection();
        Statement st;
        try{
-           st = con.createStatement();
+           st = connection.createStatement();
            if((st.executeUpdate(query)) == 1)
            {
                // refresh jtable data
