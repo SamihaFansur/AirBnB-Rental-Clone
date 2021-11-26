@@ -87,7 +87,7 @@ public class Reviews extends javax.swing.JFrame {
            ReviewObject reviews;
            while(rs.next())
            {
-        	   reviews = new ReviewObject(rs.getInt("review_id"), rs.getInt("property_id"), rs.getDouble("review_id"), rs.getDouble("location"), rs.getDouble("valueForMoney"), rs.getDouble("communication"), rs.getDouble("cleanliness"), rs.getString("description"));
+        	   reviews = new ReviewObject(rs.getInt("review_id"), rs.getInt("property_id"), rs.getDouble("accuracy"), rs.getDouble("location"), rs.getDouble("valueForMoney"), rs.getDouble("communication"), rs.getDouble("cleanliness"), rs.getString("description"));
                reviewsList.add(reviews);
            }
        } catch (Exception e) {

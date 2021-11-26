@@ -5,6 +5,7 @@ import GUI.Login;
 import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
+import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import GUI.Contact;
 import GUI.EditAccount;
@@ -25,6 +26,7 @@ import HostGUI.EditUtility;
 import HostGUI.Reviews;
 import HostGUI.HostAccount;
 import HostGUI.Properties;
+import GUI.*;
 
 import java.util.*;   
 
@@ -58,6 +60,7 @@ public class Controller extends MainModule{
 	private Reviews reviews;
 	private ChargeBands chargebands;
 	private GuestAccount guestAccount;
+	private Bookings bookings;
 
 	
 	public Controller(MainModule mainModule, 
@@ -86,7 +89,8 @@ public class Controller extends MainModule{
 			Reviews reviews,
 			ChargeBands chargebands,
 			
-			GuestAccount guestAccount){
+			GuestAccount guestAccount,
+			Bookings bookings){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -115,6 +119,7 @@ public class Controller extends MainModule{
 		this.reviews = reviews;
 		this.chargebands = chargebands;
 		this.guestAccount = guestAccount;
+		this.bookings = bookings;
 	}
 	
 	public void setTitle(String title){
@@ -215,6 +220,11 @@ public class Controller extends MainModule{
 			System.out.println("HEREEE");
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			editAccount.initializeEditAccount();
+		}
+		else if (mainModule.currentState == STATE.BOOKINGS && (mainModule.userState==USER.HOST || mainModule.userState==USER.GUEST)){
+			System.out.println("HEREEE");
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
+			bookings.initializeBookings();
 		}
 	}
 	
