@@ -118,7 +118,7 @@ public class AddFacility extends JFrame{
 							sleepingId=rs.getInt(1);
 						}
 						model.setCurrentSleepingId(sleepingId);
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -166,7 +166,7 @@ public class AddFacility extends JFrame{
 						//sets bathing id to new row value
 						model.setCurrentBathingId(bathingId);
 						
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -224,7 +224,7 @@ public class AddFacility extends JFrame{
 							kitchenId=rs.getInt(1);
 						}
 						model.setCurrentKitchedId(kitchenId);
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -273,9 +273,7 @@ public class AddFacility extends JFrame{
 						}
 						model.setCurrentUtilityId(utilityId);
 						
-						//create public id var
-						//call it in editUtility, set it as the id using select k_id from k where
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -325,10 +323,7 @@ public class AddFacility extends JFrame{
 							livingId=rs.getInt(1);
 						}
 						model.setCurrentLivingId(livingId);
-						
-						//create public id var
-						//call it in editKitchen, set it as the id using select k_id from k where
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -375,9 +370,7 @@ public class AddFacility extends JFrame{
 							outdoorsId=rs.getInt(1);
 						}
 						model.setCurrentOutdoorsId(outdoorsId);
-						//create public id var
-						//call it in editKitchen, set it as the id using select k_id from k where
-						
+						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
