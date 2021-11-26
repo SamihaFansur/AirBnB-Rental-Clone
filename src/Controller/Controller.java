@@ -22,7 +22,7 @@ import HostGUI.EditOutdoors;
 import HostGUI.AddProperty;
 import HostGUI.EditSleeping;
 import HostGUI.EditUtility;
-import HostGUI.Facilities;
+import HostGUI.Reviews;
 import HostGUI.HostAccount;
 import HostGUI.Properties;
 
@@ -259,7 +259,7 @@ public class Controller extends MainModule{
 			properties.initializeProperties(model.getHostId(), model.getPropertyId());
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.REVIEWS) {
-			reviews.initializeReviews();
+			reviews.initializeReviews(facilitiesId, id);
 		}
 		else if (mainModule.userState == USER.HOST && mainModule.editPropertyState == EDITPROPERTY.FACILITIES){
 			facilities.initializeFacilities(facilitiesId, id);

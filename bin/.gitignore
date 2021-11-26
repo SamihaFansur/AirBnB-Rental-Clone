@@ -1,6 +1,7 @@
-/GUI/
-/HostGUI/
+/CheckDriversExist.class
 /Controller/
-/db/
-/Model/
+/GUI/
 /GuestGUI/
+/HostGUI/
+/Model/
+/db/

@@ -49,30 +49,6 @@ public class Properties extends javax.swing.JFrame {
 	 private JFrame frame;
 	 private NavHost navForHost = new NavHost();
 	 
-	    // Variables declaration - do not modify                     
-	    private javax.swing.JButton jButton_Delete;
-	    private javax.swing.JButton jButton_Update;
-	    private javax.swing.JButton jButton_EditFacilities;
-	    private javax.swing.JButton jButton_EditChargeBands;
-	    private javax.swing.JLabel jLabel1;
-	    private javax.swing.JLabel jLabel_description;
-	    private javax.swing.JPanel jPanel1;
-	    private javax.swing.JScrollPane jScrollPane1;
-	    private javax.swing.JTable jTable_Display_Properties;
-	    private javax.swing.JTextField jTextField_Description;
-	    private javax.swing.JTextField jTextField_property_id;
-
-
-	    private JButton backButton;
-	    private static int hostId;
-	    private JLabel jLabel_shortname;
-	    private JTextField jTextField_shortName;
-	    private JTextField jTextField_shortName_1;
-	    private JTextField jTextField_guestCapacity;
-	    private JTextField jTextField_guestCapacity_1;
-	    private JLabel jLabel_guestCapacity;
-	    private JPanel panel;
-	    
     public Properties(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
 		this.mainModule=mainModule;
@@ -136,7 +112,7 @@ public class Properties extends javax.swing.JFrame {
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Properties.getModel();
        Object[] row = new Object[7];
        for(int i = 0; i < list.size(); i++)
-       {
+       {	  
            row[0] = list.get(i).getPropertyId();
            row[1] = list.get(i).getDescription();
            row[2] = list.get(i).getShortName();
@@ -330,6 +306,20 @@ public class Properties extends javax.swing.JFrame {
         jLabel_guestCapacity = new JLabel();
         jLabel_guestCapacity.setText("Guest Capacity:");
         jLabel_guestCapacity.setFont(new Font("Verdana", Font.PLAIN, 18));
+        
+        jButton_Reviews = new JButton();
+        jButton_Reviews.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
+        	    //needs to take in the properyId and hostId
+        		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
+        		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
+        	}
+        });
+        
+        jButton_Reviews.setText("Reviews");
+        jButton_Reviews.setFont(new Font("Verdana", Font.BOLD, 14));
 		
         
         
@@ -344,32 +334,34 @@ public class Properties extends javax.swing.JFrame {
         				.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
         				.addGroup(jPanel1Layout.createSequentialGroup()
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(jButton_Reviews, GroupLayout.PREFERRED_SIZE, 386, GroupLayout.PREFERRED_SIZE)
         						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        							.addComponent(jButton_EditChargeBands, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-        							.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-        							.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-        							.addComponent(jButton_Update, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
-        						.addGroup(jPanel1Layout.createSequentialGroup()
         							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        								.addGroup(jPanel1Layout.createSequentialGroup()
-        									.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        										.addGroup(jPanel1Layout.createSequentialGroup()
-        											.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        												.addComponent(jLabel_description)
-        												.addComponent(jLabel_shortname, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-        											.addGap(97))
-        										.addGroup(jPanel1Layout.createSequentialGroup()
-        											.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-        											.addGap(18)))
-        									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(jTextField_Description, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(jTextField_shortName_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(jTextField_guestCapacity_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
-        								.addGroup(jPanel1Layout.createSequentialGroup()
-        									.addComponent(jLabel1)
-        									.addGap(111)
-        									.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
-        							.addGap(24)))
+        								.addComponent(jButton_EditChargeBands, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        								.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        								.addComponent(jButton_EditFacilities, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+        								.addComponent(jButton_Update, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
+        							.addGroup(jPanel1Layout.createSequentialGroup()
+        								.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        									.addGroup(jPanel1Layout.createSequentialGroup()
+        										.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        											.addGroup(jPanel1Layout.createSequentialGroup()
+        												.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        													.addComponent(jLabel_description)
+        													.addComponent(jLabel_shortname, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+        												.addGap(97))
+        											.addGroup(jPanel1Layout.createSequentialGroup()
+        												.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+        												.addGap(18)))
+        										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        											.addComponent(jTextField_Description, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        											.addComponent(jTextField_shortName_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        											.addComponent(jTextField_guestCapacity_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+        									.addGroup(jPanel1Layout.createSequentialGroup()
+        										.addComponent(jLabel1)
+        										.addGap(111)
+        										.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+        								.addGap(24))))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap())
@@ -400,7 +392,9 @@ public class Properties extends javax.swing.JFrame {
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(jTextField_guestCapacity_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jLabel_guestCapacity, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-        					.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+        					.addComponent(jButton_Reviews, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jButton_Update, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jButton_EditFacilities, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
@@ -535,6 +529,7 @@ public class Properties extends javax.swing.JFrame {
            updatePropertyStatement.setInt(4, Integer.parseInt(jTextField_property_id.getText()));
     
            updatePropertyStatement.executeUpdate();
+           
            connection.close();
         } catch(Exception e) {
     		System.err.println("Got an exception!");
@@ -604,7 +599,30 @@ public class Properties extends javax.swing.JFrame {
         });
     }
 
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton jButton_Delete;
+    private javax.swing.JButton jButton_Update;
+    private javax.swing.JButton jButton_EditFacilities;
+    private javax.swing.JButton jButton_EditChargeBands;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel_description;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable_Display_Properties;
+    private javax.swing.JTextField jTextField_Description;
+    private javax.swing.JTextField jTextField_property_id;
 
+
+    private JButton backButton;
+    private static int hostId;
+    private JLabel jLabel_shortname;
+    private JTextField jTextField_shortName;
+    private JTextField jTextField_shortName_1;
+    private JTextField jTextField_guestCapacity;
+    private JTextField jTextField_guestCapacity_1;
+    private JLabel jLabel_guestCapacity;
+    private JPanel panel;
+    private JButton jButton_Reviews;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html

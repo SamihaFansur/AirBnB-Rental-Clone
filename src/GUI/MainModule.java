@@ -17,7 +17,7 @@ import HostGUI.EditOutdoors;
 import HostGUI.AddProperty;
 import HostGUI.EditSleeping;
 import HostGUI.EditUtility;
-import HostGUI.Facilities;
+import HostGUI.Reviews;
 import HostGUI.HostAccount;
 import HostGUI.Properties;
 
@@ -51,6 +51,7 @@ public class MainModule {
 	private EditAccount editAccount;
 	private Reviews reviews;
 	private ChargeBands chargeBands;
+	private GuestAccount guestAccount;
 	
 	
 	//Page user is on
