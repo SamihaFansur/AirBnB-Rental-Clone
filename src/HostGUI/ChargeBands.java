@@ -452,6 +452,7 @@ public class ChargeBands extends JFrame{
 			
 			checkExistingChargeBandStmt.close();
 			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -492,7 +493,7 @@ public class ChargeBands extends JFrame{
 			System.out.println(addingAchargeBand);
 			addingAchargeBand.executeUpdate();
 						
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -533,7 +534,7 @@ public class ChargeBands extends JFrame{
 			System.out.println(updatingAChargebandQuery);
 			updatingAChargebandQuery.executeUpdate();
 						
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
