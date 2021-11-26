@@ -363,6 +363,8 @@ public class Register extends JFrame {
 			} else {
 				exists = true;
 			}
+			
+			connection.close();
 		} catch (Exception e) {
 			System.out.println("error");
 		}
@@ -491,7 +493,8 @@ public class Register extends JFrame {
 					// remove later
 				}
 			}
-
+			
+			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
