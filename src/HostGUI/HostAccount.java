@@ -118,6 +118,7 @@ public class HostAccount extends JFrame{
 					}
 					
 					 System.out.println("host id  after = "+id);
+					 connection.close();
 				}catch(Exception ex) {
 					System.err.println(ex.getMessage());
 				}
@@ -152,7 +153,7 @@ public class HostAccount extends JFrame{
 					 id = h_id.getInt(1);
 					 System.out.println("host id = "+id);
 					}
-					
+					connection.close();
 				}catch(Exception ex) {
 					System.err.println(ex.getMessage());
 				}
