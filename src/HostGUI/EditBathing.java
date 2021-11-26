@@ -109,6 +109,8 @@ public class EditBathing extends JFrame{
                 toiletPaper = rs.getBoolean("toiletPaper");
             }		
 			
+			connection.close();
+			
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -218,7 +220,7 @@ public class EditBathing extends JFrame{
 			updatingBathingIdInFacilities.executeUpdate();
 			System.out.println(updatingBathingIdInFacilities.toString());		
 			
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
