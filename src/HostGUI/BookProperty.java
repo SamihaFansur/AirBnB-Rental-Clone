@@ -86,6 +86,7 @@ public class BookProperty extends javax.swing.JFrame {
         	   facilities = new FacilitiesObject(rs.getInt("facilities_id"), rs.getInt("utility_id"), rs.getInt("outdoors_id"), rs.getInt("kitchen_id"), rs.getInt("sleeping_id"), rs.getInt("bathing_id"), rs.getInt("living_id"));
                facilitiesList.add(facilities);
            }
+           connection.close();
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -164,6 +165,7 @@ public class BookProperty extends javax.swing.JFrame {
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
            }
+           connection.close();
        }catch(Exception ex){
            ex.printStackTrace();
        }
