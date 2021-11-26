@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -70,6 +71,7 @@ public class Register extends JFrame {
 	Boolean validateStreetNameInput = false;
 //	Boolean validateCityNameInput = false;
 	Boolean validatePostcodeInput = false;
+	Boolean emailAlreadyInDB = false;
 
 	public void initializeRegister() {
 		mainModule.currentState = STATE.SELF_REGISTRATION;
@@ -200,8 +202,12 @@ public class Register extends JFrame {
 				validateFirstNameInput = validateName(firstNameTextField.getText());
 				validateSurnameInput = validateName(surnameTextField.getText());
 
+				// validating email input
 				validateEmailInput = validateEmail(emailAddressTextField.getText());
+				// checking if email exists in DB:
+				emailAlreadyInDB = emailExistsInDB(emailAddressTextField.getText());
 
+				
 				// assumes UK number
 				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
 
@@ -270,7 +276,9 @@ public class Register extends JFrame {
 
 				System.out.println("end result for streetName: " + validateStreetNameInput);
 
-				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && validateMobileNumberInput
+				System.out.println(validateFirstNameInput+" "+validateSurnameInput+" "+validateEmailInput+" "+emailAlreadyInDB+" "
+				+validateMobileNumberInput+" "+validateHouseNameNumberInput+" "+validateStreetNameInput+" "+validatePostcodeInput);
+				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB && validateMobileNumberInput
 						&& validateHouseNameNumberInput && validateStreetNameInput
 //						&& validateCityNameInput
 						&& validatePostcodeInput) {
@@ -338,19 +346,24 @@ public class Register extends JFrame {
 		}
 	}
 
+	private boolean emailIsValid;
+	private boolean emailDoesNotAlreadyExistsInDB = false;
+	
 	public boolean validateEmail(String email) {
 		// https://www.regular-expressions.info/email.html
-		if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}") || email.matches("")) {
+
+		if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}")) {
 			System.out.println(email + " IS NOT VALID");
 			return false;
 		} else {
-			return emailExists(email);
+			System.out.println(email + " IS  VALID");
+			return true;
 
 		}
 	}
-
-	public boolean emailExists(String email) {
-		boolean exists = false;
+	
+	public boolean emailExistsInDB(String email) {
+		boolean existsInDB = false;
 		try {
 			connection = ConnectionManager.getConnection();
 			String emailCheckQuery = "SELECT email from Account where email = ?";
@@ -359,16 +372,19 @@ public class Register extends JFrame {
 			email_check.setString(1, email);
 			ResultSet rs = email_check.executeQuery();
 			if (rs.next()) {
-				exists = false;
+				existsInDB = true;
+				System.out.println("email exists in DB:" + existsInDB);
 			} else {
-				exists = true;
+				existsInDB = false;
+				System.out.println("email exists in DB:" + existsInDB);
+
 			}
 			
 			connection.close();
 		} catch (Exception e) {
 			System.out.println("error");
 		}
-		return exists;
+		return existsInDB;
 	}
 
 	public boolean validateMobileNumber(String mobile) {
@@ -386,7 +402,7 @@ public class Register extends JFrame {
 	}
 
 	public boolean validatePostcode(String postcode) {
-		if (postcode.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$") || postcode.matches("")) {
+		if (postcode.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$")) {
 			/*
 			 * regular expressions for postcode copied used from this java website:
 			 * https://howtodoinjava.com/java/regex/uk-postcode-validation/
@@ -399,7 +415,41 @@ public class Register extends JFrame {
 		}
 	}
 	public void displayError() {
-		JOptionPane.showMessageDialog(this, "Invalid input, please try again.");
+		ArrayList<String> arlist = new ArrayList<String>( );
+		if(!validateFirstNameInput) {
+			arlist.add(" First name input is invalid");
+		}
+		if(!validateSurnameInput) {
+			arlist.add(" Surname input is invalid");
+		}
+		if(!validateEmailInput) {
+			arlist.add(" This email input is invalid, please choose one of the form example@example.com");
+		}
+		if(!validateMobileNumberInput) {
+			arlist.add(" Mobile number input is invalid, please choose 11 digits for your mobile number");
+		}
+		if(!validateHouseNameNumberInput) {
+			arlist.add(" House name/number input is invalid");
+		}
+		if(!validateStreetNameInput) {
+			arlist.add(" Street name input is invalid");
+		}
+		if(!validatePostcodeInput) {
+			arlist.add(" Postcode input is invalid");
+		}
+		if(emailAlreadyInDB) {
+			arlist.add(" This email address already exists, please choose another");
+
+		}
+			/*
+		validateFirstNameInput;
+		validateSurnameInput && validateEmailInput && !emailAlreadyInDB && validateMobileNumberInput
+		&& validateHouseNameNumberInput && validateStreetNameInput
+//		&& validateCityNameInput
+		&& validatePostcodeInput
+		*/
+			
+		JOptionPane.showMessageDialog(this, arlist);
 	}
 	public void submit() {
 
@@ -433,6 +483,7 @@ public class Register extends JFrame {
 			ps_account.setString(2, model.getTitle());
 			ps_account.setString(3, model.getFirstName());
 			ps_account.setString(4, model.getSurname());
+			System.out.println("TESTING: "+model.getMobileNumber());
 			ps_account.setString(5, model.getMobileNumber());
 			ps_account.setString(6, model.getPassword());
 			ps_account.setString(7, model.getHouseNameNum());
