@@ -131,7 +131,7 @@ public class AddProperty extends JFrame {
 						}
 
 						// get propertyID and put into the Fcailties table. By default it's the latest
-
+						connection.close();
 					} catch (Exception s) {
 						System.err.println("Got an exception!");
 						System.err.println(s.getMessage());
@@ -309,7 +309,7 @@ public class AddProperty extends JFrame {
 						// END HERE
 
 						// System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
-
+						connection.close();
 					} catch (Exception s) {
 						System.err.print(s.getMessage());
 					}
@@ -435,7 +435,8 @@ public class AddProperty extends JFrame {
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
 			System.out.println(hostIDInProperty.toString());
-
+			
+			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
