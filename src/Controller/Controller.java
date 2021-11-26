@@ -221,11 +221,7 @@ public class Controller extends MainModule{
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			editAccount.initializeEditAccount();
 		}
-		else if (mainModule.currentState == STATE.BOOKINGS && (mainModule.userState==USER.HOST || mainModule.userState==USER.GUEST)){
-			System.out.println("HEREEE");
-			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
-			bookings.initializeBookings();
-		}
+		
 	}
 	
 	public void editPropertyView(int facilitiesId, int id) { //facilities id is property_id when using 'add chargebands'
@@ -289,8 +285,13 @@ public class Controller extends MainModule{
 			model.setHostId(id);
 			chargebands.initializeChargeBands(facilitiesId, id);
 		}
-		
-		
+		else if (mainModule.editPropertyState == EDITPROPERTY.BOOKINGS && (mainModule.userState==USER.HOST || mainModule.userState==USER.GUEST)){
+			System.out.println("HEREEE");
+			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
+			model.setGuestId(id);
+			System.out.println(id);
+			bookings.initializeBookings(facilitiesId, id);
+		}
 	}
  	
 //	public static void SendEmail() { //doesn't work yet

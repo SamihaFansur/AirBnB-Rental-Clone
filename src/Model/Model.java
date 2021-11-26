@@ -47,6 +47,7 @@ public class Model {
 	
 	private boolean previouslyInPropertiesList;
 	
+	private int guestId;
 	private int propertyId;
 	private int hostId;
 	private int facilitiesId;
@@ -692,6 +693,14 @@ public class Model {
 	public int getHostId() {
 		return hostId;
 	}
+	public void setGuestId(int guestId) {
+		this.guestId=guestId;
+	}
+	
+	public int getGuestId() {
+		return guestId;
+	}
+	
 	public void setFacilitiesId(int facilitiesId) {
 		this.facilitiesId=facilitiesId;
 	}

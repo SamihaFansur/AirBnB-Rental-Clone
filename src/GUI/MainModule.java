@@ -92,7 +92,7 @@ public class MainModule {
 		GUEST_ACCOUNT,
 		PROPERTIES,
 		EDIT_ACCOUNT,
-		BOOKINGS
+		
 		
 	}
 	
@@ -111,7 +111,8 @@ public class MainModule {
 		REVIEWS,
 		FACILITIES,
 		CHARGEBANDS,
-		EDIT_PROPERTY_FACILITIES
+		EDIT_PROPERTY_FACILITIES,
+		BOOKINGS
 		
 	}
 	

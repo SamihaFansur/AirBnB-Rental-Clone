@@ -77,7 +77,7 @@ public class Bookings extends javax.swing.JFrame {
        ArrayList<BookingObject> bookingsList = new ArrayList<BookingObject>();
        Connection connection = getConnection();
        
-       String query = "SELECT * FROM `Booking`";	
+       String query = "SELECT * FROM `Booking` where guest_id=" + guestId;	
        System.out.println(query);
        Statement st;
        ResultSet rs;
@@ -252,7 +252,7 @@ public class Bookings extends javax.swing.JFrame {
         });
                 
         jTable_Display_Reviews.setModel(new javax.swing.table.DefaultTableModel(
-        		new Object [][] {}, new String [] {"Booking_ID", "Property_ID", "Guest_ID", 
+        		new Object [][] {}, new String [] {"Booking_ID", "Property_ID","Host_ID", "Guest_ID", 
         											"Provisional", "TotalPrice", "Start Date", "End Date"}));
         
         jTable_Display_Reviews.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -448,14 +448,15 @@ public class Bookings extends javax.swing.JFrame {
         
         jTextField_startDate.setText(model.getValueAt(i,6).toString());
         
-      
+        jTextField_endDate.setText(model.getValueAt(i,7).toString());
     }                                                 
 
     /**
      * @param args the command line arguments
      */
-    public void initializeBookings() {
-    	
+    public void initializeBookings(int fId, int id) {
+    	propertyId = fId;
+    	guestId = id;
     	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH FACILITIES ID :"+propertyId);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -510,6 +511,7 @@ public class Bookings extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_living_id;
     private JButton backButton;
     private static int propertyId;
+    private static int guestId;
     private JLabel lblCommunication;
     private JLabel lblCleanliness;
     private JLabel lblDescription;

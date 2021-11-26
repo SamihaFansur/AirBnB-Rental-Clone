@@ -6,6 +6,7 @@ import javax.swing.*;
 
 
 import Controller.Controller;
+import GUI.ConnectionManager;
 import GUI.Login;
 import GUI.MainModule;
 import GUI.NavEnquirer;
@@ -23,6 +24,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -42,6 +46,7 @@ public class GuestAccount extends JFrame{
 	/**
 	 * Create the application.
 	 */
+	 Connection connection = null;
 
 	 private Controller controller;
 	 private Model model;
@@ -104,9 +109,36 @@ public class GuestAccount extends JFrame{
 		JButton bookingsButton = new JButton("Bookings List");
 		bookingsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.BOOKINGS;
-				MainModule.controller.drawNewView();
+				mainModule.editPropertyState=EDITPROPERTY.BOOKINGS;
+				int id = 0;
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				try {
+
+					connection = ConnectionManager.getConnection();
+					
+					String getGuestIDOfUser = "select guest_id from GuestAccount where email=?";	
+					
+					PreparedStatement guestIDfromGuestAccountTable = connection.prepareStatement(getGuestIDOfUser);
+					guestIDfromGuestAccountTable.setString(1, model.getEmail());
+					
+					ResultSet h_id = guestIDfromGuestAccountTable.executeQuery();
+					while (h_id.next()) {
+					 id = h_id.getInt(1);
+					 System.out.println("guest id = "+id);
+					}
+					
+					 System.out.println("guest id  after = "+id);
+					 connection.close();
+				}catch(Exception ex) {
+					System.err.println(ex.getMessage());
+				}
+				 
+				System.out.println(model.getEmail());
+				model.setGuestId(id);
+				
+				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
+				
 				
 			}
 		});
