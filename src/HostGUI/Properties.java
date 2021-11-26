@@ -121,6 +121,7 @@ public class Properties extends javax.swing.JFrame {
         	   property = new PropertyObject(rs.getInt("property_id"),rs.getInt("address_id"),rs.getInt("host_id"),rs.getString("description"),rs.getString("shortName"),rs.getInt("guestCapacity"));
                propertiesList.add(property);
            }
+           connection.close();
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -148,10 +149,10 @@ public class Properties extends javax.swing.JFrame {
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message)
    {
-       Connection con = getConnection();
+       Connection connection = getConnection();
        Statement st;
        try{
-           st = con.createStatement();
+           st = connection.createStatement();
            if((st.executeUpdate(query)) == 1)
            {
                // refresh jtable data
@@ -163,6 +164,7 @@ public class Properties extends javax.swing.JFrame {
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
            }
+           connection.close();
        }catch(Exception ex){
            ex.printStackTrace();
        }
@@ -533,7 +535,7 @@ public class Properties extends javax.swing.JFrame {
            updatePropertyStatement.setInt(4, Integer.parseInt(jTextField_property_id.getText()));
     
            updatePropertyStatement.executeUpdate();
-           
+           connection.close();
         } catch(Exception e) {
     		System.err.println("Got an exception!");
     		System.err.println(e.getMessage());
