@@ -239,7 +239,7 @@ public class Login extends JFrame {
 //				System.out.println("logged in");
 //			}
 			loginQuery.close();
-
+			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
