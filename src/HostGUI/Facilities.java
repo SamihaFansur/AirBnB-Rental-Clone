@@ -86,6 +86,7 @@ public class Facilities extends javax.swing.JFrame {
         	   facilities = new FacilitiesObject(rs.getInt("facilities_id"), rs.getInt("utility_id"), rs.getInt("outdoors_id"), rs.getInt("kitchen_id"), rs.getInt("sleeping_id"), rs.getInt("bathing_id"), rs.getInt("living_id"));
                facilitiesList.add(facilities);
            }
+           connection.close();
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -149,10 +150,10 @@ public class Facilities extends javax.swing.JFrame {
         
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message) {
-       Connection con = getConnection();
+       Connection connection = getConnection();
        Statement st;
        try{
-           st = con.createStatement();
+           st = connection.createStatement();
            if((st.executeUpdate(query)) == 1)
            {
                // refresh jtable data
@@ -164,6 +165,7 @@ public class Facilities extends javax.swing.JFrame {
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
            }
+           connection.close();
        }catch(Exception ex){
            ex.printStackTrace();
        }
