@@ -105,7 +105,7 @@ public class Bookings extends javax.swing.JFrame {
        Object[] row = new Object[8];
        for(int i = 0; i < list.size(); i++)
        {
-           row[0] = list.get(i).getReview_id();
+           row[0] = list.get(i).getBooking_id();
            row[1] = list.get(i).getProperty_id();
            row[2] = list.get(i).getHost_id();
            row[3] = list.get(i).getGuest_id();

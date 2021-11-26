@@ -28,11 +28,10 @@ public class BookingObject {
 	     * @wbp.parser.entryPoint
 	     */
 	    public BookingObject(int booking_id, int property_id, int host_id, int guest_id, boolean provisional,Double totalPrice, Date startDate, Date endDate) {
-	        this.review_id = review_id;
+	        this.booking_id = booking_id;
 	        this.property_id = property_id ;
 	        this.host_id = host_id;
 	        this.guest_id = guest_id;
-	        this.review_id = review_id;
 	        this.provisional = provisional;
 	        this.totalPrice = totalPrice;
 	        this.startDate = startDate;
