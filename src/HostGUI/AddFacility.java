@@ -118,6 +118,11 @@ public class AddFacility extends JFrame{
 							sleepingId=rs.getInt(1);
 						}
 						model.setCurrentSleepingId(sleepingId);
+						
+						String insertSleepingId = "UPDATE Facilities SET sleeping_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_sleepingid = connection.prepareStatement(insertSleepingId);
+						ps_sleepingid.setInt(1, model.getCurrentSleepingId());
+						ps_sleepingid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
@@ -165,7 +170,10 @@ public class AddFacility extends JFrame{
 						}
 						//sets bathing id to new row value
 						model.setCurrentBathingId(bathingId);
-						
+						String insertBathingId = "UPDATE Facilities SET bathing_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_bathingid = connection.prepareStatement(insertBathingId);
+						ps_bathingid.setInt(1, model.getCurentBathingId());
+						ps_bathingid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
@@ -224,6 +232,10 @@ public class AddFacility extends JFrame{
 							kitchenId=rs.getInt(1);
 						}
 						model.setCurrentKitchedId(kitchenId);
+						String insertKitchenId = "UPDATE Facilities SET kitchen_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_kitchenid = connection.prepareStatement(insertKitchenId);
+						ps_kitchenid.setInt(1, model.getCurrentKitchedId());
+						ps_kitchenid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
@@ -272,7 +284,10 @@ public class AddFacility extends JFrame{
 							utilityId=rs.getInt(1);
 						}
 						model.setCurrentUtilityId(utilityId);
-						
+						String insertUtilityId = "UPDATE Facilities SET utility_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_utilityid = connection.prepareStatement(insertUtilityId);
+						ps_utilityid.setInt(1, model.getCurrentUtilityId());
+						ps_utilityid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
@@ -323,6 +338,10 @@ public class AddFacility extends JFrame{
 							livingId=rs.getInt(1);
 						}
 						model.setCurrentLivingId(livingId);
+						String insertLivingId = "UPDATE Facilities SET living_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_livingid = connection.prepareStatement(insertLivingId);
+						ps_livingid.setInt(1, model.getCurrentLivingId());
+						ps_livingid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");
@@ -370,6 +389,10 @@ public class AddFacility extends JFrame{
 							outdoorsId=rs.getInt(1);
 						}
 						model.setCurrentOutdoorsId(outdoorsId);
+						String inserOutdoorsId = "UPDATE Facilities SET outdoors_id = ? WHERE facilities_id = ?";
+						PreparedStatement ps_outdoorsid = connection.prepareStatement(inserOutdoorsId);
+						ps_outdoorsid.setInt(1, model.getCurrentOutdoorsId());
+						ps_outdoorsid.setInt(2, model.getFacilitiesId());
 						connection.close();
 					} catch(Exception s) {
 						System.err.println("Got an exception!");

@@ -102,17 +102,17 @@ public class AddProperty extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
 				int facilitiesId = 0;
-
+				System.out.println(" r u in here what the fuck");
 				if (model.getEditPropertyPostcode() == null) {
 					adddingFacility();
 				} else {
 					try {
-
-						String insertFacilitiesId = "insert into Facilities(property_id, kitchen_id, sleeping_id, bathing_id, "
+						connection = ConnectionManager.getConnection();
+						String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
 								+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
 						PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
 								Statement.RETURN_GENERATED_KEYS);
-
+					
 						ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
 						ps_facilities.setString(2, model.getEditPropertyPostcode());
 						ps_facilities.setNull(3, 0);
