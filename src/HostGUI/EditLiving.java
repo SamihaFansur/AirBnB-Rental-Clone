@@ -121,7 +121,7 @@ public class EditLiving extends JFrame{
                 boardGames = rs.getBoolean("boardGames");
                 System.out.println(boardGames);
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -249,7 +249,7 @@ public class EditLiving extends JFrame{
 
 			updatingLivingIdInFacilities.executeUpdate();
 			System.out.println(updatingLivingIdInFacilities.toString());	
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
