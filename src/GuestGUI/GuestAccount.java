@@ -47,6 +47,7 @@ public class GuestAccount extends JFrame{
 	 private Model model;
 	 private MainModule mainModule;
 	 public GuestAccount(MainModule mainModule, Controller controller, Model model) {
+		//initializeGuestAccount();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
@@ -101,6 +102,14 @@ public class GuestAccount extends JFrame{
 		registerPanel.add(provisionalBookingsLabel);
 		
 		JButton bookingsButton = new JButton("Bookings List");
+		bookingsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.currentState=STATE.BOOKINGS;
+				MainModule.controller.drawNewView();
+				frame.dispose();
+				
+			}
+		});
 		bookingsButton.setBounds(203, 351, 183, 34);
 		registerPanel.add(bookingsButton);
 		
