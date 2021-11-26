@@ -106,7 +106,7 @@ public class EditSleeping extends JFrame{
 				bedLinen = rs.getBoolean("bedLinen");
                 towels = rs.getBoolean("towels");
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -196,7 +196,7 @@ public class EditSleeping extends JFrame{
 
 			updatingSleepingIdInFacilities.executeUpdate();
 			System.out.println(updatingSleepingIdInFacilities.toString());		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
