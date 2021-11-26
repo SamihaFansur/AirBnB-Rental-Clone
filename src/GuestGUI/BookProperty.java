@@ -1,4 +1,4 @@
-package HostGUI;
+package GuestGUI;
 
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -10,6 +10,7 @@ import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
+import HostGUI.NavHost;
 import Model.Model;
 
 import java.awt.SystemColor;
