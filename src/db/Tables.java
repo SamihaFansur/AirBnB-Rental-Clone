@@ -26,7 +26,8 @@ public class Tables {
 				+ "email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email))";
 
 		String createReviewTable = "CREATE TABLE Review("
-				+ "review_id INT NOT NULL PRIMARY KEY, property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), accuracy DEC, location DEC, "
+				+ "review_id INT NOT NULL PRIMARY KEY, property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "booking_id INT, FOREIGN KEY (booking_id) REFERENCES Booking(booking_id), accuracy DEC, location DEC, "
 				+ "valueForMoney DEC, communication DEC, cleanliness DEC, description VARCHAR(255))";
 
 		String createOutdoorsTable = "CREATE TABLE Outdoors("
@@ -86,10 +87,9 @@ public class Tables {
 				+ "outdoors_id INT , FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
 
 
-        String createBookingTable = "CREATE TABLE Booking(booking_id INT NOT NULL PRIMARY KEY, "
+        String createBookingTable = "CREATE TABLE Booking(booking_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
                + "property_id INT REFERENCES Property, host_id INT REFERENCES HostAccount, "
-               + "guest_id INT REFERENCES GuestAccount, review_id INT REFERENCES Review, "
-               + "provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
+               + "guest_id INT REFERENCES GuestAccount, provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
 
 		String createChargeBandsTable = "CREATE TABLE ChargeBands(PRIMARY KEY (property_id, startDate), "
 				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
@@ -117,6 +117,8 @@ public class Tables {
 //
 //		createAllTables(create);
 		dropTable("DROP TABLE IF EXISTS Review");
+		dropTable("DROP TABLE IF EXISTS Booking");
+		createTable(createBookingTable);
 		createTable(createReviewTable);
 
 	}
