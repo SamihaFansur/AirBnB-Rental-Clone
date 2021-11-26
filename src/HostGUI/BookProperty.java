@@ -59,6 +59,9 @@ public class BookProperty extends JFrame{
 		
 	 
 	 Connection connection = null;
+	 private JTextField shortNameTextField;
+	 private JTextField guestCapacityTextField;
+	 private JTextField textField_2;
 	 
 	 public BookProperty(MainModule mainModule, Controller controller, Model model) {
 		//initializeBookProperty();
@@ -106,6 +109,124 @@ public class BookProperty extends JFrame{
 			}
 		});	
 		bookPropertyPanel.add(backButton);
+		
+		JLabel bookPropertyTitleLabel = new JLabel("Property");
+		bookPropertyTitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		bookPropertyTitleLabel.setBounds(241, 39, 196, 55);
+		bookPropertyPanel.add(bookPropertyTitleLabel);
+		
+		JLabel shortNamelabel = new JLabel("Shortname:");
+		shortNamelabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		shortNamelabel.setBounds(31, 117, 112, 35);
+		bookPropertyPanel.add(shortNamelabel);
+		
+		JLabel guestCapacityLabel = new JLabel("Guest Capacity:");
+		guestCapacityLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		guestCapacityLabel.setBounds(31, 163, 112, 35);
+		bookPropertyPanel.add(guestCapacityLabel);
+		
+		JLabel descriptionLabel = new JLabel("Description:");
+		descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		descriptionLabel.setBounds(31, 208, 112, 35);
+		bookPropertyPanel.add(descriptionLabel);
+		
+		JLabel lblFacilities = new JLabel("Facilities:");
+		lblFacilities.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFacilities.setBounds(31, 323, 112, 35);
+		bookPropertyPanel.add(lblFacilities);
+		
+		JLabel lblKitchen = new JLabel("Kitchen:");
+		lblKitchen.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblKitchen.setBounds(31, 369, 112, 35);
+		bookPropertyPanel.add(lblKitchen);
+		
+		JLabel lblSleeping = new JLabel("Sleeping:");
+		lblSleeping.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblSleeping.setBounds(31, 415, 112, 35);
+		bookPropertyPanel.add(lblSleeping);
+		
+		JLabel lblLiving = new JLabel("Living:");
+		lblLiving.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblLiving.setBounds(31, 507, 112, 35);
+		bookPropertyPanel.add(lblLiving);
+		
+		JLabel lblBathing = new JLabel("Bathing:");
+		lblBathing.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblBathing.setBounds(31, 461, 112, 35);
+		bookPropertyPanel.add(lblBathing);
+		
+		JLabel lblUtility = new JLabel("Utility:");
+		lblUtility.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUtility.setBounds(31, 553, 112, 35);
+		bookPropertyPanel.add(lblUtility);
+		
+		JLabel lblOutdoors = new JLabel("Outdoors:");
+		lblOutdoors.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblOutdoors.setBounds(31, 600, 112, 35);
+		bookPropertyPanel.add(lblOutdoors);
+		
+		shortNameTextField = new JTextField();
+		shortNameTextField.setBounds(166, 123, 360, 29);
+		bookPropertyPanel.add(shortNameTextField);
+		shortNameTextField.setColumns(10);
+		
+		guestCapacityTextField = new JTextField();
+		guestCapacityTextField.setColumns(10);
+		guestCapacityTextField.setBounds(166, 163, 131, 29);
+		bookPropertyPanel.add(guestCapacityTextField);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(166, 208, 360, 93);
+		bookPropertyPanel.add(textField_2);
+		
+		JButton kitchenButton = new JButton("Kitchen");
+		kitchenButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		kitchenButton.setBounds(241, 371, 155, 29);
+		bookPropertyPanel.add(kitchenButton);
+		
+		JButton sleepingButton = new JButton("Sleeping");
+		sleepingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		sleepingButton.setBounds(241, 415, 155, 29);
+		bookPropertyPanel.add(sleepingButton);
+		
+		JButton bathingButton = new JButton("Bathing");
+		bathingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		bathingButton.setBounds(241, 461, 155, 29);
+		bookPropertyPanel.add(bathingButton);
+		
+		JButton livingButton = new JButton("Living");
+		livingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		livingButton.setBounds(241, 507, 155, 29);
+		bookPropertyPanel.add(livingButton);
+		
+		JButton UtilityButton = new JButton("Utility");
+		UtilityButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		UtilityButton.setBounds(241, 553, 155, 29);
+		bookPropertyPanel.add(UtilityButton);
+		
+		JButton OutdoorsButton = new JButton("Outdoors");
+		OutdoorsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		OutdoorsButton.setBounds(241, 600, 155, 29);
+		bookPropertyPanel.add(OutdoorsButton);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
