@@ -186,7 +186,7 @@ public class EditBathroom extends JFrame{
 		  backButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					mainModule.userState=USER.HOST;
-					mainModule.editPropertyState = EDITPROPERTY.EDIT_SLEEPING;
+					mainModule.editPropertyState = EDITPROPERTY.EDIT_BATHING;
 					MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //					close();
 					frame.dispose();

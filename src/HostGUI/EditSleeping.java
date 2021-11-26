@@ -138,6 +138,7 @@ public class EditSleeping extends JFrame{
 				updateSleepingDetails(id);
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_BEDROOM;
 				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
+				frame.dispose();
 			}
 		});
 		addBedroomButton.setBounds(197, 405, 209, 46);
