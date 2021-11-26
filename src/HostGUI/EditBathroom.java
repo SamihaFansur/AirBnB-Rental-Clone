@@ -387,7 +387,7 @@ public class EditBathroom extends JFrame{
 			System.out.println(ps_addingNoOfBathroomsInBathing);
 			ps_addingNoOfBathroomsInBathing.executeUpdate();
 			
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -419,7 +419,7 @@ public class EditBathroom extends JFrame{
 			System.out.println(ps_BathingBathType);
 			ps_BathingBathType.executeUpdate();
 			
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
