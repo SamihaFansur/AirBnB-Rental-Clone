@@ -106,6 +106,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("sleeping_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -146,6 +147,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("bathing_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -185,6 +187,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("kitchen_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -224,6 +227,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("utility_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -262,6 +266,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("living_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -300,6 +305,7 @@ public class EditAPropertysFacilities extends JFrame{
 						id = rs.getInt("outdoors_id");
 		            }	
 					
+					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
 					System.err.println(s.getMessage());
@@ -336,6 +342,7 @@ public class EditAPropertysFacilities extends JFrame{
 					 System.out.println("host id = "+id);
 					}
 					 System.out.println("host id  after = "+id);
+					 connection.close();
 				}catch(Exception ex) {
 					System.err.println(ex.getMessage());
 				}
