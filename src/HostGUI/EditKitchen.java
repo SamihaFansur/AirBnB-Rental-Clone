@@ -124,7 +124,7 @@ public class EditKitchen extends JFrame{
                 cookware = rs.getBoolean("cookware");
                 basicProvision = rs.getBoolean("basicProvision");
             }		
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
@@ -276,7 +276,7 @@ public class EditKitchen extends JFrame{
 			updatingKitchenIdInFacilities.executeUpdate();
 			System.out.println(updatingKitchenIdInFacilities.toString());		
 			
-			
+			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
