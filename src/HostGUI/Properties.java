@@ -187,14 +187,6 @@ public class Properties extends javax.swing.JFrame {
         
 
         //NAVBAR
-        
- 
-
-
-	
-        
- 
-        
 
         jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
@@ -544,9 +536,127 @@ public class Properties extends javax.swing.JFrame {
 
  // Button Delete
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        String query = "DELETE FROM `Property` WHERE property_id = "+jTextField_property_id.getText();
-         executeSQlQuery(query, "Deleted");
-    }  
+     	try {
+			Connection connection = getConnection();
+			
+			Statement stmt = connection.createStatement();
+			String getIds = "SELECT outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE facilities_id = " + model.getFacilitiesId();
+			System.out.println(getIds);
+			ResultSet rs = stmt.executeQuery(getIds);
+			int outdoors = 0, utility = 0,living = 0, bathing = 0, sleeping = 0,kitchen = 0;
+			while(rs.next()) {
+				outdoors = rs.getInt("outdoors_id");
+				utility = rs.getInt("utility_id");
+				living = rs.getInt("living_id");
+				bathing = rs.getInt("bathing_id");
+				sleeping = rs.getInt("sleeping_id");
+				kitchen = rs.getInt("kitchen_id");
+			}
+			System.out.println("o: " + outdoors);
+			System.out.println("u: " + utility);
+			System.out.println("l: " + living);
+			System.out.println("b: " + bathing);
+			System.out.println("s: " + sleeping);
+			System.out.println("k: " + kitchen);
+
+			String deleteFacilitiesQuery ="DELETE FROM Facilities WHERE facilities_id = ?";
+			PreparedStatement deleteFacilities = connection.prepareStatement(deleteFacilitiesQuery);
+			deleteFacilities.setInt(1, model.getFacilitiesId());
+			int y = deleteFacilities.executeUpdate();
+			if(y>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHEREOM Property WHERE sleeping_id = ?";
+			PreparedStatement deleteSleeping_BedType = connection.prepareStatement(deleteSleeping_BedTypeQuery);
+			deleteSleeping_BedType.setInt(1, sleeping);
+			int e = deleteSleeping_BedType.executeUpdate();
+			if(e>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteSleepingQuery = "DELETE FROM Sleeping WHERE sleeping_id = ?";
+			PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
+			deleteSleeping.setInt(1, sleeping);
+			int d = deleteSleeping.executeUpdate();
+			if(d>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE outdoors_id = ?";
+			PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
+			deleteOutdoors.setInt(1, outdoors);
+			int f = deleteOutdoors.executeUpdate();
+			if(f>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteKitchenQuery = "DELETE FROM Kitchen WHERE kitchen_id = ?";
+			PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
+			deleteKitchen.setInt(1, kitchen);
+			int g = deleteKitchen.executeUpdate();
+			if(g>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteLivingQuery = "DELETE FROM Living WHERE living_id = ?";
+			PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
+			deleteLiving.setInt(1, living);
+			int h = deleteLiving.executeUpdate();
+			if(h>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteUtilityQuery = "DELETE FROM Utiltiy WHERE utility_id = ?";
+			PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
+			deleteUtility.setInt(1, utility);
+			int i = deleteUtility.executeUpdate();
+			if(i>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteBathing_BathTypeQuery = "DELETE FROM Bathing_BathType WHERE bathing_id = ?";
+			PreparedStatement deleteBathing_BathType= connection.prepareStatement(deleteBathing_BathTypeQuery);
+			deleteBathing_BathType.setInt(1, bathing);
+			int j = deleteBathing_BathType.executeUpdate();
+			if(j>0) {
+				System.out.println(this);
+				// remove later 
+			}
+			String deleteBathingQuery = "DELETE FROM Bathing WHERE bathing_id = ?";
+			PreparedStatement deleteBathing= connection.prepareStatement(deleteBathingQuery);
+			deleteBathing.setInt(1, bathing);
+			int k = deleteBathing.executeUpdate();
+			if(k>0) {
+				System.out.println(this);
+				// remove later 
+			}
+// select from to get address_id before deleting for deleting address
+			String deletePropertyQuery = "DELETE FROM Property WHERE property_id = ?";
+			PreparedStatement deleteProperty= connection.prepareStatement(deletePropertyQuery);
+			deleteProperty.setInt(1, model.getPropertyId());
+			int l = deleteProperty.executeUpdate();
+			if(l>0) {
+				System.out.println(this);
+				// remove later 
+			}
+//			
+//			String deleteAddressQuery ="DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
+//			PreparedStatement deleteAddress = connection.prepareStatement(deleteAddressQuery);
+//			deleteAddress.setString(1, model.getHouseNameNum());
+//			deleteAddress.setString(2, model.getPostcode());
+//			int l = deleteAddress.executeUpdate();
+//			if(l>0) {
+//				System.out.println(this);
+//				// remove later 
+
+			connection.close();
+			
+			} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+    }   
     
     //Button Edit Facilities
     private void jButton_EditFacilitiesActionPerformed(java.awt.event.ActionEvent evt) {                                               
