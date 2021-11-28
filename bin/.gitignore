@@ -1,5 +1,3 @@
-/Controller/
-/GUI/
 /GuestGUI/
-/HostGUI/
-/db/
+/GUI/
+/Controller/

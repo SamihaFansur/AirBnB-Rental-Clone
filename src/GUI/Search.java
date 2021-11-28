@@ -2124,7 +2124,7 @@ public class Search extends javax.swing.JFrame {
 					//System.out.println("IN SEARCH: "+hostid);
 					System.out.println("IN SEARCH: "+propertyId);
 					mainModule.editPropertyState = EDITPROPERTY.BOOK_PROPERTY;
-					mainModule.controller.editPropertyView(propertyId, 0);
+					MainModule.controller.editPropertyView(Integer.parseInt(propertyIDTextField.getText()),0);
 					
 				}
 			

@@ -60,6 +60,7 @@ public class BookProperty extends JFrame{
 	 private JTextField numberOfBedroomsTextField;
 	 private JTextField numberOfBedsTextField;
 	 private JTextField numberOfBathsTextField;
+	 private JTextField jTextField_property_id;
 	 
 	 public BookProperty(MainModule mainModule, Controller controller, Model model) {
 		//initializeBookProperty();
@@ -118,12 +119,12 @@ public class BookProperty extends JFrame{
 		
 		JLabel shortNamelabel = new JLabel("Shortname:");
 		shortNamelabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		shortNamelabel.setBounds(31, 115, 112, 35);
+		shortNamelabel.setBounds(31, 155, 112, 35);
 		bookPropertyPanel.add(shortNamelabel);
 		
 		JLabel guestCapacityLabel = new JLabel("Guest Capacity:");
 		guestCapacityLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		guestCapacityLabel.setBounds(31, 184, 112, 35);
+		guestCapacityLabel.setBounds(31, 201, 112, 35);
 		bookPropertyPanel.add(guestCapacityLabel);
 		
 		JLabel descriptionLabel = new JLabel("Description:");
@@ -137,13 +138,13 @@ public class BookProperty extends JFrame{
 		bookPropertyPanel.add(numOfBedroomsLabel);
 		
 		shortNameTextField = new JTextField();
-		shortNameTextField.setBounds(166, 121, 360, 29);
+		shortNameTextField.setBounds(166, 161, 360, 29);
 		bookPropertyPanel.add(shortNameTextField);
 		shortNameTextField.setColumns(10);
 		
 		guestCapacityTextField = new JTextField();
 		guestCapacityTextField.setColumns(10);
-		guestCapacityTextField.setBounds(166, 184, 131, 29);
+		guestCapacityTextField.setBounds(166, 201, 131, 29);
 		bookPropertyPanel.add(guestCapacityTextField);
 		
 		descriptionTextField = new JTextField();
@@ -158,6 +159,64 @@ public class BookProperty extends JFrame{
 		});
 		btnBookProperty.setBounds(200, 625, 237, 29);
 		bookPropertyPanel.add(btnBookProperty);
+		
+		JButton reviewsButton = new JButton("Property Reviews");
+		reviewsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
+        	    //needs to take in the properyId and hostId
+        		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
+        		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
+        		frame.dispose();
+			}
+		});
+		reviewsButton.setBounds(224, 573, 196, 29);
+		bookPropertyPanel.add(reviewsButton);
+		
+		JLabel numOfBedsLabel = new JLabel("Number of Beds");
+		numOfBedsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		numOfBedsLabel.setBounds(31, 452, 160, 35);
+		bookPropertyPanel.add(numOfBedsLabel);
+		
+		JLabel numOfBathsLabel = new JLabel("Number of Baths");
+		numOfBathsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		numOfBathsLabel.setBounds(31, 509, 160, 35);
+		bookPropertyPanel.add(numOfBathsLabel);
+		
+		numberOfBedroomsTextField = new JTextField();
+		numberOfBedroomsTextField.setText("");
+		numberOfBedroomsTextField.setColumns(10);
+		numberOfBedroomsTextField.setBounds(195, 392, 331, 29);
+		bookPropertyPanel.add(numberOfBedroomsTextField);
+		
+		numberOfBedsTextField = new JTextField();
+		numberOfBedsTextField.setText("");
+		numberOfBedsTextField.setColumns(10);
+		numberOfBedsTextField.setBounds(195, 452, 331, 29);
+		bookPropertyPanel.add(numberOfBedsTextField);
+		
+		numberOfBathsTextField = new JTextField();
+		numberOfBathsTextField.setText("");
+		numberOfBathsTextField.setColumns(10);
+		numberOfBathsTextField.setBounds(195, 518, 331, 29);
+		bookPropertyPanel.add(numberOfBathsTextField);
+		
+		JLabel lblPropertyId = new JLabel("Property ID:");
+		lblPropertyId.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPropertyId.setBounds(31, 116, 112, 35);
+		bookPropertyPanel.add(lblPropertyId);
+		
+		jTextField_property_id = new JTextField();
+		jTextField_property_id.setText("");
+		jTextField_property_id.setColumns(10);
+		jTextField_property_id.setBounds(166, 121, 360, 29);
+		bookPropertyPanel.add(jTextField_property_id);
+		
+		
+		//SET PROPETY ID BOX
+		
+		jTextField_property_id.setText(String.valueOf(propertyId));
 		
 		
 		//INSERT Property INFO INTO TEXT FIELDS
@@ -204,7 +263,7 @@ public class BookProperty extends JFrame{
 	
 		
 		while(rs2.next()) {
-			sleeping = rs2.getInt("sleeping");
+			sleeping = rs2.getInt("sleeping_id");
 			
 
 		}
@@ -257,7 +316,7 @@ public class BookProperty extends JFrame{
 	
 		
 		while(rs5.next()) {
-			bathing = rs5.getInt("bathing");
+			bathing = rs5.getInt("bathing_id");
 			
 
 		}
@@ -288,42 +347,9 @@ public class BookProperty extends JFrame{
 		numberOfBathsTextField.setText(String.valueOf(bathrooms));
 		
 
+
 		
-		JButton reviewsButton = new JButton("Property Reviews");
-		reviewsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		reviewsButton.setBounds(224, 573, 196, 29);
-		bookPropertyPanel.add(reviewsButton);
-		
-		JLabel numOfBedsLabel = new JLabel("Number of Beds");
-		numOfBedsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		numOfBedsLabel.setBounds(31, 452, 160, 35);
-		bookPropertyPanel.add(numOfBedsLabel);
-		
-		JLabel numOfBathsLabel = new JLabel("Number of Baths");
-		numOfBathsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		numOfBathsLabel.setBounds(31, 509, 160, 35);
-		bookPropertyPanel.add(numOfBathsLabel);
-		
-		numberOfBedroomsTextField = new JTextField();
-		numberOfBedroomsTextField.setText("");
-		numberOfBedroomsTextField.setColumns(10);
-		numberOfBedroomsTextField.setBounds(195, 392, 331, 29);
-		bookPropertyPanel.add(numberOfBedroomsTextField);
-		
-		numberOfBedsTextField = new JTextField();
-		numberOfBedsTextField.setText("");
-		numberOfBedsTextField.setColumns(10);
-		numberOfBedsTextField.setBounds(195, 452, 331, 29);
-		bookPropertyPanel.add(numberOfBedsTextField);
-		
-		numberOfBathsTextField = new JTextField();
-		numberOfBathsTextField.setText("");
-		numberOfBathsTextField.setColumns(10);
-		numberOfBathsTextField.setBounds(195, 518, 331, 29);
-		bookPropertyPanel.add(numberOfBathsTextField);
+
 		
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
