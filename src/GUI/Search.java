@@ -33,6 +33,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +84,9 @@ public class Search extends javax.swing.JFrame {
     private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
     private static String username = "team018";
     private static String pwd = "7854a03f";
- 	
+	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    
     public Connection getConnection()
     {
         Connection connection;
@@ -111,6 +114,7 @@ public class Search extends javax.swing.JFrame {
 	 private double maxPPN;
 	 private String placeName;
 	 private int guestCap;
+		
    
  // get a list of properties from mysql database
    public ArrayList<SearchObject> getSearchList() {
@@ -122,8 +126,13 @@ public class Search extends javax.swing.JFrame {
        int guestCap = 0;
        String sd = model.getSD();
        String ed = model.getED(); 
-       Date startd = parseDate(sd);
-       Date endd = parseDate(ed);
+      try {
+			startd = sourceFormat.parse(sd);
+			endd = sourceFormat.parse(ed);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
        String placeName = model.getPlaceName();//city field
        System.out.println("minPPN "+minPPN);
        System.out.println("maxPPN "+maxPPN);
@@ -131,51 +140,53 @@ public class Search extends javax.swing.JFrame {
        System.out.println("ed "+ed);
        System.out.println("startd "+startd);
        System.out.println("endd "+endd);
-       
+       System.out.println("guest cap: "+guestCap);
+       System.out.println("placename: "+placeName);
        
 //       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
-//       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
-//    	   int addressId;
-//    	   int propId;
-//           String houseNameNum, pc;
-//
-//    	   try {
-//    		   SearchObject search;
-//    		   
-//    				   
-//    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property";
-//            		   
-//	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-//	   					
-//	   					ResultSet gettingProperty = getProperty.executeQuery();
-//	   					   
-//	   					while(gettingProperty.next()) {
-//	   						addressId = gettingProperty.getInt("address_id");
-//	   						
-//	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
-//	   		        		   
-//	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
-//	   						getHnhnPc.setInt(1, addressId);
-//	   						
-//	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
-//	   						   
-//	   						while(gettingHnhnPc.next()) {
-//	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
-//	   							pc = gettingHnhnPc.getString("postcode");
-//	   							
-//	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
-//	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
-//	   													gettingProperty.getInt("guestCapacity"));
-//	   							searchList.add(search);
-//	   						}
-//	   					}   
-//    			   
-//    		   
-//           }catch (Exception e) {
-//        	   e.printStackTrace();
-//           } 
-//       }
-//       
+       if(minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
+    	   int addressId;
+    	   int propId;
+           String houseNameNum, pc;
+           System.out.println("inside first if");
+
+    	   try {
+    		   SearchObject search;
+    		   
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, description, shortName, guestCapacity from Property";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					System.out.println("PRINTING ADRESS IDS, INSIDE SEARCH: ");
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						System.out.println(addressId);
+	   						String hnhnPcFromAid = "Select houseNameNumber, postcode from Address where address_id=?";
+	   		        		   
+	   						PreparedStatement getHnhnPc= connection.prepareStatement(hnhnPcFromAid);
+	   						getHnhnPc.setInt(1, addressId);
+	   						
+	   						ResultSet gettingHnhnPc = getHnhnPc.executeQuery();
+	   						   
+	   						while(gettingHnhnPc.next()) {
+	   							houseNameNum = gettingHnhnPc.getString("houseNameNumber");
+	   							pc = gettingHnhnPc.getString("postcode");
+	   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), houseNameNum, pc, 
+	   													gettingProperty.getString("description"), gettingProperty.getString("shortName"), 
+	   													gettingProperty.getInt("guestCapacity"));
+	   							searchList.add(search);
+	   						}
+	   					}   
+    			   
+    		   
+           }catch (Exception e) {
+        	   e.printStackTrace();
+           } 
+       }
+       
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
        //startDate
@@ -2108,6 +2119,8 @@ public class Search extends javax.swing.JFrame {
         });
         
         
+        
+        
         btnNewButton = new JButton("Search");
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
         btnNewButton.addActionListener(new ActionListener() {
@@ -2194,7 +2207,7 @@ public class Search extends javax.swing.JFrame {
         						"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
         						"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
         locationComboBox = new JComboBox(cityNames);
-        locationComboBox.setSelectedItem("");
+        //locationComboBox.setSelectedItem("");
         
         JLabel minPriceLabel = new JLabel("Minimum Price Per Night");
         minPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -2427,6 +2440,7 @@ public class Search extends javax.swing.JFrame {
                 
             }
         });
+        
     }
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

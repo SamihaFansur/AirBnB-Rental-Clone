@@ -227,7 +227,9 @@ public class ChargeBands extends JFrame{
 		 	            //checking if start date < end date
 		 	            //NOTE: cant do the following time check until dates are converted to date objects
 		 	            Boolean timeCheck = formattedStartDate.before(formattedEndDate);
-		 	           
+		 	           System.out.println("formatted Start date in chargebands"+formattedStartDate);
+		 	          System.out.println("formatted End date in chargebands"+formattedEndDate);
+		 	            
 		 	            //making all prices into doubles:
 		 	            Double pricePerNightDoubleValidation = Double.parseDouble(pricePerNight.getText());
 		 	            Double serviceChargeDoubleValidation = Double.parseDouble(serviceCharge.getText());
@@ -558,53 +560,53 @@ public class ChargeBands extends JFrame{
         	switch (month) {
         	//jan
             case 1:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
                 break;
             //feb
             case 2:
-            	if(day<28) dateAccepted = true;
+            	if(day<=28) dateAccepted = true;
                 break;
             //march
             case 3:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
             	break;
             //april
             case 4:
-            	if(day<30) dateAccepted = true;
+            	if(day<=30) dateAccepted = true;
                 break;
             //may
             case 5:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
                 break;
             //june
             case 6:
-            	if(day<30) dateAccepted = true;
+            	if(day<=30) dateAccepted = true;
             	
                 break;
             //july
             case 7:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
                 break;
             //aug
             case 8:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
             	
                 break;
             //sept
             case 9:
-            	if(day<30) dateAccepted = true;
+            	if(day<=30) dateAccepted = true;
                 break;
             //oct
             case 10:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
                 break;
             //nov
             case 11:
-            	if(day<30) dateAccepted = true;
+            	if(day<=30) dateAccepted = true;
                 break;
             //dec
             case 12:
-            	if(day<31) dateAccepted = true;
+            	if(day<=31) dateAccepted = true;
             	break;
                 
             default:
