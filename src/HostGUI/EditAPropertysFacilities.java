@@ -84,7 +84,7 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton addSleepingButton = new JButton("Edit Sleeping Facility");
 		addSleepingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;	
+	
 				System.out.println("IN edit sleeping btn");
 				System.out.println("facilities id = "+facilityIdAfter);
 				
@@ -105,6 +105,13 @@ public class EditAPropertysFacilities extends JFrame{
 					while (rs.next()) {
 						id = rs.getInt("sleeping_id");
 		            }	
+					if (id == 0){
+						mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+					}else {
+							mainModule.editPropertyState= EDITPROPERTY.EDIT_SLEEPING;
+							
+					}
 					
 					connection.close();
 				} catch(Exception s) {
@@ -124,7 +131,6 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton btnAddBathingFacility = new JButton("Edit Bathing Facility");
 		btnAddBathingFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
 				
 				System.out.println("IN edit bathing btn");
 				System.out.println("facilities id = "+facilityIdAfter);
@@ -145,7 +151,13 @@ public class EditAPropertysFacilities extends JFrame{
 					
 					while (rs.next()) {
 						id = rs.getInt("bathing_id");
-		            }	
+					 }	
+					if (id == 0){
+						mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+					}else {
+						mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHING;
+					}
 					
 					connection.close();
 				} catch(Exception s) {
@@ -165,7 +177,6 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton btnAddKitchenfacility = new JButton("Edit Kitchen Facility");
 		btnAddKitchenfacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_KITCHEN;
 				System.out.println("IN edit kitchen btn");
 				System.out.println("facilities id = "+facilityIdAfter);
 				
@@ -186,7 +197,14 @@ public class EditAPropertysFacilities extends JFrame{
 					while (rs.next()) {
 						id = rs.getInt("kitchen_id");
 		            }	
-					
+				 
+				if (id == 0){
+					mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+				}else {
+					mainModule.editPropertyState= EDITPROPERTY.EDIT_KITCHEN;
+				}
+
 					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
@@ -205,7 +223,6 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton btnAddUtilityFacility = new JButton("Edit Utility Facility");
 		btnAddUtilityFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
 				System.out.println("IN edit utility btn");
 				System.out.println("facilities id = "+facilityIdAfter);
 				
@@ -226,7 +243,13 @@ public class EditAPropertysFacilities extends JFrame{
 					while (rs.next()) {
 						id = rs.getInt("utility_id");
 		            }	
-					
+				 
+				if (id == 0){
+					mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+				}else {
+					mainModule.editPropertyState= EDITPROPERTY.EDIT_UTILITY;
+				}
 					connection.close();
 				} catch(Exception s) {
 					System.err.println("Got an exception!");
@@ -244,7 +267,6 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton btnAddLivingFacility = new JButton("Edit Living Facility");
 		btnAddLivingFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
 				System.out.println("IN edit living btn");
 				System.out.println("facilities id = "+facilityIdAfter);
 				
@@ -264,7 +286,13 @@ public class EditAPropertysFacilities extends JFrame{
 					
 					while (rs.next()) {
 						id = rs.getInt("living_id");
-		            }	
+					 }	
+					if (id == 0){
+						mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+					}else {
+						mainModule.editPropertyState= EDITPROPERTY.EDIT_LIVING;
+					}
 					
 					connection.close();
 				} catch(Exception s) {
@@ -283,7 +311,6 @@ public class EditAPropertysFacilities extends JFrame{
 		JButton btnAddOutdoorsFacility = new JButton("Edit Outdoors Facility");
 		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
 				System.out.println("IN edit outdoors btn");
 				System.out.println("facilities id = "+facilityIdAfter);
 				
@@ -303,7 +330,13 @@ public class EditAPropertysFacilities extends JFrame{
 					
 					while (rs.next()) {
 						id = rs.getInt("outdoors_id");
-		            }	
+					 }	
+					if (id == 0){
+						mainModule.editPropertyState= EDITPROPERTY.ADD_FACILITY;
+
+					}else {
+						mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;
+					}
 					
 					connection.close();
 				} catch(Exception s) {
