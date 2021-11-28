@@ -2063,7 +2063,17 @@ public class Search extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable_Display_Search);
         
-        btnNewButton = new JButton("View Property");
+        
+        viewPropertyButton = new JButton("View Property");
+        viewPropertyButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        viewPropertyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			}
+        });
+        
+        
+        btnNewButton = new JButton("Search");
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
         btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2206,7 +2216,8 @@ public class Search extends javax.swing.JFrame {
         						.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
         				.addGroup(jPanel1Layout.createSequentialGroup()
         					.addGap(134)
-        					.addComponent(btnNewButton)))
+        					.addComponent(btnNewButton)
+        					.addComponent(viewPropertyButton)))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
         			.addGap(22))
@@ -2245,6 +2256,7 @@ public class Search extends javax.swing.JFrame {
         				.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
         			.addGap(110)
         			.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(viewPropertyButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
         			.addGap(113))
         		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
         			.addContainerGap()
@@ -2390,6 +2402,7 @@ public class Search extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Search;
     private JButton btnNewButton;
+    private JButton viewPropertyButton;
     private JTextField minPriceTextField;
     private JTextField maxPriceTextField;
     private JTextField startDateTextField;
