@@ -455,7 +455,7 @@ public class Register extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
+			String insertAccountQuery = "insert into Account values(?,?,?,?,?,AES_ENCRYPT(?, 'key'),(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
 			String insertAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";
 			String insertIntoHostAccountTable = "insert into HostAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";

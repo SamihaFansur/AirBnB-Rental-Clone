@@ -94,7 +94,7 @@ public class EditAccount extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 			
-			String selectAccountRecord = "SELECT title, firstName, surname, password from Account where email = ?";
+			String selectAccountRecord = "SELECT title, firstName, surname, AES_DECRYPT(password,'key') as decrypt from Account where email = ?";
 			
 			PreparedStatement selectingAccountValues= connection.prepareStatement(selectAccountRecord);
 			
@@ -105,7 +105,7 @@ public class EditAccount extends JFrame{
 				title = rs.getString("title");
 				firstName = rs.getString("firstName");
                 surname = rs.getString("surname");
-                password = rs.getString("password");
+                password = rs.getString("decrypt");
             }		
 			connection.close();
 		} catch(Exception e) {
@@ -256,7 +256,7 @@ public class EditAccount extends JFrame{
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
-			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = ? where email = ?";
+			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = AES_ENCRYPT(?,'key') where email = ?";
 			PreparedStatement updateAccount = connection.prepareStatement(updateAccountQuery);
 			updateAccount.setString(1, model.getTitle());
 			updateAccount.setString(2, model.getFirstName());

@@ -150,14 +150,14 @@ public class Login extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-
+			String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
 			PreparedStatement loginQuery = (PreparedStatement) connection
-					.prepareStatement("Select email, password from Account where email=? and password=?");
+					.prepareStatement(query);
 
 			loginQuery.setString(1, userName_login);
 			loginQuery.setString(2, password_login);
 			ResultSet rs = loginQuery.executeQuery();
-
+			System.out.println(rs);
 			/*
 			 * Need to check if the email belongs to a "host and guest" account. If so, ask
 			 * user to log in as either a host or a guest so GUI can be built according to
