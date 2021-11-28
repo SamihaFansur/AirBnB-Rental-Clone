@@ -177,7 +177,7 @@ public class EditBathing extends JFrame{
 
 			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState=USER.HOST;
-				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
 				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();

@@ -280,7 +280,7 @@ public class EditAPropertysFacilities extends JFrame{
 		btnAddLivingFacility.setBounds(192, 437, 194, 57);
 		addFacilityPanel.add(btnAddLivingFacility);
 		
-		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
+		JButton btnAddOutdoorsFacility = new JButton("Edit Outdoors Facility");
 		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState= EDITPROPERTY.EDIT_OUTDOORS;

@@ -45,6 +45,7 @@ public class AddProperty extends JFrame {
 	private JTextField descriptionTextField;
 	private int propertyId;
 	private int hostId;
+	private int facilitiesId;
 	Connection connection = null;
 
 	/**
@@ -101,42 +102,11 @@ public class AddProperty extends JFrame {
 		addFacilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				int facilitiesId = 0;
 				System.out.println(" r u in here what the fuck");
 				if (model.getEditPropertyPostcode() == null) {
 					adddingFacility();
 				} else {
-					try {
-						connection = ConnectionManager.getConnection();
-						String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
-								+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
-						PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
-								Statement.RETURN_GENERATED_KEYS);
-					
-						ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
-						ps_facilities.setString(2, model.getEditPropertyPostcode());
-						ps_facilities.setNull(3, 0);
-						ps_facilities.setNull(4, 0);
-						ps_facilities.setNull(5, 0);
-						ps_facilities.setNull(6, 0);
-						ps_facilities.setNull(7, 0);
-						ps_facilities.setNull(8, 0);
-
-						System.out.println(ps_facilities);
-						ps_facilities.executeUpdate();
-
-						ResultSet rs = ps_facilities.getGeneratedKeys();
-						if (rs.next()) {
-							facilitiesId = rs.getInt(1);
-						}
-
-						// get propertyID and put into the Fcailties table. By default it's the latest
-						connection.close();
-					} catch (Exception s) {
-						System.err.println("Got an exception!");
-						System.err.println(s.getMessage());
-					}
-
+	
 					System.out.println("FACILITIES IDDDDDDDDDDDD = " + facilitiesId);
 					model.setFacilitiesId(facilitiesId);
 					frame.dispose();
@@ -435,6 +405,29 @@ public class AddProperty extends JFrame {
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
 			System.out.println(hostIDInProperty.toString());
+	
+				String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
+						+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
+				PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
+						Statement.RETURN_GENERATED_KEYS);
+			
+				ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
+				ps_facilities.setString(2, model.getEditPropertyPostcode());
+				ps_facilities.setNull(3, 0);
+				ps_facilities.setNull(4, 0);
+				ps_facilities.setNull(5, 0);
+				ps_facilities.setNull(6, 0);
+				ps_facilities.setNull(7, 0);
+				ps_facilities.setNull(8, 0);
+
+				System.out.println(ps_facilities);
+				ps_facilities.executeUpdate();
+
+				ResultSet rs = ps_facilities.getGeneratedKeys();
+				if (rs.next()) {
+					facilitiesId = rs.getInt(1);
+				}
+
 			
 			connection.close();
 		} catch (Exception e) {
