@@ -44,7 +44,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import com.mysql.cj.protocol.Resultset;
-
+import GUI.ConnectionManager;
 import Controller.Controller;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
@@ -67,6 +67,7 @@ public class Search extends javax.swing.JFrame {
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
+	 Connection connection = null;
 	 
     public Search(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
@@ -1987,8 +1988,7 @@ public class Search extends javax.swing.JFrame {
            model.addRow(row);
        }
     }
-       
-   
+      
    private boolean validateMaxPrice() {
 	   return false;
    }
@@ -2068,6 +2068,41 @@ public class Search extends javax.swing.JFrame {
         viewPropertyButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
         viewPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			//get value of propertyId in textbox
+				//pass property ID, guest ID to the controller.
+			    
+				if (propertyIDTextField.getText().isEmpty()) {
+					// show JOptionPane
+				}else {
+					int propertyId = Integer.parseInt(propertyIDTextField.getText().toString());
+					//getting hostId:
+//					int hostid = 0;
+//	                try {
+//	                	
+//	                    connection = ConnectionManager.getConnection();
+//	                    System.out.println(connection);
+//	                    String getHostIDOfUser = "select host_id from HostAccount where email=?";
+//
+//	                    PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+//	                    hostIDfromHostAccountTable.setString(1, model.getEmail());
+//
+//	                    ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+//	                    while (h_id.next()) {
+//	                     hostid = h_id.getInt(1);
+//	                     System.out.println("host id = "+hostid);
+//	                    }
+//	                    
+//	                    connection.close();
+//	                }catch(Exception ex) {
+//	                    System.err.println(ex.getMessage());
+//	                }
+//					
+					//System.out.println("IN SEARCH: "+hostid);
+					System.out.println("IN SEARCH: "+propertyId);
+					mainModule.editPropertyState = EDITPROPERTY.BOOK_PROPERTY;
+					mainModule.controller.editPropertyView(propertyId, 0);
+					
+				}
 			
 			}
         });

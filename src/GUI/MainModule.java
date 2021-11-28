@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import Controller.Controller;
+import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import Model.Model;
@@ -54,6 +55,7 @@ public class MainModule {
 	private ChargeBands chargeBands;
 	private GuestAccount guestAccount;
 	private Bookings bookings;
+	private BookProperty bookProperty;
 	
 	
 	//Page user is on
@@ -112,7 +114,8 @@ public class MainModule {
 		FACILITIES,
 		CHARGEBANDS,
 		EDIT_PROPERTY_FACILITIES,
-		BOOKINGS
+		BOOKINGS,
+		BOOK_PROPERTY
 		
 	}
 	
@@ -149,6 +152,7 @@ public class MainModule {
 		
 		//Objects for Guest GUI
 		Bookings bookings = new Bookings(mainModule, controller, model);
+		BookProperty bookProperty = new BookProperty(mainModule, controller, model);
 		
 		//Objects for Host GUI:
 		AddFacility addFacility = new AddFacility(mainModule, controller, model);
@@ -173,7 +177,7 @@ public class MainModule {
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();

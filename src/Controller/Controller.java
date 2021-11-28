@@ -5,6 +5,7 @@ import GUI.Login;
 import GUI.MainModule;
 import GUI.Register;
 import GUI.Search;
+import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import GUI.Contact;
@@ -61,6 +62,7 @@ public class Controller extends MainModule{
 	private ChargeBands chargebands;
 	private GuestAccount guestAccount;
 	private Bookings bookings;
+	private BookProperty bookProperty;
 
 	
 	public Controller(MainModule mainModule, 
@@ -90,7 +92,8 @@ public class Controller extends MainModule{
 			ChargeBands chargebands,
 			
 			GuestAccount guestAccount,
-			Bookings bookings){
+			Bookings bookings, 
+			BookProperty bookProperty){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -120,6 +123,7 @@ public class Controller extends MainModule{
 		this.chargebands = chargebands;
 		this.guestAccount = guestAccount;
 		this.bookings = bookings;
+		this.bookProperty = bookProperty;
 	}
 	
 	public void setTitle(String title){
@@ -285,12 +289,17 @@ public class Controller extends MainModule{
 			model.setHostId(id);
 			chargebands.initializeChargeBands(facilitiesId, id);
 		}
-		else if (mainModule.editPropertyState == EDITPROPERTY.BOOKINGS && (mainModule.userState==USER.HOST || mainModule.userState==USER.GUEST)){
+		else if (mainModule.editPropertyState == EDITPROPERTY.BOOKINGS){
 			System.out.println("HEREEE");
 			System.out.println("STATE = "+mainModule.currentState+" USER = "+mainModule.userState);
 			model.setGuestId(id);
 			System.out.println(id);
 			bookings.initializeBookings(facilitiesId, id);
+		}
+		else if (mainModule.editPropertyState == EDITPROPERTY.BOOK_PROPERTY){
+			model.setGuestId(id);
+			System.out.println(id);
+			bookProperty.initializeBookProperty(facilitiesId, id);
 		}
 	}
  	
