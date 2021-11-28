@@ -76,6 +76,13 @@ public class Search extends javax.swing.JFrame {
 		this.controller=controller;
 		
         initComponents();
+        model.setSD(startDateTextField.getText());
+ 	   model.setED(endDateTextField.getText());
+ 	   model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
+ 	   model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
+ 	   model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
+ 	   model.setPlaceName("");
+ 	
        Show_Search_In_JTable();
     }
     
@@ -143,6 +150,8 @@ public class Search extends javax.swing.JFrame {
        System.out.println("guest cap: "+guestCap);
        System.out.println("placename: "+placeName);
        
+       
+       
 //       /////////////////////////////////////////no search criteria////////////////////////////////////////////////////
        if(minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
     	   int addressId;
@@ -190,7 +199,7 @@ public class Search extends javax.swing.JFrame {
        ///////////////////////////////////////// 1 search criteria queries/////////////////////////////////////////////
        
        //startDate
-       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd != "" && ed =="" && placeName == "" ) {
+       if(minPPN == 0 && maxPPN == 0 && guestCap == 0 && !sd.equals("") && ed.equals("31/12/2022") && placeName.equals("") ) {
     	   int addressId;
     	   int propId;
            String houseNameNum, pc;
@@ -1973,12 +1982,16 @@ public class Search extends javax.swing.JFrame {
    // Display Data In JTable
    
    public void Show_Search_In_JTable() {
-	   model.setSD(startDateTextField.getText());
-	   model.setED(endDateTextField.getText());
-	   model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
-	   model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
-	   model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
-	   model.setPlaceName("");
+	   System.out.println("INSIDE TH Show_Search_In_JTable");
+	   System.out.println("sd: "+model.getSD());
+	   System.out.println("ed: "+model.getED());
+	   System.out.println("gc: "+model.getGuestCap());
+	   System.out.println("maxp: "+model.getMaxPPN());
+	   System.out.println("minp: "+model.getMinPPN());
+	   System.out.println("placename: "+model.getPlaceName());
+
+	   
+	   
 	   
        ArrayList<SearchObject> list = getSearchList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Search.getModel();
@@ -2158,6 +2171,8 @@ public class Search extends javax.swing.JFrame {
 				//setting end date
 				if(endDateTextField.getText().isEmpty()) {
 					model.setED("31/12/2022"); 
+					System.out.println("IN IF STMT ed: "+model.getED());
+
 				}else {
 					model.setED(endDateTextField.getText().toString());	
 				}
