@@ -55,6 +55,7 @@ public class EditSleeping extends JFrame{
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
+	 private JTextField numberOfBedsTextField;
 	 public EditSleeping(MainModule mainModule, Controller controller, Model model) {
 		//initializeEditSleeping();
 		this.model=model;
@@ -141,7 +142,7 @@ public class EditSleeping extends JFrame{
 				frame.dispose();
 			}
 		});
-		addBedroomButton.setBounds(197, 405, 209, 46);
+		addBedroomButton.setBounds(197, 482, 209, 46);
 		editSleepingPanel.add(addBedroomButton);
 		
 		JButton backButton = new JButton("Back");
@@ -162,6 +163,16 @@ public class EditSleeping extends JFrame{
 		});	
 		editSleepingPanel.add(backButton);
 		
+		JLabel noOfBedsLabel = new JLabel("Number of Beds in Faciity");
+		noOfBedsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		noOfBedsLabel.setBounds(171, 358, 209, 34);
+		editSleepingPanel.add(noOfBedsLabel);
+		
+		numberOfBedsTextField = new JTextField();
+		numberOfBedsTextField.setBounds(385, 358, 49, 29);
+		editSleepingPanel.add(numberOfBedsTextField);
+		numberOfBedsTextField.setColumns(10);
+		
 		
 		
 		frame.setBounds(100, 100, 600, 700);
@@ -177,14 +188,15 @@ public class EditSleeping extends JFrame{
 			System.out.println("id after in updateSleeping func = "+idAfter);
 			model.setBedLinen(bedLinenRadioBtn.isSelected());
 			model.setTowels(towelsRadioBtn.isSelected());
-			
-			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=? "
+			model.setNoOfBeds(Integer.parseInt(numberOfBedsTextField.getText()));
+			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=?, noOfBeds=? "
 										+ "where sleeping_id=?";
 			
 			PreparedStatement updatingSleepingValues= connection.prepareStatement(updateSleepingRecord);
 			updatingSleepingValues.setBoolean(1, model.getBedLinen());
 			updatingSleepingValues.setBoolean(2, model.getTowels());
-			updatingSleepingValues.setInt(3, idAfter);
+			updatingSleepingValues.setInt(3, model.getNoOfBeds());
+			updatingSleepingValues.setInt(4, idAfter);
 			updatingSleepingValues.executeUpdate();
 			System.out.println(updatingSleepingValues.toString());
 			

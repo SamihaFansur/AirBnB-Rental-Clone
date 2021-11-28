@@ -102,13 +102,14 @@ public class AddFacility extends JFrame{
 					try {
 						connection = ConnectionManager.getConnection();
 						
-						String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBedrooms)"
-													+ " values(?,?,?)";
+						String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBeds, noOfBedrooms)"
+													+ " values(?,?,?,?)";
 						PreparedStatement ps_sleeping = connection.prepareStatement(insertSleepingQuery, Statement.RETURN_GENERATED_KEYS);
 						
 						ps_sleeping.setBoolean(1, false);
 						ps_sleeping.setBoolean(2, false);
 						ps_sleeping.setInt(3, 0);
+						ps_sleeping.setInt(4, 0);
 	
 						System.out.println(ps_sleeping);
 						ps_sleeping.executeUpdate();

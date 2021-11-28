@@ -31,7 +31,7 @@ public class Model {
 	
 	//sleeping variables
 	private boolean bedLinen, towels;
-	private int noOfBedrooms, bedroomId;
+	private int noOfBedrooms, bedroomId, noOfBeds;
 	
 	//bedType variables
 	private boolean bed1, bed2 ;
@@ -547,6 +547,15 @@ public class Model {
 	public int getNoOfBedrooms() {
 		return noOfBedrooms;
 	}
+	
+	public void setNoOfBeds(int noOfBeds) {
+		this.noOfBeds= noOfBeds;
+	}
+
+	public int getNoOfBeds() {
+		return noOfBeds;
+	}
+	
 	
 	//bedType getters and setters
 	public void setBedroomId(int bedroomId) {
