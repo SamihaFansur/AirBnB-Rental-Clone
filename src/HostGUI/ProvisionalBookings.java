@@ -394,19 +394,12 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		TableModel model = jTable_Display_Reviews.getModel();
 		// Display Slected Row In JTexteFields
 		jTextField_booking_id.setText(model.getValueAt(i, 0).toString());
-
 		jTextField_property_id.setText(model.getValueAt(i, 1).toString());
-
 		jTextField_host_id.setText(model.getValueAt(i, 2).toString());
-
 		jTextField_guest_id.setText(model.getValueAt(i, 3).toString());
-
 		jTextField_provisional.setText(model.getValueAt(i, 4).toString());
-
 		jTextField_totalPrice.setText(model.getValueAt(i, 5).toString());
-
 		jTextField_startDate.setText(model.getValueAt(i, 6).toString());
-
 		jTextField_endDate.setText(model.getValueAt(i, 7).toString());
 	}
 
@@ -447,7 +440,6 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			}
 		});
 	}
-
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;
