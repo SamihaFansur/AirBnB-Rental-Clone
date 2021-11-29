@@ -74,7 +74,7 @@ public class Tables {
 				+ "host_id INT , FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
 //				+ "facilities_id INT, FOREIGN KEY (facilities_id) REFERENCES Facilities(facilities_id), "
 //				+ "review_id INT REFERENCES Review, "
-				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT)";
+				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT, breakfast BOOL)";
 
 		String createFacilitiesTable = "CREATE TABLE Facilities("
 				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
@@ -113,7 +113,7 @@ public class Tables {
 		String[] create = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable,
 				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
 				createBathing_BathTypeTable, createSleepingTable, createSleeping_BedTypeTable, createPropertyTable,
-				createFacilitiesTable, createChargeBandsTable, createReviewTable, createBookingTable};
+				createFacilitiesTable, createChargeBandsTable, createBookingTable, createReviewTable};
 
 		createAllTables(create);
 		
