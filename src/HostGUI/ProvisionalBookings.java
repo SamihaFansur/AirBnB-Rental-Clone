@@ -80,6 +80,8 @@ public class ProvisionalBookings extends javax.swing.JFrame {
        Connection connection = getConnection();
        
    
+       if(mainModule.userState == USER.HOST) {
+       
        String query = "SELECT * FROM `Booking` where host_id=" + Id + " and provisional=true";	
        
        System.out.println(query);
@@ -100,7 +102,28 @@ public class ProvisionalBookings extends javax.swing.JFrame {
        }
        return bookingsList;
        
-       
+       }else {
+           String query = "SELECT * FROM `Booking` where guest_id=" + Id + " and provisional=true";	
+           
+           System.out.println(query);
+           Statement st;
+           ResultSet rs;
+           
+           try {
+               st = connection.createStatement();
+               rs = st.executeQuery(query);
+               BookingObject bookings; 
+               while(rs.next())
+               {
+            	   bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"), rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"), rs.getDouble("totalPrice"), rs.getDate("startDate"), rs.getDate("endDate"));
+            	   bookingsList.add(bookings);
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+           return bookingsList;
+            
+       }
    }
    
    // Display Data In JTable

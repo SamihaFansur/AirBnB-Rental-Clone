@@ -95,16 +95,43 @@ public class GuestAccount extends JFrame{
 		editAccountButton.setBounds(203, 177, 183, 34);
 		registerPanel.add(editAccountButton);
 		
-		JButton provisionalBookingsLabel = new JButton("Provisional Bookings");
-		provisionalBookingsLabel.addActionListener(new ActionListener() {
+		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
+		provisionalBookingsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				//MainModule.controller.editPropertyView(0);
+				
+				mainModule.editPropertyState=EDITPROPERTY.PROVISIONAL_BOOKINGS;
+				int id = 0;
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				try {
+
+					connection = ConnectionManager.getConnection();
+					
+					String getGuestIDOfUser = "select guest_id from GuestAccount where email=?";	
+					
+					PreparedStatement guestIDfromGuestAccountTable = connection.prepareStatement(getGuestIDOfUser);
+					guestIDfromGuestAccountTable.setString(1, model.getEmail());
+					
+					ResultSet g_id = guestIDfromGuestAccountTable.executeQuery();
+					while (g_id.next()) {
+					 id = g_id.getInt(1);
+					 System.out.println("guest id = "+id);
+					}
+					
+					 System.out.println("guest id  after = "+id);
+					 connection.close();
+				}catch(Exception ex) {
+					System.err.println(ex.getMessage());
+				}
+				 
+				System.out.println(model.getEmail());
+				model.setGuestId(id);
+				
+				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
 			}
 		});
-		provisionalBookingsLabel.setBounds(203, 269, 183, 34);
-		registerPanel.add(provisionalBookingsLabel);
+		provisionalBookingsButton.setBounds(203, 269, 183, 34);
+		registerPanel.add(provisionalBookingsButton);
 		
 		JButton bookingsButton = new JButton("Bookings List");
 		bookingsButton.addActionListener(new ActionListener() {
