@@ -74,10 +74,15 @@ public class Bookings extends javax.swing.JFrame {
            
  // get a list of users from mysql database
    public ArrayList<BookingObject> getBookingsList() {
+	   
        ArrayList<BookingObject> bookingsList = new ArrayList<BookingObject>();
        Connection connection = getConnection();
        
-       String query = "SELECT * FROM `Booking` where guest_id=" + guestId;	
+       if(mainModule.userState == USER.GUEST) {
+    	   
+       
+       String query = "SELECT * FROM `Booking` where guest_id=" + Id;	
+       
        System.out.println(query);
        Statement st;
        ResultSet rs;
@@ -95,6 +100,30 @@ public class Bookings extends javax.swing.JFrame {
            e.printStackTrace();
        }
        return bookingsList;
+       
+       }else {
+       String query = "SELECT * FROM `Booking` where host_id=" + Id;
+       
+       System.out.println(query);
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           BookingObject bookings; 
+           while(rs.next())
+           {
+        	   bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"), rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"), rs.getDouble("totalPrice"), rs.getDate("startDate"), rs.getDate("endDate"));
+        	   bookingsList.add(bookings);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return bookingsList;
+       }
+       
+       
    }
    
    // Display Data In JTable
@@ -456,7 +485,7 @@ public class Bookings extends javax.swing.JFrame {
      */
     public void initializeBookings(int fId, int id) {
     	propertyId = fId;
-    	guestId = id;
+    	Id = id;
     	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH FACILITIES ID :"+propertyId);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -511,7 +540,7 @@ public class Bookings extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_living_id;
     private JButton backButton;
     private static int propertyId;
-    private static int guestId;
+    private static int Id;
     private JLabel lblCommunication;
     private JLabel lblCleanliness;
     private JLabel lblDescription;

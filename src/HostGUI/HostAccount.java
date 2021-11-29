@@ -172,10 +172,48 @@ public class HostAccount extends JFrame{
 		hostAccountPanel.add(addPropertyButton);
 		
 		JButton bookingsButton = new JButton("Bookings List");
+		bookingsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainModule.editPropertyState=EDITPROPERTY.BOOKINGS;
+				int id = 0;
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				try {
+
+					connection = ConnectionManager.getConnection();
+					
+					String getHostIDOfUser = "select host_id from HostAccount where email=?";	
+					
+					PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
+					hostIDfromHostAccountTable.setString(1, model.getEmail());
+					
+					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
+					while (h_id.next()) {
+					 id = h_id.getInt(1);
+					 System.out.println("host id = "+id);
+					}
+					
+					 System.out.println("host id  after = "+id);
+					 connection.close();
+				}catch(Exception ex) {
+					System.err.println(ex.getMessage());
+				}
+				 
+				System.out.println(model.getEmail());
+				model.setHostId(id);
+				
+				MainModule.controller.editPropertyView(0, id);
+				frame.dispose();
+				
+			}
+		});
 		bookingsButton.setBounds(203, 351, 183, 34);
 		hostAccountPanel.add(bookingsButton);
 		
 		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
+		provisionalBookingsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		provisionalBookingsButton.setBounds(203, 406, 183, 34);
 		hostAccountPanel.add(provisionalBookingsButton);
 
