@@ -296,7 +296,7 @@ public class Bookings extends javax.swing.JFrame {
         backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
-				
+				if(mainModule.userState == USER.HOST) {
 				mainModule.currentState=STATE.HOST_ACCOUNT;
 				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
 				mainModule.userState=USER.HOST;
@@ -304,7 +304,14 @@ public class Bookings extends javax.swing.JFrame {
 //				close();
 			//	model.setEditPropertyPostcode(null);
 				setVisible(false);
-				
+				}else {
+					mainModule.userState=USER.GUEST;
+					mainModule.currentState=STATE.GUEST_ACCOUNT;
+	
+					
+					MainModule.controller.drawNewView();
+					setVisible(false);
+				}
 			}
 		});
         
