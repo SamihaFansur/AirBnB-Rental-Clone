@@ -58,7 +58,7 @@ public class AddProperty extends JFrame {
 	}
 
 	public AddProperty(MainModule mainModule, Controller controller, Model model) {
-		 //initializeEditProperty();
+		// initializeEditProperty();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
@@ -108,8 +108,6 @@ public class AddProperty extends JFrame {
 				if (model.getEditPropertyPostcode() == null) {
 					adddingFacility();
 				} else {
-
-					System.out.println("FACILITIES IDDDDDDDDDDDD = " + facilitiesId);
 					model.setFacilitiesId(facilitiesId);
 					frame.dispose();
 					MainModule.controller.editPropertyView(facilitiesId, 0);
@@ -119,17 +117,6 @@ public class AddProperty extends JFrame {
 		});
 		addFacilityButton.setBounds(206, 142, 183, 34);
 		editPropertyPanel.add(addFacilityButton);
-
-//		JButton facilitiesButton = new JButton("Facilities");
-//		facilitiesButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
-//				MainModule.controller.editPropertyView(0, 0); //fix the params
-//				close();
-//			}
-//		});
-//		facilitiesButton.setBounds(203, 163, 183, 34);
-//		editPropertyPanel.add(facilitiesButton);
 
 		JLabel postcodeLabel = new JLabel("Postcode:");
 		postcodeLabel.setBounds(97, 248, 93, 34);
@@ -153,14 +140,14 @@ public class AddProperty extends JFrame {
 		cityLabel.setBounds(97, 338, 93, 34);
 		editPropertyPanel.add(cityLabel);
 
-		 String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
-					"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry",
-					"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull",
-					"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester",
-					"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
-					"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent",
-					"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
-	 	cityComboBox = new JComboBox(cityNames);
+		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
+				"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", "Derby", "Durham", "Ely",
+				"Exeter", "Gloucester", "Hereford", "Kingston upon Hull", "Lancaster", "Leeds", "Leicester",
+				"Lichfield", "Lincoln", "Liverpool", "London", "Manchester", "Newcastle upon Tyne", "Norwich",
+				"Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", "Preston", "Ripon", "Salford",
+				"Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", "Sunderland", "Truro",
+				"Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
+		cityComboBox = new JComboBox(cityNames);
 		cityComboBox.setBounds(195, 338, 274, 34);
 		editPropertyPanel.add(cityComboBox);
 
@@ -206,18 +193,13 @@ public class AddProperty extends JFrame {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Homepage sp = new Homepage();
-
 				mainModule.currentState = STATE.HOST_ACCOUNT;
 				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
-//				close();
 				model.setEditPropertyPostcode(null);
 				frame.dispose();
-
 			}
 		});
-
 		editPropertyPanel.add(backButton);
 
 		JButton addChargeBandsButton = new JButton("Add Charge Bands");
@@ -226,7 +208,6 @@ public class AddProperty extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.CHARGEBANDS;
-
 				int property_id = 0;
 
 				if (model.getEditPropertyPostcode() == null) {
@@ -235,56 +216,22 @@ public class AddProperty extends JFrame {
 
 					try {
 
-						// START HERE
 						connection = ConnectionManager.getConnection();
 						int tempId = 0;
 						Statement getPropertyId = connection.createStatement();
 						ResultSet propertyIds = getPropertyId.executeQuery("SELECT * FROM Property");
 						while (propertyIds.next()) {
 							tempId = propertyIds.getInt(1);
-							// System.out.println("THIS IS THE ID: "+tempId);
 						}
-						System.out.println("THIS IS THE LAST PROPERTY ID IN THE TABLE ID: " + tempId);
-						// System.out.println("THIS RSULT SET OF IDS "+propertyIds);
-//							String getLastPropertyId = "SELECT propert_id FROM Property";
-//							PreparedStatement ps_getLastPropertyId = getLastPropertyId.executeQuery();
-
-						// String currentPostcode = model.getEditPropertyPostcode();
-						// System.out.println("PROPERTY POSTCODEEEEEEE = "+currentPostcode);
-						// String getCurrentPropertyId = "select property_id from Property where
-						// postcode=?";
-						// PreparedStatement gettingCurrentPropertyId =
-						// connection.prepareStatement(getCurrentPropertyId);
-
-						// gettingCurrentPropertyId.setString(1, currentPostcode);
-
-						// int property_id = 0;
-
-						// ResultSet prop_id = gettingCurrentPropertyId.executeQuery();
-						// while (prop_id.next()) {
-						// property_id = prop_id.getInt("property_id");
-						// }
-						// System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
 						propertyId = tempId;
 						model.setPropertyId(property_id);
 
-						// END HERE
-
-						// System.out.println("CURRENT PROPERTY ID ---------------------"+property_id);
 						connection.close();
 					} catch (Exception s) {
 						System.err.print(s.getMessage());
 					}
-
-					// System.out.println("PCCCCCCCCCCCC = "+model.getEditPropertyPostcode());
 					mainModule.userState = USER.HOST;
-					// System.out.println("�����������������������ADD CHARGE BANDS BTN CLICKED
-					// "+mainModule.editPropertyState);
-					System.out.println("PROPERTY ID AT THE END OF ADD PROPERTY: " + propertyId);
-					System.out.println("HOST ID IN ADD PROPERTY: "+model.getHostId());
 					MainModule.controller.editPropertyView(propertyId, model.getHostId());
-					// close();
-					// model.setEditPropertyPostcode(null);
 					frame.dispose();
 					close();
 				}
@@ -298,25 +245,17 @@ public class AddProperty extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Boolean validateGuestCapacityInput = validateGuestCapacity(guestCapacityTextField.getText());
-				// System.out.println(guestCapacityTextField.getSelectedText());
-
 				if (validateGuestCapacityInput) {
-					// setting all temp facility id's to zero so host can get access to fill in each
-					// facility once
-
 					model.setCurrentKitchedId(0);
 					model.setCurrentBathingId(0);
 					model.setCurrentLivingId(0);
 					model.setCurrentUtilityId(0);
 					model.setCurrentOutdoorsId(0);
-					System.out.println("btn pressed");
 					addEditPropertyDetails();
-
 				} else {
 					JOptionPane.showMessageDialog(guestCapacityTextField,
 							"Guest capacity must be a number greater than 0");
 				}
-
 			}
 		});
 		addEditPropertyButton.setBounds(248, 668, 91, 23);
@@ -341,7 +280,6 @@ public class AddProperty extends JFrame {
 	}
 
 	public void addEditPropertyDetails() {
-		System.out.println("in btn addprop func");
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -362,7 +300,6 @@ public class AddProperty extends JFrame {
 			propertyAddress.setString(4, model.getEditPropertyPostcode());
 
 			propertyAddress.executeUpdate();
-			System.out.println(propertyAddress.toString());
 
 			String insertPropertyAddressInPropertyQuery = "insert into Property (address_id , shortName, guestCapacity, description) values((SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?),?,?,?) ";
 
@@ -375,9 +312,6 @@ public class AddProperty extends JFrame {
 			propertyAddressInProperty.setString(5, model.getEditPropertyDescription());
 
 			propertyAddressInProperty.executeUpdate();
-			System.out.println(propertyAddressInProperty.toString());
-
-			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ = " + model.getEmail());
 
 			String getHostIDOfUser = "select host_id from HostAccount where email=?";
 			PreparedStatement hostIDfromHostAccountTable = connection.prepareStatement(getHostIDOfUser);
@@ -386,10 +320,8 @@ public class AddProperty extends JFrame {
 			ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 			while (h_id.next()) {
 				id = h_id.getInt(1);
-				System.out.println("host id = " + id);
 			}
-			System.out.println("host id  after = " + id);
-			hostId=id;
+			hostId = id;
 			model.setHostId(hostId);
 
 			String insertHostIDInProperty = "update Property set host_id=? where address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
@@ -398,30 +330,26 @@ public class AddProperty extends JFrame {
 			hostIDInProperty.setString(2, model.getEditPropertyHouseNameNum());
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
-			System.out.println(hostIDInProperty.toString());
 
-				String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
-						+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
-				PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
-						Statement.RETURN_GENERATED_KEYS);
+			String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
+					+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
+			PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
+					Statement.RETURN_GENERATED_KEYS);
 
-				ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
-				ps_facilities.setString(2, model.getEditPropertyPostcode());
-				ps_facilities.setNull(3, 0);
-				ps_facilities.setNull(4, 0);
-				ps_facilities.setNull(5, 0);
-				ps_facilities.setNull(6, 0);
-				ps_facilities.setNull(7, 0);
-				ps_facilities.setNull(8, 0);
+			ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
+			ps_facilities.setString(2, model.getEditPropertyPostcode());
+			ps_facilities.setNull(3, 0);
+			ps_facilities.setNull(4, 0);
+			ps_facilities.setNull(5, 0);
+			ps_facilities.setNull(6, 0);
+			ps_facilities.setNull(7, 0);
+			ps_facilities.setNull(8, 0);
+			ps_facilities.executeUpdate();
 
-				System.out.println(ps_facilities);
-				ps_facilities.executeUpdate();
-
-				ResultSet rs = ps_facilities.getGeneratedKeys();
-				if (rs.next()) {
-					facilitiesId = rs.getInt(1);
-				}
-
+			ResultSet rs = ps_facilities.getGeneratedKeys();
+			if (rs.next()) {
+				facilitiesId = rs.getInt(1);
+			}
 
 			connection.close();
 		} catch (Exception e) {
@@ -431,21 +359,12 @@ public class AddProperty extends JFrame {
 	}
 
 	public boolean validateGuestCapacity(String guestCapacity) {
-		System.out.println("HERE****************");
-
 		if (guestCapacity.matches("[1-9]*") && (guestCapacity.length() >= 1)) {
-			// System.out.println("First name contains a characters not between a-z or
-			// A-Z");
-			System.out.println(guestCapacity + " IS  VALID****************");
-
 			return true;
 		} else {
-			System.out.println(guestCapacity + " IS NOT VALID***************");
 			return false;
 		}
-
 	}
-
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
