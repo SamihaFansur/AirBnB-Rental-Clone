@@ -23,12 +23,10 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import Model.Model;
 
-public class HostAccount extends JFrame{
-
+public class HostAccount extends JFrame {
 
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
-
 
 	Connection connection = null;
 
@@ -40,15 +38,16 @@ public class HostAccount extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public HostAccount(MainModule mainModule, Controller controller, Model model) {
-		//initializeHostAccount();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+
+	public HostAccount(MainModule mainModule, Controller controller, Model model) {
+		// initializeHostAccount();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -59,16 +58,14 @@ public class HostAccount extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 
 		JPanel hostAccountPanel = new JPanel();
 		hostAccountPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(hostAccountPanel, BorderLayout.CENTER);
 		hostAccountPanel.setLayout(null);
-
 
 		JLabel hostAccountLabel = new JLabel("Host Account");
 		hostAccountLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -79,10 +76,9 @@ public class HostAccount extends JFrame{
 		editAccountButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.EDIT_ACCOUNT;
+				mainModule.currentState = STATE.EDIT_ACCOUNT;
 				MainModule.controller.drawNewView();
 				frame.dispose();
-
 			}
 		});
 		editAccountButton.setBounds(203, 177, 183, 34);
@@ -94,7 +90,6 @@ public class HostAccount extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
 				int id = 0;
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				try {
 
 					connection = ConnectionManager.getConnection();
@@ -106,19 +101,12 @@ public class HostAccount extends JFrame{
 
 					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 					while (h_id.next()) {
-					 id = h_id.getInt(1);
-					 System.out.println("host id = "+id);
+						id = h_id.getInt(1);
 					}
-
-					 System.out.println("host id  after = "+id);
-					 connection.close();
-				}catch(Exception ex) {
-					System.err.println(ex.getMessage());
+					connection.close();
+				} catch (Exception ex) {
 				}
-
-				System.out.println(model.getEmail());
 				model.setHostId(id);
-
 				MainModule.controller.editPropertyView(id, 0);
 				frame.dispose();
 			}
@@ -145,20 +133,14 @@ public class HostAccount extends JFrame{
 
 					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 					while (h_id.next()) {
-					 id = h_id.getInt(1);
-					 System.out.println("host id = "+id);
+						id = h_id.getInt(1);
+						System.out.println("host id = " + id);
 					}
 					connection.close();
-				}catch(Exception ex) {
+				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-
-				System.out.println(model.getEmail());
 				model.setHostId(id);
-
-
-
-				System.out.println("IN HOST ACCOUNT, HOST ID:: "+model.getHostId());
 				MainModule.controller.editPropertyView(0, model.getHostId());
 				frame.dispose();
 			}
@@ -170,9 +152,8 @@ public class HostAccount extends JFrame{
 		bookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState=EDITPROPERTY.BOOKINGS;
+				mainModule.editPropertyState = EDITPROPERTY.BOOKINGS;
 				int id = 0;
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				try {
 
 					connection = ConnectionManager.getConnection();
@@ -184,22 +165,15 @@ public class HostAccount extends JFrame{
 
 					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 					while (h_id.next()) {
-					 id = h_id.getInt(1);
-					 System.out.println("host id = "+id);
+						id = h_id.getInt(1);
 					}
-
-					 System.out.println("host id  after = "+id);
-					 connection.close();
-				}catch(Exception ex) {
+					connection.close();
+				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-
-				System.out.println(model.getEmail());
 				model.setHostId(id);
-
 				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
-
 			}
 		});
 		bookingsButton.setBounds(203, 351, 183, 34);
@@ -209,11 +183,8 @@ public class HostAccount extends JFrame{
 		provisionalBookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-
-				mainModule.editPropertyState=EDITPROPERTY.PROVISIONAL_BOOKINGS;
+				mainModule.editPropertyState = EDITPROPERTY.PROVISIONAL_BOOKINGS;
 				int id = 0;
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				try {
 
 					connection = ConnectionManager.getConnection();
@@ -225,19 +196,13 @@ public class HostAccount extends JFrame{
 
 					ResultSet h_id = hostIDfromHostAccountTable.executeQuery();
 					while (h_id.next()) {
-					 id = h_id.getInt(1);
-					 System.out.println("host id = "+id);
+						id = h_id.getInt(1);
 					}
-
-					 System.out.println("host id  after = "+id);
-					 connection.close();
-				}catch(Exception ex) {
+					connection.close();
+				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-
-				System.out.println(model.getEmail());
 				model.setHostId(id);
-
 				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
 			}
@@ -245,11 +210,9 @@ public class HostAccount extends JFrame{
 		provisionalBookingsButton.setBounds(203, 406, 183, 34);
 		hostAccountPanel.add(provisionalBookingsButton);
 
-
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
