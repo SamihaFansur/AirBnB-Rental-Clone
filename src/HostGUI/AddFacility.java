@@ -21,6 +21,7 @@ import Controller.Controller;
 import GUI.ConnectionManager;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.STATE;
 import Model.Model;
 
 public class AddFacility extends JFrame {
@@ -46,13 +47,14 @@ public class AddFacility extends JFrame {
 	}
 
 	/**
-	 * Create the application.
+	 * Class for adding a facility to a property
 	 */
 
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 
+	
 	public AddFacility(MainModule mainModule, Controller controller, Model model) {
 		// initializeAddFacility();
 		this.model = model;
@@ -61,7 +63,7 @@ public class AddFacility extends JFrame {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initializes the contents of the frame.
 	 */
 	public void initializeAddFacility(int facilityId, int id) {
 		faciltiesId = model.getFacilitiesId();
@@ -69,10 +71,10 @@ public class AddFacility extends JFrame {
 		hostId = id;
 		previouslyInPropertiesList = model.getPreviouslyInPropertiesList();
 
+		//Creates a frame with a navbar
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
-
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -137,6 +139,7 @@ public class AddFacility extends JFrame {
 		addSleepingButton.setBounds(192, 221, 196, 51);
 		addFacilityPanel.add(addSleepingButton);
 
+		//Button For adding a Bathing facility with initially empty values to property
 		JButton btnAddBathingFacility = new JButton("Add Bathing Facility");
 		btnAddBathingFacility.addActionListener(new ActionListener() {
 			@Override
@@ -185,21 +188,13 @@ public class AddFacility extends JFrame {
 		btnAddBathingFacility.setBounds(192, 283, 196, 51);
 		addFacilityPanel.add(btnAddBathingFacility);
 
-		// int kitchenId = 0;
-
+		//Button For adding a Kitchen facility with initially empty values to property
 		JButton btnAddKitchenfacility = new JButton("Add Kitchen Facility");
 		btnAddKitchenfacility.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_KITCHEN;
-				// create a record and set values to null
-				// int kitchenId=0;
-				// model.setCurrentKitchedId(0);
-				// setting
-				// kitchenId = 0;
-
 				if (model.getCurrentKitchedId() == 0) {
-
 					try {
 						connection = ConnectionManager.getConnection();
 
@@ -242,7 +237,8 @@ public class AddFacility extends JFrame {
 		});
 		btnAddKitchenfacility.setBounds(192, 350, 196, 57);
 		addFacilityPanel.add(btnAddKitchenfacility);
-
+		
+		//Button For adding a Utility facility with initially empty values to property
 		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
 		btnAddUtilityFacility.addActionListener(new ActionListener() {
 			@Override
@@ -293,6 +289,7 @@ public class AddFacility extends JFrame {
 		btnAddUtilityFacility.setBounds(194, 424, 194, 57);
 		addFacilityPanel.add(btnAddUtilityFacility);
 
+		//Button For adding a Facility facility with initially empty values to property
 		JButton btnAddLivingFacility = new JButton("Add Living Facility");
 		btnAddLivingFacility.addActionListener(new ActionListener() {
 			@Override
@@ -342,6 +339,7 @@ public class AddFacility extends JFrame {
 		btnAddLivingFacility.setBounds(194, 498, 194, 57);
 		addFacilityPanel.add(btnAddLivingFacility);
 
+		//Button For adding a Outdoors facility with initially empty values to property
 		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
 		btnAddOutdoorsFacility.addActionListener(new ActionListener() {
 			@Override
@@ -389,7 +387,7 @@ public class AddFacility extends JFrame {
 		});
 		btnAddOutdoorsFacility.setBounds(192, 566, 196, 51);
 		addFacilityPanel.add(btnAddOutdoorsFacility);
-
+		//Button for returning to the previous GUI page
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
@@ -397,16 +395,18 @@ public class AddFacility extends JFrame {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				previouslyInPropertiesList = model.getPreviouslyInPropertiesList();
 				if (previouslyInPropertiesList) {
-					mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-					MainModule.controller.editPropertyView(hostId, facilityId);
+					mainModule.currentState = STATE.HOST_ACCOUNT;
+					MainModule.controller.drawNewView();
+					System.out.println(hostId);
+					System.out.println(facilityId);
 					frame.setVisible(false);
 				} else {
-					mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
+					mainModule.currentState = STATE.HOST_ACCOUNT;
 					MainModule.controller.editPropertyView(hostId, facilityId);
 					frame.setVisible(false);
 				}
-
 			}
 		});
 		addFacilityPanel.add(backButton);
@@ -420,11 +420,10 @@ public class AddFacility extends JFrame {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-
+	//Displays error message if user tries to add a facility that already exists in the property
 	public void displayMessageAlreadyMade() {
 		JOptionPane.showMessageDialog(this,
 				"You have already saved this facility. Go to Facilties to edit this facility");
 	}
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

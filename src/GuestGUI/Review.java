@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -106,8 +107,8 @@ public class Review extends JFrame {
 		lblDescription.setBounds(127, 437, 167, 34);
 		reviewPanel.add(lblDescription);
 
-		JButton addKitchen = new JButton("Add Review");
-		addKitchen.addActionListener(new ActionListener() {
+		JButton addReview = new JButton("Add Review");
+		addReview.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// INSERT Property INFO INTO TEXT FIELDS
@@ -118,6 +119,9 @@ public class Review extends JFrame {
 							+ " values(?,?,?,?,?,?,?,?)";
 					PreparedStatement ps_review = connection.prepareStatement(addReview);
 
+					if(Integer.parseInt(AccuracyRatingTextField.getText())<=5.0 && Integer.parseInt(locationRatingTextField.getText())<=5.0 &&
+							(Integer.parseInt(valueRatingTextField.getText())<=5.0)&& (Integer.parseInt(cleanlinessRatingTextField.getText())<=5.0)
+							&& (Integer.parseInt(communicationRatingTextField.getText())<=5.0)) {
 					ps_review.setInt(1, propertyId);
 					ps_review.setInt(2, booking_id);
 					ps_review.setDouble(3, Integer.parseInt(AccuracyRatingTextField.getText()));
@@ -127,6 +131,11 @@ public class Review extends JFrame {
 					ps_review.setDouble(7, Integer.parseInt(cleanlinessRatingTextField.getText()));
 					ps_review.setString(8, descriptionTextField.getText());
 					ps_review.executeUpdate();
+					}else {
+						JOptionPane.showMessageDialog(frame,"Rating must be number smaller than 5",
+							    "Inane error",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 
 				} catch (Exception f) {
 					System.err.println("Got an exception!");
@@ -134,9 +143,9 @@ public class Review extends JFrame {
 				}
 			}
 		});
-		addKitchen.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		addKitchen.setBounds(217, 609, 180, 23);
-		reviewPanel.add(addKitchen);
+		addReview.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		addReview.setBounds(217, 609, 180, 23);
+		reviewPanel.add(addReview);
 
 		descriptionTextField = new JTextField();
 		descriptionTextField.setBounds(127, 471, 351, 109);

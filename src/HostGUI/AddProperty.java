@@ -27,6 +27,7 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
+//Class to add a property to the database
 public class AddProperty extends JFrame {
 
 	private NavHost navForHost = new NavHost();
@@ -45,18 +46,17 @@ public class AddProperty extends JFrame {
 	private int facilitiesId;
 	Connection connection = null;
 
-	/**
-	 * Create the application.
-	 */
 
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 
+	//function to close the frame
 	public void close() {
 		frame.dispose();
 	}
 
+	//Constructor for addProperty
 	public AddProperty(MainModule mainModule, Controller controller, Model model) {
 		// initializeEditProperty();
 		this.model = model;
@@ -75,6 +75,7 @@ public class AddProperty extends JFrame {
 		JOptionPane.showMessageDialog(this, "You must save a property before adding a charge band");
 	}
 
+	
 	public void initializeEditProperty() {
 
 		model.setPreviouslyInPropertiesList(false);
@@ -201,7 +202,7 @@ public class AddProperty extends JFrame {
 			}
 		});
 		editPropertyPanel.add(backButton);
-
+		//Button adds a charge band to the table and to the database
 		JButton addChargeBandsButton = new JButton("Add Charge Bands");
 		addChargeBandsButton.setBounds(206, 191, 183, 34);
 		addChargeBandsButton.addActionListener(new ActionListener() {
@@ -239,6 +240,7 @@ public class AddProperty extends JFrame {
 		});
 		editPropertyPanel.add(addChargeBandsButton);
 
+		//Button to save changes made to property textFields in the database
 		addEditPropertyButton = new JButton("Save");
 		addEditPropertyButton.addActionListener(new ActionListener() {
 			@Override
@@ -279,6 +281,7 @@ public class AddProperty extends JFrame {
 		frame.setVisible(true);
 	}
 
+	//Inserts edited property details into the database
 	public void addEditPropertyDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
@@ -357,7 +360,7 @@ public class AddProperty extends JFrame {
 			System.err.println(e.getMessage());
 		}
 	}
-
+	//checks if guest capacity is a valid amount
 	public boolean validateGuestCapacity(String guestCapacity) {
 		if (guestCapacity.matches("[1-9]*") && (guestCapacity.length() >= 1)) {
 			return true;
