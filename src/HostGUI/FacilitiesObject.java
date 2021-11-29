@@ -10,9 +10,6 @@ public class FacilitiesObject {
 	private int bathing_id;
 	private int living_id;
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public FacilitiesObject(int facilities_id, int utility_id, int outdoors_id, int kitchen_id, int sleeping_id,
 			int bathing_id, int living_id) {
 		this.facilities_id = facilities_id;
