@@ -5,25 +5,13 @@ public class SearchObject {
 	private int property_id, guestCapacity;
 	private String shortName, placeName, hostName;
     private boolean superhost, breakfast;
-	    
-//	    private String startDate;
-//	    private String endDate;
-
-	public SearchObject(int property_id, String shortName, int guestCapacity, 
-						String placeName, 
-//						String hostName, 
-						boolean breakfast
-//						boolean superhost
-						) {
-
+	 
+	public SearchObject(int property_id, String shortName, int guestCapacity, String placeName, boolean breakfast) {
 		this.property_id = property_id;
 		this.shortName = shortName;
 		this.guestCapacity = guestCapacity;
         this.placeName = placeName;
-//        this.hostName = hostName;
-//        this.superhost = superhost;
         this.breakfast = breakfast;
-
 	}
 
 	public int getPropertyId() {

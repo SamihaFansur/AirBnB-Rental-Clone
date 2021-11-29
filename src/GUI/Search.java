@@ -177,20 +177,10 @@ public class Search extends javax.swing.JFrame {
 
 			try {
 				   SearchObject search;
-				   
-				   String allCb = "select property_id from ChargeBands";
-	    		   PreparedStatement getAllCb = connection.prepareStatement(allCb);
-	    		   ResultSet gettingAllCb = getAllCb.executeQuery();
-
-	    		   System.out.println(getAllCb);
-	    		   while(gettingAllCb.next()) {
-	    				   
-    				   propId = gettingAllCb.getInt("property_id");
-    				   
-    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where property_id=?";
+				       				   
+    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property";
             		   
 	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
-	   					getProperty.setInt(1, propId);
 	   					
 	   					ResultSet gettingProperty = getProperty.executeQuery();
 	   					   
@@ -205,14 +195,13 @@ public class Search extends javax.swing.JFrame {
 	   						   
 	   						while(gettingPlaceName.next()) {
 	   							city = gettingPlaceName.getString("placeName");
-	   									   							
-	   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"),
-										gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+	   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"), 
+	   									gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+	   							
 								searchList.add(search);
 	   						}
 	   					}
-	    			   
-	    		   }
 				
 					//removes duplicate entries from table
 					for (int i = 0; i < searchList.size(); i++) {
@@ -227,6 +216,7 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
+       
 		///////////////////////////////////////// 1 search criteria////////////////////////////////
 
 		// startEndDate
@@ -294,6 +284,56 @@ public class Search extends javax.swing.JFrame {
 			}
 		}
 
+
+		//city 
+		if(minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && !placeName.equals("")) {
+	    	   int addressId, propId;
+				String city;
+
+				try {
+					   SearchObject search;
+					       				   
+	    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property";
+	            		   
+		   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+		   					
+		   					ResultSet gettingProperty = getProperty.executeQuery();
+		   					   
+		   					while(gettingProperty.next()) {
+		   						addressId = gettingProperty.getInt("address_id");
+		   						
+		   						String placeNameFromAid = "Select placeName from Address where address_id=? and placeName=?";
+		   		        		   
+		   						PreparedStatement getPlaceName= connection.prepareStatement(placeNameFromAid);
+		   						getPlaceName.setInt(1, addressId);
+		   						getPlaceName.setString(2, placeName);
+		   						
+		   						ResultSet gettingPlaceName = getPlaceName.executeQuery();
+		   						   
+		   						while(gettingPlaceName.next()) {
+		   							city = gettingPlaceName.getString("placeName");
+		   							
+		   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"), 
+		   									gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+		   							
+									searchList.add(search);
+		   						}
+		   					}
+					
+						//removes duplicate entries from table
+						for (int i = 0; i < searchList.size(); i++) {
+							for (int j = i + 1; j < searchList.size(); j++) {
+								if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+									searchList.remove(j);
+								}
+							}
+						}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		
 //       //endDate
 		// searching for properties where correposing charge band end dates are before
 		// the one from users input
