@@ -1,36 +1,29 @@
 package GUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
-
-import Controller.Controller;
-import GUI.ConnectionManager;
-import GUI.Login;
-import GUI.MainModule;
-import GUI.MainModule.EDITPROPERTY;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import HostGUI.NavHost;
-import GuestGUI.NavGuest;
-import Model.Model;
-
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
+import GuestGUI.NavGuest;
+import HostGUI.NavHost;
+import Model.Model;
 
 public class EditAccount extends JFrame {
 
@@ -160,6 +153,7 @@ public class EditAccount extends JFrame {
 
 		addEditPropertyButton = new JButton("Save");
 		addEditPropertyButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean validateFirstNameInput = validateName(firstNameTextField.getText());
 				boolean validateSurnameInput = validateName(surnameTextField.getText());
@@ -191,6 +185,7 @@ public class EditAccount extends JFrame {
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
 		backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Homepage sp = new Homepage();
 
@@ -215,6 +210,7 @@ public class EditAccount extends JFrame {
 		deleteAccountButton.setBounds(207, 548, 113, 23);
 		editACcountPanel.add(deleteAccountButton);
 		deleteAccountButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				deleteAccount();
 				frame.dispose();
@@ -230,7 +226,7 @@ public class EditAccount extends JFrame {
 		editACcountPanel.add(titleComboBox);
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
 		System.out.println("3");
@@ -444,7 +440,7 @@ public class EditAccount extends JFrame {
 //				// remove later
 				}
 				connection.close();
-			
+
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());

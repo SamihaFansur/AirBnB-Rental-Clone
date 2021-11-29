@@ -1,29 +1,29 @@
 package GUI;
 
-import Controller.*;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import Model.*;
-import java.awt.EventQueue;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
+import Model.Model;
 
 public class Register extends JFrame {
 
@@ -167,12 +167,12 @@ public class Register extends JFrame {
 		cityLabel.setBounds(82, 408, 125, 14);
 		registerPanel.add(cityLabel);
 
-		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
-								"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
-								"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
-								"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
-								"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", 
-								"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
+		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
+								"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry",
+								"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull",
+								"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester",
+								"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
+								"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent",
 								"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 		cityComboBox = new JComboBox(cityNames);
 		cityComboBox.setBounds(217, 400, 276, 31);
@@ -197,6 +197,7 @@ public class Register extends JFrame {
 
 		registerButton.setBounds(321, 553, 91, 23);
 		registerButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				validateFirstNameInput = validateName(firstNameTextField.getText());
@@ -207,7 +208,7 @@ public class Register extends JFrame {
 				// checking if email exists in DB:
 				emailAlreadyInDB = emailExistsInDB(emailAddressTextField.getText());
 
-				
+
 				// assumes UK number
 				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
 
@@ -218,7 +219,7 @@ public class Register extends JFrame {
 				for (int k = 0; k < houseNameNumberInput.length(); k++) {
 					// going through the input
 
-					if (Character.isDigit(houseNameNumberInput.charAt(k)) == false) {
+					if (!Character.isDigit(houseNameNumberInput.charAt(k))) {
 						// System.out.println(houseNameNumberInput+" IS NOT VALID");
 						System.out.println(houseNameNumberInput + " is a string not an integer. So break out of here");
 						validateHouseNameNumberInput = false;
@@ -228,18 +229,18 @@ public class Register extends JFrame {
 						validateHouseNameNumberInput = true;
 					}
 				}
-				if (validateHouseNameNumberInput == true) {
+				if (validateHouseNameNumberInput) {
 					System.out.println(houseNameNumberInput + " IS A NUMBER ONLY AND IS VALID");
 				}
 
 				// if not a number then it must be a String
-				if (validateHouseNameNumberInput == false) {
+				if (!validateHouseNameNumberInput) {
 					String[] houseNameNumberInputArray = houseNumberTextField.getText().split(" ");
 					for (int i = 0; i < houseNameNumberInputArray.length; i++) {
 						// validating one string at a time:
 						System.out.println(i);
 						validateHouseNameNumberInput = validateName(houseNameNumberInputArray[i]);
-						if (validateHouseNameNumberInput == false) {
+						if (!validateHouseNameNumberInput) {
 							// if one of the strings is not between a-z or A-Z then
 							System.out.println(houseNameNumberInputArray + " IS NOT VALID");
 							System.out.println(houseNameNumberInputArray[i] + "does not contain a-z or A-Z");
@@ -260,7 +261,7 @@ public class Register extends JFrame {
 					System.out.println("HEREEE");
 					System.out.println(streetNameInputArray[i]);
 					validateStreetNameInput = validateName(streetNameInputArray[i]);
-					if (validateStreetNameInput == false) {
+					if (!validateStreetNameInput) {
 						// if one of the strings is not between a-z or A-Z then
 						i = streetNameInputArray.length;
 						break;
@@ -300,7 +301,7 @@ public class Register extends JFrame {
 					MainModule.controller.drawNewView();
 					Login sp = new Login(mainModule, controller, model);
 					/*
-					 * 
+					 *
 					 * submit(); Login sp = new Login(mainModule,controller,model);
 					 */
 				} else {
@@ -313,6 +314,7 @@ public class Register extends JFrame {
 
 		JButton resetRegisterButton = new JButton("Reset");
 		resetRegisterButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				registerTitleComboBox.setSelectedItem("Mr");
 				firstNameTextField.setText("");
@@ -331,7 +333,7 @@ public class Register extends JFrame {
 		registerPanel.add(resetRegisterButton);
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -348,7 +350,7 @@ public class Register extends JFrame {
 
 	private boolean emailIsValid;
 	private boolean emailDoesNotAlreadyExistsInDB = false;
-	
+
 	public boolean validateEmail(String email) {
 		// https://www.regular-expressions.info/email.html
 
@@ -361,7 +363,7 @@ public class Register extends JFrame {
 
 		}
 	}
-	
+
 	public boolean emailExistsInDB(String email) {
 		boolean existsInDB = false;
 		try {
@@ -379,7 +381,7 @@ public class Register extends JFrame {
 				System.out.println("email exists in DB:" + existsInDB);
 
 			}
-			
+
 			connection.close();
 		} catch (Exception e) {
 			System.out.println("error");
@@ -415,7 +417,7 @@ public class Register extends JFrame {
 		}
 	}
 	public void displayError() {
-		ArrayList<String> arlist = new ArrayList<String>( );
+		ArrayList<String> arlist = new ArrayList<>( );
 		if(!validateFirstNameInput) {
 			arlist.add(" First name input is invalid");
 		}
@@ -448,7 +450,7 @@ public class Register extends JFrame {
 //		&& validateCityNameInput
 		&& validatePostcodeInput
 		*/
-			
+
 		JOptionPane.showMessageDialog(this, arlist);
 	}
 	public void submit() {
@@ -545,7 +547,7 @@ public class Register extends JFrame {
 					// remove later
 				}
 			}
-			
+
 			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");

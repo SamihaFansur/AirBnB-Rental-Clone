@@ -1,35 +1,14 @@
 package GUI;
-import Controller.*;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import GUI.MainModule;
-import Model.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-
-import javax.swing.JSplitPane;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
+import GUI.MainModule.STATE;
 
 public class NavEnquirer extends JFrame{
 	public NavEnquirer() {
@@ -54,14 +33,14 @@ public class NavEnquirer extends JFrame{
 		System.out.println("getting main module from navenq");
 		return mainModule;
 	}
-	
-	
+
+
 //	public void close() {
-//			
+//
 //			this.frame.dispose();
 //	}
-//	
-	
+//
+
 	public void addNavBeforeLogin(JFrame frame, MainModule mainModule) {
 		//System.out.println("IN NAVENQ");
 		//System.out.println("in nav current state= "+mainModule);
@@ -73,11 +52,12 @@ public class NavEnquirer extends JFrame{
 		JPanel navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-		
+
 		System.out.println("----------------^^^^^^^^^^^^^^^^^^-----------Initialise homepage");
-		
+
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 
@@ -85,14 +65,15 @@ public class NavEnquirer extends JFrame{
 				MainModule.controller.drawNewView();
 //				close();
 				frame.dispose();
-				
+
 			}
 		});
 		navBarPanel.add(navHomeButton);
-	
-		
+
+
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				MainModule.controller.drawNewView();
@@ -101,9 +82,10 @@ public class NavEnquirer extends JFrame{
 			}
 		});
 		navBarPanel.add(navSearchButton);
-		
+
 		JButton navRegisterButton = new JButton("Register");
 		navRegisterButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SELF_REGISTRATION;
 				MainModule.controller.drawNewView();
@@ -111,9 +93,10 @@ public class NavEnquirer extends JFrame{
 			}
 		});
 		navBarPanel.add(navRegisterButton);
-		
+
 		JButton navLoginButton = new JButton("Login");
 		navLoginButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.LOGIN;
 				MainModule.controller.drawNewView();
@@ -124,9 +107,10 @@ public class NavEnquirer extends JFrame{
 			}
 		});
 		navBarPanel.add(navLoginButton);
-		
+
 		JButton navContactButton = new JButton("Contact");
 		navContactButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				mainModule.currentState=STATE.CONTACT_US;
@@ -138,8 +122,8 @@ public class NavEnquirer extends JFrame{
 		});
 		navBarPanel.add(navContactButton);
 	}
-	
-	
-	
-	
+
+
+
+
 }

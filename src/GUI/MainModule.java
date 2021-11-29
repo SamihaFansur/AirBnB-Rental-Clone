@@ -1,28 +1,27 @@
 package GUI;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import Controller.Controller;
 import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import GuestGUI.Review;
-import Model.Model;
-import HostGUI.*;
 import HostGUI.AddFacility;
+import HostGUI.AddProperty;
+import HostGUI.ChargeBands;
+import HostGUI.EditAPropertysFacilities;
 import HostGUI.EditBathing;
 import HostGUI.EditBathroom;
 import HostGUI.EditBedroom;
 import HostGUI.EditKitchen;
 import HostGUI.EditLiving;
 import HostGUI.EditOutdoors;
-import HostGUI.AddProperty;
 import HostGUI.EditSleeping;
 import HostGUI.EditUtility;
-import HostGUI.Reviews;
+import HostGUI.Facilities;
 import HostGUI.HostAccount;
 import HostGUI.Properties;
+import HostGUI.ProvisionalBookings;
+import HostGUI.Reviews;
+import Model.Model;
 
 
 
@@ -36,7 +35,7 @@ public class MainModule {
 	private Login login;
 	private Search search;
 	private Contact contact;
-	
+
 	//hostGUI
 	private AddFacility addFacility;
 	private EditBathing editBathing;
@@ -59,8 +58,8 @@ public class MainModule {
 	private BookProperty bookProperty;
 	private ProvisionalBookings provisionalBookings;
 	private Review review;
-	
-	
+
+
 	//Page user is on
 	public enum STATE{
 		HOMEPAGE,
@@ -72,15 +71,15 @@ public class MainModule {
 		CONTACT_US,
 		// pages for host gui:
 		LOGOUT,
-		
-		
+
+
 		/* new */
 		// edit host account details
-		// properties - showing the list of properties 
+		// properties - showing the list of properties
 		// edit property
 		// provisional bookings page - makes list of all provisional booking. Reeject/Accept booking here
 		// active bookings page.
-		
+
 		//for host GUI:
 //		PROPERTY_EDIT,
 //		ADD_FACILITY,
@@ -92,15 +91,15 @@ public class MainModule {
 //		EDIT_OUTDOORS,
 //		EDIT_SLEEPING,
 //		EDIT_UTILITY,
-		FACILTIES, 
+		FACILTIES,
 		HOST_ACCOUNT,
 		GUEST_ACCOUNT,
 		PROPERTIES,
 		EDIT_ACCOUNT,
-		
-		
+
+
 	}
-	
+
 	public enum EDITPROPERTY {
 		EDIT_PROPERTY,
 		ADD_FACILITY,
@@ -121,25 +120,25 @@ public class MainModule {
 		BOOK_PROPERTY,
 		PROVISIONAL_BOOKINGS,
 		REVIEW
-		
+
 	}
-	
-	
+
+
 	public enum USER {
 		// for checking who's logged in:
 		ENQUIRER,
 		HOST,
 		GUEST
 	}
-	
+
 	public STATE currentState = STATE.HOMEPAGE;
 	public USER userState = USER.ENQUIRER;
 	public EDITPROPERTY editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-	
+
 	public static void main (String [] args) {
-	
+
 		MainModule mainModule = new MainModule();
-		
+
 		//creating the model
 		Model model = new Model();
 		//creating an instance of SelfRegistration class
@@ -154,11 +153,11 @@ public class MainModule {
 		Search search = new Search(mainModule, controller, model);
 		//creating instance of contact class
 		Contact contact = new Contact(mainModule, controller, model);
-		
+
 		//Objects for Guest GUI
 		Bookings bookings = new Bookings(mainModule, controller, model);
 		BookProperty bookProperty = new BookProperty(mainModule, controller, model);
-		
+
 		//Objects for Host GUI:
 		AddFacility addFacility = new AddFacility(mainModule, controller, model);
 		EditBathing editBathing = new EditBathing(mainModule, controller, model);
@@ -176,11 +175,11 @@ public class MainModule {
 		GuestAccount guestAccount = new GuestAccount(mainModule, controller, model);
 		Properties properties = new Properties(mainModule, controller, model);
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
-		Reviews reviews = new Reviews(mainModule, controller, model);	
+		Reviews reviews = new Reviews(mainModule, controller, model);
 		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);
 		ProvisionalBookings provisionalBookings = new ProvisionalBookings(mainModule, controller, model);
 		Review review = new Review(mainModule, controller, model);
-		
+
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
@@ -188,8 +187,8 @@ public class MainModule {
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
-		
+
 		}
-	
-	
+
+
 }

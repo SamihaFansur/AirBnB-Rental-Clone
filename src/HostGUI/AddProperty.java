@@ -1,34 +1,31 @@
 package HostGUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import Controller.Controller;
 import GUI.ConnectionManager;
-import GUI.Login;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
-
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
 
 public class AddProperty extends JFrame {
 
@@ -79,7 +76,7 @@ public class AddProperty extends JFrame {
 	}
 
 	public void initializeEditProperty() {
-		
+
 		model.setPreviouslyInPropertiesList(false);
 		try {
 			frame = new JFrame();
@@ -103,6 +100,7 @@ public class AddProperty extends JFrame {
 		JButton addFacilityButton = new JButton("Add Facility");
 
 		addFacilityButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
 				model.setPreviouslyInPropertiesList(false);
@@ -110,7 +108,7 @@ public class AddProperty extends JFrame {
 				if (model.getEditPropertyPostcode() == null) {
 					adddingFacility();
 				} else {
-	
+
 					System.out.println("FACILITIES IDDDDDDDDDDDD = " + facilitiesId);
 					model.setFacilitiesId(facilitiesId);
 					frame.dispose();
@@ -154,13 +152,13 @@ public class AddProperty extends JFrame {
 		JLabel cityLabel = new JLabel("City/Town:");
 		cityLabel.setBounds(97, 338, 93, 34);
 		editPropertyPanel.add(cityLabel);
-		
-		 String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
-					"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", 
-					"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull", 
-					"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester", 
-					"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", 
-					"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
+
+		 String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
+					"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry",
+					"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull",
+					"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester",
+					"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
+					"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent",
 					"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 	 	cityComboBox = new JComboBox(cityNames);
 		cityComboBox.setBounds(195, 338, 274, 34);
@@ -206,6 +204,7 @@ public class AddProperty extends JFrame {
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
 		backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Homepage sp = new Homepage();
 
@@ -224,6 +223,7 @@ public class AddProperty extends JFrame {
 		JButton addChargeBandsButton = new JButton("Add Charge Bands");
 		addChargeBandsButton.setBounds(206, 191, 183, 34);
 		addChargeBandsButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.CHARGEBANDS;
 
@@ -294,6 +294,7 @@ public class AddProperty extends JFrame {
 
 		addEditPropertyButton = new JButton("Save");
 		addEditPropertyButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				Boolean validateGuestCapacityInput = validateGuestCapacity(guestCapacityTextField.getText());
@@ -323,6 +324,7 @@ public class AddProperty extends JFrame {
 
 		resetEditPropertyButton = new JButton("Reset");
 		resetEditPropertyButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				houseNameNumberTextField.setText("");
 				streetNameTextField.setText("");
@@ -334,7 +336,7 @@ public class AddProperty extends JFrame {
 		editPropertyPanel.add(resetEditPropertyButton);
 
 		frame.setBounds(100, 100, 600, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
@@ -389,7 +391,7 @@ public class AddProperty extends JFrame {
 			System.out.println("host id  after = " + id);
 			hostId=id;
 			model.setHostId(hostId);
-			
+
 			String insertHostIDInProperty = "update Property set host_id=? where address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?) ";
 			PreparedStatement hostIDInProperty = connection.prepareStatement(insertHostIDInProperty);
 			hostIDInProperty.setInt(1, model.getHostId());
@@ -397,12 +399,12 @@ public class AddProperty extends JFrame {
 			hostIDInProperty.setString(3, model.getEditPropertyPostcode());
 			hostIDInProperty.executeUpdate();
 			System.out.println(hostIDInProperty.toString());
-	
+
 				String insertFacilitiesId = "insert into Facilities (property_id, kitchen_id, sleeping_id, bathing_id, "
 						+ "living_id, utility_id, outdoors_id) values((SELECT property_id FROM Property WHERE address_id = (SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode =?)),?,?,?,?,?,?)";
 				PreparedStatement ps_facilities = connection.prepareStatement(insertFacilitiesId,
 						Statement.RETURN_GENERATED_KEYS);
-			
+
 				ps_facilities.setString(1, model.getEditPropertyHouseNameNum());
 				ps_facilities.setString(2, model.getEditPropertyPostcode());
 				ps_facilities.setNull(3, 0);
@@ -420,7 +422,7 @@ public class AddProperty extends JFrame {
 					facilitiesId = rs.getInt(1);
 				}
 
-			
+
 			connection.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");

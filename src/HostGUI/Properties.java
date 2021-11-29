@@ -1,7 +1,7 @@
 package HostGUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -10,35 +10,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import Controller.Controller;
-import GUI.ConnectionManager;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
  *
  * @author 1bestcsharp.blogspot.com
  */
 public class Properties extends javax.swing.JFrame {
-		
+
     /**
      * Creates new form Java_Insert_Update_Delete_Display
      */
@@ -48,8 +45,8 @@ public class Properties extends javax.swing.JFrame {
 	 private MainModule mainModule;
 	 private JFrame frame;
 	 private NavHost navForHost = new NavHost();
-	 
-	    // Variables declaration - do not modify                     
+
+	    // Variables declaration - do not modify
 	    private javax.swing.JButton jButton_Delete;
 	    private javax.swing.JButton jButton_Update;
 	    private javax.swing.JButton jButton_EditFacilities;
@@ -73,23 +70,23 @@ public class Properties extends javax.swing.JFrame {
 	    private JLabel jLabel_guestCapacity;
 	    private JPanel panel;
 	    private JButton jButton_Reviews;
-	
-	 
+
+
     public Properties(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
-		
+
         initComponents();
         Show_Users_In_JTable();
     }
-    
+
      // get the connection
-    
+
    private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
    private static String username = "team018";
    private static String pwd = "7854a03f";
-	
+
    public Connection getConnection()
    {
        Connection connection;
@@ -101,19 +98,19 @@ public class Properties extends javax.swing.JFrame {
            return null;
        }
    }
-        
-   	
-   
+
+
+
  // get a list of users from mysql database
    public ArrayList<PropertyObject> getUsersList() {
-       ArrayList<PropertyObject> propertiesList = new ArrayList<PropertyObject>();
+       ArrayList<PropertyObject> propertiesList = new ArrayList<>();
        Connection connection = getConnection();
        System.out.println("you got this !!! cmonnn " + hostId);
        String query = "SELECT * FROM `Property` WHERE host_id = "+hostId;
        System.out.println(query);
        Statement st;
        ResultSet rs;
-       
+
        try {
            st = connection.createStatement();
            rs = st.executeQuery(query);
@@ -129,25 +126,24 @@ public class Properties extends javax.swing.JFrame {
        }
        return propertiesList;
    }
-   
+
    // Display Data In JTable
-   
+
    public void Show_Users_In_JTable()
    {
        ArrayList<PropertyObject> list = getUsersList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Properties.getModel();
        Object[] row = new Object[7];
-       for(int i = 0; i < list.size(); i++)
-       {	  
-           row[0] = list.get(i).getPropertyId();
-           row[1] = list.get(i).getDescription();
-           row[2] = list.get(i).getShortName();
-           row[3] = list.get(i).getGuestCapacity();
-           
+       for (PropertyObject element : list) {
+           row[0] = element.getPropertyId();
+           row[1] = element.getDescription();
+           row[2] = element.getShortName();
+           row[3] = element.getGuestCapacity();
+
            model.addRow(row);
        }
     }
-        
+
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message)
    {
@@ -161,7 +157,7 @@ public class Properties extends javax.swing.JFrame {
                DefaultTableModel model = (DefaultTableModel)jTable_Display_Properties.getModel();
                model.setRowCount(0);
                Show_Users_In_JTable();
-               
+
                JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
@@ -171,29 +167,29 @@ public class Properties extends javax.swing.JFrame {
            ex.printStackTrace();
        }
    }
-   
-   
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-    	
+
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel_description = new javax.swing.JLabel();
-       
-        
-        
+
+
+
         jTextField_property_id = new javax.swing.JTextField();
         jTextField_Description = new javax.swing.JTextField();
-     
+
         jTextField_shortName = new javax.swing.JTextField();
         jTextField_guestCapacity = new javax.swing.JTextField();
-        
+
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Properties = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
@@ -205,41 +201,44 @@ public class Properties extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel1.setText("Property ID:");
 
-        jLabel_description.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel_description.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel_description.setText("Description");
-        
+
 
         //NAVBAR
 
         jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
-        jTextField_Description.setFont(new java.awt.Font("Verdana", 0, 14)); 
+        jTextField_Description.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_Description.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
 
-        
-        jTextField_shortName.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_shortName.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_shortName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        jTextField_guestCapacity.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_guestCapacity.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_guestCapacity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        
-         
+
+
+
         jTable_Display_Properties.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -248,10 +247,11 @@ public class Properties extends javax.swing.JFrame {
                 "property_id", "description", "shortName", "guestCapacity"
             }
         ));
-        
-        
+
+
         jTable_Display_Properties.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_Display_UsersMouseClicked(evt);
                 setpropertyID();
             }
@@ -262,7 +262,8 @@ public class Properties extends javax.swing.JFrame {
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
         jButton_Update.setText("Edit");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_UpdateActionPerformed(evt);
             }
         });
@@ -271,32 +272,36 @@ public class Properties extends javax.swing.JFrame {
         jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); // NOI18N
         jButton_Delete.setText("Delete");
         jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_DeleteActionPerformed(evt);
             }
         });
-        
+
         jButton_EditFacilities.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jButton_EditFacilities.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
         jButton_EditFacilities.setText("Edit Property Facilities");
         jButton_EditFacilities.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_EditFacilitiesActionPerformed(evt);
             }
         });
-        
+
         jButton_EditChargeBands.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jButton_EditChargeBands.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
         jButton_EditChargeBands.setText("Edit Property Charge Bands");
         jButton_EditChargeBands.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
             	jButton_UpdateChargeBandsActionPerformed(evt);
             }
         });
-        
+
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 
@@ -306,44 +311,45 @@ public class Properties extends javax.swing.JFrame {
 //				close();
 				model.setEditPropertyPostcode(null);
 				setVisible(false);
-				
+
 				//jPanel1.setVisible(false);
-				
+
 			}
 		});
-        
+
         jLabel_shortname = new JLabel();
         jLabel_shortname.setText("Short Name:");
         jLabel_shortname.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         jTextField_shortName_1 = new JTextField();
         jTextField_shortName_1.setFont(new Font("Verdana", Font.PLAIN, 14));
-        
+
         jTextField_guestCapacity_1 = new JTextField();
         jTextField_guestCapacity_1.setFont(new Font("Verdana", Font.PLAIN, 14));
-        
+
         jLabel_guestCapacity = new JLabel();
         jLabel_guestCapacity.setText("Guest Capacity:");
         jLabel_guestCapacity.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         jButton_Reviews = new JButton();
         jButton_Reviews.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
+        	@Override
+			public void actionPerformed(ActionEvent e) {
+
         		mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
         	    //needs to take in the properyId and hostId
         		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
         		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
         	}
         });
-        
+
         jButton_Reviews.setText("Reviews");
         jButton_Reviews.setFont(new Font("Verdana", Font.BOLD, 14));
-		
-        
-        
-		
-		
+
+
+
+
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -424,7 +430,7 @@ public class Properties extends javax.swing.JFrame {
         			.addContainerGap())
         );
         jPanel1.setLayout(jPanel1Layout);
-        
+
         panel = new JPanel();
         panel.setBackground(new Color(51, 255, 255));
 
@@ -441,13 +447,14 @@ public class Properties extends javax.swing.JFrame {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 541, GroupLayout.PREFERRED_SIZE))
         );
-        	
-        	
+
+
         	JButton navHomeButton = new JButton("Home");
         	navHomeButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         	panel.add(navHomeButton);
         	navHomeButton.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
+        		@Override
+				public void actionPerformed(ActionEvent e) {
         			//Homepage sp = new Homepage();
 
         			mainModule.currentState=STATE.HOST_ACCOUNT;
@@ -457,14 +464,15 @@ public class Properties extends javax.swing.JFrame {
         			setVisible(false);
         		}
         	});
-        	
-        	
+
+
         	JButton navLogoutButton = new JButton("Logout");
         	navLogoutButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         	navLogoutButton.setForeground(new Color(0, 0, 0));
         	panel.add(navLogoutButton);
         	navLogoutButton.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
+        		@Override
+				public void actionPerformed(ActionEvent e) {
         			mainModule.currentState = STATE.HOMEPAGE;
         			mainModule.userState = USER.ENQUIRER;
         			frame.dispose();
@@ -473,13 +481,14 @@ public class Properties extends javax.swing.JFrame {
         			setVisible(false);
         		}
         	});
-        
-        	
+
+
         	JButton navSearchButton = new JButton("Search");
         	navSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         	panel.add(navSearchButton);
         	navSearchButton.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
+        		@Override
+				public void actionPerformed(ActionEvent e) {
         			mainModule.currentState=STATE.SEARCH;
         			mainModule.userState=USER.HOST;
         			MainModule.controller.drawNewView();
@@ -488,34 +497,34 @@ public class Properties extends javax.swing.JFrame {
         		}
         	});
         getContentPane().setLayout(layout);
-        
-        
+
+
 
         pack();
-    }            
-  
+    }
 
-    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {                                               
+
+    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                              
+    }
 
  // show jtable row data in jtextfields in the mouse clicked event
-    private void jTable_Display_UsersMouseClicked(java.awt.event.MouseEvent evt) {                                                  
-       // Get The Index Of The Slected Row 
+    private void jTable_Display_UsersMouseClicked(java.awt.event.MouseEvent evt) {
+       // Get The Index Of The Slected Row
         int i = jTable_Display_Properties.getSelectedRow();
 
         TableModel model = jTable_Display_Properties.getModel();
-        
+
          // Display Slected Row In JTexteFields
         jTextField_property_id.setText(model.getValueAt(i,0).toString());
         jTextField_Description.setText(model.getValueAt(i,1).toString());
-        
+
         jTextField_shortName_1.setText(model.getValueAt(i,2).toString());
-        
+
         jTextField_guestCapacity_1.setText(model.getValueAt(i,3).toString());
-        
-        
-    }                                                 
+
+
+    }
 
     private void setpropertyID() {
         model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
@@ -532,33 +541,33 @@ public class Properties extends javax.swing.JFrame {
 		model.setPreviouslyInPropertiesList(true);
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
 		setVisible(false);
-    }  
-    
+    }
+
 
  // Button Update
-    private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
     	 try {
            String updatePropertyQuery = "update Property set  description=?, "
     				+ "shortName=?, guestcapacity=? "
     				+ "where property_id=?";
-    
+
            Connection connection = getConnection();
            PreparedStatement updatePropertyStatement= connection.prepareStatement(updatePropertyQuery);
-    
+
 
            updatePropertyStatement.setString(1, jTextField_Description.getText());
            updatePropertyStatement.setString(2,jTextField_shortName_1.getText());
            updatePropertyStatement.setInt(3, Integer.parseInt(jTextField_guestCapacity_1.getText()));
            updatePropertyStatement.setInt(4, Integer.parseInt(jTextField_property_id.getText()));
-    
+
            updatePropertyStatement.executeUpdate();
-           
+
            connection.close();
         } catch(Exception e) {
     		System.err.println("Got an exception!");
     		System.err.println(e.getMessage());
-        }              
-    	 
+        }
+
     	 	mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
 			MainModule.controller.editPropertyView(model.getFacilitiesId(), 0);
 			setVisible(false);
@@ -566,10 +575,10 @@ public class Properties extends javax.swing.JFrame {
 
 
  // Button Delete
-    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
      	try {
 			Connection connection = getConnection();
-			
+
 			Statement stmt = connection.createStatement();
 			String getIds = "SELECT facilities_id,outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE property_id = " + model.getPropertyId();
 			System.out.println(getIds);
@@ -599,7 +608,7 @@ public class Properties extends javax.swing.JFrame {
 			int y = deleteFacilities.executeUpdate();
 			if(y>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHERE sleeping_id = ?";
 			PreparedStatement deleteSleeping_BedType = connection.prepareStatement(deleteSleeping_BedTypeQuery);
@@ -607,7 +616,7 @@ public class Properties extends javax.swing.JFrame {
 			int e = deleteSleeping_BedType.executeUpdate();
 			if(e>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteSleepingQuery = "DELETE FROM Sleeping WHERE sleeping_id = ?";
 			PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
@@ -615,7 +624,7 @@ public class Properties extends javax.swing.JFrame {
 			int d = deleteSleeping.executeUpdate();
 			if(d>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE outdoors_id = ?";
 			PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
@@ -623,7 +632,7 @@ public class Properties extends javax.swing.JFrame {
 			int f = deleteOutdoors.executeUpdate();
 			if(f>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteKitchenQuery = "DELETE FROM Kitchen WHERE kitchen_id = ?";
 			PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
@@ -631,7 +640,7 @@ public class Properties extends javax.swing.JFrame {
 			int g = deleteKitchen.executeUpdate();
 			if(g>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteLivingQuery = "DELETE FROM Living WHERE living_id = ?";
 			PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
@@ -639,7 +648,7 @@ public class Properties extends javax.swing.JFrame {
 			int h = deleteLiving.executeUpdate();
 			if(h>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteUtilityQuery = "DELETE FROM Utility WHERE utility_id = ?";
 			PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
@@ -647,7 +656,7 @@ public class Properties extends javax.swing.JFrame {
 			int i = deleteUtility.executeUpdate();
 			if(i>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteBathing_BathTypeQuery = "DELETE FROM Bathing_BathType WHERE bathing_id = ?";
 			PreparedStatement deleteBathing_BathType= connection.prepareStatement(deleteBathing_BathTypeQuery);
@@ -655,7 +664,7 @@ public class Properties extends javax.swing.JFrame {
 			int j = deleteBathing_BathType.executeUpdate();
 			if(j>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteBathingQuery = "DELETE FROM Bathing WHERE bathing_id = ?";
 			PreparedStatement deleteBathing= connection.prepareStatement(deleteBathingQuery);
@@ -663,7 +672,7 @@ public class Properties extends javax.swing.JFrame {
 			int k = deleteBathing.executeUpdate();
 			if(k>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String getaddressId = "SELECT address_id FROM Property WHERE property_id = " + model.getPropertyId();
 			System.out.println(getaddressId);
@@ -680,7 +689,7 @@ public class Properties extends javax.swing.JFrame {
 			int l = deleteProperty.executeUpdate();
 			if(l>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
 			String deleteAddressQuery = "DELETE FROM Address WHERE address_id = ?";
 			PreparedStatement deleteAddress= connection.prepareStatement(deleteAddressQuery);
@@ -688,13 +697,13 @@ public class Properties extends javax.swing.JFrame {
 			int m = deleteAddress.executeUpdate();
 			if(m>0) {
 				System.out.println(this);
-				// remove later 
+				// remove later
 			}
-			
+
 			DefaultTableModel model = (DefaultTableModel)jTable_Display_Properties.getModel();
             model.setRowCount(0);
             Show_Users_In_JTable();
-            
+
             JOptionPane.showMessageDialog(null, "Data deleted Succefully");
 			connection.close();
 
@@ -702,30 +711,30 @@ public class Properties extends javax.swing.JFrame {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-    }   
-    
+    }
+
     //Button Edit Facilities
-    private void jButton_EditFacilitiesActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jButton_EditFacilitiesActionPerformed(java.awt.event.ActionEvent evt) {
 //        String query = "DELETE FROM `Property` WHERE property_id = "+jTextField_property_id.getText();
 //         executeSQlQuery(query, "Deleted");
     	System.out.println("OK GOING TO EDIT FACILITIES PAGE");
     	mainModule.editPropertyState= EDITPROPERTY.FACILITIES;
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), 0); //fix the params
 		setVisible(false);
-    }  
+    }
 
     /**
      * @param args the command line arguments
      */
-   
-    
+
+
     public void initializeProperties(int host_Id, int id) {
     	hostId = host_Id;
     	System.out.println("UGHHHHHHHHHHHHHHHHHHHHHHHH PROPERTY ID :"+hostId);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -746,12 +755,13 @@ public class Properties extends javax.swing.JFrame {
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-        
-    		
-            public void run() {
-            
+
+
+            @Override
+			public void run() {
+
                 new Properties(mainModule, controller, model).setVisible(true);
-                
+
             }
         });
     }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConnectionManager {
     private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";

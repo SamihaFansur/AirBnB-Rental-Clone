@@ -1,27 +1,27 @@
 package GUI;
 
-import Controller.*;
-import Model.*;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import Model.*;
-import java.awt.EventQueue;
-import java.sql.Statement;
-import javax.swing.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
+import Model.Model;
 
 public class Login extends JFrame {
 
@@ -91,6 +91,7 @@ public class Login extends JFrame {
 		loginButton.setBounds(200, 432, 100, 36);
 		loginPanel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				model.setEmail(usernameField.getText());
@@ -107,12 +108,12 @@ public class Login extends JFrame {
 //				close();
 
 //				System.out.println(passwordField.getText());
-//				
+//
 //				userName_login = model.getEmail();
 //				password_login = model.getPassword();
 //				System.out.println(userName_login);
 //				System.out.println(password_login);
-//				
+//
 				// close();
 				// Search sp = new Search();
 			}
@@ -121,6 +122,7 @@ public class Login extends JFrame {
 
 		JButton resetLogin = new JButton("Reset");
 		resetLogin.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				usernameField.setText("");
 				passwordField.setText("");
@@ -136,7 +138,7 @@ public class Login extends JFrame {
 		loginPanel.add(loginLabel);
 
 		frame.setBounds(100, 100, 601, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		frame.setLocationRelativeTo(null);
 
@@ -153,7 +155,7 @@ public class Login extends JFrame {
 //			String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
 			String query = "Select email, password from Account where email=? and password= ?";
 
-			PreparedStatement loginQuery = (PreparedStatement) connection
+			PreparedStatement loginQuery = connection
 					.prepareStatement(query);
 
 			loginQuery.setString(1, userName_login);
@@ -168,11 +170,11 @@ public class Login extends JFrame {
 
 			if (rs.next()) {
 				// checking if the username/email belongs to a "host and guest" account
-				PreparedStatement hostAccountQuery = (PreparedStatement) connection
+				PreparedStatement hostAccountQuery = connection
 						.prepareStatement("Select email from HostAccount where email=?");
 				hostAccountQuery.setString(1, userName_login);
 				ResultSet rsHost = hostAccountQuery.executeQuery();
-				PreparedStatement guestAccountQuery = (PreparedStatement) connection
+				PreparedStatement guestAccountQuery = connection
 						.prepareStatement("Select email from GuestAccount where email=?");
 				guestAccountQuery.setString(1, userName_login);
 				ResultSet rsGuest = guestAccountQuery.executeQuery();

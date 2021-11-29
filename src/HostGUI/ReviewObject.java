@@ -1,7 +1,7 @@
 package HostGUI;
 
 public class ReviewObject {
-	
+
 	    private int review_id;
 	    private int property_id;
 	    private Double accuracy;
@@ -10,7 +10,7 @@ public class ReviewObject {
 	    private Double communication;
 	    private Double cleanliness;
 	    private String description;
-	    
+
 	    /**
 	     * @wbp.parser.entryPoint
 	     */
@@ -23,7 +23,7 @@ public class ReviewObject {
 	        this.communication = communication;
 	        this.cleanliness = cleanliness;
 	        this.description = description;
-	        
+
 	    }
 
 	    public int getReview_id() {
@@ -32,7 +32,7 @@ public class ReviewObject {
 	    public int getProperty_id() {
 	        return property_id;
 	    }
-	    
+
 	    public Double getAccuracy() {
 	        return accuracy;
 	    }
@@ -55,5 +55,5 @@ public class ReviewObject {
 	    public String getDescription() {
 	        return description;
 	    }
-	    
+
 }

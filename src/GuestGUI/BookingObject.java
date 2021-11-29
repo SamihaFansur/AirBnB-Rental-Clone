@@ -1,20 +1,18 @@
 package GuestGUI;
 
 
-import java.util.Date;
-import java.time.Month;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.Date;
 
 
 
 
 public class BookingObject {
-	
-	
+
+
 	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	    private int booking_id;
 	    private int property_id;
 	    private int host_id;
@@ -44,7 +42,7 @@ public class BookingObject {
 	    public int getProperty_id() {
 	        return property_id;
 	    }
-	    
+
 	    public int getHost_id() {
 	        return host_id;
 	    }
@@ -70,5 +68,5 @@ public class BookingObject {
 	    public Date getEndDate() {
 	        return endDate;
 	    }
-	    
+
 }

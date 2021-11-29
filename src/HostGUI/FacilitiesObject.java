@@ -1,7 +1,7 @@
 package HostGUI;
 
 public class FacilitiesObject {
-	
+
 	    private int facilities_id;
 	    private int utility_id;
 	    private int outdoors_id;
@@ -9,7 +9,7 @@ public class FacilitiesObject {
 	    private int sleeping_id;
 	    private int bathing_id;
 	    private int living_id;
-	    
+
 	    /**
 	     * @wbp.parser.entryPoint
 	     */
@@ -21,7 +21,7 @@ public class FacilitiesObject {
 	        this.sleeping_id = sleeping_id;
 	        this.bathing_id = bathing_id;
 	        this.living_id = living_id;
-	        
+
 	    }
 
 	    public int getFacilitiesId() {
@@ -51,5 +51,5 @@ public class FacilitiesObject {
 	    public int getLivingId() {
 	        return living_id;
 	    }
-	    
+
 }

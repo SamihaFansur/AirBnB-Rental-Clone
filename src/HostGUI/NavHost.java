@@ -32,14 +32,14 @@ public class NavHost extends JFrame{
 	public MainModule getMainModule() {
 		return mainModule;
 	}
-	
-	
+
+
 //	public void close() {
-//			
+//
 //			this.frame.dispose();
 //	}
-//	
-	
+//
+
 	public void addHostNav(JFrame frame, MainModule mainModule) {
 		//System.out.println("IN NAVENQ");
 		//System.out.println("in nav current state= "+mainModule);
@@ -51,10 +51,11 @@ public class NavHost extends JFrame{
 		JPanel navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-		
-		
+
+
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 
@@ -63,14 +64,15 @@ public class NavHost extends JFrame{
 				MainModule.controller.drawNewView();
 //				close();
 				frame.dispose();
-				
+
 			}
 		});
 		navBarPanel.add(navHomeButton);
-	
-		
+
+
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState=STATE.SEARCH;
 				mainModule.userState=USER.HOST;
@@ -80,10 +82,11 @@ public class NavHost extends JFrame{
 			}
 		});
 		navBarPanel.add(navSearchButton);
-		
-		
+
+
 		JButton navLogoutButton = new JButton("Logout");
 		navLogoutButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.currentState = STATE.HOMEPAGE;
 				mainModule.userState = USER.ENQUIRER;
@@ -95,10 +98,10 @@ public class NavHost extends JFrame{
 		});
 		navBarPanel.add(navLogoutButton);
 
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

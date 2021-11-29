@@ -1,9 +1,7 @@
 package HostGUI;
 
 
-import HostGUI.ReviewObject;
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -11,26 +9,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import Controller.Controller;
 import GUI.MainModule;
-import GUI.MainModule.EDITPROPERTY;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
 import Model.Model;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  *
@@ -41,7 +33,7 @@ public class Reviews extends javax.swing.JFrame {
 	private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-	 
+
     /**
      * Creates new form Java_Insert_Update_Delete_Display
      */
@@ -49,17 +41,17 @@ public class Reviews extends javax.swing.JFrame {
     	this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
-		
+
         initComponents();
         Show_Facilities_In_JTable();
     }
-    
+
      // get the connection
-    
+
    private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
    private static String username = "team018";
    private static String pwd = "7854a03f";
-	
+
    public Connection getConnection() {
        Connection connection;
        try {
@@ -70,17 +62,17 @@ public class Reviews extends javax.swing.JFrame {
            return null;
        }
    }
-           
+
  // get a list of users from mysql database
    public ArrayList<ReviewObject> getReviewsList() {
-       ArrayList<ReviewObject> reviewsList = new ArrayList<ReviewObject>();
+       ArrayList<ReviewObject> reviewsList = new ArrayList<>();
        Connection connection = getConnection();
-       
-       String query = "SELECT * FROM `Review` where property_id=" + propertyId;	
+
+       String query = "SELECT * FROM `Review` where property_id=" + propertyId;
        System.out.println(query);
        Statement st;
        ResultSet rs;
-       
+
        try {
            st = connection.createStatement();
            rs = st.executeQuery(query);
@@ -95,28 +87,27 @@ public class Reviews extends javax.swing.JFrame {
        }
        return reviewsList;
    }
-   
+
    // Display Data In JTable
-   
+
    public void Show_Facilities_In_JTable() {
        ArrayList<ReviewObject> list = getReviewsList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Reviews.getModel();
        Object[] row = new Object[8];
-       for(int i = 0; i < list.size(); i++)
-       {
-           row[0] = list.get(i).getReview_id();
-           row[1] = list.get(i).getProperty_id();
-           row[2] = list.get(i).getAccuracy();
-           row[3] = list.get(i).getLocation();
-           row[4] = list.get(i).getValueForMoney();
-           row[5] = list.get(i).getCommunication();
-           row[6] = list.get(i).getCleanliness();
-           row[7] = list.get(i).getDescription();
-           
+       for (ReviewObject element : list) {
+           row[0] = element.getReview_id();
+           row[1] = element.getProperty_id();
+           row[2] = element.getAccuracy();
+           row[3] = element.getLocation();
+           row[4] = element.getValueForMoney();
+           row[5] = element.getCommunication();
+           row[6] = element.getCleanliness();
+           row[7] = element.getDescription();
+
            model.addRow(row);
        }
     }
-        
+
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message) {
        Connection con = getConnection();
@@ -129,7 +120,7 @@ public class Reviews extends javax.swing.JFrame {
                DefaultTableModel model = (DefaultTableModel)jTable_Display_Reviews.getModel();
                model.setRowCount(0);
                Show_Facilities_In_JTable();
-               
+
                JOptionPane.showMessageDialog(null, "Data "+message+" Successfully");
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
@@ -138,15 +129,15 @@ public class Reviews extends javax.swing.JFrame {
            ex.printStackTrace();
        }
    }
-   
-   
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -157,8 +148,8 @@ public class Reviews extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        
-        
+
+
         jTextField_review_id = new javax.swing.JTextField();
         jTextField_accuracy = new javax.swing.JTextField();
         jTextField_location = new javax.swing.JTextField();
@@ -166,7 +157,7 @@ public class Reviews extends javax.swing.JFrame {
         jTextField_sleeping_id = new javax.swing.JTextField();
         jTextField_bathing_id = new javax.swing.JTextField();
         jTextField_living_id = new javax.swing.JTextField();
-        
+
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Reviews = new javax.swing.JTable();
 
@@ -174,132 +165,140 @@ public class Reviews extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel1.setText("Review ID:");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel2.setText("Accuracy:");
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel3.setText("Location:");
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel4.setText("Value For Money:");
-        
-        jLabel5.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel5.setText("Sleeping:");
-        
-        jLabel6.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel6.setText("Bathing:");
-        
-        jLabel7.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel7.setText("Living:");
-        
-        
+
+
         //NAVBAR
-        
- 
 
 
-	
-        
- 
-        
 
-        jTextField_review_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
 
-        jTextField_accuracy.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+
+
+
+
+        jTextField_review_id.setFont(new java.awt.Font("Verdana", 0, 14));
+
+        jTextField_accuracy.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_accuracy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_FirstNameActionPerformed(evt);
             }
         });
 
-        jTextField_location.setFont(new java.awt.Font("Verdana", 0, 14)); 
+        jTextField_location.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_location.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_LastNameActionPerformed(evt);
             }
         });
 
-        jTextField_valueForMoney.setFont(new java.awt.Font("Verdana", 0, 14)); 
+        jTextField_valueForMoney.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_valueForMoney.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
 
         jTextField_sleeping_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_sleeping_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        jTextField_bathing_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_bathing_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_bathing_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_living_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-                
+
         jTable_Display_Reviews.setModel(new javax.swing.table.DefaultTableModel(
-        		new Object [][] {}, new String [] {"Review_ID", "Accuracy", "Location", 
+        		new Object [][] {}, new String [] {"Review_ID", "Accuracy", "Location",
         											"ValueForMoney", "Communication", "Cleanliness", "Description"}));
-        
+
         jTable_Display_Reviews.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_Display_ReviewsMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable_Display_Reviews);
-        
+
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				
+
 			}
 		});
-        
+
         lblCommunication = new JLabel();
         lblCommunication.setText("Communication:");
         lblCommunication.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         lblCleanliness = new JLabel();
         lblCleanliness.setText("Cleanliness:");
         lblCleanliness.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         lblDescription = new JLabel();
         lblDescription.setText("Description:");
         lblDescription.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         jTextField_communication = new JTextField();
         jTextField_communication.setFont(new Font("Verdana", Font.PLAIN, 14));
-        
+
         jTextField_cleanliness = new JTextField();
         jTextField_cleanliness.setFont(new Font("Verdana", Font.PLAIN, 14));
-        
+
         jTextField_description = new JTextField();
         jTextField_description.setFont(new Font("Verdana", Font.PLAIN, 14));
-        
+
         lblPropertyRating = new JLabel();
         lblPropertyRating.setText("Property Rating:");
         lblPropertyRating.setFont(new Font("Verdana", Font.PLAIN, 18));
-        
+
         jTextField_propertyRating = new JTextField();
         jTextField_propertyRating.setFont(new Font("Verdana", Font.PLAIN, 14));
 
-		
-		
+
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -395,29 +394,29 @@ public class Reviews extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        
+
         pack();
-    }                     
+    }
 
-    private void jTextField_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+    private void jTextField_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                                    
+    }
 
-    private void jTextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+    private void jTextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                                   
+    }
 
-    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                              
+    }
 
  // show jtable row data in jtextfields in the mouse clicked event
-    private void jTable_Display_ReviewsMouseClicked(java.awt.event.MouseEvent evt) {                                                  
-       // Get The Index Of The Slected Row 
+    private void jTable_Display_ReviewsMouseClicked(java.awt.event.MouseEvent evt) {
+       // Get The Index Of The Slected Row
         int i = jTable_Display_Reviews.getSelectedRow();
 
         TableModel model = jTable_Display_Reviews.getModel();
-        
+
          // Display Slected Row In JTexteFields
         jTextField_review_id.setText(model.getValueAt(i,0).toString());
 
@@ -426,14 +425,14 @@ public class Reviews extends javax.swing.JFrame {
         jTextField_location.setText(model.getValueAt(i,2).toString());
 
         jTextField_valueForMoney.setText(model.getValueAt(i,3).toString());
-        
+
         jTextField_communication.setText(model.getValueAt(i,4).toString());
-        
+
         jTextField_cleanliness.setText(model.getValueAt(i,5).toString());
-        
+
         jTextField_description.setText(model.getValueAt(i,6).toString());
-        
-        
+
+
       String reviewid = (model.getValueAt(i,0).toString());
 
       Double accuracy1  = (Double.parseDouble(model.getValueAt(i,1).toString()));
@@ -441,21 +440,21 @@ public class Reviews extends javax.swing.JFrame {
       Double location1 = (Double.parseDouble(model.getValueAt(i,2).toString()));
 
       Double value1 = (Double.parseDouble(model.getValueAt(i,3).toString()));
-        
+
       Double communication1 = (Double.parseDouble(model.getValueAt(i,4).toString()));
-        
+
       Double cleanliness1 = (Double.parseDouble(model.getValueAt(i,5).toString()));
-        
+
       Double description1 = (Double.parseDouble(model.getValueAt(i,6).toString()));
-      
+
       	Double propertyRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 + description1)/6.0;
       	//round to 2 dp
       	propertyRating1 = (double) Math.round(propertyRating1 * 100.0);
       	propertyRating1 =propertyRating1/100.0;
-      	
+
         String propertyRating2 = Double.toString(propertyRating1);
         jTextField_propertyRating.setText(propertyRating2);
-    }                                                 
+    }
 
     /**
      * @param args the command line arguments
@@ -466,7 +465,7 @@ public class Reviews extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -488,12 +487,13 @@ public class Reviews extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-        
-    		
-            public void run() {
-            
+
+
+            @Override
+			public void run() {
+
                 new Reviews(mainModule, controller, model).setVisible(true);
-                
+
             }
         });
     }

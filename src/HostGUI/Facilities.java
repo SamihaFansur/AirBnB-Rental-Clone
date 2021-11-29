@@ -1,7 +1,6 @@
 package HostGUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -9,8 +8,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -20,13 +23,6 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import java.awt.Font;
 
 /**
  *
@@ -37,7 +33,7 @@ public class Facilities extends javax.swing.JFrame {
 	private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
-	 
+
     /**
      * Creates new form Java_Insert_Update_Delete_Display
      */
@@ -45,17 +41,17 @@ public class Facilities extends javax.swing.JFrame {
     	this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
-		
+
         initComponents();
         Show_Facilities_In_JTable();
     }
-    
+
      // get the connection
-    
+
    private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
    private static String username = "team018";
    private static String pwd = "7854a03f";
-	
+
    public Connection getConnection() {
        Connection connection;
        try {
@@ -66,17 +62,17 @@ public class Facilities extends javax.swing.JFrame {
            return null;
        }
    }
-           
+
  // get a list of users from mysql database
    public ArrayList<FacilitiesObject> getFacilitiesList() {
-       ArrayList<FacilitiesObject> facilitiesList = new ArrayList<FacilitiesObject>();
+       ArrayList<FacilitiesObject> facilitiesList = new ArrayList<>();
        Connection connection = getConnection();
-       
-       String query = "SELECT * FROM `Facilities` where property_id=" + propertyId;	
+
+       String query = "SELECT * FROM `Facilities` where property_id=" + propertyId;
        System.out.println(query);
        Statement st;
        ResultSet rs;
-       
+
        try {
            st = connection.createStatement();
            rs = st.executeQuery(query);
@@ -92,62 +88,62 @@ public class Facilities extends javax.swing.JFrame {
        }
        return facilitiesList;
    }
-   
+
    // Display Data In JTable
-   
+
    public void Show_Facilities_In_JTable() {
        ArrayList<FacilitiesObject> list = getFacilitiesList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Facilities.getModel();
        Object[] row = new Object[7];
-       for(int i = 0; i < list.size(); i++) {
-    	   row[0] = list.get(i).getFacilitiesId();
-           
-           if(list.get(i).getUtilityId() != 0) {
+       for (FacilitiesObject element : list) {
+    	   row[0] = element.getFacilitiesId();
+
+           if(element.getUtilityId() != 0) {
         	   row[1] = "Yes";
            }
            else {
         	   row[1] = "No";
            }
-           
-           if(list.get(i).getOutdoorsId() != 0) {
+
+           if(element.getOutdoorsId() != 0) {
         	   row[2] = "Yes";
            }
            else {
         	   row[2] = "No";
            }
-           
-           if(list.get(i).getKitchenId() != 0) {
+
+           if(element.getKitchenId() != 0) {
         	   row[3] = "Yes";
            }
            else {
         	   row[3] = "No";
            }
-           
-           if(list.get(i).getSleepingId() != 0) {
+
+           if(element.getSleepingId() != 0) {
         	   row[4] = "Yes";
            }
            else {
         	   row[4] = "No";
            }
-           
-           if(list.get(i).getBathingId() != 0) {
+
+           if(element.getBathingId() != 0) {
         	   row[5] = "Yes";
            }
            else {
         	   row[5] = "No";
            }
-           
-           if(list.get(i).getLivingId() != 0) {
+
+           if(element.getLivingId() != 0) {
         	   row[6] = "Yes";
            }
            else {
         	   row[6] = "No";
            }
-           
+
            model.addRow(row);
        }
     }
-        
+
    // Execute The Insert Update And Delete Querys
    public void executeSQlQuery(String query, String message) {
        Connection connection = getConnection();
@@ -160,7 +156,7 @@ public class Facilities extends javax.swing.JFrame {
                DefaultTableModel model = (DefaultTableModel)jTable_Display_Facilities.getModel();
                model.setRowCount(0);
                Show_Facilities_In_JTable();
-               
+
                JOptionPane.showMessageDialog(null, "Data "+message+" Successfully");
            }else{
                JOptionPane.showMessageDialog(null, "Data Not "+message);
@@ -170,15 +166,15 @@ public class Facilities extends javax.swing.JFrame {
            ex.printStackTrace();
        }
    }
-   
-   
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -189,8 +185,8 @@ public class Facilities extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        
-        
+
+
         jTextField_facilities_id = new javax.swing.JTextField();
         jTextField_utility_id = new javax.swing.JTextField();
         jTextField_outdoors_id = new javax.swing.JTextField();
@@ -198,7 +194,7 @@ public class Facilities extends javax.swing.JFrame {
         jTextField_sleeping_id = new javax.swing.JTextField();
         jTextField_bathing_id = new javax.swing.JTextField();
         jTextField_living_id = new javax.swing.JTextField();
-        
+
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Facilities = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
@@ -208,88 +204,95 @@ public class Facilities extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel1.setText("Facility ID:");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel2.setText("Utility:");
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel3.setText("Outdoors:");
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 18)); 
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel4.setText("Kitchen");
-        
-        jLabel5.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel5.setText("Sleeping:");
-        
-        jLabel6.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel6.setText("Bathing:");
-        
-        jLabel7.setFont(new java.awt.Font("Verdana", 0, 18)); 
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 0, 18));
         jLabel7.setText("Living:");
-        
-        
+
+
         //NAVBAR
-        
- 
 
 
-	
-        
- 
-        
 
-        jTextField_facilities_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
 
-        jTextField_utility_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+
+
+
+
+        jTextField_facilities_id.setFont(new java.awt.Font("Verdana", 0, 14));
+
+        jTextField_utility_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_utility_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_FirstNameActionPerformed(evt);
             }
         });
 
-        jTextField_outdoors_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+        jTextField_outdoors_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_outdoors_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_LastNameActionPerformed(evt);
             }
         });
 
-        jTextField_kitchen_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+        jTextField_kitchen_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_kitchen_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
 
         jTextField_sleeping_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_sleeping_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        jTextField_bathing_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_bathing_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_bathing_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-        
-        jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14)); 
+
+        jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
         jTextField_living_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_AgeActionPerformed(evt);
             }
         });
-                
+
         jTable_Display_Facilities.setModel(new javax.swing.table.DefaultTableModel(
-        		new Object [][] {}, new String [] {"Facility ID", "Utility", "Outdoors", 
+        		new Object [][] {}, new String [] {"Facility ID", "Utility", "Outdoors",
         											"Kitchen", "Sleeping", "Bathing", "Living"}));
-        
+
         jTable_Display_Facilities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_Display_FacilitiesMouseClicked(evt);
             }
         });
@@ -299,7 +302,8 @@ public class Facilities extends javax.swing.JFrame {
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
         jButton_Update.setText("Edit");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_UpdateActionPerformed(evt);
             }
         });
@@ -308,17 +312,19 @@ public class Facilities extends javax.swing.JFrame {
         jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); // NOI18N
         jButton_Delete.setText("Delete");
         jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_DeleteActionPerformed(evt);
             }
         });
-        
+
         backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
-				
+
 				mainModule.currentState=STATE.HOST_ACCOUNT;
 				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
 				mainModule.userState=USER.HOST;
@@ -326,12 +332,12 @@ public class Facilities extends javax.swing.JFrame {
 //				close();
 			//	model.setEditPropertyPostcode(null);
 				setVisible(false);
-				
+
 			}
 		});
 
-		
-		
+
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -406,29 +412,29 @@ public class Facilities extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        
+
         pack();
-    }                     
+    }
 
-    private void jTextField_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+    private void jTextField_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                                    
+    }
 
-    private void jTextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+    private void jTextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                                   
+    }
 
-    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                              
+    }
 
  // show jtable row data in jtextfields in the mouse clicked event
-    private void jTable_Display_FacilitiesMouseClicked(java.awt.event.MouseEvent evt) {                                                  
-       // Get The Index Of The Slected Row 
+    private void jTable_Display_FacilitiesMouseClicked(java.awt.event.MouseEvent evt) {
+       // Get The Index Of The Slected Row
         int i = jTable_Display_Facilities.getSelectedRow();
 
         TableModel model = jTable_Display_Facilities.getModel();
-        
+
          // Display Slected Row In JTexteFields
         jTextField_facilities_id.setText(model.getValueAt(i,0).toString());
 
@@ -437,24 +443,24 @@ public class Facilities extends javax.swing.JFrame {
         jTextField_outdoors_id.setText(model.getValueAt(i,2).toString());
 
         jTextField_kitchen_id.setText(model.getValueAt(i,3).toString());
-        
+
         jTextField_sleeping_id.setText(model.getValueAt(i,4).toString());
-    }                                                 
-   
+    }
+
 
  // Button Update
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
     	System.out.println("FACILITY ID ENTERED IN TEXTBOX = "+jTextField_facilities_id.getText());
 		mainModule.editPropertyState= EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_facilities_id.getText()), 0);
-    }                                              
+    }
 
 
  // Button Delete
-    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "DELETE FROM `Facilities` WHERE facilities_id = "+jTextField_facilities_id.getText();
          executeSQlQuery(query, "Deleted");
-    }                                              
+    }
 
     /**
      * @param args the command line arguments
@@ -465,7 +471,7 @@ public class Facilities extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -487,17 +493,18 @@ public class Facilities extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-        
-    		
-            public void run() {
-            
+
+
+            @Override
+			public void run() {
+
                 new Facilities(mainModule, controller, model).setVisible(true);
-                
+
             }
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify
     private javax.swing.JButton jButton_Delete;
     private javax.swing.JButton jButton_Update;
     private javax.swing.JLabel jLabel1;

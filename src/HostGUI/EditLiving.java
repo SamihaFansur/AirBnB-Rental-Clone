@@ -1,34 +1,28 @@
 
 package HostGUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
-
-import Controller.Controller;
-import GUI.ConnectionManager;
-import GUI.Login;
-import GUI.MainModule;
-import GUI.MainModule.EDITPROPERTY;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import Model.Model;
-
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.ConnectionManager;
+import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
+import Model.Model;
 
 public class EditLiving extends JFrame{
 
@@ -52,15 +46,15 @@ public class EditLiving extends JFrame{
 	 private JRadioButton televisionRadioBtn;
 	 private JRadioButton streamingRadioBtn;
 	 private JRadioButton dvdPlayerRadioBtn;
-	 private JRadioButton boardGamesRadioBtn;	
-	 private int idAfter; 
+	 private JRadioButton boardGamesRadioBtn;
+	 private int idAfter;
 	private int facilitiesidAfter;
 	 private JButton addLiving;
-	 
+
 	 private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
-	 
+
 	Connection connection = null;
-	
+
 	 public EditLiving(MainModule mainModule, Controller controller, Model model) {
 		//initializeEditLiving();
 		this.model=model;
@@ -75,7 +69,7 @@ public class EditLiving extends JFrame{
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
-			
+
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -94,19 +88,19 @@ public class EditLiving extends JFrame{
 		editLivingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editLivingLabel.setBounds(183, 54, 183, 57);
 		editLivingPanel.add(editLivingLabel);
-		
+
 		try {
 			connection = ConnectionManager.getConnection();
 
 			String selectLivingRecord = "select wifi, television, satellite, streaming, "
 										+ "dvdPlayer, boardGames from Living "
 										+ "where living_id=?";
-			
+
 			PreparedStatement selectingLivingValues= connection.prepareStatement(selectLivingRecord);
-			
+
 			selectingLivingValues.setInt(1, id);
 			ResultSet rs = selectingLivingValues.executeQuery();
-			
+
 			while (rs.next()) {
 				wifi = rs.getBoolean("wifi");
                 System.out.println(wifi);
@@ -120,13 +114,13 @@ public class EditLiving extends JFrame{
                 System.out.println(dvdPlayer);
                 boardGames = rs.getBoolean("boardGames");
                 System.out.println(boardGames);
-            }		
+            }
 			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-				
+
 		JLabel wifiLabel = new JLabel("Wifi");
 		wifiLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		wifiLabel.setBounds(170, 135, 167, 34);
@@ -135,7 +129,7 @@ public class EditLiving extends JFrame{
 		wifiRadioBtn = new JRadioButton("Wifi", wifi);
 		wifiRadioBtn.setBounds(375, 146, 21, 23);
 		editLivingPanel.add(wifiRadioBtn);
-		
+
 		JLabel televisionLabel = new JLabel("Television");
 		televisionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		televisionLabel.setBounds(170, 191, 167, 34);
@@ -144,7 +138,7 @@ public class EditLiving extends JFrame{
 		televisionRadioBtn = new JRadioButton("Television", television);
 		televisionRadioBtn.setBounds(375, 199, 21, 23);
 		editLivingPanel.add(televisionRadioBtn);
-		
+
 		JLabel satelliteLabel = new JLabel("Satellite");
 		satelliteLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		satelliteLabel.setBounds(170, 254, 167, 34);
@@ -153,7 +147,7 @@ public class EditLiving extends JFrame{
 		satelliteRadioBtn = new JRadioButton("Satellite", satellite);
 		satelliteRadioBtn.setBounds(375, 262, 21, 23);
 		editLivingPanel.add(satelliteRadioBtn);
-		
+
 		JLabel streamingLabel = new JLabel("Streaming");
 		streamingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		streamingLabel.setBounds(170, 310, 167, 34);
@@ -162,38 +156,40 @@ public class EditLiving extends JFrame{
 		streamingRadioBtn = new JRadioButton("Streaming", streaming);
 		streamingRadioBtn.setBounds(375, 310, 21, 23);
 		editLivingPanel.add(streamingRadioBtn);
-		
+
 		JLabel dvdPlayerLabel = new JLabel("DVD Player");
 		dvdPlayerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		dvdPlayerLabel.setBounds(170, 369, 167, 34);
 		editLivingPanel.add(dvdPlayerLabel);
-				
+
 		dvdPlayerRadioBtn = new JRadioButton("DVD Player", dvdPlayer);
 		dvdPlayerRadioBtn.setBounds(375, 380, 21, 23);
 		editLivingPanel.add(dvdPlayerRadioBtn);
-		
+
 		JLabel boardGamesLabel = new JLabel("Board Games");
 		boardGamesLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		boardGamesLabel.setBounds(170, 424, 167, 34);
 		editLivingPanel.add(boardGamesLabel);
-		
+
 		boardGamesRadioBtn = new JRadioButton("Board Games", boardGames);
 		boardGamesRadioBtn.setBounds(375, 435, 21, 23);
 		editLivingPanel.add(boardGamesRadioBtn);
 
 		addLiving = new JButton("Save");
 		addLiving.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateLivingDetails();
 			}
 		});
 		addLiving.setBounds(256, 502, 91, 23);
 		editLivingPanel.add(addLiving);
-		
+
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(26, 76, 91, 23);
 		backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 
@@ -203,16 +199,16 @@ public class EditLiving extends JFrame{
 				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
-				
+
 			}
-		});	
+		});
 		editLivingPanel.add(backButton);
-		
+
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
+
 	public void updateLivingDetails() {
 		System.out.println("idafter in updateLivingDetails = "+idAfter);
 		try {
@@ -228,7 +224,7 @@ public class EditLiving extends JFrame{
 			String updateLivingRecord = "update Living set wifi=?, television=?, "
 										+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? "
 										+ "where living_id=?";
-			
+
 			PreparedStatement updatingLivingValues= connection.prepareStatement(updateLivingRecord);
 			updatingLivingValues.setBoolean(1, model.getWifi());
 			updatingLivingValues.setBoolean(2, model.getTelevision());
@@ -239,23 +235,23 @@ public class EditLiving extends JFrame{
 			updatingLivingValues.setInt(7, idAfter);
 			updatingLivingValues.executeUpdate();
 			System.out.println(updatingLivingValues.toString());
-			
+
 
 			String updateLivingIdInFacilities = "update Facilities set Living_id=? where facilities_id=?";
-			
+
 			PreparedStatement updatingLivingIdInFacilities = connection.prepareStatement(updateLivingIdInFacilities);
 			updatingLivingIdInFacilities.setInt(1, idAfter);
 			updatingLivingIdInFacilities.setInt(2, facilitiesidAfter);
 
 			updatingLivingIdInFacilities.executeUpdate();
-			System.out.println(updatingLivingIdInFacilities.toString());	
+			System.out.println(updatingLivingIdInFacilities.toString());
 			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
-	
+
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

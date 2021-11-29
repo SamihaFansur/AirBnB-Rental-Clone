@@ -1,37 +1,21 @@
 package GUI;
-//import hostGUI.*;
-import Controller.*;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import GUI.MainModule;
-import Model.*;
-
-import java.awt.EventQueue;
-import javax.swing.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+//import hostGUI.*;
+import Controller.Controller;
+import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
+import Model.Model;
+
 public class Homepage extends JFrame{
-	/**	
+	/**
 	 * Create the application.
 	 */
 	 private Controller controller;
@@ -39,7 +23,7 @@ public class Homepage extends JFrame{
 	 private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
 	private JFrame frame ;
-	 
+
 	 public Homepage(MainModule mainModule, Controller controller, Model model) {
 		//initializeHomePage();
 		this.model=model;
@@ -52,32 +36,32 @@ public class Homepage extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	 public void initializeHomePage() {
-		 
+
 		 if(mainModule.userState == USER.ENQUIRER) {
-			
+
 			 mainModule.currentState = STATE.HOMEPAGE;
 				try {
 					frame = new JFrame();
 					//System.out.println("in register: "+frame);
 					navBeforeLogin.addNavBeforeLogin(frame, mainModule);
 					//System.out.println("after nav in register = "+mainModule);
-					
+
 				}catch(Exception e) {
 					System.err.println(e.getMessage());
-				}	
-			
+				}
+
 			JPanel homepagePanel = new JPanel();
 			homepagePanel.setBackground(new Color(204, 255, 255));
 			frame.getContentPane().add(homepagePanel, BorderLayout.CENTER);
 			homepagePanel.setLayout(null);
-			
+
 			JLabel homePageLabel = new JLabel("Home Page");
 			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
 			homePageLabel.setBounds(202, -27, 222, 152);
 			homepagePanel.add(homePageLabel);
 			frame.setBounds(100, 100, 600, 700);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		 }
@@ -89,14 +73,14 @@ public class Homepage extends JFrame{
 			  * 	accepted bookings
 			  * 	search
 			  * 	contact
-			  * 
-			  * 
+			  *
+			  *
 			  */
-			 
+
 		 }
 		 else if (mainModule.userState==USER.GUEST) {
-			 
+
 		 }
-		 
+
 	}
 }

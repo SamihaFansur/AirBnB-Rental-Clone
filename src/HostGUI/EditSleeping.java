@@ -1,33 +1,28 @@
 package HostGUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
-
-import Controller.Controller;
-import GUI.ConnectionManager;
-import GUI.Login;
-import GUI.MainModule;
-import GUI.MainModule.EDITPROPERTY;
-import GUI.MainModule.STATE;
-import GUI.MainModule.USER;
-import Model.Model;
-
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.ConnectionManager;
+import GUI.MainModule;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
+import Model.Model;
 
 public class EditSleeping extends JFrame{
 
@@ -39,9 +34,9 @@ public class EditSleeping extends JFrame{
 
 	private int idAfter;
 	private int facilitiesidAfter;
-	
+
 	private boolean bedLinen, towels;
-	
+
 	Connection connection = null;
 
 	public void close() {
@@ -70,7 +65,7 @@ public class EditSleeping extends JFrame{
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
-			
+
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -80,7 +75,7 @@ public class EditSleeping extends JFrame{
 		facilitiesidAfter = facilitiesId;
 		System.out.println("FACILITY ID FOR WHICH AM CREATING SLEEPING RN = "+facilitiesidAfter);
 		System.out.println("id after in init edit SLEEPING func = "+idAfter);
-		
+
 		JPanel editSleepingPanel = new JPanel();
 		editSleepingPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editSleepingPanel, BorderLayout.CENTER);
@@ -90,29 +85,29 @@ public class EditSleeping extends JFrame{
 		editSleepingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		editSleepingLabel.setBounds(197, 50, 249, 57);
 		editSleepingPanel.add(editSleepingLabel);
-		
+
 		try {
 			connection = ConnectionManager.getConnection();
 
 			System.out.println("id in try block where im tryna get values from db = "+id);
-			
+
 			String selectSleepingRecord = "select bedLinen, towels from Sleeping "
 										+ "where sleeping_id=?";
-			
+
 			PreparedStatement selectingSleepingValues= connection.prepareStatement(selectSleepingRecord);
-			
+
 			selectingSleepingValues.setInt(1, id);
 			ResultSet rs = selectingSleepingValues.executeQuery();
 			while (rs.next()) {
 				bedLinen = rs.getBoolean("bedLinen");
                 towels = rs.getBoolean("towels");
-            }		
+            }
 			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-		
+
 		JLabel bedLinenLabel = new JLabel("Bed Linen");
 		bedLinenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bedLinenLabel.setBounds(170, 167, 167, 34);
@@ -121,18 +116,19 @@ public class EditSleeping extends JFrame{
 		bedLinenRadioBtn = new JRadioButton("Bed Linen", bedLinen);
 		bedLinenRadioBtn.setBounds(398, 177, 21, 23);
 		editSleepingPanel.add(bedLinenRadioBtn);
-		
+
 		JLabel towelsLabel = new JLabel("Towels");
 		towelsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		towelsLabel.setBounds(170, 265, 167, 34);
 		editSleepingPanel.add(towelsLabel);
-				
+
 		towelsRadioBtn = new JRadioButton("Towels", towels);
 		towelsRadioBtn.setBounds(398, 264, 21, 23);
 		editSleepingPanel.add(towelsRadioBtn);
-		
+
 		JButton addBedroomButton = new JButton("Add Bedrooms");
 		addBedroomButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("printing id in add bedroom btn before calling updateSleepingDetails func = "+id);
 				System.out.println("printing idAfter in add bedroom btn before calling updateSleepingDetails func = "+idAfter);
@@ -144,11 +140,12 @@ public class EditSleeping extends JFrame{
 		});
 		addBedroomButton.setBounds(197, 482, 209, 46);
 		editSleepingPanel.add(addBedroomButton);
-		
+
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(27, 69, 91, 23);
 		backButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 
@@ -158,28 +155,28 @@ public class EditSleeping extends JFrame{
 				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
 //				close();
 				frame.dispose();
-				
+
 			}
-		});	
+		});
 		editSleepingPanel.add(backButton);
-		
+
 		JLabel noOfBedsLabel = new JLabel("Number of Beds in Faciity");
 		noOfBedsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		noOfBedsLabel.setBounds(171, 358, 209, 34);
 		editSleepingPanel.add(noOfBedsLabel);
-		
+
 		numberOfBedsTextField = new JTextField();
 		numberOfBedsTextField.setBounds(385, 358, 49, 29);
 		editSleepingPanel.add(numberOfBedsTextField);
 		numberOfBedsTextField.setColumns(10);
-		
-		
-		
+
+
+
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
+
 	public void updateSleepingDetails(int id) {
 		System.out.println("Printing id fed into updateSleepingDetails = "+id);
 		try {
@@ -191,7 +188,7 @@ public class EditSleeping extends JFrame{
 			model.setNoOfBeds(Integer.parseInt(numberOfBedsTextField.getText()));
 			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=?, noOfBeds=? "
 										+ "where sleeping_id=?";
-			
+
 			PreparedStatement updatingSleepingValues= connection.prepareStatement(updateSleepingRecord);
 			updatingSleepingValues.setBoolean(1, model.getBedLinen());
 			updatingSleepingValues.setBoolean(2, model.getTowels());
@@ -199,16 +196,16 @@ public class EditSleeping extends JFrame{
 			updatingSleepingValues.setInt(4, idAfter);
 			updatingSleepingValues.executeUpdate();
 			System.out.println(updatingSleepingValues.toString());
-			
+
 
 			String updateSleepingIdInFacilities = "update Facilities set sleeping_id=? where facilities_id=?";
-			
+
 			PreparedStatement updatingSleepingIdInFacilities = connection.prepareStatement(updateSleepingIdInFacilities);
 			updatingSleepingIdInFacilities.setInt(1, idAfter);
 			updatingSleepingIdInFacilities.setInt(2, facilitiesidAfter);
 
 			updatingSleepingIdInFacilities.executeUpdate();
-			System.out.println(updatingSleepingIdInFacilities.toString());		
+			System.out.println(updatingSleepingIdInFacilities.toString());
 			connection.close();
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
