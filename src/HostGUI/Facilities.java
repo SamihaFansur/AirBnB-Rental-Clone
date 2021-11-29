@@ -213,52 +213,16 @@ public class Facilities extends javax.swing.JFrame {
 		jTextField_facilities_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_utility_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_utility_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_FirstNameActionPerformed(evt);
-			}
-		});
 
 		jTextField_outdoors_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_outdoors_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_LastNameActionPerformed(evt);
-			}
-		});
 
 		jTextField_kitchen_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_kitchen_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_AgeActionPerformed(evt);
-			}
-		});
 
 		jTextField_sleeping_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_sleeping_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_AgeActionPerformed(evt);
-			}
-		});
 
 		jTextField_bathing_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_bathing_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_AgeActionPerformed(evt);
-			}
-		});
 
 		jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
-		jTextField_living_id.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField_AgeActionPerformed(evt);
-			}
-		});
 
 		jTable_Display_Facilities.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
 				new String[] { "Facility ID", "Utility", "Outdoors", "Kitchen", "Sleeping", "Bathing", "Living" }));

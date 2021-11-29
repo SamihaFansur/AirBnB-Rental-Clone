@@ -89,7 +89,7 @@ public class EditBathroom extends JFrame {
 
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		
+
 		JPanel editBathroomPanel = new JPanel();
 		editBathroomPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editBathroomPanel, BorderLayout.CENTER);
