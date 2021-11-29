@@ -42,7 +42,6 @@ public class EditAccount extends JFrame {
 	/**
 	 * Create the application.
 	 */
-
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
@@ -58,8 +57,6 @@ public class EditAccount extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeEditAccount() {
-		System.out.println("0");
-
 		try {
 			frame = new JFrame();
 			if (mainModule.userState == USER.GUEST) {
@@ -70,8 +67,6 @@ public class EditAccount extends JFrame {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		System.out.println("email" + model.getEmail());
-
 		JPanel editACcountPanel = new JPanel();
 		editACcountPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editACcountPanel, BorderLayout.CENTER);
@@ -84,22 +79,17 @@ public class EditAccount extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-
-			// String selectAccountRecord = "SELECT title, firstName, surname,
-			// AES_DECRYPT(password,'key') as decrypt from Account where email = ?";
 			String selectAccountRecord = "SELECT title, firstName, surname, password from Account where email = ?";
 
 			PreparedStatement selectingAccountValues = connection.prepareStatement(selectAccountRecord);
-
 			selectingAccountValues.setString(1, model.getEmail());
 			ResultSet rs = selectingAccountValues.executeQuery();
-
+			
 			while (rs.next()) {
 				title = rs.getString("title");
 				firstName = rs.getString("firstName");
 				surname = rs.getString("surname");
 				password = rs.getString("password");
-				// password = rs.getString("decrypt");
 			}
 			connection.close();
 		} catch (Exception e) {
@@ -111,17 +101,13 @@ public class EditAccount extends JFrame {
 		editACcountPanel.add(TitleLabel);
 
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
-
-		System.out.println(titles[2] + title);
 		for (int i = 0; i < titles.length; i++) {
 			if (titles[i].equals(title)) {
-				System.out.println(titles[i]);
 				String temp = titles[0];
 				titles[0] = titles[i];
 				titles[i] = temp;
 			}
 		}
-
 		JComboBox titleComboBox = new JComboBox(titles);
 		JLabel firstNameLabel = new JLabel("First Name:");
 		firstNameLabel.setBounds(104, 336, 93, 34);
@@ -141,7 +127,6 @@ public class EditAccount extends JFrame {
 		surnameTextField.setBounds(207, 402, 274, 34);
 		editACcountPanel.add(surnameTextField);
 
-		System.out.println("1");
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setBounds(104, 456, 93, 34);
 		editACcountPanel.add(passwordLabel);
@@ -187,8 +172,6 @@ public class EditAccount extends JFrame {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Homepage sp = new Homepage();
-
 				if (mainModule.userState == USER.HOST) {
 					mainModule.currentState = STATE.HOST_ACCOUNT;
 					mainModule.userState = USER.HOST;
@@ -197,10 +180,8 @@ public class EditAccount extends JFrame {
 					mainModule.userState = USER.GUEST;
 				}
 				MainModule.controller.drawNewView();
-//				close();
 				model.setEditPropertyPostcode(null);
 				frame.dispose();
-
 			}
 		});
 		editACcountPanel.add(backButton);
@@ -228,16 +209,12 @@ public class EditAccount extends JFrame {
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-
-		System.out.println("3");
 	}
 
 	public boolean validateName(String name) {
 		if (!name.matches("[a-zA-Z]*") || name.matches("")) {
-			System.out.println(name + " IS NOT VALID NAME");
 			return false;
 		} else {
-			System.out.println(name + " IS VALID");
 			return true;
 		}
 	}
@@ -261,7 +238,6 @@ public class EditAccount extends JFrame {
 
 			int i = updateAccount.executeUpdate();
 			if (i > 0) {
-				System.out.println(this);
 				frame.dispose();
 				JOptionPane.showMessageDialog(this, "Account details updated.");
 
@@ -277,7 +253,6 @@ public class EditAccount extends JFrame {
 	public void deleteAccount() {
 		try {
 			connection = ConnectionManager.getConnection();
-			System.out.println(model.getEmail());
 			String getHostId = "SELECT host_id from HostAccount WHERE email = ?";
 			PreparedStatement stmt = connection.prepareStatement(getHostId);
 			int host_id = 0;
@@ -286,7 +261,6 @@ public class EditAccount extends JFrame {
 			while (rs_host.next()) {
 				host_id = rs_host.getInt("host_id");
 			}
-			System.out.println(host_id);
 			String selectPropertyRecord = "SELECT property_id,address_id from Property where host_id = ?";
 
 			PreparedStatement selectPropertyValues = connection.prepareStatement(selectPropertyRecord,
@@ -296,15 +270,13 @@ public class EditAccount extends JFrame {
 			ResultSet rs = selectPropertyValues.executeQuery();
 
 			while (rs.next()) {
-				System.out.println("hi what is wrong");
 				model.setPropertyId(rs.getInt("property_id"));
 				address = rs.getInt("address_id");
 				String selectFacilitiesRecord = "SELECT facilities_id,outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE property_id = ? ";
-				System.out.println(selectFacilitiesRecord);
+			
 				PreparedStatement selectFacilitiesValues = connection.prepareStatement(selectFacilitiesRecord,
 						ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 				selectFacilitiesValues.setInt(1, model.getPropertyId());
-				System.out.println(model.getPropertyId());
 				ResultSet rs_facilities = selectFacilitiesValues.executeQuery();
 
 				int outdoors = 0, utility = 0, living = 0, bathing = 0, sleeping = 0, kitchen = 0;
@@ -315,12 +287,6 @@ public class EditAccount extends JFrame {
 					bathing = rs_facilities.getInt("bathing_id");
 					sleeping = rs_facilities.getInt("sleeping_id");
 					kitchen = rs_facilities.getInt("kitchen_id");
-					System.out.println("o: " + outdoors);
-					System.out.println("u: " + utility);
-					System.out.println("l: " + living);
-					System.out.println("b: " + bathing);
-					System.out.println("s: " + sleeping);
-					System.out.println("k: " + kitchen);
 					rs_facilities.deleteRow();
 
 					String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHERE sleeping_id = ?";
@@ -328,66 +294,49 @@ public class EditAccount extends JFrame {
 					deleteSleeping_BedType.setInt(1, sleeping);
 					int e = deleteSleeping_BedType.executeUpdate();
 					if (e > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteSleepingQuery = "DELETE FROM Sleeping WHERE sleeping_id = ?";
 					PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
 					deleteSleeping.setInt(1, sleeping);
 					int d = deleteSleeping.executeUpdate();
 					if (d > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE outdoors_id = ?";
 					PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
 					deleteOutdoors.setInt(1, outdoors);
 					int f = deleteOutdoors.executeUpdate();
 					if (f > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteKitchenQuery = "DELETE FROM Kitchen WHERE kitchen_id = ?";
 					PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
 					deleteKitchen.setInt(1, kitchen);
 					int g = deleteKitchen.executeUpdate();
 					if (g > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteLivingQuery = "DELETE FROM Living WHERE living_id = ?";
 					PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
 					deleteLiving.setInt(1, living);
 					int h = deleteLiving.executeUpdate();
 					if (h > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteUtilityQuery = "DELETE FROM Utility WHERE utility_id = ?";
 					PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
 					deleteUtility.setInt(1, utility);
 					int i = deleteUtility.executeUpdate();
 					if (i > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteBathing_BathTypeQuery = "DELETE FROM Bathing_BathType WHERE bathing_id = ?";
 					PreparedStatement deleteBathing_BathType = connection.prepareStatement(deleteBathing_BathTypeQuery);
 					deleteBathing_BathType.setInt(1, bathing);
 					int j = deleteBathing_BathType.executeUpdate();
 					if (j > 0) {
-						System.out.println(this);
-						// remove later
 					}
 					String deleteBathingQuery = "DELETE FROM Bathing WHERE bathing_id = ?";
 					PreparedStatement deleteBathing = connection.prepareStatement(deleteBathingQuery);
 					deleteBathing.setInt(1, bathing);
 					int k = deleteBathing.executeUpdate();
 					if (k > 0) {
-						System.out.println(this);
-						// remove later
 					}
-
 				}
 				rs.deleteRow();
 				String deleteAddressQuery = "DELETE FROM Address WHERE address_id = ?";
@@ -395,51 +344,36 @@ public class EditAccount extends JFrame {
 				deleteAddress.setInt(1, address);
 				int m = deleteAddress.executeUpdate();
 				if (m > 0) {
-					System.out.println(this);
-					// remove later
-					// password = rs.getString("decrypt");
 				}
 			}
-				String deleteAccountAddressQuery = "DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
-				PreparedStatement deleteAccountAddress = connection.prepareStatement(deleteAccountAddressQuery);
-				deleteAccountAddress.setString(1, model.getHouseNameNum());
-				deleteAccountAddress.setString(2, model.getPostcode());
-				int l = deleteAccountAddress.executeUpdate();
-				if (l > 0) {
-					System.out.println(this);
-					// remove later
-				}
-				// String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE EXISTS (SELECT
-				// * FROM Account WHERE Account.email = HostAccount.email and email = ?)";
-				String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
-				PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
-				deleteHostAccount.setString(1, model.getEmail());
-				System.out.println("do u work");
-				int j = deleteHostAccount.executeUpdate();
-				if (j > 0) {
-					System.out.println(this);
-					// remove later
-				}
-				String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
-				PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
-				deleteGuestAccount.setString(1, model.getEmail());
-				int k = deleteGuestAccount.executeUpdate();
-				if (k > 0) {
-					System.out.println(this);
-					// remove later
-				}
-				String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
-				PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
-				deleteAccount.setString(1, model.getEmail());
-				int i = deleteAccount.executeUpdate();
-				if (i > 0) {
-					System.out.println(this);
-					frame.dispose();
-					JOptionPane.showMessageDialog(this, "Account deleted.");
-
-//				// remove later
-				}
-				connection.close();
+			String deleteAccountAddressQuery = "DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
+			PreparedStatement deleteAccountAddress = connection.prepareStatement(deleteAccountAddressQuery);
+			deleteAccountAddress.setString(1, model.getHouseNameNum());
+			deleteAccountAddress.setString(2, model.getPostcode());
+			int l = deleteAccountAddress.executeUpdate();
+			if (l > 0) {
+			}
+			String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
+			PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
+			deleteHostAccount.setString(1, model.getEmail());
+			int j = deleteHostAccount.executeUpdate();
+			if (j > 0) {
+			}
+			String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
+			PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
+			deleteGuestAccount.setString(1, model.getEmail());
+			int k = deleteGuestAccount.executeUpdate();
+			if (k > 0) {
+			}
+			String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
+			PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
+			deleteAccount.setString(1, model.getEmail());
+			int i = deleteAccount.executeUpdate();
+			if (i > 0) {
+				frame.dispose();
+				JOptionPane.showMessageDialog(this, "Account deleted.");
+			}
+			connection.close();
 
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
@@ -447,5 +381,4 @@ public class EditAccount extends JFrame {
 		}
 	}
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
