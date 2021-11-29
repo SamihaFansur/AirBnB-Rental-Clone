@@ -2375,18 +2375,25 @@ public class Search extends javax.swing.JFrame {
         );
         
         //NAVBAR	
+        
+        if(mainModule.userState == USER.GUEST || mainModule.userState == USER.HOST) {
+        	
     	JButton navHomeButton = new JButton("Home");
     	navHomeButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
     	navBarPanel.add(navHomeButton);
     	navHomeButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			//Homepage sp = new Homepage();
-
-    			mainModule.currentState=STATE.HOST_ACCOUNT;
-    			mainModule.userState=USER.HOST;
+    			 if(mainModule.userState == USER.GUEST) {
+    			mainModule.currentState=STATE.GUEST_ACCOUNT;
     			MainModule.controller.drawNewView();
 //			close();
     			setVisible(false);
+    			 }else {
+    				 mainModule.currentState=STATE.HOST_ACCOUNT;
+    	    		MainModule.controller.drawNewView();
+    	    		setVisible(false);
+    			 }
     		}
     	});
     	
@@ -2413,17 +2420,46 @@ public class Search extends javax.swing.JFrame {
     	navSearchButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			mainModule.currentState=STATE.SEARCH;
-    			mainModule.userState=USER.HOST;
     			MainModule.controller.drawNewView();
 //			close();
     			setVisible(false);
     		}
     	});
+    	
+        }else {
+        	JButton navHomeButton = new JButton("Home");
+        	navHomeButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        	navBarPanel.add(navHomeButton);
+        	navHomeButton.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			//Homepage sp = new Homepage();
+
+        			mainModule.currentState=STATE.HOMEPAGE;
+        			MainModule.controller.drawNewView();
+//    			close();
+        			setVisible(false);
+        		}
+        	});
+        	
+        	JButton navSearchButton = new JButton("Search");
+        	navSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        	navBarPanel.add(navSearchButton);
+        	navSearchButton.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			mainModule.currentState=STATE.SEARCH;
+        			MainModule.controller.drawNewView();
+//    			close();
+        			setVisible(false);
+        		}
+        	});
+        }
         getContentPane().setLayout(layout);
 
         pack();
     }                     
 
+        
+        
     private void jTextField_AgeActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
     }                                              
