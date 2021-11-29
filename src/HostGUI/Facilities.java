@@ -24,7 +24,6 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
-
 public class Facilities extends javax.swing.JFrame {
 
 	private Controller controller;
@@ -44,7 +43,6 @@ public class Facilities extends javax.swing.JFrame {
 	}
 
 	// get the connection
-
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
@@ -235,8 +233,8 @@ public class Facilities extends javax.swing.JFrame {
 		});
 		jScrollPane1.setViewportView(jTable_Display_Facilities);
 
-		jButton_Update.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-		jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
+		jButton_Update.setFont(new java.awt.Font("Verdana", 1, 14)); 
+		jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); 
 		jButton_Update.setText("Edit");
 		jButton_Update.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -245,8 +243,8 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 
-		jButton_Delete.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-		jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); // NOI18N
+		jButton_Delete.setFont(new java.awt.Font("Verdana", 1, 14)); 
+		jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); 
 		jButton_Delete.setText("Delete");
 		jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -353,13 +351,9 @@ public class Facilities extends javax.swing.JFrame {
 
 		// Display Slected Row In JTexteFields
 		jTextField_facilities_id.setText(model.getValueAt(i, 0).toString());
-
 		jTextField_utility_id.setText(model.getValueAt(i, 1).toString());
-
 		jTextField_outdoors_id.setText(model.getValueAt(i, 2).toString());
-
 		jTextField_kitchen_id.setText(model.getValueAt(i, 3).toString());
-
 		jTextField_sleeping_id.setText(model.getValueAt(i, 4).toString());
 	}
 
