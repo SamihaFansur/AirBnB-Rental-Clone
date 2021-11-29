@@ -26,7 +26,7 @@ public class Tables {
 				+ "email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email))";
 
 		String createReviewTable = "CREATE TABLE Review("
-				+ "review_id INT NOT NULL PRIMARY KEY, property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
 				+ "booking_id INT, FOREIGN KEY (booking_id) REFERENCES Booking(booking_id), accuracy DEC, location DEC, "
 				+ "valueForMoney DEC, communication DEC, cleanliness DEC, description VARCHAR(255))";
 

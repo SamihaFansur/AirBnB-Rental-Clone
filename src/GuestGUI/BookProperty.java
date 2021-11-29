@@ -155,6 +155,37 @@ public class BookProperty extends JFrame{
 		JButton btnBookProperty = new JButton("Book Property");
 		btnBookProperty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+//				try {
+//					connection = ConnectionManager.getConnection();
+//					String b = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
+////					
+//					
+//					
+//
+//					PreparedStatement ps_address = connection.prepareStatement(insertAccountQuery);
+//					ps_address.setString(1, model.getHouseNameNum());
+//					ps_address.setString(2, model.getStreetName());
+//					ps_address.setString(3, model.getCity());
+//					ps_address.setString(4, model.getPostcode());
+//
+//					int y = ps_address.executeUpdate();
+//					System.out.println("6")
+//					if (y > 0) {
+//						System.out.println("tryagain");
+//						System.out.println(this);
+//						JOptionPane.showMessageDialog(this, "Successful registration!");
+//						// remove later
+//					}
+//
+//					
+//					connection.close();
+//				} catch (Exception e) {
+//					System.err.println("Got an exception!");
+//					System.err.println(e.getMessage());
+//				}
+//				
+				
 			}
 		});
 		btnBookProperty.setBounds(200, 625, 237, 29);

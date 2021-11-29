@@ -8,6 +8,7 @@ import GUI.Search;
 import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
+import GuestGUI.Review;
 import GUI.Contact;
 import GUI.EditAccount;
 import GUI.MainModule.STATE;
@@ -64,6 +65,7 @@ public class Controller extends MainModule{
 	private Bookings bookings;
 	private BookProperty bookProperty;
 	private ProvisionalBookings provisionalBookings;
+	private Review review;
 
 	
 	public Controller(MainModule mainModule, 
@@ -95,7 +97,8 @@ public class Controller extends MainModule{
 			GuestAccount guestAccount,
 			Bookings bookings, 
 			BookProperty bookProperty,
-			ProvisionalBookings provisionalBookings){
+			ProvisionalBookings provisionalBookings,
+			Review review){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -127,6 +130,7 @@ public class Controller extends MainModule{
 		this.bookings = bookings;
 		this.bookProperty = bookProperty;
 		this.provisionalBookings = provisionalBookings;
+		this.review = review;
 	}
 	
 	public void setTitle(String title){
@@ -308,6 +312,11 @@ public class Controller extends MainModule{
 			model.setHostId(id);
 			System.out.println(id);
 			provisionalBookings.initializeProvisionalBookings(facilitiesId, id);
+		}
+		else if (mainModule.userState == USER.GUEST && mainModule.editPropertyState == EDITPROPERTY.REVIEW){
+			model.setHostId(id);
+			System.out.println(id);
+			review.initializeReview(facilitiesId, id);
 		}
 	}
  	

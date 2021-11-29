@@ -335,7 +335,23 @@ public class Bookings extends javax.swing.JFrame {
         lblEndDate = new JLabel();
         lblEndDate.setText("End Date:");
         lblEndDate.setFont(new Font("Verdana", Font.PLAIN, 18));
-
+        
+        
+        
+        JButton reviewButton = new JButton("Review");
+        reviewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(mainModule.userState == USER.GUEST) {
+        		mainModule.editPropertyState = EDITPROPERTY.REVIEW;
+				MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()),Integer.parseInt(jTextField_booking_id.getText()));
+//				close();
+			//	model.setEditPropertyPostcode(null);
+				setVisible(false);
+        		}
+        	}
+        });
+        reviewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        
 		
 		
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -349,34 +365,37 @@ public class Bookings extends javax.swing.JFrame {
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
         						.addGroup(jPanel1Layout.createSequentialGroup()
+        							.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(jTextField_startDate, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
+        						.addGroup(jPanel1Layout.createSequentialGroup()
+        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(jLabel2)
+        								.addComponent(jLabel4)
+        								.addComponent(jLabel1)
+        								.addComponent(jLabel3)
+        								.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
+        									.addComponent(lblCleanliness, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        									.addComponent(lblCommunication, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)))
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(jTextField_totalPrice, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(jTextField_provisional, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(jTextField_host_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(jTextField_guest_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+        						.addGroup(jPanel1Layout.createSequentialGroup()
         							.addComponent(lblEndDate, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
         							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(jTextField_endDate, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-        						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        							.addGroup(jPanel1Layout.createSequentialGroup()
-        								.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
-        								.addPreferredGap(ComponentPlacement.RELATED)
-        								.addComponent(jTextField_startDate, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-        							.addGroup(jPanel1Layout.createSequentialGroup()
-        								.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        									.addComponent(jLabel2)
-        									.addComponent(jLabel4)
-        									.addComponent(jLabel1)
-        									.addComponent(jLabel3)
-        									.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
-        										.addComponent(lblCleanliness, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        										.addComponent(lblCommunication, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)))
-        								.addPreferredGap(ComponentPlacement.RELATED)
-        								.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        									.addComponent(jTextField_totalPrice, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        									.addComponent(jTextField_provisional, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        									.addComponent(jTextField_host_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        									.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        									.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-        									.addComponent(jTextField_guest_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))))
+        							.addComponent(jTextField_endDate, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
         					.addGap(18)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap())
+        		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+        			.addGap(142)
+        			.addComponent(reviewButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(542, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -423,6 +442,8 @@ public class Bookings extends javax.swing.JFrame {
         				.addGroup(jPanel1Layout.createSequentialGroup()
         					.addGap(62)
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        			.addGap(4)
+        			.addComponent(reviewButton)
         			.addContainerGap())
         );
         jPanel1.setLayout(jPanel1Layout);

@@ -7,6 +7,7 @@ import Controller.Controller;
 import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
+import GuestGUI.Review;
 import Model.Model;
 import HostGUI.*;
 import HostGUI.AddFacility;
@@ -57,6 +58,7 @@ public class MainModule {
 	private Bookings bookings;
 	private BookProperty bookProperty;
 	private ProvisionalBookings provisionalBookings;
+	private Review review;
 	
 	
 	//Page user is on
@@ -117,7 +119,8 @@ public class MainModule {
 		EDIT_PROPERTY_FACILITIES,
 		BOOKINGS,
 		BOOK_PROPERTY,
-		PROVISIONAL_BOOKINGS
+		PROVISIONAL_BOOKINGS,
+		REVIEW
 		
 	}
 	
@@ -176,11 +179,12 @@ public class MainModule {
 		Reviews reviews = new Reviews(mainModule, controller, model);	
 		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);
 		ProvisionalBookings provisionalBookings = new ProvisionalBookings(mainModule, controller, model);
+		Review review = new Review(mainModule, controller, model);
 		
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings, review);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();

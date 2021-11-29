@@ -38,8 +38,9 @@ public class Review extends JFrame{
 	private JTextField valueRatingTextField = new JTextField();
 	private JTextField communicationRatingTextField = new JTextField();
 	private JTextField cleanlinessRatingTextField;
-	
-	
+	private int propertyId;
+	private int booking_id;
+	private int Id;
 
 	private Controller controller;
 	private Model model;
@@ -49,7 +50,7 @@ public class Review extends JFrame{
 
 	
 	public Review(MainModule mainModule, Controller controller, Model model) {
-		initializeReview();
+		//initializeReview();
 		this.mainModule=mainModule;
 		this.controller=controller;
 		this.model=model;
@@ -58,7 +59,10 @@ public class Review extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeReview() {
+	public void initializeReview(int pId, int bId) {
+		propertyId = pId;
+    	booking_id = bId;
+    	
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
@@ -113,8 +117,41 @@ public class Review extends JFrame{
 		lblDescription.setBounds(127, 437, 167, 34);
 		reviewPanel.add(lblDescription);
 		
-		JButton addKitchen = new JButton("Save");
-		addKitchen.setBounds(259, 593, 91, 23);
+		JButton addKitchen = new JButton("Add Review");
+		addKitchen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//INSERT Property INFO INTO TEXT FIELDS
+				
+				try {
+					
+					connection = ConnectionManager.getConnection();
+
+
+					String addReview = "insert into Review (property_id, booking_id, accuracy, location, valueForMoney, communication, cleanliness, description)"
+												+ " values(?,?,?,?,?,?,?,?)";
+					PreparedStatement ps_review = connection.prepareStatement(addReview);
+
+					ps_review.setInt(1, propertyId);
+					ps_review.setInt(2, booking_id);
+					ps_review.setDouble(3, Integer.parseInt(AccuracyRatingTextField.getText()));
+					ps_review.setDouble(4, Integer.parseInt(locationRatingTextField.getText()));
+					ps_review.setDouble(5, Integer.parseInt(valueRatingTextField.getText()));
+					ps_review.setDouble(6, Integer.parseInt(communicationRatingTextField.getText()));
+					ps_review.setDouble(7, Integer.parseInt(cleanlinessRatingTextField.getText()));
+					ps_review.setString(8, descriptionTextField.getText());
+
+					System.out.println(ps_review);
+					ps_review.executeUpdate();
+				
+				} catch(Exception f) {
+					System.err.println("Got an exception!");
+					System.err.println(f.getMessage());
+				}
+				
+			}
+		});
+		addKitchen.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		addKitchen.setBounds(217, 609, 180, 23);
 		reviewPanel.add(addKitchen);
 		
 		descriptionTextField = new JTextField();
@@ -146,6 +183,9 @@ public class Review extends JFrame{
 		cleanlinessRatingTextField.setBounds(359, 391, 91, 20);
 		reviewPanel.add(cleanlinessRatingTextField);
 		cleanlinessRatingTextField.setColumns(10);
+		
+		
+		
 		
 		
 		
