@@ -24,8 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditBathing extends JFrame{
-
+public class EditBathing extends JFrame {
 
 	private JFrame frame;
 	private JTextField noOfBathroomsTextField;
@@ -49,15 +48,16 @@ public class EditBathing extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public EditBathing(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditBathing();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+
+	public EditBathing(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditBathing();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -68,15 +68,13 @@ public class EditBathing extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING BATHING RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit BATHING func = "+idAfter);
-
+		
 		JPanel editBathingPanel = new JPanel();
 		editBathingPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editBathingPanel, BorderLayout.CENTER);
@@ -90,23 +88,20 @@ public class EditBathing extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id in try block where im tryna get values from db = "+id);
+			String selectBathingRecord = "select hairDryer, toiletPaper from Bathing " + "where bathing_id=?";
 
-			String selectBathingRecord = "select hairDryer, toiletPaper from Bathing "
-										+ "where bathing_id=?";
-
-			PreparedStatement selectingBathingValues= connection.prepareStatement(selectBathingRecord);
+			PreparedStatement selectingBathingValues = connection.prepareStatement(selectBathingRecord);
 
 			selectingBathingValues.setInt(1, id);
 			ResultSet rs = selectingBathingValues.executeQuery();
 			while (rs.next()) {
 				hairDryer = rs.getBoolean("hairDryer");
-                toiletPaper = rs.getBoolean("toiletPaper");
-            }
+				toiletPaper = rs.getBoolean("toiletPaper");
+			}
 
 			connection.close();
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -129,34 +124,12 @@ public class EditBathing extends JFrame{
 		toiletPaperRadioBtn.setBounds(364, 296, 21, 23);
 		editBathingPanel.add(toiletPaperRadioBtn);
 
-//		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
-//		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
-//		editBathingPanel.add(noOfBathroomsLabel);
-//
-//		noOfBathroomsTextField = new JTextField();
-//		noOfBathroomsTextField.setBounds(347, 254, 106, 29);
-//		editBathingPanel.add(noOfBathroomsTextField);
-//		noOfBathroomsTextField.setColumns(10);
-//
-//		JButton addBathroomButton = new JButton("Add Bathroom");
-//		addBathroomButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
-//				MainModule.controller.editPropertyView(0);
-//			}
-//		});
-//		addBathroomButton.setBounds(207, 395, 209, 46);
-//		editBathingPanel.add(addBathroomButton);
-
-		addBathing= new JButton("Add Bathrooms");
+		addBathing = new JButton("Add Bathrooms");
 		addBathing.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("printing id in add bathroom btn before calling updateBathingDetails func = "+id);
-				System.out.println("printing idAfter in add bathroom btn before calling updateBathingDetails func = "+idAfter);
+			public void actionPerformed(ActionEvent e) {	
 				updateBathingDetails(id);
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_BATHROOM;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_BATHROOM;
 				MainModule.controller.editPropertyView(facilitiesidAfter, id);
 				frame.dispose();
 			}
@@ -170,13 +143,9 @@ public class EditBathing extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
 
 			}
@@ -189,24 +158,22 @@ public class EditBathing extends JFrame{
 	}
 
 	public void updateBathingDetails(int id) {
-		System.out.println("Printing id fed into updateBathingDetails = "+id);
+		System.out.println("Printing id fed into updateBathingDetails = " + id);
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateBathing func = "+idAfter);
+			System.out.println("id after in updateBathing func = " + idAfter);
 			model.setHairDryer(hairDryerRadioBtn.isSelected());
 			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
 
-			String updateBathingRecord = "update Bathing set hairDryer=?, toiletPaper=? "
-										+ "where bathing_id=?";
+			String updateBathingRecord = "update Bathing set hairDryer=?, toiletPaper=? " + "where bathing_id=?";
 
-			PreparedStatement updatingBathingValues= connection.prepareStatement(updateBathingRecord);
+			PreparedStatement updatingBathingValues = connection.prepareStatement(updateBathingRecord);
 			updatingBathingValues.setBoolean(1, model.getHairDryer());
 			updatingBathingValues.setBoolean(2, model.getToiletPaper());
 			updatingBathingValues.setInt(3, idAfter);
 			updatingBathingValues.executeUpdate();
 			System.out.println(updatingBathingValues.toString());
-
 
 			String updateBathingIdInFacilities = "update Facilities set bathing_id=? where facilities_id=?";
 
@@ -218,12 +185,11 @@ public class EditBathing extends JFrame{
 			System.out.println(updatingBathingIdInFacilities.toString());
 
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
