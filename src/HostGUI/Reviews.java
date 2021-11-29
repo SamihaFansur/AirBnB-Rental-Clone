@@ -265,14 +265,6 @@ public class Reviews extends javax.swing.JFrame {
         backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
         backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-				
-				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-				mainModule.userState=USER.HOST;
-				MainModule.controller.editPropertyView(model.getHostId(),model.getPropertyId());
-//				close();
-			//	model.setEditPropertyPostcode(null);
 				setVisible(false);
 				
 			}
