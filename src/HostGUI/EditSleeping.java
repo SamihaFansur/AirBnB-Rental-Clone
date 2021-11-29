@@ -24,8 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditSleeping extends JFrame{
-
+public class EditSleeping extends JFrame {
 
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
@@ -47,16 +46,17 @@ public class EditSleeping extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 private JTextField numberOfBedsTextField;
-	 public EditSleeping(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditSleeping();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JTextField numberOfBedsTextField;
+
+	public EditSleeping(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditSleeping();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -66,15 +66,12 @@ public class EditSleeping extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
-
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING SLEEPING RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit SLEEPING func = "+idAfter);
 
 		JPanel editSleepingPanel = new JPanel();
 		editSleepingPanel.setBackground(new Color(204, 255, 255));
@@ -89,21 +86,18 @@ public class EditSleeping extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id in try block where im tryna get values from db = "+id);
+			String selectSleepingRecord = "select bedLinen, towels from Sleeping " + "where sleeping_id=?";
 
-			String selectSleepingRecord = "select bedLinen, towels from Sleeping "
-										+ "where sleeping_id=?";
-
-			PreparedStatement selectingSleepingValues= connection.prepareStatement(selectSleepingRecord);
+			PreparedStatement selectingSleepingValues = connection.prepareStatement(selectSleepingRecord);
 
 			selectingSleepingValues.setInt(1, id);
 			ResultSet rs = selectingSleepingValues.executeQuery();
 			while (rs.next()) {
 				bedLinen = rs.getBoolean("bedLinen");
-                towels = rs.getBoolean("towels");
-            }
+				towels = rs.getBoolean("towels");
+			}
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -130,11 +124,9 @@ public class EditSleeping extends JFrame{
 		addBedroomButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("printing id in add bedroom btn before calling updateSleepingDetails func = "+id);
-				System.out.println("printing idAfter in add bedroom btn before calling updateSleepingDetails func = "+idAfter);
 				updateSleepingDetails(id);
-				mainModule.editPropertyState= EDITPROPERTY.EDIT_BEDROOM;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_BEDROOM;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
 			}
 		});
@@ -147,13 +139,9 @@ public class EditSleeping extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
 
 			}
@@ -170,48 +158,41 @@ public class EditSleeping extends JFrame{
 		editSleepingPanel.add(numberOfBedsTextField);
 		numberOfBedsTextField.setColumns(10);
 
-
-
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
 	public void updateSleepingDetails(int id) {
-		System.out.println("Printing id fed into updateSleepingDetails = "+id);
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateSleeping func = "+idAfter);
 			model.setBedLinen(bedLinenRadioBtn.isSelected());
 			model.setTowels(towelsRadioBtn.isSelected());
 			model.setNoOfBeds(Integer.parseInt(numberOfBedsTextField.getText()));
 			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=?, noOfBeds=? "
-										+ "where sleeping_id=?";
+					+ "where sleeping_id=?";
 
-			PreparedStatement updatingSleepingValues= connection.prepareStatement(updateSleepingRecord);
+			PreparedStatement updatingSleepingValues = connection.prepareStatement(updateSleepingRecord);
 			updatingSleepingValues.setBoolean(1, model.getBedLinen());
 			updatingSleepingValues.setBoolean(2, model.getTowels());
 			updatingSleepingValues.setInt(3, model.getNoOfBeds());
 			updatingSleepingValues.setInt(4, idAfter);
 			updatingSleepingValues.executeUpdate();
-			System.out.println(updatingSleepingValues.toString());
-
 
 			String updateSleepingIdInFacilities = "update Facilities set sleeping_id=? where facilities_id=?";
 
-			PreparedStatement updatingSleepingIdInFacilities = connection.prepareStatement(updateSleepingIdInFacilities);
+			PreparedStatement updatingSleepingIdInFacilities = connection
+					.prepareStatement(updateSleepingIdInFacilities);
 			updatingSleepingIdInFacilities.setInt(1, idAfter);
 			updatingSleepingIdInFacilities.setInt(2, facilitiesidAfter);
-
 			updatingSleepingIdInFacilities.executeUpdate();
-			System.out.println(updatingSleepingIdInFacilities.toString());
+			
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
