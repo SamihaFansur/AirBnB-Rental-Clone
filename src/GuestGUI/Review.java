@@ -1,4 +1,5 @@
 package GuestGUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,10 +21,7 @@ import GUI.MainModule;
 import GUI.NavEnquirer;
 import Model.Model;
 
-
-public class Review extends JFrame{
-
-
+public class Review extends JFrame {
 
 	Connection connection = null;
 
@@ -41,14 +39,13 @@ public class Review extends JFrame{
 	private Model model;
 	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
-	private JFrame frame ;
-
+	private JFrame frame;
 
 	public Review(MainModule mainModule, Controller controller, Model model) {
-		//initializeReview();
-		this.mainModule=mainModule;
-		this.controller=controller;
-		this.model=model;
+		// initializeReview();
+		this.mainModule = mainModule;
+		this.controller = controller;
+		this.model = model;
 	}
 
 	/**
@@ -56,16 +53,13 @@ public class Review extends JFrame{
 	 */
 	public void initializeReview(int pId, int bId) {
 		propertyId = pId;
-    	booking_id = bId;
-
+		booking_id = bId;
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 		JPanel reviewPanel = new JPanel();
 
 		reviewPanel.setBackground(new Color(204, 255, 255));
@@ -116,15 +110,12 @@ public class Review extends JFrame{
 		addKitchen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//INSERT Property INFO INTO TEXT FIELDS
-
+				// INSERT Property INFO INTO TEXT FIELDS
 				try {
-
 					connection = ConnectionManager.getConnection();
 
-
 					String addReview = "insert into Review (property_id, booking_id, accuracy, location, valueForMoney, communication, cleanliness, description)"
-												+ " values(?,?,?,?,?,?,?,?)";
+							+ " values(?,?,?,?,?,?,?,?)";
 					PreparedStatement ps_review = connection.prepareStatement(addReview);
 
 					ps_review.setInt(1, propertyId);
@@ -135,15 +126,12 @@ public class Review extends JFrame{
 					ps_review.setDouble(6, Integer.parseInt(communicationRatingTextField.getText()));
 					ps_review.setDouble(7, Integer.parseInt(cleanlinessRatingTextField.getText()));
 					ps_review.setString(8, descriptionTextField.getText());
-
-					System.out.println(ps_review);
 					ps_review.executeUpdate();
 
-				} catch(Exception f) {
+				} catch (Exception f) {
 					System.err.println("Got an exception!");
 					System.err.println(f.getMessage());
 				}
-
 			}
 		});
 		addKitchen.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -180,12 +168,6 @@ public class Review extends JFrame{
 		reviewPanel.add(cleanlinessRatingTextField);
 		cleanlinessRatingTextField.setColumns(10);
 
-
-
-
-
-
-
 		frame.setBounds(100, 100, 601, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,7 +176,3 @@ public class Review extends JFrame{
 		frame.setVisible(true);
 	}
 }
-
-
-
-
