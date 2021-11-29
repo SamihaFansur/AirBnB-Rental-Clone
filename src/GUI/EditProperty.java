@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -15,7 +16,7 @@ import Controller.Controller;
 import GUI.MainModule.STATE;
 import Model.Model;
 
-public class EditProperty extends JFrame{
+public class EditProperty extends JFrame {
 
 	Connection connection = null;
 
@@ -27,48 +28,50 @@ public class EditProperty extends JFrame{
 	private Model model;
 	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
-	private JFrame frame ;
+	private JFrame frame;
 	private int id;
 	private String houseNameNumber;
 	private String postcode;
 	private String shortName;
 
-	 public int getId() {
-	        return id;
-	    }
-	    public void setId(int id) {
-	        this.id = id;
-	    }
-	    public String getHouseNameNumber() {
-	        return houseNameNumber;
-	    }
-	    public void setHouseNameNumber(String houseNameNumber) {
-	        this.houseNameNumber = houseNameNumber;
-	    }
-	    public String getPostcode() {
-	        return postcode;
-	    }
-	    public void setPostcode(String postcode) {
-	        this.postcode = postcode;
-	    }
-	    public String getShortName() {
-	        return shortName;
-	    }
-	    public void setShortName(String shortName) {
-	        this.shortName = shortName;
-	    }
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 
+	public String getHouseNameNumber() {
+		return houseNameNumber;
+	}
 
+	public void setHouseNameNumber(String houseNameNumber) {
+		this.houseNameNumber = houseNameNumber;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
 
 	public EditProperty(MainModule mainModule, Controller controller, Model model) {
 		initializeProperty();
-		this.mainModule=mainModule;
-		this.controller=controller;
-		this.model=model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+		this.model = model;
 	}
-
-
 
 	/**
 	 * Initialize the contents of the frame.
@@ -79,7 +82,7 @@ public class EditProperty extends JFrame{
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
@@ -141,7 +144,3 @@ public class EditProperty extends JFrame{
 		frame.setVisible(true);
 	}
 }
-
-
-
-

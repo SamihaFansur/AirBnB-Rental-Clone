@@ -31,25 +31,18 @@ public class Homepage extends JFrame{
 		this.controller=controller;
 	}
 
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	 public void initializeHomePage() {
-
 		 if(mainModule.userState == USER.ENQUIRER) {
-
 			 mainModule.currentState = STATE.HOMEPAGE;
 				try {
 					frame = new JFrame();
-					//System.out.println("in register: "+frame);
 					navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-					//System.out.println("after nav in register = "+mainModule);
-
 				}catch(Exception e) {
 					System.err.println(e.getMessage());
 				}
-
 			JPanel homepagePanel = new JPanel();
 			homepagePanel.setBackground(new Color(204, 255, 255));
 			frame.getContentPane().add(homepagePanel, BorderLayout.CENTER);
@@ -66,21 +59,8 @@ public class Homepage extends JFrame{
 			frame.setVisible(true);
 		 }
 		 else if (mainModule.userState==USER.HOST) {
-			 /*Homepage for host should display list of host properties and buttons in the nav for:
-			  * 	add property
-			  * 	charge bands
-			  * 	provision bookings
-			  * 	accepted bookings
-			  * 	search
-			  * 	contact
-			  *
-			  *
-			  */
-
 		 }
 		 else if (mainModule.userState==USER.GUEST) {
-
 		 }
-
 	}
 }
