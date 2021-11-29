@@ -24,8 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditLiving extends JFrame{
-
+public class EditLiving extends JFrame {
 
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
@@ -38,29 +37,29 @@ public class EditLiving extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 private JRadioButton wifiRadioBtn;
-	 private JRadioButton satelliteRadioBtn;
-	 private JRadioButton televisionRadioBtn;
-	 private JRadioButton streamingRadioBtn;
-	 private JRadioButton dvdPlayerRadioBtn;
-	 private JRadioButton boardGamesRadioBtn;
-	 private int idAfter;
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JRadioButton wifiRadioBtn;
+	private JRadioButton satelliteRadioBtn;
+	private JRadioButton televisionRadioBtn;
+	private JRadioButton streamingRadioBtn;
+	private JRadioButton dvdPlayerRadioBtn;
+	private JRadioButton boardGamesRadioBtn;
+	private int idAfter;
 	private int facilitiesidAfter;
-	 private JButton addLiving;
+	private JButton addLiving;
 
-	 private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
+	private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
 
 	Connection connection = null;
 
-	 public EditLiving(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditLiving();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	public EditLiving(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditLiving();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -70,14 +69,12 @@ public class EditLiving extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING LIVING RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit LIVING func = "+idAfter);
 
 		JPanel editLivingPanel = new JPanel();
 		editLivingPanel.setBackground(new Color(204, 255, 255));
@@ -93,30 +90,23 @@ public class EditLiving extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			String selectLivingRecord = "select wifi, television, satellite, streaming, "
-										+ "dvdPlayer, boardGames from Living "
-										+ "where living_id=?";
+					+ "dvdPlayer, boardGames from Living " + "where living_id=?";
 
-			PreparedStatement selectingLivingValues= connection.prepareStatement(selectLivingRecord);
+			PreparedStatement selectingLivingValues = connection.prepareStatement(selectLivingRecord);
 
 			selectingLivingValues.setInt(1, id);
 			ResultSet rs = selectingLivingValues.executeQuery();
 
 			while (rs.next()) {
 				wifi = rs.getBoolean("wifi");
-                System.out.println(wifi);
-                television = rs.getBoolean("television");
-                System.out.println(television);
-                satellite = rs.getBoolean("satellite");
-                System.out.println(satellite);
-                streaming = rs.getBoolean("streaming");
-                System.out.println(streaming);
-                dvdPlayer = rs.getBoolean("dvdPlayer");
-                System.out.println(dvdPlayer);
-                boardGames = rs.getBoolean("boardGames");
-                System.out.println(boardGames);
-            }
+				television = rs.getBoolean("television");
+				satellite = rs.getBoolean("satellite");
+				streaming = rs.getBoolean("streaming");
+				dvdPlayer = rs.getBoolean("dvdPlayer");
+				boardGames = rs.getBoolean("boardGames");
+			}
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -191,15 +181,10 @@ public class EditLiving extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
-
 			}
 		});
 		editLivingPanel.add(backButton);
@@ -210,7 +195,6 @@ public class EditLiving extends JFrame{
 	}
 
 	public void updateLivingDetails() {
-		System.out.println("idafter in updateLivingDetails = "+idAfter);
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -222,10 +206,9 @@ public class EditLiving extends JFrame{
 			model.setBoardGames(boardGamesRadioBtn.isSelected());
 
 			String updateLivingRecord = "update Living set wifi=?, television=?, "
-										+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? "
-										+ "where living_id=?";
+					+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? " + "where living_id=?";
 
-			PreparedStatement updatingLivingValues= connection.prepareStatement(updateLivingRecord);
+			PreparedStatement updatingLivingValues = connection.prepareStatement(updateLivingRecord);
 			updatingLivingValues.setBoolean(1, model.getWifi());
 			updatingLivingValues.setBoolean(2, model.getTelevision());
 			updatingLivingValues.setBoolean(3, model.getSatellite());
@@ -234,24 +217,20 @@ public class EditLiving extends JFrame{
 			updatingLivingValues.setBoolean(6, model.getBoardGames());
 			updatingLivingValues.setInt(7, idAfter);
 			updatingLivingValues.executeUpdate();
-			System.out.println(updatingLivingValues.toString());
-
 
 			String updateLivingIdInFacilities = "update Facilities set Living_id=? where facilities_id=?";
 
 			PreparedStatement updatingLivingIdInFacilities = connection.prepareStatement(updateLivingIdInFacilities);
 			updatingLivingIdInFacilities.setInt(1, idAfter);
 			updatingLivingIdInFacilities.setInt(2, facilitiesidAfter);
-
 			updatingLivingIdInFacilities.executeUpdate();
-			System.out.println(updatingLivingIdInFacilities.toString());
+
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
