@@ -298,9 +298,7 @@ public class Bookings extends javax.swing.JFrame {
 				//Homepage sp = new Homepage();
 				if(mainModule.userState == USER.HOST) {
 				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-				mainModule.userState=USER.HOST;
-				MainModule.controller.editPropertyView(model.getHostId(),model.getPropertyId());
+				MainModule.controller.drawNewView();
 //				close();
 			//	model.setEditPropertyPostcode(null);
 				setVisible(false);

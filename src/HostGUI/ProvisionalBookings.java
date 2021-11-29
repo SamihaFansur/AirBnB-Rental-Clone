@@ -297,13 +297,20 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//Homepage sp = new Homepage();
 				
-				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
-				mainModule.userState=USER.HOST;
-				MainModule.controller.editPropertyView(model.getHostId(),model.getPropertyId());
-//				close();
-			//	model.setEditPropertyPostcode(null);
-				setVisible(false);
+				if(mainModule.userState == USER.HOST) {
+					mainModule.currentState=STATE.HOST_ACCOUNT;
+					MainModule.controller.drawNewView();
+//					close();
+				//	model.setEditPropertyPostcode(null);
+					setVisible(false);
+					}else {
+						mainModule.userState=USER.GUEST;
+						mainModule.currentState=STATE.GUEST_ACCOUNT;
+		
+						
+						MainModule.controller.drawNewView();
+						setVisible(false);
+					}
 				
 			}
 		});
