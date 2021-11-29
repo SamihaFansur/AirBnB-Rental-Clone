@@ -41,7 +41,11 @@ public class AddFacility extends JFrame{
 	private int utilityId;
 	private int livingId;
 	private int outdoorsId;
+	private boolean previouslyInPropertiesList;
 	
+	private int facilityIdAfter;
+	private int hostId;
+	private int faciltiesId;
 	
 	Connection connection = null;
 	
@@ -68,7 +72,10 @@ public class AddFacility extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeAddFacility(int facilityId, int id) {
-		int facilityIdAfter = facilityId;
+		faciltiesId = model.getFacilitiesId();
+		facilityIdAfter = facilityId;
+		hostId = id;
+		previouslyInPropertiesList = model.getPreviouslyInPropertiesList();
 		
 		try {
 			frame = new JFrame();
@@ -86,7 +93,7 @@ public class AddFacility extends JFrame{
 
 		JLabel addFacilityLabel = new JLabel("Add Facility");
 		addFacilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		addFacilityLabel.setBounds(222, 53, 183, 57);
+		addFacilityLabel.setBounds(234, 56, 183, 57);
 		addFacilityPanel.add(addFacilityLabel);
 		
 		JButton addSleepingButton = new JButton("Add Sleeping Facility");
@@ -139,7 +146,7 @@ public class AddFacility extends JFrame{
 				}
 			}
 		});
-		addSleepingButton.setBounds(190, 160, 196, 51);
+		addSleepingButton.setBounds(192, 221, 196, 51);
 		addFacilityPanel.add(addSleepingButton);
 		
 		JButton btnAddBathingFacility = new JButton("Add Bathing Facility");
@@ -190,7 +197,7 @@ public class AddFacility extends JFrame{
 				}
 			}
 		});
-		btnAddBathingFacility.setBounds(190, 222, 196, 51);
+		btnAddBathingFacility.setBounds(192, 283, 196, 51);
 		addFacilityPanel.add(btnAddBathingFacility);
 		
 		//int kitchenId = 0;
@@ -253,7 +260,7 @@ public class AddFacility extends JFrame{
 					System.out.println("KITCHEN IS IS*************"+kitchenId);
 			}
 		});
-		btnAddKitchenfacility.setBounds(190, 289, 196, 57);
+		btnAddKitchenfacility.setBounds(192, 350, 196, 57);
 		addFacilityPanel.add(btnAddKitchenfacility);
 		
 		JButton btnAddUtilityFacility = new JButton("Add Utility Facility");
@@ -304,7 +311,7 @@ public class AddFacility extends JFrame{
 				}
 			}
 		});
-		btnAddUtilityFacility.setBounds(192, 363, 194, 57);
+		btnAddUtilityFacility.setBounds(194, 424, 194, 57);
 		addFacilityPanel.add(btnAddUtilityFacility);
 		
 		JButton btnAddLivingFacility = new JButton("Add Living Facility");
@@ -358,7 +365,7 @@ public class AddFacility extends JFrame{
 				}
 			}
 		});
-		btnAddLivingFacility.setBounds(192, 437, 194, 57);
+		btnAddLivingFacility.setBounds(194, 498, 194, 57);
 		addFacilityPanel.add(btnAddLivingFacility);
 		
 		JButton btnAddOutdoorsFacility = new JButton("Add Outdoors Facility");
@@ -409,7 +416,7 @@ public class AddFacility extends JFrame{
 				}
 			}
 		});
-		btnAddOutdoorsFacility.setBounds(190, 505, 196, 51);
+		btnAddOutdoorsFacility.setBounds(192, 566, 196, 51);
 		addFacilityPanel.add(btnAddOutdoorsFacility);
 		
 		JButton backButton = new JButton("Back");
@@ -418,19 +425,33 @@ public class AddFacility extends JFrame{
 		
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
+				
+				if(previouslyInPropertiesList) {
+					mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+					
+				}else{
+					mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
+					
+				}
+				
+				System.out.println("HOST ID IN CHARGEBANDS: "+hostId);
+				
+				
+				
+				System.out.println("propertyID IN CHARGEBANDS: "+ facilityId);
+				MainModule.controller.editPropertyView(hostId,facilityId);
 
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
-				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				MainModule.controller.editPropertyView(facilityId, 0); //need to check what 2nd param is
-//				close();
-				frame.dispose();
+				frame.setVisible(false);
 				
 			}
 		});
 		
 		addFacilityPanel.add(backButton);
+		
+		JLabel messegeLabel = new JLabel("Create all Facilities Before Leaving Page");
+		messegeLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		messegeLabel.setBounds(178, 141, 288, 42);
+		addFacilityPanel.add(messegeLabel);
 
 
 		frame.setBounds(100, 100, 600, 700);

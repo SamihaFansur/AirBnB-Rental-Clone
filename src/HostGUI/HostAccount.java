@@ -137,7 +137,8 @@ public class HostAccount extends JFrame{
 		addPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
-				
+				model.setPreviouslyInPropertiesList(false);
+
 				int id = 0;
 				try {
 

@@ -61,7 +61,7 @@ public class AddProperty extends JFrame {
 	}
 
 	public AddProperty(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditProperty();
+		 //initializeEditProperty();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
@@ -79,8 +79,11 @@ public class AddProperty extends JFrame {
 	}
 
 	public void initializeEditProperty() {
+		
+		model.setPreviouslyInPropertiesList(false);
 		try {
 			frame = new JFrame();
+			frame.setResizable(false);
 			navForHost.addHostNav(frame, mainModule);
 
 		} catch (Exception e) {
@@ -102,7 +105,8 @@ public class AddProperty extends JFrame {
 		addFacilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.ADD_FACILITY;
-				System.out.println(" r u in here what the fuck");
+				model.setPreviouslyInPropertiesList(false);
+
 				if (model.getEditPropertyPostcode() == null) {
 					adddingFacility();
 				} else {
@@ -115,7 +119,7 @@ public class AddProperty extends JFrame {
 				}
 			}
 		});
-		addFacilityButton.setBounds(203, 212, 183, 34);
+		addFacilityButton.setBounds(206, 142, 183, 34);
 		editPropertyPanel.add(addFacilityButton);
 
 //		JButton facilitiesButton = new JButton("Facilities");
@@ -130,25 +134,25 @@ public class AddProperty extends JFrame {
 //		editPropertyPanel.add(facilitiesButton);
 
 		JLabel postcodeLabel = new JLabel("Postcode:");
-		postcodeLabel.setBounds(104, 325, 93, 34);
+		postcodeLabel.setBounds(97, 248, 93, 34);
 		editPropertyPanel.add(postcodeLabel);
 
 		postcodeTextField = new JTextField();
 		postcodeTextField.setColumns(10);
-		postcodeTextField.setBounds(202, 325, 274, 34);
+		postcodeTextField.setBounds(195, 248, 274, 34);
 		editPropertyPanel.add(postcodeTextField);
 
 		JLabel streetNameLabel = new JLabel("Street Name:");
-		streetNameLabel.setBounds(104, 370, 93, 34);
+		streetNameLabel.setBounds(97, 293, 93, 34);
 		editPropertyPanel.add(streetNameLabel);
 
 		streetNameTextField = new JTextField();
 		streetNameTextField.setColumns(10);
-		streetNameTextField.setBounds(202, 370, 274, 34);
+		streetNameTextField.setBounds(195, 293, 274, 34);
 		editPropertyPanel.add(streetNameTextField);
 
 		JLabel cityLabel = new JLabel("City/Town:");
-		cityLabel.setBounds(104, 415, 93, 34);
+		cityLabel.setBounds(97, 338, 93, 34);
 		editPropertyPanel.add(cityLabel);
 		
 		 String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge", 
@@ -159,56 +163,44 @@ public class AddProperty extends JFrame {
 					"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", 
 					"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 	 	cityComboBox = new JComboBox(cityNames);
-		cityComboBox.setBounds(202, 415, 274, 34);
+		cityComboBox.setBounds(195, 338, 274, 34);
 		editPropertyPanel.add(cityComboBox);
 
 		JLabel houseNameNumberLabel = new JLabel("House Name/Number:");
-		houseNameNumberLabel.setBounds(104, 456, 93, 34);
+		houseNameNumberLabel.setBounds(97, 379, 93, 34);
 		editPropertyPanel.add(houseNameNumberLabel);
 
 		houseNameNumberTextField = new JTextField();
 		houseNameNumberTextField.setColumns(10);
-		houseNameNumberTextField.setBounds(202, 460, 274, 34);
+		houseNameNumberTextField.setBounds(195, 383, 274, 34);
 		editPropertyPanel.add(houseNameNumberTextField);
 
 		JLabel shortNameLabel = new JLabel("Short Name:");
-		shortNameLabel.setBounds(104, 508, 93, 34);
+		shortNameLabel.setBounds(97, 431, 93, 34);
 		editPropertyPanel.add(shortNameLabel);
 
 		shortNameTextField = new JTextField();
 		shortNameTextField.setColumns(10);
-		shortNameTextField.setBounds(202, 508, 274, 34);
+		shortNameTextField.setBounds(195, 431, 274, 34);
 		editPropertyPanel.add(shortNameTextField);
 
 		JLabel guestCapacityLabel = new JLabel("Guest Capacity");
-		guestCapacityLabel.setBounds(104, 549, 93, 34);
+		guestCapacityLabel.setBounds(97, 472, 93, 34);
 		editPropertyPanel.add(guestCapacityLabel);
 
 		guestCapacityTextField = new JTextField();
 		guestCapacityTextField.setColumns(10);
-		guestCapacityTextField.setBounds(202, 553, 274, 34);
+		guestCapacityTextField.setBounds(195, 476, 274, 34);
 		editPropertyPanel.add(guestCapacityTextField);
 
 		JLabel descriptionLabel = new JLabel("Description"); // fix text box dimensions
-		descriptionLabel.setBounds(104, 598, 93, 34);
+		descriptionLabel.setBounds(97, 521, 93, 34);
 		editPropertyPanel.add(descriptionLabel);
 
 		descriptionTextField = new JTextField();
 		descriptionTextField.setColumns(10);
-		descriptionTextField.setBounds(202, 598, 274, 120);
+		descriptionTextField.setBounds(195, 521, 274, 120);
 		editPropertyPanel.add(descriptionTextField);
-
-		JButton reviewsButton = new JButton("Reviews");
-		reviewsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState = EDITPROPERTY.REVIEWS;
-				MainModule.controller.editPropertyView(0, 0); // fix params
-				close();
-			}
-		});
-		reviewsButton.setBounds(203, 118, 183, 34);
-
-		editPropertyPanel.add(reviewsButton);
 
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -230,7 +222,7 @@ public class AddProperty extends JFrame {
 		editPropertyPanel.add(backButton);
 
 		JButton addChargeBandsButton = new JButton("Add Charge Bands");
-		addChargeBandsButton.setBounds(203, 261, 183, 34);
+		addChargeBandsButton.setBounds(206, 191, 183, 34);
 		addChargeBandsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.CHARGEBANDS;
@@ -326,7 +318,7 @@ public class AddProperty extends JFrame {
 
 			}
 		});
-		addEditPropertyButton.setBounds(415, 701, 91, 23);
+		addEditPropertyButton.setBounds(248, 668, 91, 23);
 		editPropertyPanel.add(addEditPropertyButton);
 
 		resetEditPropertyButton = new JButton("Reset");
@@ -341,7 +333,7 @@ public class AddProperty extends JFrame {
 		resetEditPropertyButton.setBounds(201, 611, 91, 23);
 		editPropertyPanel.add(resetEditPropertyButton);
 
-		frame.setBounds(100, 100, 600, 700);
+		frame.setBounds(100, 100, 600, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

@@ -721,6 +721,7 @@ public class Model {
 	
 	public void setPreviouslyInPropertiesList(boolean previouslyInPropertiesList) {
 		this.previouslyInPropertiesList=previouslyInPropertiesList;
+		System.out.println("CAHNGED STATE OF PREVIOUSLT IN PROPERTIES" + getPreviouslyInPropertiesList());
 	}
 	
 	public boolean getPreviouslyInPropertiesList() {
