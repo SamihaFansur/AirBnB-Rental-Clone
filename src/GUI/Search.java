@@ -69,6 +69,35 @@ public class Search extends javax.swing.JFrame {
 	 private Model model;
 	 private MainModule mainModule;
 	 Connection connection = null;
+	 private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable_Display_Search;
+    private JButton btnNewButton;
+    private JButton viewPropertyButton;
+    private JTextField minPriceTextField;
+    private JTextField maxPriceTextField;
+    private JTextField startDateTextField;
+    private JTextField endDateTextField;
+    private JTextField guestCapacityTextField;
+    private JComboBox locationComboBox;
+    private JLabel maxPriceLabel;
+    private JLabel startDateLabel;
+    private JLabel endDateLabel;
+    private JLabel guestCapacityLabel;
+    private JLabel locationLabel;
+    private JLabel propertyIdLabel;
+    private JTextField propertyIDTextField;
+    private JPanel navBarPanel;
+    private Date startd;
+	 private Date endd;
+	 private String sd;
+	 private String ed;
+	 private double minPPN;
+	 private double maxPPN;
+	 private String placeName;
+	 private int guestCap;
 	 
     public Search(MainModule mainModule, Controller controller, Model model) {
     	this.model=model;
@@ -77,13 +106,13 @@ public class Search extends javax.swing.JFrame {
 		
         initComponents();
         model.setSD(startDateTextField.getText());
- 	   model.setED(endDateTextField.getText());
- 	   model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
- 	   model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
- 	   model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
- 	   model.setPlaceName("");
+ 	    model.setED(endDateTextField.getText());
+ 	    model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
+ 	    model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
+ 	    model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
+ 	    model.setPlaceName("");
  	
-       Show_Search_In_JTable();
+        Show_Search_In_JTable();
     }
     
     // get the connection
@@ -113,16 +142,7 @@ public class Search extends javax.swing.JFrame {
          return null;
      }
   }
-	 private Date startd;
-	 private Date endd;
-	 private String sd;
-	 private String ed;
-	 private double minPPN;
-	 private double maxPPN;
-	 private String placeName;
-	 private int guestCap;
-		
-   
+
  // get a list of properties from mysql database
    public ArrayList<SearchObject> getSearchList() {
 	   Connection connection = getConnection();
@@ -134,7 +154,8 @@ public class Search extends javax.swing.JFrame {
        String sd = model.getSD();
        String ed = model.getED(); 
       try {
-			startd = sourceFormat.parse(sd);
+
+			startd =  sourceFormat.parse(sd);
 			endd = sourceFormat.parse(ed);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
@@ -224,7 +245,8 @@ public class Search extends javax.swing.JFrame {
 
                System.out.println(getAllCb);
                while(gettingAllCb.next()) {
-                   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) ||   startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))))) {
+            	   // checking if user start date is after start date of the charge band AND if the user start date is before the end date of the charge band
+                   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) ||  ( startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) || startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) )) {
                        propId = gettingAllCb.getInt("property_id");
 
                         System.out.println("PROPERTY ID IN QUERY : "+ propId);
@@ -2528,30 +2550,8 @@ public class Search extends javax.swing.JFrame {
         });
         
     }
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-//    private javax.swing.JLabel jLabel7;
-//    private javax.swing.JLabel jLabel8;
-//    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_Display_Search;
-    private JButton btnNewButton;
-    private JButton viewPropertyButton;
-    private JTextField minPriceTextField;
-    private JTextField maxPriceTextField;
-    private JTextField startDateTextField;
-    private JTextField endDateTextField;
-    private JTextField guestCapacityTextField;
-    private JComboBox locationComboBox;
-    private JLabel maxPriceLabel;
-    private JLabel startDateLabel;
-    private JLabel endDateLabel;
-    private JLabel guestCapacityLabel;
-    private JLabel locationLabel;
-    private JLabel propertyIdLabel;
-    private JTextField propertyIDTextField;
-    private JPanel navBarPanel;
+  
+    
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
