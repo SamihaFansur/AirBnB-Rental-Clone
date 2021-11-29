@@ -24,8 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditKitchen extends JFrame{
-
+public class EditKitchen extends JFrame {
 
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
@@ -55,16 +54,14 @@ public class EditKitchen extends JFrame{
 
 	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvision;
 
-
 	Connection connection = null;
 
-
-	 public EditKitchen(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditKitchen();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	public EditKitchen(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditKitchen();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -74,14 +71,12 @@ public class EditKitchen extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING KITCHEN RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit kitchen func = "+idAfter);
 
 		JPanel editKitchenPanel = new JPanel();
 		editKitchenPanel.setBackground(new Color(204, 255, 255));
@@ -96,30 +91,26 @@ public class EditKitchen extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id in try block where im tryna get values from db = "+id);
+			String selectKitchenRecord = "select refrigerator, microwave, " + "oven, stove, dishwasher, tableware, "
+					+ "cookware, basicProvision from Kitchen " + "where kitchen_id=?";
 
-			String selectKitchenRecord = "select refrigerator, microwave, "
-										+ "oven, stove, dishwasher, tableware, "
-										+ "cookware, basicProvision from Kitchen "
-										+ "where kitchen_id=?";
-
-			PreparedStatement selectingKitchenValues= connection.prepareStatement(selectKitchenRecord);
+			PreparedStatement selectingKitchenValues = connection.prepareStatement(selectKitchenRecord);
 
 			selectingKitchenValues.setInt(1, id);
 			ResultSet rs = selectingKitchenValues.executeQuery();
 
 			while (rs.next()) {
 				refrigerator = rs.getBoolean("refrigerator");
-                microwave = rs.getBoolean("microwave");
-                oven = rs.getBoolean("oven");
-                stove = rs.getBoolean("stove");
-                dishwasher = rs.getBoolean("dishwasher");
-                tableware = rs.getBoolean("tableware");
-                cookware = rs.getBoolean("cookware");
-                basicProvision = rs.getBoolean("basicProvision");
-            }
+				microwave = rs.getBoolean("microwave");
+				oven = rs.getBoolean("oven");
+				stove = rs.getBoolean("stove");
+				dishwasher = rs.getBoolean("dishwasher");
+				tableware = rs.getBoolean("tableware");
+				cookware = rs.getBoolean("cookware");
+				basicProvision = rs.getBoolean("basicProvision");
+			}
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -196,7 +187,7 @@ public class EditKitchen extends JFrame{
 		basicProvisionsRadioBtn.setBounds(387, 552, 21, 23);
 		editKitchenPanel.add(basicProvisionsRadioBtn);
 
-		addKitchen= new JButton("Save");
+		addKitchen = new JButton("Save");
 		addKitchen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -212,15 +203,10 @@ public class EditKitchen extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
-
 			}
 		});
 		editKitchenPanel.add(backButton);
@@ -234,8 +220,6 @@ public class EditKitchen extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateKitchen func = "+idAfter);
-			System.out.println("facilities id after in updateKitchen func = "+facilitiesidAfter);
 			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
 			model.setMicrowave(microwaveRadioBtn.isSelected());
 			model.setOven(ovenRadioBtn.isSelected());
@@ -246,11 +230,10 @@ public class EditKitchen extends JFrame{
 			model.setBasicProvisions(basicProvisionsRadioBtn.isSelected());
 
 			String updateKitchenRecord = "update Kitchen set refrigerator=?, microwave=?, "
-										+ "oven=?, stove=?, dishwasher=?, tableware=?, "
-										+ "cookware=?, basicProvision=?  "
-										+ "where kitchen_id=?";
+					+ "oven=?, stove=?, dishwasher=?, tableware=?, " + "cookware=?, basicProvision=?  "
+					+ "where kitchen_id=?";
 
-			PreparedStatement updatingKitchenValues= connection.prepareStatement(updateKitchenRecord);
+			PreparedStatement updatingKitchenValues = connection.prepareStatement(updateKitchenRecord);
 			updatingKitchenValues.setBoolean(1, model.getRefrigerator());
 			updatingKitchenValues.setBoolean(2, model.getMicrowave());
 			updatingKitchenValues.setBoolean(3, model.getOven());
@@ -261,24 +244,20 @@ public class EditKitchen extends JFrame{
 			updatingKitchenValues.setBoolean(8, model.getBasicProvisions());
 			updatingKitchenValues.setInt(9, idAfter);
 			updatingKitchenValues.executeUpdate();
-			System.out.println(updatingKitchenValues.toString());
 
 			String updateKitchenIdInFacilities = "update Facilities set kitchen_id=? where facilities_id=?";
 
 			PreparedStatement updatingKitchenIdInFacilities = connection.prepareStatement(updateKitchenIdInFacilities);
 			updatingKitchenIdInFacilities.setInt(1, idAfter);
 			updatingKitchenIdInFacilities.setInt(2, facilitiesidAfter);
-
 			updatingKitchenIdInFacilities.executeUpdate();
-			System.out.println(updatingKitchenIdInFacilities.toString());
 
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
 
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
