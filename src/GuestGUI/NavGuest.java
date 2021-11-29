@@ -1,6 +1,5 @@
 package GuestGUI;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ import GUI.MainModule;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 
-public class NavGuest extends JFrame{
+public class NavGuest extends JFrame {
 
 	public JFrame frame;
 	private MainModule mainModule;
@@ -26,6 +25,7 @@ public class NavGuest extends JFrame{
 	public JFrame getFrame() {
 		return frame;
 	}
+
 	public void setMainModule(MainModule mainModule) {
 		this.mainModule = mainModule;
 	}
@@ -34,18 +34,8 @@ public class NavGuest extends JFrame{
 		return mainModule;
 	}
 
-
-//	public void close() {
-//
-//			this.frame.dispose();
-//	}
-//
-
 	public void addGuestNav(JFrame frame, MainModule mainModule) {
-		//System.out.println("IN NAVENQ");
-		//System.out.println("in nav current state= "+mainModule);
-		this.frame= frame;
-		//System.out.println("in nav enq: "+frame);
+		this.frame = frame;
 
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
@@ -53,37 +43,29 @@ public class NavGuest extends JFrame{
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
 
-
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-				mainModule.currentState=STATE.GUEST_ACCOUNT;
-				mainModule.userState=USER.GUEST;
+				mainModule.currentState = STATE.GUEST_ACCOUNT;
+				mainModule.userState = USER.GUEST;
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
-
 			}
 		});
 		navBarPanel.add(navHomeButton);
-
 
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SEARCH;
-				mainModule.userState=USER.GUEST;
+				mainModule.currentState = STATE.SEARCH;
+				mainModule.userState = USER.GUEST;
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
 			}
 		});
 		navBarPanel.add(navSearchButton);
-
 
 		JButton navLogoutButton = new JButton("Logout");
 		navLogoutButton.addActionListener(new ActionListener() {
@@ -93,16 +75,9 @@ public class NavGuest extends JFrame{
 				mainModule.userState = USER.ENQUIRER;
 				frame.dispose();
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
 			}
 		});
 		navBarPanel.add(navLogoutButton);
-
-
 	}
-
-
-
-
 }
