@@ -24,19 +24,15 @@ import HostGUI.NavHost;
 import Model.Model;
 
 public class BookProperty extends JFrame{
-
 	private NavHost navForHost = new NavHost();
-
 	private JFrame frame;
 
 	public void close() {
 		frame.dispose();
 	}
-
 	/**
 	 * Create the application.
 	 */
-
 	 private Controller controller;
 	 private Model model;
 	 private MainModule mainModule;
@@ -44,7 +40,6 @@ public class BookProperty extends JFrame{
 	 private int propertyidAfter;
 
 	 Connection connection = null;
-
 
 	 private JTextField shortNameTextField;
 	 private JTextField guestCapacityTextField;
@@ -65,12 +60,9 @@ public class BookProperty extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeBookProperty(int propertyId, int id) {
-
-
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
-
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -82,8 +74,6 @@ public class BookProperty extends JFrame{
 
 		idAfter = id;
 		propertyidAfter = propertyId;
-		System.out.println("Property ID  = "+propertyidAfter);
-		System.out.println("id after = "+idAfter);
 
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -97,10 +87,6 @@ public class BookProperty extends JFrame{
 			}
 		});
 		bookPropertyPanel.add(backButton);
-
-
-
-
 
 		JLabel bookPropertyTitleLabel = new JLabel("Property");
 		bookPropertyTitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -146,37 +132,6 @@ public class BookProperty extends JFrame{
 		btnBookProperty.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-//				try {
-//					connection = ConnectionManager.getConnection();
-//					String b = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
-////
-//
-//
-//
-//					PreparedStatement ps_address = connection.prepareStatement(insertAccountQuery);
-//					ps_address.setString(1, model.getHouseNameNum());
-//					ps_address.setString(2, model.getStreetName());
-//					ps_address.setString(3, model.getCity());
-//					ps_address.setString(4, model.getPostcode());
-//
-//					int y = ps_address.executeUpdate();
-//					System.out.println("6")
-//					if (y > 0) {
-//						System.out.println("tryagain");
-//						System.out.println(this);
-//						JOptionPane.showMessageDialog(this, "Successful registration!");
-//						// remove later
-//					}
-//
-//
-//					connection.close();
-//				} catch (Exception e) {
-//					System.err.println("Got an exception!");
-//					System.err.println(e.getMessage());
-//				}
-//
-
 			}
 		});
 		btnBookProperty.setBounds(200, 625, 237, 29);
@@ -186,7 +141,6 @@ public class BookProperty extends JFrame{
 		reviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
         	    //needs to take in the properyId and hostId
         		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
@@ -236,11 +190,8 @@ public class BookProperty extends JFrame{
 		jTextField_property_id.setBounds(166, 121, 360, 29);
 		bookPropertyPanel.add(jTextField_property_id);
 
-
 		//SET PROPETY ID BOX
-
 		jTextField_property_id.setText(String.valueOf(propertyId));
-
 
 		//INSERT Property INFO INTO TEXT FIELDS
 		try {
@@ -248,7 +199,6 @@ public class BookProperty extends JFrame{
 
 		Statement stmt = connection.createStatement();
 		String getInfo = "SELECT shortName, guestCapacity, description FROM Property WHERE property_id = " + propertyidAfter;
-		System.out.println(getInfo);
 		ResultSet rs = stmt.executeQuery(getInfo);
 		int guestCapacity = 0;
 
@@ -260,125 +210,61 @@ public class BookProperty extends JFrame{
 			shortName = rs.getString("shortName");
 			guestCapacity = rs.getInt("guestCapacity");
 			description = rs.getString("description");
-
 		}
-		System.out.println(shortName);
-		System.out.println(guestCapacity);
-		System.out.println(description);
-
-
 		shortNameTextField.setText(shortName);
 		guestCapacityTextField.setText(guestCapacityString);
 		descriptionTextField.setText(description);
 
-
 		//INSERT facilities INTFO into text fields
-
-
 		Statement stmt2 = connection.createStatement();
 		String getSleeping = "SELECT sleeping_id FROM Facilities WHERE property_id = " + propertyidAfter;
-		System.out.println(getSleeping);
 		ResultSet rs2 = stmt2.executeQuery(getSleeping);
 
-
-
 		int sleeping = 0;
-
-
 		while(rs2.next()) {
 			sleeping = rs2.getInt("sleeping_id");
-
-
 		}
-		System.out.println(sleeping);
-
-
-
+		
 		Statement stmt3 = connection.createStatement();
 		String getBedrooms = "SELECT noOfBedrooms FROM Sleeping WHERE sleeping_id = " + sleeping;
-		System.out.println(getBedrooms);
 		ResultSet rs3 = stmt3.executeQuery(getBedrooms);
 
-
-
 		int bedrooms = 0;
-
-
 		while(rs3.next()) {
 			bedrooms = rs3.getInt("noOfBedrooms");
-
-
 		}
-		System.out.println(bedrooms);
-
 		Statement stmt4 = connection.createStatement();
 		String getBeds = "SELECT noOfBeds FROM Sleeping WHERE sleeping_id = " + sleeping;
-		System.out.println(getBeds);
 		ResultSet rs4 = stmt4.executeQuery(getBeds);
 
-
-
 		int beds = 0;
-
-
 		while(rs4.next()) {
 			beds = rs4.getInt("noOfBeds");
-
-
 		}
-		System.out.println(beds);
 
 		Statement stmt5 = connection.createStatement();
 		String getBathing = "SELECT bathing_id FROM Facilities WHERE property_id = " + propertyidAfter;
-		System.out.println(getBathing);
 		ResultSet rs5 = stmt5.executeQuery(getBathing);
 
-
-
 		int bathing = 0;
-
-
 		while(rs5.next()) {
 			bathing = rs5.getInt("bathing_id");
-
-
 		}
-		System.out.println(bathing);
-
-
 		Statement stmt6 = connection.createStatement();
 		String getBathrooms = "SELECT noOfBathrooms FROM Bathing WHERE bathing_id = " + bathing;
-		System.out.println(getBathrooms);
 		ResultSet rs6 = stmt6.executeQuery(getBathrooms);
-
-
-
+		
 		int bathrooms = 0;
-
-
 		while(rs6.next()) {
 			bathrooms = rs6.getInt("noOfBathrooms");
-
-
 		}
-		System.out.println(bathrooms);
-
-
-
 		numberOfBedroomsTextField.setText(String.valueOf(bedrooms));
 		numberOfBedsTextField.setText(String.valueOf(beds));
 		numberOfBathsTextField.setText(String.valueOf(bathrooms));
-
-
-
-
-
-
 		} catch(Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-
 
 		frame.setBounds(100, 100, 600, 800);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
