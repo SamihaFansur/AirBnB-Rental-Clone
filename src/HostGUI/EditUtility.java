@@ -24,8 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditUtility extends JFrame{
-
+public class EditUtility extends JFrame {
 
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
@@ -37,31 +36,29 @@ public class EditUtility extends JFrame{
 	/**
 	 * Create the application.
 	 */
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JRadioButton heatingRadioBtn;
+	private JRadioButton washingMachineRadioBtn;
+	private JRadioButton fireExtinguisherRadioBtn;
+	private JRadioButton dryingMachineRadioBtn;
+	private JRadioButton smokeAlarmRadioBtn;
+	private JRadioButton firstAidKitRadioBtn;
+	private JButton addUtility;
+	private int idAfter;
+	private int facilitiesidAfter;
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 private JRadioButton heatingRadioBtn;
-	 private JRadioButton washingMachineRadioBtn;
-	 private JRadioButton fireExtinguisherRadioBtn;
-	 private JRadioButton dryingMachineRadioBtn;
-	 private JRadioButton smokeAlarmRadioBtn;
-	 private JRadioButton firstAidKitRadioBtn;
-	 private JButton addUtility;
-	 private int idAfter;
-	 private int facilitiesidAfter;
-
-	 private boolean heating, washingMachine, dryingMachine, fireExtinguisher, smokeAlarm, firstAidKit;
+	private boolean heating, washingMachine, dryingMachine, fireExtinguisher, smokeAlarm, firstAidKit;
 
 	Connection connection = null;
 
-	 public EditUtility(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditUtility();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
-
+	public EditUtility(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditUtility();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -70,15 +67,11 @@ public class EditUtility extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING UTILITY RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit UTILITY func = "+idAfter);
-
 
 		JPanel editUtilityPanel = new JPanel();
 		editUtilityPanel.setBackground(new Color(204, 255, 255));
@@ -94,23 +87,23 @@ public class EditUtility extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			String selectUtilityRecord = "select heating, washingMachine, dryingMachine, fireExtinguisher, "
-										+ "smokeAlarm, firstAidKit from Utility where utility_id=?";
+					+ "smokeAlarm, firstAidKit from Utility where utility_id=?";
 
-			PreparedStatement selectingUtilityValues= connection.prepareStatement(selectUtilityRecord);
+			PreparedStatement selectingUtilityValues = connection.prepareStatement(selectUtilityRecord);
 
 			selectingUtilityValues.setInt(1, id);
 			ResultSet rs = selectingUtilityValues.executeQuery();
 
 			while (rs.next()) {
 				heating = rs.getBoolean("heating");
-                washingMachine = rs.getBoolean("washingMachine");
-                dryingMachine = rs.getBoolean("dryingMachine");
-                fireExtinguisher = rs.getBoolean("fireExtinguisher");
-                smokeAlarm = rs.getBoolean("smokeAlarm");
-                firstAidKit = rs.getBoolean("firstAidKit");
-            }
+				washingMachine = rs.getBoolean("washingMachine");
+				dryingMachine = rs.getBoolean("dryingMachine");
+				fireExtinguisher = rs.getBoolean("fireExtinguisher");
+				smokeAlarm = rs.getBoolean("smokeAlarm");
+				firstAidKit = rs.getBoolean("firstAidKit");
+			}
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -185,19 +178,18 @@ public class EditUtility extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
+				// Homepage sp = new Homepage();
 
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				// mainModule.currentState=STATE.EDIT_PROPERTY;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 //				close();
 				frame.dispose();
 
 			}
 		});
 		editUtilityPanel.add(backButton);
-
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -206,10 +198,8 @@ public class EditUtility extends JFrame{
 
 	public void updateUtilityDetails() {
 		try {
-
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateUtility func = "+idAfter);
 			model.setHeating(heatingRadioBtn.isSelected());
 			model.setWashingMachine(washingMachineRadioBtn.isSelected());
 			model.setFireExtinguisher(fireExtinguisherRadioBtn.isSelected());
@@ -217,10 +207,8 @@ public class EditUtility extends JFrame{
 			model.setSmokeAlarm(smokeAlarmRadioBtn.isSelected());
 			model.setFirstAidKit(firstAidKitRadioBtn.isSelected());
 
-
 			String updateUtilityRecord = "update Utility set heating=?, washingMachine=?, "
-					+ "dryingMachine=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? "
-					+ "where utility_id=?";
+					+ "dryingMachine=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? " + "where utility_id=?";
 
 			PreparedStatement ps_utility = connection.prepareStatement(updateUtilityRecord);
 
@@ -232,7 +220,6 @@ public class EditUtility extends JFrame{
 			ps_utility.setBoolean(6, model.getFirstAidKit());
 			ps_utility.setInt(7, idAfter);
 
-			System.out.println(ps_utility);
 			ps_utility.executeUpdate();
 
 			String updateUtilityIdInFacilities = "update Facilities set utility_id=? where facilities_id=?";
@@ -240,15 +227,13 @@ public class EditUtility extends JFrame{
 			PreparedStatement updatingUtilityIdInFacilities = connection.prepareStatement(updateUtilityIdInFacilities);
 			updatingUtilityIdInFacilities.setInt(1, idAfter);
 			updatingUtilityIdInFacilities.setInt(2, facilitiesidAfter);
-
 			updatingUtilityIdInFacilities.executeUpdate();
-			System.out.println(updatingUtilityIdInFacilities.toString());
+			
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
