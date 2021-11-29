@@ -50,7 +50,6 @@ public class Login extends JFrame {
 		this.controller = controller;
 		this.model = model;
 	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -101,21 +100,7 @@ public class Login extends JFrame {
 				password_login = model.getPassword();
 
 				logUserIn();
-
-//				mainModule.currentState = STATE.HOST_ACCOUNT;
-//				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
-//				close();
-
-//				System.out.println(passwordField.getText());
-//
-//				userName_login = model.getEmail();
-//				password_login = model.getPassword();
-//				System.out.println(userName_login);
-//				System.out.println(password_login);
-//
-				// close();
-				// Search sp = new Search();
 			}
 
 		});
@@ -152,7 +137,6 @@ public class Login extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-//			String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
 			String query = "Select email, password from Account where email=? and password= ?";
 
 			PreparedStatement loginQuery = connection
@@ -161,7 +145,6 @@ public class Login extends JFrame {
 			loginQuery.setString(1, userName_login);
 			loginQuery.setString(2, password_login);
 			ResultSet rs = loginQuery.executeQuery();
-			System.out.println(rs);
 			/*
 			 * Need to check if the email belongs to a "host and guest" account. If so, ask
 			 * user to log in as either a host or a guest so GUI can be built according to
@@ -182,37 +165,29 @@ public class Login extends JFrame {
 				boolean hostLogin, guestLogin;
 				hostLogin = rsHost.next();
 				guestLogin = rsGuest.next();
-				System.out.println("host?:" + hostLogin);
-				System.out.println("guest?:" + guestLogin);
 
 				if (hostLogin && guestLogin) {
 					String[] options = { "Host", "Guest" };
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					accountSelected = JOptionPane.showOptionDialog(this, "Please log in as a Host or Guest", "Message",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-					System.out.println("THE RESULT: " + accountSelected);
 					if (accountSelected == 0) {
 						mainModule.currentState = STATE.HOST_ACCOUNT;
 						mainModule.userState = USER.HOST;
-
 					} else if (accountSelected == 1) {
 						mainModule.currentState = STATE.GUEST_ACCOUNT;
 						mainModule.userState = USER.GUEST;
 					}
-
-					System.out.println("logggin in: " + model.getEmail());
 					frame.dispose();
 				} else if (hostLogin) {
 					mainModule.currentState = STATE.HOST_ACCOUNT;
 					mainModule.userState = USER.HOST;
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
-					System.out.println("logggin in: " + model.getEmail());
 					frame.dispose();
 				} else if (guestLogin) {
 					mainModule.currentState = STATE.GUEST_ACCOUNT;
 					mainModule.userState = USER.GUEST;
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
-					System.out.println("logggin in: " + model.getEmail());
 					frame.dispose();
 				}
 
@@ -222,26 +197,9 @@ public class Login extends JFrame {
 			} else {
 				JOptionPane.showMessageDialog(this, "Wrong Username & Password");
 				frame.dispose();
-				System.out.println("Current email: " + model.getEmail());
-				System.out.println("Current pword: " + model.getPassword());
 				mainModule.currentState = STATE.LOGIN;
 				mainModule.userState = USER.ENQUIRER;
 			}
-
-//			PreparedStatement ps = connection.prepareStatement(loginQuery);
-//			System.out.println("4");
-//			ps.setString(1, getUsername());;
-//			ps.setString(6, getPasword());
-//			System.out.println("5");
-//			System.out.println(ps);
-//			int i  = ps.executeQuery();
-//			System.out.println("6");
-//			if(i>0) {
-//				System.out.println("7");
-//				System.out.println(this);
-//				JOptionPane.showMessageDialog(this, "saved ok"); //remove later
-//				System.out.println("logged in");
-//			}
 			loginQuery.close();
 			connection.close();
 		} catch (Exception e) {
