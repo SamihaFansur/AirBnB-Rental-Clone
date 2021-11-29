@@ -2,126 +2,127 @@ package Model;
 
 public class Model {
 
-	//account variables
-	private String title, firstName, surname, email, password, houseNameNum, 
-					streetName, city, postcode, accType, mobileNumber;
-	
-	//edit property variables
-	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode, editPropertyShortName, editPropertyDescription;
+	// account variables
+	private String title, firstName, surname, email, password, houseNameNum, streetName, city, postcode, accType,
+			mobileNumber;
+
+	// edit property variables
+	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode,
+			editPropertyShortName, editPropertyDescription;
 	private int editPropertyGuestCapacity;
-	
-	//utility variables
+
+	// utility variables
 	private boolean heating, washingMachine, fireExtinguisher, dryingMachine, smokeAlarm, firstAidKit;
-	
-	//outdoors variables
+
+	// outdoors variables
 	private boolean freeOnSiteParking, onRoadParking, paidCarPark, patio, barbeque;
-	
-	//living variables
+
+	// living variables
 	private boolean wifi, television, satellite, streaming, dvdPlayer, boardGames;
-	
-	//kitchen variables
+
+	// kitchen variables
 	private boolean refrigerator, microwave, oven, stove, dishwasher, tableware, cookware, basicProvisions;
-	
-	//bathtype variables
+
+	// bathtype variables
 	private boolean toilet, bath, shower, shared;
-	
-	//bathing variables
+
+	// bathing variables
 	private boolean hairDryer, toiletPaper;
 	private int noOfBathrooms, bathroomId;
-	
-	//sleeping variables
+
+	// sleeping variables
 	private boolean bedLinen, towels;
 	private int noOfBedrooms, bedroomId, noOfBeds;
-	
-	//bedType variables
-	private boolean bed1, bed2 ;
+
+	// bedType variables
+	private boolean bed1, bed2;
 	private String bed1Type, bed2Type;
 	private int bed1Capacity, bed2Capacity;
-	
-	//facilities variables
+
+	// facilities variables
 	private int kitchenId, sleepingId, bathingId, utilityId, livingId, outdoorsId;
-	
-	//chargeband variables
+
+	// chargeband variables
 	private String startDate, endDate;
 	private double pricePerNight, serviceCharge, cleaningCharge;
-	
+
 	private boolean previouslyInPropertiesList;
-	
+
 	private int guestId;
 	private int propertyId;
 	private int hostId;
 	private int facilitiesId;
-	
-	//search page variables
-		private double minPPN, maxPPN;
-		private int guestCap;
-		private String sd, ed, placeName;
-		
-		public void setMinPPN(double minPPN) {
-			this.minPPN = minPPN;
-		}
 
-		public double getMinPPN() {
-			return minPPN;
-		}
-		
-		public void setMaxPPN(double maxPPN) {
-			this.maxPPN = maxPPN;
-		}
+	// search page variables
+	private double minPPN, maxPPN;
+	private int guestCap;
+	private String sd, ed, placeName;
 
-		public double getMaxPPN() {
-			return maxPPN;
-		}
-		
-		public void setGuestCap(int guestCap) {
-			this.guestCap = guestCap;
-		}
+	public void setMinPPN(double minPPN) {
+		this.minPPN = minPPN;
+	}
 
-		public int getGuestCap() {
-			return guestCap;
-		}
-		
-		public void setSD(String sd) {
-			this.sd = sd;
-		}
+	public double getMinPPN() {
+		return minPPN;
+	}
 
-		public String getSD() {
-			return sd;
-		}
-		
-		public void setED(String ed) {
-			this.ed = ed;
-		}
+	public void setMaxPPN(double maxPPN) {
+		this.maxPPN = maxPPN;
+	}
 
-		public String getED() {
-			return ed;
-		}
-		
-		public void setPlaceName(String placeName) {
-			this.placeName = placeName;
-		}
+	public double getMaxPPN() {
+		return maxPPN;
+	}
 
-		public String getPlaceName() {
-			return placeName;
-		}
-	
-	//account getters and setters
+	public void setGuestCap(int guestCap) {
+		this.guestCap = guestCap;
+	}
+
+	public int getGuestCap() {
+		return guestCap;
+	}
+
+	public void setSD(String sd) {
+		this.sd = sd;
+	}
+
+	public String getSD() {
+		return sd;
+	}
+
+	public void setED(String ed) {
+		this.ed = ed;
+	}
+
+	public String getED() {
+		return ed;
+	}
+
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	// account getters and setters
 	public void setTitle(String title) {
-		this.title=title;
+		this.title = title;
 	}
 
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
@@ -133,12 +134,11 @@ public class Model {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	
+
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
-	
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -146,7 +146,7 @@ public class Model {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -154,7 +154,7 @@ public class Model {
 	public String getPassword() {
 		return password;
 	}
-		
+
 	public void setHouseNameNum(String houseNameHum) {
 		this.houseNameNum = houseNameHum;
 	}
@@ -164,7 +164,7 @@ public class Model {
 	}
 
 	public void setStreetName(String streetName) {
-		this.streetName= streetName;
+		this.streetName = streetName;
 	}
 
 	public String getStreetName() {
@@ -178,7 +178,7 @@ public class Model {
 	public String getCity() {
 		return city;
 	}
-	
+
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
@@ -186,7 +186,7 @@ public class Model {
 	public String getPostcode() {
 		return postcode;
 	}
-	
+
 	public void setAccountType(String accType) {
 		this.accType = accType;
 	}
@@ -194,9 +194,8 @@ public class Model {
 	public String getAccountType() {
 		return accType;
 	}
-	
-	
-	//edit property getters and setters
+
+	// edit property getters and setters
 	public void setEditPropertyHouseNameNum(String editPropertyHouseNameHum) {
 		this.editPropertyHouseNameNum = editPropertyHouseNameHum;
 	}
@@ -206,7 +205,7 @@ public class Model {
 	}
 
 	public void setEditPropertyStreetName(String editPropertyStreetName) {
-		this.editPropertyStreetName= editPropertyStreetName;
+		this.editPropertyStreetName = editPropertyStreetName;
 	}
 
 	public String getEditPropertyStreetName() {
@@ -228,7 +227,7 @@ public class Model {
 	public String getEditPropertyPostcode() {
 		return editPropertyPostcode;
 	}
-	
+
 	public void setEditPropertyShortName(String editPropertyShortName) {
 		this.editPropertyShortName = editPropertyShortName;
 	}
@@ -252,8 +251,8 @@ public class Model {
 	public int getEditPropertyGuestCapacity() {
 		return editPropertyGuestCapacity;
 	}
-	
-	//getters and setters for utility facility
+
+	// getters and setters for utility facility
 
 	public void setHeating(boolean heating) {
 		this.heating = heating;
@@ -262,6 +261,7 @@ public class Model {
 	public boolean getHeating() {
 		return heating;
 	}
+
 	public void setWashingMachine(boolean washingMachine) {
 		this.washingMachine = washingMachine;
 	}
@@ -269,6 +269,7 @@ public class Model {
 	public boolean getWashingMachine() {
 		return washingMachine;
 	}
+
 	public void setFireExtinguisher(boolean fireExtinguisher) {
 		this.fireExtinguisher = fireExtinguisher;
 	}
@@ -276,6 +277,7 @@ public class Model {
 	public boolean getFireExtinguisher() {
 		return fireExtinguisher;
 	}
+
 	public void setDryingMachine(boolean dryingMachine) {
 		this.dryingMachine = dryingMachine;
 	}
@@ -283,6 +285,7 @@ public class Model {
 	public boolean getDryingMachine() {
 		return dryingMachine;
 	}
+
 	public void setSmokeAlarm(boolean smokeAlarm) {
 		this.smokeAlarm = smokeAlarm;
 	}
@@ -290,15 +293,16 @@ public class Model {
 	public boolean getSmokeAlarm() {
 		return smokeAlarm;
 	}
+
 	public void setFirstAidKit(boolean firstAidKit) {
-		this.firstAidKit= firstAidKit;
+		this.firstAidKit = firstAidKit;
 	}
 
 	public boolean getFirstAidKit() {
 		return firstAidKit;
 	}
-	
-	//outdoors getters and setters
+
+	// outdoors getters and setters
 	public void setFreeOnSiteParking(boolean freeOnSiteParking) {
 		this.freeOnSiteParking = freeOnSiteParking;
 	}
@@ -306,7 +310,7 @@ public class Model {
 	public boolean getFreeOnSiteParking() {
 		return freeOnSiteParking;
 	}
-	
+
 	public void setOnRoadParking(boolean onRoadParking) {
 		this.onRoadParking = onRoadParking;
 	}
@@ -314,7 +318,7 @@ public class Model {
 	public boolean getOnRoadParking() {
 		return onRoadParking;
 	}
-	
+
 	public void setPaidCarPark(boolean paidCarPark) {
 		this.paidCarPark = paidCarPark;
 	}
@@ -322,7 +326,7 @@ public class Model {
 	public boolean getPaidCarPark() {
 		return paidCarPark;
 	}
-	
+
 	public void setPatio(boolean patio) {
 		this.patio = patio;
 	}
@@ -330,7 +334,7 @@ public class Model {
 	public boolean getPatio() {
 		return patio;
 	}
-	
+
 	public void setBarbeque(boolean barbeque) {
 		this.barbeque = barbeque;
 	}
@@ -338,17 +342,17 @@ public class Model {
 	public boolean getBarbeque() {
 		return barbeque;
 	}
-	
-	//living getters and setters
-	
+
+	// living getters and setters
+
 	public void setWifi(boolean wifi) {
-		this.wifi= wifi;
+		this.wifi = wifi;
 	}
 
 	public boolean getWifi() {
 		return wifi;
 	}
-	
+
 	public void setTelevision(boolean television) {
 		this.television = television;
 	}
@@ -356,7 +360,7 @@ public class Model {
 	public boolean getTelevision() {
 		return television;
 	}
-	
+
 	public void setSatellite(boolean satellite) {
 		this.satellite = satellite;
 	}
@@ -364,7 +368,7 @@ public class Model {
 	public boolean getSatellite() {
 		return satellite;
 	}
-	
+
 	public void setStreaming(boolean streaming) {
 		this.streaming = streaming;
 	}
@@ -372,7 +376,7 @@ public class Model {
 	public boolean getStreaming() {
 		return streaming;
 	}
-	
+
 	public void setDvdPlayer(boolean dvdPlayer) {
 		this.dvdPlayer = dvdPlayer;
 	}
@@ -380,7 +384,7 @@ public class Model {
 	public boolean getDvdPlayer() {
 		return dvdPlayer;
 	}
-	
+
 	public void setBoardGames(boolean boardGames) {
 		this.boardGames = boardGames;
 	}
@@ -388,8 +392,8 @@ public class Model {
 	public boolean getBoardGames() {
 		return boardGames;
 	}
-	
-	//kitchen getters and setters
+
+	// kitchen getters and setters
 	public void setRefrigerator(boolean refrigerator) {
 		this.refrigerator = refrigerator;
 	}
@@ -453,8 +457,8 @@ public class Model {
 	public boolean getBasicProvisions() {
 		return basicProvisions;
 	}
-	
-	//bathtype getters and setters
+
+	// bathtype getters and setters
 	public void setBathroomId(int bathroomId) {
 		this.bathroomId = bathroomId;
 	}
@@ -462,7 +466,7 @@ public class Model {
 	public int getBathroomId() {
 		return bathroomId;
 	}
-	
+
 	public void setToilet(boolean toilet) {
 		this.toilet = toilet;
 	}
@@ -494,8 +498,8 @@ public class Model {
 	public boolean getShared() {
 		return shared;
 	}
-	
-	//bathing getters and setters
+
+	// bathing getters and setters
 
 	public void setHairDryer(boolean hairDryer) {
 		this.hairDryer = hairDryer;
@@ -504,7 +508,7 @@ public class Model {
 	public boolean getHairDryer() {
 		return hairDryer;
 	}
-	
+
 	public void setToiletPaper(boolean toiletPaper) {
 		this.toiletPaper = toiletPaper;
 	}
@@ -512,17 +516,16 @@ public class Model {
 	public boolean getToiletPaper() {
 		return toiletPaper;
 	}
-	
+
 	public void setNoOfBathrooms(int noOfBathrooms) {
-		this.noOfBathrooms= noOfBathrooms;
+		this.noOfBathrooms = noOfBathrooms;
 	}
 
 	public int getNoOfBathrooms() {
 		return noOfBathrooms;
 	}
-	
 
-	//sleeping getters and setters
+	// sleeping getters and setters
 
 	public void setBedLinen(boolean bedLinen) {
 		this.bedLinen = bedLinen;
@@ -531,7 +534,7 @@ public class Model {
 	public boolean getBedLinen() {
 		return bedLinen;
 	}
-	
+
 	public void setTowels(boolean towels) {
 		this.towels = towels;
 	}
@@ -539,25 +542,24 @@ public class Model {
 	public boolean getTowels() {
 		return towels;
 	}
-	
+
 	public void setNoOfBedrooms(int noOfBedrooms) {
-		this.noOfBedrooms= noOfBedrooms;
+		this.noOfBedrooms = noOfBedrooms;
 	}
 
 	public int getNoOfBedrooms() {
 		return noOfBedrooms;
 	}
-	
+
 	public void setNoOfBeds(int noOfBeds) {
-		this.noOfBeds= noOfBeds;
+		this.noOfBeds = noOfBeds;
 	}
 
 	public int getNoOfBeds() {
 		return noOfBeds;
 	}
-	
-	
-	//bedType getters and setters
+
+	// bedType getters and setters
 	public void setBedroomId(int bedroomId) {
 		this.bedroomId = bedroomId;
 	}
@@ -573,7 +575,7 @@ public class Model {
 	public boolean getBed1() {
 		return bed1;
 	}
-	
+
 	public void setBed1Type(String bed1Type) {
 		this.bed1Type = bed1Type;
 	}
@@ -581,7 +583,7 @@ public class Model {
 	public String getBed1Type() {
 		return bed1Type;
 	}
-	
+
 	public void setBed1Capacity(int bed1Capacity) {
 		this.bed1Capacity = bed1Capacity;
 	}
@@ -597,7 +599,7 @@ public class Model {
 	public boolean getBed2() {
 		return bed2;
 	}
-	
+
 	public void setBed2Type(String bed2Type) {
 		this.bed2Type = bed2Type;
 	}
@@ -605,7 +607,7 @@ public class Model {
 	public String getBed2Type() {
 		return bed2Type;
 	}
-	
+
 	public void setBed2Capacity(int bed2Capacity) {
 		this.bed2Capacity = bed2Capacity;
 	}
@@ -613,117 +615,136 @@ public class Model {
 	public int getBed2Capacity() {
 		return bed2Capacity;
 	}
+
 	/*
-	private int sleepingId;
-	private int bathingId;
-	private int utilityId;
-	private int livingId;
-	private int outdoorsId;
-	*/
+	 * private int sleepingId; private int bathingId; private int utilityId; private
+	 * int livingId; private int outdoorsId;
+	 */
 	public void setCurrentKitchedId(int kitchedId) {
-		this.kitchenId=kitchedId;
+		this.kitchenId = kitchedId;
 	}
+
 	public int getCurrentKitchedId() {
 		return kitchenId;
 	}
+
 	public void setCurrentBathingId(int bathingId) {
-		this.bathingId=bathingId;
+		this.bathingId = bathingId;
 	}
+
 	public int getCurentBathingId() {
 		return bathingId;
 	}
+
 	public void setCurrentUtilityId(int utilityId) {
-		this.utilityId=utilityId;
+		this.utilityId = utilityId;
 	}
+
 	public int getCurrentUtilityId() {
 		return utilityId;
 	}
+
 	public void setCurrentLivingId(int livingId) {
-		this.livingId=livingId;
+		this.livingId = livingId;
 	}
+
 	public int getCurrentLivingId() {
 		return livingId;
 	}
+
 	public void setCurrentOutdoorsId(int outdoorsId) {
-		this.outdoorsId=outdoorsId;
+		this.outdoorsId = outdoorsId;
 	}
+
 	public int getCurrentOutdoorsId() {
 		return outdoorsId;
 	}
+
 	public void setCurrentSleepingId(int sleepingId) {
-		this.sleepingId=sleepingId;
+		this.sleepingId = sleepingId;
 	}
+
 	public int getCurrentSleepingId() {
 		return sleepingId;
 	}
-	
-	//chargeband getts and setters
+
+	// chargeband getts and setters
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
 	public String getStartDate() {
 		return startDate;
 	}
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 	public String getEndDate() {
 		return endDate;
 	}
+
 	public void setPricePerNight(double pricePerNight) {
 		this.pricePerNight = pricePerNight;
 	}
+
 	public double getPricePerNight() {
 		return pricePerNight;
 	}
+
 	public void setServiceCharge(double serviceCharge) {
 		this.serviceCharge = serviceCharge;
 	}
+
 	public double getServiceCharge() {
 		return serviceCharge;
 	}
+
 	public void setCleaningCharge(double cleaningCharge) {
 		this.cleaningCharge = cleaningCharge;
 	}
+
 	public double getCleaningCharge() {
 		return cleaningCharge;
 	}
+
 	public void setPropertyId(int propertyId) {
-		this.propertyId=propertyId;
+		this.propertyId = propertyId;
 	}
-	
+
 	public int getPropertyId() {
 		return propertyId;
 	}
+
 	public void setHostId(int hostId) {
-		this.hostId=hostId;
+		this.hostId = hostId;
 	}
-	
+
 	public int getHostId() {
 		return hostId;
 	}
+
 	public void setGuestId(int guestId) {
-		this.guestId=guestId;
+		this.guestId = guestId;
 	}
-	
+
 	public int getGuestId() {
 		return guestId;
 	}
-	
+
 	public void setFacilitiesId(int facilitiesId) {
-		this.facilitiesId=facilitiesId;
+		this.facilitiesId = facilitiesId;
 	}
-	
+
 	public int getFacilitiesId() {
 		return facilitiesId;
 	}
-	
-	
+
 	public void setPreviouslyInPropertiesList(boolean previouslyInPropertiesList) {
-		this.previouslyInPropertiesList=previouslyInPropertiesList;
-		System.out.println("CAHNGED STATE OF PREVIOUSLT IN PROPERTIES" + getPreviouslyInPropertiesList());
+		this.previouslyInPropertiesList = previouslyInPropertiesList;
 	}
-	
+
 	public boolean getPreviouslyInPropertiesList() {
 		return previouslyInPropertiesList;
 	}
