@@ -13,7 +13,7 @@ import GUI.MainModule;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 
-public class NavHost extends JFrame{
+public class NavHost extends JFrame {
 
 	public JFrame frame;
 	private MainModule mainModule;
@@ -25,6 +25,7 @@ public class NavHost extends JFrame{
 	public JFrame getFrame() {
 		return frame;
 	}
+
 	public void setMainModule(MainModule mainModule) {
 		this.mainModule = mainModule;
 	}
@@ -33,56 +34,37 @@ public class NavHost extends JFrame{
 		return mainModule;
 	}
 
-
-//	public void close() {
-//
-//			this.frame.dispose();
-//	}
-//
-
 	public void addHostNav(JFrame frame, MainModule mainModule) {
-		//System.out.println("IN NAVENQ");
-		//System.out.println("in nav current state= "+mainModule);
-		this.frame= frame;
-		//System.out.println("in nav enq: "+frame);
-
+		this.frame = frame;
 		frame.getContentPane().setBackground(new Color(204, 255, 255));
 
 		JPanel navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
 
-
 		JButton navHomeButton = new JButton("Home");
 		navHomeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-				mainModule.currentState=STATE.HOST_ACCOUNT;
-				mainModule.userState=USER.HOST;
+				mainModule.currentState = STATE.HOST_ACCOUNT;
+				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
-
 			}
 		});
 		navBarPanel.add(navHomeButton);
-
 
 		JButton navSearchButton = new JButton("Search");
 		navSearchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.SEARCH;
-				mainModule.userState=USER.HOST;
+				mainModule.currentState = STATE.SEARCH;
+				mainModule.userState = USER.HOST;
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
 			}
 		});
 		navBarPanel.add(navSearchButton);
-
 
 		JButton navLogoutButton = new JButton("Logout");
 		navLogoutButton.addActionListener(new ActionListener() {
@@ -92,16 +74,9 @@ public class NavHost extends JFrame{
 				mainModule.userState = USER.ENQUIRER;
 				frame.dispose();
 				MainModule.controller.drawNewView();
-//				close();
 				frame.dispose();
 			}
 		});
 		navBarPanel.add(navLogoutButton);
-
-
 	}
-
-
-
-
 }
