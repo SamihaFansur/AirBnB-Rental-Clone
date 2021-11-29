@@ -149,7 +149,7 @@ public class Search extends javax.swing.JFrame {
 //       System.out.println("you got this !!! cmonnn " + hostId);
 		double minPPN = model.getMinPPN();
 		double maxPPN = model.getMaxPPN();
-		int guestCap = 0;
+		int guestCap = model.getGuestCap();
 		String sd = model.getSD();
 		String ed = model.getED();
 		try {
@@ -334,6 +334,54 @@ public class Search extends javax.swing.JFrame {
 				}
 			}
 		
+		//guest
+		if(minPPN == 0.0 && maxPPN == 0.0 && guestCap != 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
+	    	   int addressId, propId;
+				String city;
+
+				try {
+					   SearchObject search;
+					       				   
+	    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where guestCapacity=?";
+	            		   
+		   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+		   					getProperty.setInt(1, guestCap);
+		   					
+		   					ResultSet gettingProperty = getProperty.executeQuery();
+		   					   
+		   					while(gettingProperty.next()) {
+		   						addressId = gettingProperty.getInt("address_id");
+		   						
+		   						String placeNameFromAid = "Select placeName from Address where address_id=?";
+		   		        		   
+		   						PreparedStatement getPlaceName= connection.prepareStatement(placeNameFromAid);
+		   						getPlaceName.setInt(1, addressId);
+		   						
+		   						ResultSet gettingPlaceName = getPlaceName.executeQuery();
+		   						   
+		   						while(gettingPlaceName.next()) {
+		   							city = gettingPlaceName.getString("placeName");
+		   							
+		   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"), 
+		   									gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+		   							
+									searchList.add(search);
+		   						}
+		   					}
+					
+						//removes duplicate entries from table
+						for (int i = 0; i < searchList.size(); i++) {
+							for (int j = i + 1; j < searchList.size(); j++) {
+								if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+									searchList.remove(j);
+								}
+							}
+						}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 //       //endDate
 		// searching for properties where correposing charge band end dates are before
 		// the one from users input
@@ -2395,6 +2443,7 @@ public class Search extends javax.swing.JFrame {
 
 				// setting guest capacity
 				if (guestCapacityTextField.getText().isEmpty()) {
+					System.out.println("ITS EMPTY YOOO");
 					model.setGuestCap(0);
 				} else {
 					model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText().toString()));
