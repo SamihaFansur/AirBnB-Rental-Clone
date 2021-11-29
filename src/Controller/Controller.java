@@ -63,6 +63,7 @@ public class Controller extends MainModule{
 	private GuestAccount guestAccount;
 	private Bookings bookings;
 	private BookProperty bookProperty;
+	private ProvisionalBookings provisionalBookings;
 
 	
 	public Controller(MainModule mainModule, 
@@ -93,7 +94,8 @@ public class Controller extends MainModule{
 			
 			GuestAccount guestAccount,
 			Bookings bookings, 
-			BookProperty bookProperty){
+			BookProperty bookProperty,
+			ProvisionalBookings provisionalBookings){
 		
 		System.out.println("now in controller");
 		this.mainModule=mainModule;
@@ -124,6 +126,7 @@ public class Controller extends MainModule{
 		this.guestAccount = guestAccount;
 		this.bookings = bookings;
 		this.bookProperty = bookProperty;
+		this.provisionalBookings = provisionalBookings;
 	}
 	
 	public void setTitle(String title){
@@ -300,6 +303,11 @@ public class Controller extends MainModule{
 			model.setGuestId(id);
 			System.out.println(id);
 			bookProperty.initializeBookProperty(facilitiesId, id);
+		}
+		else if (mainModule.editPropertyState == EDITPROPERTY.PROVISIONAL_BOOKINGS){
+			model.setHostId(id);
+			System.out.println(id);
+			provisionalBookings.initializeProvisionalBookings(facilitiesId, id);
 		}
 	}
  	

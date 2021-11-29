@@ -56,6 +56,7 @@ public class MainModule {
 	private GuestAccount guestAccount;
 	private Bookings bookings;
 	private BookProperty bookProperty;
+	private ProvisionalBookings provisionalBookings;
 	
 	
 	//Page user is on
@@ -115,7 +116,8 @@ public class MainModule {
 		CHARGEBANDS,
 		EDIT_PROPERTY_FACILITIES,
 		BOOKINGS,
-		BOOK_PROPERTY
+		BOOK_PROPERTY,
+		PROVISIONAL_BOOKINGS
 		
 	}
 	
@@ -173,11 +175,12 @@ public class MainModule {
 		EditAccount editAccount = new EditAccount(mainModule, controller, model);
 		Reviews reviews = new Reviews(mainModule, controller, model);	
 		ChargeBands chargeBands = new ChargeBands(mainModule, controller, model);
+		ProvisionalBookings provisionalBookings = new ProvisionalBookings(mainModule, controller, model);
 		
 		//some test code
 		System.out.println("reached here");
 		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty);
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings);
 		//calling the draw method in the controller:
 		System.out.println("-------controller made");
 		controller.drawNewView();
