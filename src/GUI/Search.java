@@ -356,7 +356,7 @@ public class Search extends javax.swing.JFrame {
 			}
 		}
 
-//      minMax 
+//      
 // search for properties where the minMax value is specified but the rest are blanck
 		if (minPPN != 0 && maxPPN == 0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
 			// int addressId;
@@ -418,6 +418,69 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
+		
+// search for properties where the maxPPN is specified but the rest are blanck
+		if (minPPN == 0 && maxPPN != 0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
+			// int addressId;
+			int propId;
+			// String houseNameNum, pc;
+
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> in FOURTH if stmt");
+			System.out.println(minPPN == 0);
+			System.out.println(maxPPN == 0);
+			System.out.println(guestCap == 0);
+			System.out.println(sd.equals("01/01/2022"));
+			System.out.println(ed.equals("01/01/2022"));
+			System.out.println(placeName.equals(""));
+			System.out.println(minPPN == 0 && maxPPN == 0 && guestCap == 0 && sd.equals("01/01/2022") && !ed.equals("")
+					&& placeName.equals(""));
+
+			System.out.println(startd);
+			System.out.println(endd);
+
+			try {
+				SearchObject search;
+
+				String allCb = "select property_id, totalPricePerNight from ChargeBands";
+				PreparedStatement getAllCb = connection.prepareStatement(allCb);
+				ResultSet gettingAllCb = getAllCb.executeQuery();
+
+				System.out.println(getAllCb);
+				while (gettingAllCb.next()) {
+					if(gettingAllCb.getDouble("totalPricePerNight")<=maxPPN) {
+
+						propId = gettingAllCb.getInt("property_id");
+
+						System.out.println("PROPERTY ID IN QUERY : " + propId);
+
+						String propertyFromPid = "Select property_id, description, shortName, guestCapacity from Property where property_id=?";
+
+						PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+						getProperty.setInt(1, propId);
+
+						ResultSet gettingProperty = getProperty.executeQuery();
+
+						while (gettingProperty.next()) {
+							search = new SearchObject(gettingProperty.getInt("property_id"),
+									gettingProperty.getString("description"), gettingProperty.getString("shortName"),
+									gettingProperty.getInt("guestCapacity"));
+							searchList.add(search);
+						}
+					}
+					for (int i = 0; i < searchList.size(); i++) {
+						for (int j = i + 1; j < searchList.size(); j++) {
+							if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+								searchList.remove(j);
+							}
+						}
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		
 //       //minMax 
 //       if(minPPN != 0 && maxPPN != 0 && guestCap == 0 && sd == "" && ed =="" && placeName == "" ) {
