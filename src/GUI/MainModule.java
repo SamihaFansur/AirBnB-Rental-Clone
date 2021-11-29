@@ -1,4 +1,5 @@
 package GUI;
+
 import Controller.Controller;
 import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
@@ -23,8 +24,6 @@ import HostGUI.ProvisionalBookings;
 import HostGUI.Reviews;
 import Model.Model;
 
-
-
 //Remove GUI mainModule later, test webhook comment
 public class MainModule {
 
@@ -36,7 +35,7 @@ public class MainModule {
 	private Search search;
 	private Contact contact;
 
-	//hostGUI
+	// hostGUI
 	private AddFacility addFacility;
 	private EditBathing editBathing;
 	private EditBathroom editBathroom;
@@ -59,106 +58,58 @@ public class MainModule {
 	private ProvisionalBookings provisionalBookings;
 	private Review review;
 
-
-	//Page user is on
-	public enum STATE{
-		HOMEPAGE,
-		SELF_REGISTRATION,
-		/*property class also not being used*/
-		LOGIN,
-		SEARCH,
-		//could have others that correspond to new pages.
+	// Page user is on
+	public enum STATE {
+		HOMEPAGE, SELF_REGISTRATION,
+		/* property class also not being used */
+		LOGIN, SEARCH,
+		// could have others that correspond to new pages.
 		CONTACT_US,
 		// pages for host gui:
 		LOGOUT,
 
-
-		/* new */
-		// edit host account details
-		// properties - showing the list of properties
-		// edit property
-		// provisional bookings page - makes list of all provisional booking. Reeject/Accept booking here
-		// active bookings page.
-
-		//for host GUI:
-//		PROPERTY_EDIT,
-//		ADD_FACILITY,
-//		EDIT_BATHING,
-//		EDIT_BATHROOM,
-//		EDIT_BEDROOM,
-//		EDIT_KITCHEN,
-//		EDIT_LIVING,
-//		EDIT_OUTDOORS,
-//		EDIT_SLEEPING,
-//		EDIT_UTILITY,
-		FACILTIES,
-		HOST_ACCOUNT,
-		GUEST_ACCOUNT,
-		PROPERTIES,
-		EDIT_ACCOUNT,
-
+		FACILTIES, HOST_ACCOUNT, GUEST_ACCOUNT, PROPERTIES, EDIT_ACCOUNT,
 
 	}
 
 	public enum EDITPROPERTY {
-		EDIT_PROPERTY,
-		ADD_FACILITY,
-		EDIT_SLEEPING,
-		EDIT_BATHING,
-		EDIT_KITCHEN,
-		EDIT_LIVING,
-		EDIT_OUTDOORS,
-		EDIT_UTILITY,
-		EDIT_BATHROOM,
-		EDIT_BEDROOM,
-		PROPERTIES,
-		REVIEWS,
-		FACILITIES,
-		CHARGEBANDS,
-		EDIT_PROPERTY_FACILITIES,
-		BOOKINGS,
-		BOOK_PROPERTY,
-		PROVISIONAL_BOOKINGS,
-		REVIEW
+		EDIT_PROPERTY, ADD_FACILITY, EDIT_SLEEPING, EDIT_BATHING, EDIT_KITCHEN, EDIT_LIVING, EDIT_OUTDOORS,
+		EDIT_UTILITY, EDIT_BATHROOM, EDIT_BEDROOM, PROPERTIES, REVIEWS, FACILITIES, CHARGEBANDS,
+		EDIT_PROPERTY_FACILITIES, BOOKINGS, BOOK_PROPERTY, PROVISIONAL_BOOKINGS, REVIEW
 
 	}
 
-
 	public enum USER {
 		// for checking who's logged in:
-		ENQUIRER,
-		HOST,
-		GUEST
+		ENQUIRER, HOST, GUEST
 	}
 
 	public STATE currentState = STATE.HOMEPAGE;
 	public USER userState = USER.ENQUIRER;
 	public EDITPROPERTY editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 
-	public static void main (String [] args) {
+	public static void main(String[] args) {
 
 		MainModule mainModule = new MainModule();
 
-		//creating the model
+		// creating the model
 		Model model = new Model();
-		//creating an instance of SelfRegistration class
+		// creating an instance of SelfRegistration class
 		Register register = new Register(mainModule, controller, model);
-		//some test code
-		System.out.println("testing");
-		//creating an instance of Homepage class
+		// creating an instance of Homepage class
 		Homepage homepage = new Homepage(mainModule, controller, model);
-		//creating an instance of login class
+		// creating an instance of login class
 		Login login = new Login(mainModule, controller, model);
-		//creating an instance of search class
+		// creating an instance of search class
 		Search search = new Search(mainModule, controller, model);
-		//creating instance of contact class
+		// creating instance of contact class
 		Contact contact = new Contact(mainModule, controller, model);
-
-		//Objects for Guest GUI
+		
+		// Objects for Guest GUI
 		Bookings bookings = new Bookings(mainModule, controller, model);
 		BookProperty bookProperty = new BookProperty(mainModule, controller, model);
 
-		//Objects for Host GUI:
+		// Objects for Host GUI:
 		AddFacility addFacility = new AddFacility(mainModule, controller, model);
 		EditBathing editBathing = new EditBathing(mainModule, controller, model);
 		EditBathroom editBathroom = new EditBathroom(mainModule, controller, model);
@@ -180,15 +131,14 @@ public class MainModule {
 		ProvisionalBookings provisionalBookings = new ProvisionalBookings(mainModule, controller, model);
 		Review review = new Review(mainModule, controller, model);
 
-		//some test code
-		System.out.println("reached here");
-		//creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility, editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty, editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount, reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings, review);
-		//calling the draw method in the controller:
-		System.out.println("-------controller made");
+		// creating the controller
+		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility,
+				editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty,
+				editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount,
+				reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings, review);
+		// calling the draw method in the controller:
 		controller.drawNewView();
 
-		}
-
+	}
 
 }
