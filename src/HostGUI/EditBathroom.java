@@ -51,7 +51,6 @@ public class EditBathroom extends JFrame{
 	 private JRadioButton showerRadioBtn;
 	 private JRadioButton bathRadioBtn;
 	 private JRadioButton sharedBathroomRadioBtn;
-	 private JButton addBathType;
 	 private JTable table = new JTable();
 	 private JRadioButton toiletRadioButton;
 	 private JRadioButton showerRadioButton;
@@ -139,7 +138,7 @@ public class EditBathroom extends JFrame{
 		  editBathroomPanel.add(lblShared);
 
 		  JScrollPane scrollPane = new JScrollPane(table);
-		  scrollPane.setBounds(67, 446, 464, 115);
+		  scrollPane.setBounds(68, 486, 464, 115);
 		  editBathroomPanel.add(scrollPane);
 
 		  JButton addButton = new JButton("Add Bathroom");
@@ -168,10 +167,10 @@ public class EditBathroom extends JFrame{
 	              sharedRadioButton.setText("");
 	            }
 	        });
-		  addButton.setBounds(223, 366, 142, 23);
+		  addButton.setBounds(224, 393, 142, 23);
 		  editBathroomPanel.add(addButton);
 
-		  updateButton.setBounds(223, 400, 142, 23);
+		  updateButton.setBounds(224, 427, 142, 23);
 		  editBathroomPanel.add(updateButton);
 
 		  JButton backButton = new JButton("Back");
@@ -215,56 +214,6 @@ public class EditBathroom extends JFrame{
 	               updateBathTypeDetails(idAfter);
 	            }
 	        });
-
-
-//		JLabel toiletLabel = new JLabel("Toilet");
-//		toiletLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		toiletLabel.setBounds(170, 150, 167, 34);
-//		editBathroomPanel.add(toiletLabel);
-//
-//		toiletRadioBtn = new JRadioButton("Toilet", false);
-//		toiletRadioBtn.setBounds(387, 161, 21, 23);
-//		editBathroomPanel.add(toiletRadioBtn);
-//
-//		JLabel bathLabel = new JLabel("Bath");
-//		bathLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		bathLabel.setBounds(170, 226, 167, 34);
-//		editBathroomPanel.add(bathLabel);
-//
-//		bathRadioBtn = new JRadioButton("Bath", false);
-//		bathRadioBtn.setBounds(387, 237, 21, 23);
-//		editBathroomPanel.add(bathRadioBtn);
-//
-//		JLabel showerLabel = new JLabel("Shower");
-//		showerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		showerLabel.setBounds(170, 315, 167, 34);
-//		editBathroomPanel.add(showerLabel);
-//
-//		showerRadioBtn = new JRadioButton("Shower", false);
-//		showerRadioBtn.setBounds(387, 315, 21, 23);
-//		editBathroomPanel.add(showerRadioBtn);
-//
-//		JLabel sharedHostLabel = new JLabel("Shared Bathroom with host");
-//		sharedHostLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		sharedHostLabel.setBounds(170, 395, 196, 34);
-//		editBathroomPanel.add(sharedHostLabel);
-//
-//		sharedBathroomRadioBtn = new JRadioButton("Shared bathroom", false);
-//		sharedBathroomRadioBtn.setBounds(387, 403, 21, 23);
-//		editBathroomPanel.add(sharedBathroomRadioBtn);
-
-
-		addBathType = new JButton("Save");
-		addBathType.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				addBathTypeDetails();
-				//should do nth cz add/update btns have the queries
-				//should just go back to addfaciltiy page
-			}
-		});
-		addBathType.setBounds(242, 572, 91, 23);
-		editBathroomPanel.add(addBathType);
 
 		toiletRadioButton = new JRadioButton("Toilet");
 		toiletRadioButton.addActionListener(new ActionListener() {
