@@ -23,38 +23,39 @@ import GUI.MainModule.EDITPROPERTY;
 import HostGUI.NavHost;
 import Model.Model;
 
-public class BookProperty extends JFrame{
+public class BookProperty extends JFrame {
 	private NavHost navForHost = new NavHost();
 	private JFrame frame;
 
 	public void close() {
 		frame.dispose();
 	}
+
 	/**
 	 * Create the application.
 	 */
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 private int idAfter;
-	 private int propertyidAfter;
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private int idAfter;
+	private int propertyidAfter;
 
-	 Connection connection = null;
+	Connection connection = null;
 
-	 private JTextField shortNameTextField;
-	 private JTextField guestCapacityTextField;
-	 private JTextField descriptionTextField;
-	 private JTextField numberOfBedroomsTextField;
-	 private JTextField numberOfBedsTextField;
-	 private JTextField numberOfBathsTextField;
-	 private JTextField jTextField_property_id;
+	private JTextField shortNameTextField;
+	private JTextField guestCapacityTextField;
+	private JTextField descriptionTextField;
+	private JTextField numberOfBedroomsTextField;
+	private JTextField numberOfBedsTextField;
+	private JTextField numberOfBathsTextField;
+	private JTextField jTextField_property_id;
 
-	 public BookProperty(MainModule mainModule, Controller controller, Model model) {
-		//initializeBookProperty();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	public BookProperty(MainModule mainModule, Controller controller, Model model) {
+		// initializeBookProperty();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -63,7 +64,7 @@ public class BookProperty extends JFrame{
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
@@ -141,11 +142,12 @@ public class BookProperty extends JFrame{
 		reviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState= EDITPROPERTY.REVIEWS;
-        	    //needs to take in the properyId and hostId
-        		model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
-        		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), model.getHostId());
-        		frame.dispose();
+				mainModule.editPropertyState = EDITPROPERTY.REVIEWS;
+				// needs to take in the properyId and hostId
+				model.setPropertyId(Integer.parseInt(jTextField_property_id.getText()));
+				MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()),
+						model.getHostId());
+				frame.dispose();
 			}
 		});
 		reviewsButton.setBounds(224, 573, 196, 29);
@@ -190,78 +192,79 @@ public class BookProperty extends JFrame{
 		jTextField_property_id.setBounds(166, 121, 360, 29);
 		bookPropertyPanel.add(jTextField_property_id);
 
-		//SET PROPETY ID BOX
+		// SET PROPETY ID BOX
 		jTextField_property_id.setText(String.valueOf(propertyId));
 
-		//INSERT Property INFO INTO TEXT FIELDS
+		// INSERT Property INFO INTO TEXT FIELDS
 		try {
-		connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
-		Statement stmt = connection.createStatement();
-		String getInfo = "SELECT shortName, guestCapacity, description FROM Property WHERE property_id = " + propertyidAfter;
-		ResultSet rs = stmt.executeQuery(getInfo);
-		int guestCapacity = 0;
+			Statement stmt = connection.createStatement();
+			String getInfo = "SELECT shortName, guestCapacity, description FROM Property WHERE property_id = "
+					+ propertyidAfter;
+			ResultSet rs = stmt.executeQuery(getInfo);
+			int guestCapacity = 0;
 
-		String shortName = "";
-		String description = "";
-		String guestCapacityString = String.valueOf(guestCapacity);
+			String shortName = "";
+			String description = "";
+			String guestCapacityString = String.valueOf(guestCapacity);
 
-		while(rs.next()) {
-			shortName = rs.getString("shortName");
-			guestCapacity = rs.getInt("guestCapacity");
-			description = rs.getString("description");
-		}
-		shortNameTextField.setText(shortName);
-		guestCapacityTextField.setText(guestCapacityString);
-		descriptionTextField.setText(description);
+			while (rs.next()) {
+				shortName = rs.getString("shortName");
+				guestCapacity = rs.getInt("guestCapacity");
+				description = rs.getString("description");
+			}
+			shortNameTextField.setText(shortName);
+			guestCapacityTextField.setText(guestCapacityString);
+			descriptionTextField.setText(description);
 
-		//INSERT facilities INTFO into text fields
-		Statement stmt2 = connection.createStatement();
-		String getSleeping = "SELECT sleeping_id FROM Facilities WHERE property_id = " + propertyidAfter;
-		ResultSet rs2 = stmt2.executeQuery(getSleeping);
+			// INSERT facilities INTFO into text fields
+			Statement stmt2 = connection.createStatement();
+			String getSleeping = "SELECT sleeping_id FROM Facilities WHERE property_id = " + propertyidAfter;
+			ResultSet rs2 = stmt2.executeQuery(getSleeping);
 
-		int sleeping = 0;
-		while(rs2.next()) {
-			sleeping = rs2.getInt("sleeping_id");
-		}
-		
-		Statement stmt3 = connection.createStatement();
-		String getBedrooms = "SELECT noOfBedrooms FROM Sleeping WHERE sleeping_id = " + sleeping;
-		ResultSet rs3 = stmt3.executeQuery(getBedrooms);
+			int sleeping = 0;
+			while (rs2.next()) {
+				sleeping = rs2.getInt("sleeping_id");
+			}
 
-		int bedrooms = 0;
-		while(rs3.next()) {
-			bedrooms = rs3.getInt("noOfBedrooms");
-		}
-		Statement stmt4 = connection.createStatement();
-		String getBeds = "SELECT noOfBeds FROM Sleeping WHERE sleeping_id = " + sleeping;
-		ResultSet rs4 = stmt4.executeQuery(getBeds);
+			Statement stmt3 = connection.createStatement();
+			String getBedrooms = "SELECT noOfBedrooms FROM Sleeping WHERE sleeping_id = " + sleeping;
+			ResultSet rs3 = stmt3.executeQuery(getBedrooms);
 
-		int beds = 0;
-		while(rs4.next()) {
-			beds = rs4.getInt("noOfBeds");
-		}
+			int bedrooms = 0;
+			while (rs3.next()) {
+				bedrooms = rs3.getInt("noOfBedrooms");
+			}
+			Statement stmt4 = connection.createStatement();
+			String getBeds = "SELECT noOfBeds FROM Sleeping WHERE sleeping_id = " + sleeping;
+			ResultSet rs4 = stmt4.executeQuery(getBeds);
 
-		Statement stmt5 = connection.createStatement();
-		String getBathing = "SELECT bathing_id FROM Facilities WHERE property_id = " + propertyidAfter;
-		ResultSet rs5 = stmt5.executeQuery(getBathing);
+			int beds = 0;
+			while (rs4.next()) {
+				beds = rs4.getInt("noOfBeds");
+			}
 
-		int bathing = 0;
-		while(rs5.next()) {
-			bathing = rs5.getInt("bathing_id");
-		}
-		Statement stmt6 = connection.createStatement();
-		String getBathrooms = "SELECT noOfBathrooms FROM Bathing WHERE bathing_id = " + bathing;
-		ResultSet rs6 = stmt6.executeQuery(getBathrooms);
-		
-		int bathrooms = 0;
-		while(rs6.next()) {
-			bathrooms = rs6.getInt("noOfBathrooms");
-		}
-		numberOfBedroomsTextField.setText(String.valueOf(bedrooms));
-		numberOfBedsTextField.setText(String.valueOf(beds));
-		numberOfBathsTextField.setText(String.valueOf(bathrooms));
-		} catch(Exception e) {
+			Statement stmt5 = connection.createStatement();
+			String getBathing = "SELECT bathing_id FROM Facilities WHERE property_id = " + propertyidAfter;
+			ResultSet rs5 = stmt5.executeQuery(getBathing);
+
+			int bathing = 0;
+			while (rs5.next()) {
+				bathing = rs5.getInt("bathing_id");
+			}
+			Statement stmt6 = connection.createStatement();
+			String getBathrooms = "SELECT noOfBathrooms FROM Bathing WHERE bathing_id = " + bathing;
+			ResultSet rs6 = stmt6.executeQuery(getBathrooms);
+
+			int bathrooms = 0;
+			while (rs6.next()) {
+				bathrooms = rs6.getInt("noOfBathrooms");
+			}
+			numberOfBedroomsTextField.setText(String.valueOf(bedrooms));
+			numberOfBedsTextField.setText(String.valueOf(beds));
+			numberOfBathsTextField.setText(String.valueOf(bathrooms));
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}

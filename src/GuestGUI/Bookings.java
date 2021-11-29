@@ -59,6 +59,7 @@ public class Bookings extends javax.swing.JFrame {
 			return null;
 		}
 	}
+
 	// get a list of users from mysql database
 	public ArrayList<BookingObject> getBookingsList() {
 
@@ -122,6 +123,7 @@ public class Bookings extends javax.swing.JFrame {
 			model.addRow(row);
 		}
 	}
+
 	// Execute The Insert Update And Delete Querys
 	public void executeSQlQuery(String query, String message) {
 		Connection con = getConnection();
@@ -445,6 +447,7 @@ public class Bookings extends javax.swing.JFrame {
 			}
 		});
 	}
+
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;

@@ -23,9 +23,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import Model.Model;
 
-public class GuestAccount extends JFrame{
-
-
+public class GuestAccount extends JFrame {
 	private NavGuest navForGuest = new NavGuest();
 	private JFrame frame;
 
@@ -36,37 +34,35 @@ public class GuestAccount extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	 Connection connection = null;
+	Connection connection = null;
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public GuestAccount(MainModule mainModule, Controller controller, Model model) {
-		//initializeGuestAccount();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+
+	public GuestAccount(MainModule mainModule, Controller controller, Model model) {
+		// initializeGuestAccount();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeGuestAccount() {
-
 		try {
 			frame = new JFrame();
 			navForGuest.addGuestNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
-
 
 		JLabel guestAccountLabel = new JLabel("Guest Account");
 		guestAccountLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -77,7 +73,7 @@ public class GuestAccount extends JFrame{
 		editAccountButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.EDIT_ACCOUNT;
+				mainModule.currentState = STATE.EDIT_ACCOUNT;
 				MainModule.controller.drawNewView();
 				frame.dispose();
 
@@ -90,12 +86,9 @@ public class GuestAccount extends JFrame{
 		provisionalBookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				mainModule.editPropertyState=EDITPROPERTY.PROVISIONAL_BOOKINGS;
+				mainModule.editPropertyState = EDITPROPERTY.PROVISIONAL_BOOKINGS;
 				int id = 0;
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				try {
-
 					connection = ConnectionManager.getConnection();
 
 					String getGuestIDOfUser = "select guest_id from GuestAccount where email=?";
@@ -105,19 +98,13 @@ public class GuestAccount extends JFrame{
 
 					ResultSet g_id = guestIDfromGuestAccountTable.executeQuery();
 					while (g_id.next()) {
-					 id = g_id.getInt(1);
-					 System.out.println("guest id = "+id);
+						id = g_id.getInt(1);
 					}
-
-					 System.out.println("guest id  after = "+id);
-					 connection.close();
-				}catch(Exception ex) {
+					connection.close();
+				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-
-				System.out.println(model.getEmail());
 				model.setGuestId(id);
-
 				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
 			}
@@ -129,11 +116,9 @@ public class GuestAccount extends JFrame{
 		bookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainModule.editPropertyState=EDITPROPERTY.BOOKINGS;
+				mainModule.editPropertyState = EDITPROPERTY.BOOKINGS;
 				int id = 0;
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				try {
-
 					connection = ConnectionManager.getConnection();
 
 					String getGuestIDOfUser = "select guest_id from GuestAccount where email=?";
@@ -143,23 +128,15 @@ public class GuestAccount extends JFrame{
 
 					ResultSet h_id = guestIDfromGuestAccountTable.executeQuery();
 					while (h_id.next()) {
-					 id = h_id.getInt(1);
-					 System.out.println("guest id = "+id);
+						id = h_id.getInt(1);
 					}
-
-					 System.out.println("guest id  after = "+id);
-					 connection.close();
-				}catch(Exception ex) {
+					connection.close();
+				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-
-				System.out.println(model.getEmail());
 				model.setGuestId(id);
-
 				MainModule.controller.editPropertyView(0, id);
 				frame.dispose();
-
-
 			}
 		});
 		bookingsButton.setBounds(203, 351, 183, 34);
