@@ -138,7 +138,7 @@ public class Login extends JFrame {
 		try {
 			connection = ConnectionManager.getConnection();
 			String query = "Select email, password from Account where email=? and password= ?";
-
+//			String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
 			PreparedStatement loginQuery = connection
 					.prepareStatement(query);
 

@@ -79,7 +79,9 @@ public class EditAccount extends JFrame {
 
 		try {
 			connection = ConnectionManager.getConnection();
-			String selectAccountRecord = "SELECT title, firstName, surname, password from Account where email = ?";
+			// String selectAccountRecord = "SELECT title, firstName, surname, AES_DECRYPT(password,'key') as decrypt from Account where email = ?";
+			String selectAccountRecord = "SELECT title, firstName,"
+					+ " surname, password from Account where email = ?";
 
 			PreparedStatement selectingAccountValues = connection.prepareStatement(selectAccountRecord);
 			selectingAccountValues.setString(1, model.getEmail());
