@@ -24,7 +24,7 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
-public class EditOutdoors extends JFrame{
+public class EditOutdoors extends JFrame {
 
 	private NavHost navForHost = new NavHost();
 
@@ -38,29 +38,28 @@ public class EditOutdoors extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 private JButton addOutdoors;
-	 private JRadioButton freeOnSiteParkingRadioButton;
-	 private JRadioButton paidCarParkRadioButton;
-	 private JRadioButton onRoadParkingRadioButton;
-	 private JRadioButton patioRadioButton;
-	 private JRadioButton barbequeRadioButton;
-	 private int idAfter;
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JButton addOutdoors;
+	private JRadioButton freeOnSiteParkingRadioButton;
+	private JRadioButton paidCarParkRadioButton;
+	private JRadioButton onRoadParkingRadioButton;
+	private JRadioButton patioRadioButton;
+	private JRadioButton barbequeRadioButton;
+	private int idAfter;
 	private int facilitiesidAfter;
 
-	 private boolean freeOnSiteParking, onRoadParking, paidCarPark, patio, barbeque;
+	private boolean freeOnSiteParking, onRoadParking, paidCarPark, patio, barbeque;
 
+	Connection connection = null;
 
-	 Connection connection = null;
-
-	 public EditOutdoors(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditOutdoors();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	public EditOutdoors(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditOutdoors();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -70,14 +69,12 @@ public class EditOutdoors extends JFrame{
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
-		System.out.println("FACILITY ID FOR WHICH AM CREATING OUTDOORS RN = "+facilitiesidAfter);
-		System.out.println("id after in init edit OUTDOORS func = "+idAfter);
 
 		JPanel editOutdoorsPanel = new JPanel();
 		editOutdoorsPanel.setBackground(new Color(204, 255, 255));
@@ -93,22 +90,22 @@ public class EditOutdoors extends JFrame{
 			connection = ConnectionManager.getConnection();
 
 			String selectOutdoorsRecord = "select freeOnSiteParking, onRoadParking, paidCarPark, patio, "
-										+ "barbeque from Outdoors where outdoors_id=?";
+					+ "barbeque from Outdoors where outdoors_id=?";
 
-			PreparedStatement selectingOutdoorsValues= connection.prepareStatement(selectOutdoorsRecord);
+			PreparedStatement selectingOutdoorsValues = connection.prepareStatement(selectOutdoorsRecord);
 
 			selectingOutdoorsValues.setInt(1, id);
 			ResultSet rs = selectingOutdoorsValues.executeQuery();
 
 			while (rs.next()) {
 				freeOnSiteParking = rs.getBoolean("freeOnSiteParking");
-                onRoadParking = rs.getBoolean("onRoadParking");
-                paidCarPark= rs.getBoolean("paidCarPark");
-                patio = rs.getBoolean("patio");
-                barbeque = rs.getBoolean("barbeque");
-            }
+				onRoadParking = rs.getBoolean("onRoadParking");
+				paidCarPark = rs.getBoolean("paidCarPark");
+				patio = rs.getBoolean("patio");
+				barbeque = rs.getBoolean("barbeque");
+			}
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
@@ -130,7 +127,6 @@ public class EditOutdoors extends JFrame{
 		onRoadParkingRadioButton = new JRadioButton("On road parking", onRoadParking);
 		onRoadParkingRadioButton.setBounds(394, 246, 21, 23);
 		editOutdoorsPanel.add(onRoadParkingRadioButton);
-
 
 		JLabel paidCarParkLabel = new JLabel("Paid Car Parking");
 		paidCarParkLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -175,15 +171,10 @@ public class EditOutdoors extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Homepage sp = new Homepage();
-
-			  //  mainModule.currentState=STATE.EDIT_PROPERTY;
-				mainModule.userState=USER.HOST;
+				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); //fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
 				frame.dispose();
-
 			}
 		});
 		editOutdoorsPanel.add(backButton);
@@ -197,7 +188,6 @@ public class EditOutdoors extends JFrame{
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateOutdoors func = "+idAfter);
 			model.setFreeOnSiteParking(freeOnSiteParkingRadioButton.isSelected());
 			model.setOnRoadParking(onRoadParkingRadioButton.isSelected());
 			model.setPaidCarPark(paidCarParkRadioButton.isSelected());
@@ -205,8 +195,7 @@ public class EditOutdoors extends JFrame{
 			model.setBarbeque(barbequeRadioButton.isSelected());
 
 			String updateOutdoorsRecord = "update Outdoors set freeOnSiteParking=?, onRoadParking=?, "
-											+ "paidCarPark=?, patio=?, barbeque=? "
-											+ "where outdoors_id=?";
+					+ "paidCarPark=?, patio=?, barbeque=? " + "where outdoors_id=?";
 
 			PreparedStatement updatingOutdoorsValues = connection.prepareStatement(updateOutdoorsRecord);
 
@@ -216,21 +205,18 @@ public class EditOutdoors extends JFrame{
 			updatingOutdoorsValues.setBoolean(4, model.getPatio());
 			updatingOutdoorsValues.setBoolean(5, model.getBarbeque());
 			updatingOutdoorsValues.setInt(6, idAfter);
-
-			System.out.println(updatingOutdoorsValues);
 			updatingOutdoorsValues.executeUpdate();
 
 			String updateOutdoorsIdInFacilities = "update Facilities set outdoors_id=? where facilities_id=?";
 
-			PreparedStatement updatingOutdoorsIdInFacilities = connection.prepareStatement(updateOutdoorsIdInFacilities);
+			PreparedStatement updatingOutdoorsIdInFacilities = connection
+					.prepareStatement(updateOutdoorsIdInFacilities);
 			updatingOutdoorsIdInFacilities.setInt(1, idAfter);
 			updatingOutdoorsIdInFacilities.setInt(2, facilitiesidAfter);
-
 			updatingOutdoorsIdInFacilities.executeUpdate();
-			System.out.println(updatingOutdoorsIdInFacilities.toString());
 
 			connection.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
