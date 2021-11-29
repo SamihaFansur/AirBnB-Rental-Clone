@@ -19,6 +19,7 @@ import Controller.Controller;
 import GUI.ConnectionManager;
 import GUI.MainModule;
 import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
@@ -315,7 +316,7 @@ public class EditAPropertysFacilities extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.userState = USER.HOST;
-				mainModule.editPropertyState = EDITPROPERTY.PROPERTIES;
+				mainModule.currentState = STATE.HOST_ACCOUNT;
 				int id = 0;
 				try {
 					connection = ConnectionManager.getConnection();
@@ -335,7 +336,7 @@ public class EditAPropertysFacilities extends JFrame {
 				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 				}
-				MainModule.controller.editPropertyView(id, 0);
+				MainModule.controller.drawNewView();
 				frame.dispose();
 			}
 		});
