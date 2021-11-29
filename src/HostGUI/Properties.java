@@ -117,7 +117,7 @@ public class Properties extends javax.swing.JFrame {
 		}
 		return propertiesList;
 	}
-	
+
 	// Display Data In JTable
 	public void Show_Users_In_JTable() {
 		ArrayList<PropertyObject> list = getUsersList();
@@ -153,7 +153,6 @@ public class Properties extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 	}
-
 
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
@@ -443,7 +442,6 @@ public class Properties extends javax.swing.JFrame {
 
 		pack();
 	}
-
 
 	// show jtable row data in jtextfields in the mouse clicked event
 	private void jTable_Display_UsersMouseClicked(java.awt.event.MouseEvent evt) {

@@ -40,7 +40,6 @@ public class Register extends JFrame {
 	private JComboBox accountTypeComboBox;
 	private JComboBox registerTitleComboBox;
 	private JPanel registerPanel = new JPanel();
-//	private JFrame frame;
 	private Model model;
 	private Controller controller;
 	private MainModule mainModule;
@@ -52,7 +51,6 @@ public class Register extends JFrame {
 	/**
 	 * Create the application.
 	 */
-
 	public Register(MainModule mainModule, Controller controller, Model model) {
 		// initializeRegister();
 		this.mainModule = mainModule;
@@ -69,7 +67,6 @@ public class Register extends JFrame {
 	Boolean validateMobileNumberInput = false;
 	Boolean validateHouseNameNumberInput = false;
 	Boolean validateStreetNameInput = false;
-//	Boolean validateCityNameInput = false;
 	Boolean validatePostcodeInput = false;
 	Boolean emailAlreadyInDB = false;
 
@@ -77,9 +74,7 @@ public class Register extends JFrame {
 		mainModule.currentState = STATE.SELF_REGISTRATION;
 		try {
 			frame = new JFrame();
-			// System.out.println("in register: "+frame);
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
-			// System.out.println("after nav in register = "+mainModule);
 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -168,12 +163,12 @@ public class Register extends JFrame {
 		registerPanel.add(cityLabel);
 
 		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
-								"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry",
-								"Derby", "Durham", "Ely", "Exeter", "Gloucester", "Hereford", "Kingston upon Hull",
-								"Lancaster", "Leeds", "Leicester", "Lichfield", "Lincoln", "Liverpool", "London", "Manchester",
-								"Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
-								"Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent",
-								"Sunderland", "Truro", "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
+				"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", "Derby", "Durham", "Ely",
+				"Exeter", "Gloucester", "Hereford", "Kingston upon Hull", "Lancaster", "Leeds", "Leicester",
+				"Lichfield", "Lincoln", "Liverpool", "London", "Manchester", "Newcastle upon Tyne", "Norwich",
+				"Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth", "Preston", "Ripon", "Salford",
+				"Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", "Sunderland", "Truro",
+				"Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 		cityComboBox = new JComboBox(cityNames);
 		cityComboBox.setBounds(217, 400, 276, 31);
 		registerPanel.add(cityComboBox);
@@ -207,30 +202,20 @@ public class Register extends JFrame {
 				validateEmailInput = validateEmail(emailAddressTextField.getText());
 				// checking if email exists in DB:
 				emailAlreadyInDB = emailExistsInDB(emailAddressTextField.getText());
-
-
 				// assumes UK number
 				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
 
 				// first checking if the street number is a house name or number
-
 				// first checking if it's a number
 				String houseNameNumberInput = houseNumberTextField.getText();
 				for (int k = 0; k < houseNameNumberInput.length(); k++) {
 					// going through the input
-
 					if (!Character.isDigit(houseNameNumberInput.charAt(k))) {
-						// System.out.println(houseNameNumberInput+" IS NOT VALID");
-						System.out.println(houseNameNumberInput + " is a string not an integer. So break out of here");
 						validateHouseNameNumberInput = false;
 						break; // breaks out of loop if it finds something that is not a digit
-						// k=houseNameNumberInput.length();
 					} else {
 						validateHouseNameNumberInput = true;
 					}
-				}
-				if (validateHouseNameNumberInput) {
-					System.out.println(houseNameNumberInput + " IS A NUMBER ONLY AND IS VALID");
 				}
 
 				// if not a number then it must be a String
@@ -238,16 +223,12 @@ public class Register extends JFrame {
 					String[] houseNameNumberInputArray = houseNumberTextField.getText().split(" ");
 					for (int i = 0; i < houseNameNumberInputArray.length; i++) {
 						// validating one string at a time:
-						System.out.println(i);
 						validateHouseNameNumberInput = validateName(houseNameNumberInputArray[i]);
 						if (!validateHouseNameNumberInput) {
 							// if one of the strings is not between a-z or A-Z then
-							System.out.println(houseNameNumberInputArray + " IS NOT VALID");
-							System.out.println(houseNameNumberInputArray[i] + "does not contain a-z or A-Z");
 							i = houseNameNumberInputArray.length;
 							break;
 						} else {
-							System.out.println(i + "time");
 							validateHouseNameNumberInput = true;
 						}
 					}
@@ -258,8 +239,6 @@ public class Register extends JFrame {
 				String[] streetNameInputArray = streetNameTextField.getText().split(" ");
 				for (int i = 0; i < streetNameInputArray.length; i++) {
 					// validating one string at a time:
-					System.out.println("HEREEE");
-					System.out.println(streetNameInputArray[i]);
 					validateStreetNameInput = validateName(streetNameInputArray[i]);
 					if (!validateStreetNameInput) {
 						// if one of the strings is not between a-z or A-Z then
@@ -270,18 +249,11 @@ public class Register extends JFrame {
 					}
 				}
 
-//				validateCityNameInput = validateName(cityTextField.getText());
-
 				// see postcode method for the validation for this.
 				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
 
-				System.out.println("end result for streetName: " + validateStreetNameInput);
-
-				System.out.println(validateFirstNameInput+" "+validateSurnameInput+" "+validateEmailInput+" "+emailAlreadyInDB+" "
-				+validateMobileNumberInput+" "+validateHouseNameNumberInput+" "+validateStreetNameInput+" "+validatePostcodeInput);
-				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB && validateMobileNumberInput
-						&& validateHouseNameNumberInput && validateStreetNameInput
-//						&& validateCityNameInput
+				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB
+						&& validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput
 						&& validatePostcodeInput) {
 					model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 					model.setFirstName(firstNameTextField.getText());
@@ -300,17 +272,12 @@ public class Register extends JFrame {
 					mainModule.userState = USER.ENQUIRER;
 					MainModule.controller.drawNewView();
 					Login sp = new Login(mainModule, controller, model);
-					/*
-					 *
-					 * submit(); Login sp = new Login(mainModule,controller,model);
-					 */
 				} else {
 					displayError();
 				}
 			}
 		});
 		registerPanel.add(registerButton);
-
 
 		JButton resetRegisterButton = new JButton("Reset");
 		resetRegisterButton.addActionListener(new ActionListener() {
@@ -340,10 +307,8 @@ public class Register extends JFrame {
 
 	public boolean validateName(String name) {
 		if (!name.matches("[a-zA-Z]*") || name.matches("")) {
-			System.out.println(name + " IS NOT VALID NAME");
 			return false;
 		} else {
-			System.out.println(name + " IS VALID");
 			return true;
 		}
 	}
@@ -353,14 +318,10 @@ public class Register extends JFrame {
 
 	public boolean validateEmail(String email) {
 		// https://www.regular-expressions.info/email.html
-
 		if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}")) {
-			System.out.println(email + " IS NOT VALID");
 			return false;
 		} else {
-			System.out.println(email + " IS  VALID");
 			return true;
-
 		}
 	}
 
@@ -375,29 +336,19 @@ public class Register extends JFrame {
 			ResultSet rs = email_check.executeQuery();
 			if (rs.next()) {
 				existsInDB = true;
-				System.out.println("email exists in DB:" + existsInDB);
 			} else {
 				existsInDB = false;
-				System.out.println("email exists in DB:" + existsInDB);
-
 			}
-
 			connection.close();
 		} catch (Exception e) {
-			System.out.println("error");
 		}
 		return existsInDB;
 	}
 
 	public boolean validateMobileNumber(String mobile) {
 		if (mobile.matches("[0-9]*") && (mobile.length() == 11)) {
-			// System.out.println("First name contains a characters not between a-z or
-			// A-Z");
-			System.out.println(mobile + " IS  VALID");
-
 			return true;
 		} else {
-			System.out.println(mobile + " IS NOT VALID");
 			return false;
 		}
 
@@ -409,56 +360,47 @@ public class Register extends JFrame {
 			 * regular expressions for postcode copied used from this java website:
 			 * https://howtodoinjava.com/java/regex/uk-postcode-validation/
 			 */
-			System.out.println(postcode + " IS VALID");
 			return true;
 		} else {
-			System.out.println(postcode + " IS NOT VALID");
 			return false;
 		}
 	}
+
 	public void displayError() {
-		ArrayList<String> arlist = new ArrayList<>( );
-		if(!validateFirstNameInput) {
+		ArrayList<String> arlist = new ArrayList<>();
+		if (!validateFirstNameInput) {
 			arlist.add(" First name input is invalid");
 		}
-		if(!validateSurnameInput) {
+		if (!validateSurnameInput) {
 			arlist.add(" Surname input is invalid");
 		}
-		if(!validateEmailInput) {
+		if (!validateEmailInput) {
 			arlist.add(" This email input is invalid, please choose one of the form example@example.com");
 		}
-		if(!validateMobileNumberInput) {
+		if (!validateMobileNumberInput) {
 			arlist.add(" Mobile number input is invalid, please choose 11 digits for your mobile number");
 		}
-		if(!validateHouseNameNumberInput) {
+		if (!validateHouseNameNumberInput) {
 			arlist.add(" House name/number input is invalid");
 		}
-		if(!validateStreetNameInput) {
+		if (!validateStreetNameInput) {
 			arlist.add(" Street name input is invalid");
 		}
-		if(!validatePostcodeInput) {
+		if (!validatePostcodeInput) {
 			arlist.add(" Postcode input is invalid");
 		}
-		if(emailAlreadyInDB) {
+		if (emailAlreadyInDB) {
 			arlist.add(" This email address already exists, please choose another");
 
 		}
-			/*
-		validateFirstNameInput;
-		validateSurnameInput && validateEmailInput && !emailAlreadyInDB && validateMobileNumberInput
-		&& validateHouseNameNumberInput && validateStreetNameInput
-//		&& validateCityNameInput
-		&& validatePostcodeInput
-		*/
-
 		JOptionPane.showMessageDialog(this, arlist);
 	}
+
 	public void submit() {
 
 		try {
 			connection = ConnectionManager.getConnection();
 			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
-//			String insertAccountQuery = "insert into Account values(?,?,?,?,?,AES_ENCRYPT(?, 'key'),(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
 			String insertAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";
 			String insertIntoHostAccountTable = "insert into HostAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";
@@ -472,12 +414,8 @@ public class Register extends JFrame {
 			ps_address.setString(4, model.getPostcode());
 
 			int y = ps_address.executeUpdate();
-			System.out.println("6");
 			if (y > 0) {
-				System.out.println("tryagain");
-				System.out.println(this);
 				JOptionPane.showMessageDialog(this, "Successful registration!");
-				// remove later
 			}
 
 			PreparedStatement ps_account = connection.prepareStatement(insertAccountQuery);
@@ -486,66 +424,33 @@ public class Register extends JFrame {
 			ps_account.setString(2, model.getTitle());
 			ps_account.setString(3, model.getFirstName());
 			ps_account.setString(4, model.getSurname());
-			System.out.println("TESTING: "+model.getMobileNumber());
 			ps_account.setString(5, model.getMobileNumber());
 			ps_account.setString(6, model.getPassword());
 			ps_account.setString(7, model.getHouseNameNum());
 			ps_account.setString(8, model.getPostcode());
 
-
-
-			System.out.println(ps_account);
 			int i = ps_account.executeUpdate();
-			if (i > 0) {
-				System.out.println("7");
-				System.out.println(this);
-				// remove later
-			}
+
 			PreparedStatement ps_guestAccount = connection.prepareStatement(insertIntoGuestAccountTable);
 			PreparedStatement ps_hostAccount = connection.prepareStatement(insertIntoHostAccountTable);
 
 			if (model.getAccountType() == "Host") {
 				ps_hostAccount.setString(1, model.getEmail());
-				System.out.println(ps_hostAccount);
 
 				int h = ps_hostAccount.executeUpdate();
-				if (h > 0) {
-					System.out.println("7");
-					System.out.println(this);
-					// remove later
-				}
 
 			} else if (model.getAccountType() == "Guest") {
 				ps_guestAccount.setString(1, model.getEmail());
-				System.out.println(ps_guestAccount);
 
 				int g = ps_guestAccount.executeUpdate();
-				if (g > 0) {
-					System.out.println("7");
-					System.out.println(this);
-					// remove later
-				}
+
 			} else if (model.getAccountType() == "Both (Host & Guest)") {
 
 				ps_hostAccount.setString(1, model.getEmail());
-				System.out.println(ps_hostAccount);
-
 				int h = ps_hostAccount.executeUpdate();
-				if (h > 0) {
-					System.out.println("7");
-					System.out.println(this);
-					// remove later
-				}
 
 				ps_guestAccount.setString(1, model.getEmail());
-				System.out.println(ps_guestAccount);
-
 				int g = ps_guestAccount.executeUpdate();
-				if (g > 0) {
-					System.out.println("7");
-					System.out.println(this);
-					// remove later
-				}
 			}
 
 			connection.close();
@@ -554,7 +459,5 @@ public class Register extends JFrame {
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
-
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW & MAKE ALL HEIGHTS OF TEXTBOXES SAME
