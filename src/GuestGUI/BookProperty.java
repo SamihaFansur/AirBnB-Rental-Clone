@@ -99,9 +99,6 @@ public class BookProperty extends JFrame{
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView(); //fix params
-//				close();
 				frame.dispose();
 				
 			}
@@ -388,7 +385,7 @@ public class BookProperty extends JFrame{
 		}
 		
 
-		frame.setBounds(100, 100, 600, 700);
+		frame.setBounds(100, 100, 600, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

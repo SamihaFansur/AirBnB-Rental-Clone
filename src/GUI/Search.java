@@ -2247,46 +2247,72 @@ public class Search extends javax.swing.JFrame {
         
         propertyIDTextField = new JTextField();
         propertyIDTextField.setColumns(10);
+        
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(mainModule.userState == USER.GUEST) {
+        		mainModule.currentState=STATE.GUEST_ACCOUNT;
+				MainModule.controller.drawNewView();
+				setVisible(false);
+				
+				//jPanel1.setVisible(false);
+        		}else if(mainModule.userState == USER.HOST) {
+        			mainModule.currentState=STATE.HOST_ACCOUNT;
+    				MainModule.controller.drawNewView();
+    				setVisible(false);
+				}else {
+					mainModule.currentState=STATE.HOMEPAGE;
+    				MainModule.controller.drawNewView();
+    				setVisible(false);
+			}
+        }
+        });
+        
+        backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
-		
 		
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addContainerGap(33, Short.MAX_VALUE)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        					.addGroup(jPanel1Layout.createSequentialGroup()
-        						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        							.addComponent(locationLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        							.addComponent(guestCapacityLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        							.addComponent(startDateLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        							.addComponent(endDateLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        							.addComponent(maxPriceLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        							.addComponent(minPriceLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
-        						.addGap(18)
-        						.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
-        							.addComponent(locationComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        							.addComponent(maxPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-        							.addComponent(minPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-        							.addComponent(startDateTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-        							.addComponent(endDateTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-        							.addComponent(guestCapacityTextField, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
-        					.addGroup(jPanel1Layout.createSequentialGroup()
-        						.addComponent(propertyIdLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-        						.addGap(18)
-        						.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
         				.addGroup(jPanel1Layout.createSequentialGroup()
-        					.addGap(134)
+        					.addContainerGap(33, Short.MAX_VALUE)
+        					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(jPanel1Layout.createSequentialGroup()
+        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        								.addComponent(locationLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(guestCapacityLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(startDateLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(endDateLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(maxPriceLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(minPriceLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(backButton, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
+        							.addGap(18)
+        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+        								.addComponent(locationComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        								.addComponent(maxPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+        								.addComponent(minPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+        								.addComponent(startDateTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+        								.addComponent(endDateTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+        								.addComponent(guestCapacityTextField, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
+        						.addGroup(jPanel1Layout.createSequentialGroup()
+        							.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        								.addComponent(viewPropertyButton)
+        								.addComponent(propertyIdLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
+        							.addGap(18)
+        							.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
+        					.addPreferredGap(ComponentPlacement.RELATED))
+        				.addGroup(jPanel1Layout.createSequentialGroup()
+        					.addGap(174)
         					.addComponent(btnNewButton)
-        					.addComponent(viewPropertyButton)))
-        			.addPreferredGap(ComponentPlacement.RELATED)
+        					.addPreferredGap(ComponentPlacement.RELATED)))
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
         			.addGap(22))
         );
         jPanel1Layout.setVerticalGroup(
-        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(68)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
@@ -2317,14 +2343,17 @@ public class Search extends javax.swing.JFrame {
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         				.addComponent(propertyIdLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
         				.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-        			.addGap(110)
+        			.addGap(79)
         			.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
         			.addComponent(viewPropertyButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-        			.addGap(113))
-        		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+        			.addGap(30))
+        		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addContainerGap()
-        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 634, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(98, Short.MAX_VALUE))
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 634, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(backButton))
+        			.addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1.setLayout(jPanel1Layout);
         
