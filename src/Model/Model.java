@@ -10,6 +10,7 @@ public class Model {
 	private String editPropertyHouseNameNum, editPropertyStreetName, editPropertyCity, editPropertyPostcode,
 			editPropertyShortName, editPropertyDescription;
 	private int editPropertyGuestCapacity;
+	private boolean editPropertyBreakfast;
 
 	// utility variables
 	private boolean heating, washingMachine, fireExtinguisher, dryingMachine, smokeAlarm, firstAidKit;
@@ -252,6 +253,15 @@ public class Model {
 		return editPropertyGuestCapacity;
 	}
 
+
+	public void setEditPropertyBreakfast(boolean editPropertyBreakfast) {
+		this.editPropertyBreakfast = editPropertyBreakfast;
+	}
+
+	public boolean getEditPropertyBreakfast() {
+		return editPropertyBreakfast;
+	}
+	
 	// getters and setters for utility facility
 
 	public void setHeating(boolean heating) {

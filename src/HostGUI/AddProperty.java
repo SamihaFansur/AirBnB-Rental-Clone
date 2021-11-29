@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -41,6 +42,8 @@ public class AddProperty extends JFrame {
 	private JTextField shortNameTextField;
 	private JTextField guestCapacityTextField;
 	private JTextField descriptionTextField;
+	private JRadioButton breakfastRadioBtn;
+	private boolean breakfastValue;
 	private int propertyId;
 	private int hostId;
 	private int facilitiesId;
@@ -187,6 +190,25 @@ public class AddProperty extends JFrame {
 		descriptionTextField.setColumns(10);
 		descriptionTextField.setBounds(195, 521, 274, 120);
 		editPropertyPanel.add(descriptionTextField);
+		
+		JLabel breakfastLabel = new JLabel("Breakfast offered"); // fix text box dimensions
+		breakfastLabel.setBounds(97, 10, 93, 34);
+		editPropertyPanel.add(breakfastLabel);
+
+		breakfastRadioBtn = new JRadioButton();
+		breakfastRadioBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (breakfastRadioBtn.isSelected()) {
+					breakfastValue = true;
+				} else {
+					breakfastValue = false;
+				}
+			}
+		});
+		
+		breakfastRadioBtn.setBounds(195, 10, 111, 23);
+		editPropertyPanel.add(breakfastRadioBtn);
 
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -293,6 +315,7 @@ public class AddProperty extends JFrame {
 			model.setEditPropertyShortName(shortNameTextField.getText());
 			model.setEditPropertyGuestCapacity(Integer.parseInt(guestCapacityTextField.getText()));
 			model.setEditPropertyDescription(descriptionTextField.getText());
+			model.setEditPropertyBreakfast(breakfastRadioBtn.isSelected());
 
 			String insertPropertyAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";
 
@@ -304,7 +327,7 @@ public class AddProperty extends JFrame {
 
 			propertyAddress.executeUpdate();
 
-			String insertPropertyAddressInPropertyQuery = "insert into Property (address_id , shortName, guestCapacity, description) values((SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?),?,?,?) ";
+			String insertPropertyAddressInPropertyQuery = "insert into Property (address_id , shortName, guestCapacity, description, breakfast) values((SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?),?,?,?,?) ";
 
 			PreparedStatement propertyAddressInProperty = connection
 					.prepareStatement(insertPropertyAddressInPropertyQuery);
@@ -313,6 +336,7 @@ public class AddProperty extends JFrame {
 			propertyAddressInProperty.setString(3, model.getEditPropertyShortName());
 			propertyAddressInProperty.setInt(4, model.getEditPropertyGuestCapacity());
 			propertyAddressInProperty.setString(5, model.getEditPropertyDescription());
+			propertyAddressInProperty.setBoolean(6, model.getEditPropertyBreakfast());
 
 			propertyAddressInProperty.executeUpdate();
 
