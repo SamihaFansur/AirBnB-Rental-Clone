@@ -469,13 +469,7 @@ public class ChargeBands extends JFrame {
 
 	// from
 	// here:https://stackoverflow.com/questions/22326339/how-create-date-object-with-values-in-java/22326675
-	public static Date parseDate(String date) {
-		try {
-			return new SimpleDateFormat("dd/mm/yyyy").parse(date);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
+	
 
 	public Boolean validateDate(int day, int month, int year) {
 

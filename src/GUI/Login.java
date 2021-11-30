@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,6 +44,8 @@ public class Login extends JFrame {
 	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
 	private JFrame frame;
+	private int hostId;
+	private int guestId;
 
 	public Login(MainModule mainModule, Controller controller, Model model) {
 		// initializeLogin();
@@ -174,19 +177,32 @@ public class Login extends JFrame {
 					if (accountSelected == 0) {
 						mainModule.currentState = STATE.HOST_ACCOUNT;
 						mainModule.userState = USER.HOST;
+						
+						hostId = gettingThehostId(userName_login);
+						
+						
 					} else if (accountSelected == 1) {
 						mainModule.currentState = STATE.GUEST_ACCOUNT;
 						mainModule.userState = USER.GUEST;
+						
+						guestId = gettingTheGuestId(userName_login);
+						
 					}
 					frame.dispose();
 				} else if (hostLogin) {
 					mainModule.currentState = STATE.HOST_ACCOUNT;
 					mainModule.userState = USER.HOST;
+					
+					hostId = gettingThehostId(userName_login);
+					
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					frame.dispose();
 				} else if (guestLogin) {
 					mainModule.currentState = STATE.GUEST_ACCOUNT;
 					mainModule.userState = USER.GUEST;
+					
+					guestId = gettingTheGuestId(userName_login);
+					
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					frame.dispose();
 				}
@@ -206,6 +222,54 @@ public class Login extends JFrame {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
+		
+		
+	}
+	
+	private int gettingThehostId(String username) {
+		ResultSet rs2 = null;
+		String query2 = "Select host_id from HostAccount where email=?";
+//		String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
+		PreparedStatement loginQuery2;
+		try {
+			loginQuery2 = connection.prepareStatement(query2);
+			loginQuery2.setString(1, userName_login);
+			rs2 = loginQuery2.executeQuery();
+			while (rs2.next()){
+				hostId = rs2.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("THIS IS THE HOST ID IN LOGIN: "+hostId);
+		model.setHostId(hostId);
+		
+		return hostId;
+		
+	}
+	
+	private int gettingTheGuestId(String username) {
+		ResultSet rs2 = null;
+		String query2 = "Select guest_id from GuestAccount where email=?";
+//		String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
+		PreparedStatement loginQuery2;
+		try {
+			loginQuery2 = connection.prepareStatement(query2);
+			loginQuery2.setString(1, userName_login);
+			rs2 = loginQuery2.executeQuery();
+			while (rs2.next()){
+				guestId = rs2.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("THIS IS THE GUEST ID IN LOGIN: "+guestId);
+		model.setGuestId(guestId);
+		
+		return guestId;
+		
 	}
 
 }

@@ -62,6 +62,8 @@ public class MainModule {
 		HOMEPAGE, SELF_REGISTRATION,
 		/* property class also not being used */
 		LOGIN, SEARCH,
+		// could have others that correspond to new pages.
+		CONTACT_US,
 		// pages for host gui:
 		LOGOUT,
 
@@ -99,6 +101,8 @@ public class MainModule {
 		Login login = new Login(mainModule, controller, model);
 		// creating an instance of search class
 		Search search = new Search(mainModule, controller, model);
+		// creating instance of contact class
+		//Contact contact = new Contact(mainModule, controller, model);
 		
 		// Objects for Guest GUI
 		Bookings bookings = new Bookings(mainModule, controller, model);
