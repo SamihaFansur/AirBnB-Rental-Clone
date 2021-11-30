@@ -122,6 +122,7 @@ public class Search extends javax.swing.JFrame {
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
 	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private JLabel lblNewLabel;
 
 	public Connection getConnection() {
 		Connection connection;
@@ -3089,6 +3090,7 @@ public class Search extends javax.swing.JFrame {
 //        jTextField_city = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setBounds(318, 13, 565, 634);
 		jTable_Display_Search = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -3124,7 +3126,7 @@ public class Search extends javax.swing.JFrame {
 
 		jTable_Display_Search.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
-		}, new String[] { "Property ID", "Short Name", "Guest Capacity", "City", "Breakfast Offered" }));
+		}, new String[] { "Property ID", "Short Name", "Guest Capacity", "City", "Breakfast Offered", "SuperHost" }));
 
 		jTable_Display_Search.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3134,6 +3136,7 @@ public class Search extends javax.swing.JFrame {
 		jScrollPane1.setViewportView(jTable_Display_Search);
 
 		viewPropertyButton = new JButton("View Property");
+		viewPropertyButton.setBounds(82, 580, 127, 38);
 		viewPropertyButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		viewPropertyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -3177,6 +3180,7 @@ public class Search extends javax.swing.JFrame {
 		});
 
 		btnNewButton = new JButton("Search");
+		btnNewButton.setBounds(100, 506, 79, 38);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -3240,22 +3244,27 @@ public class Search extends javax.swing.JFrame {
 		});
 
 		minPriceTextField = new JTextField();
+		minPriceTextField.setBounds(162, 68, 133, 31);
 		minPriceTextField.setText("0");
 		minPriceTextField.setColumns(10);
 
 		maxPriceTextField = new JTextField();
+		maxPriceTextField.setBounds(162, 110, 133, 31);
 		maxPriceTextField.setText("0");
 		maxPriceTextField.setColumns(10);
 
 		startDateTextField = new JTextField();
+		startDateTextField.setBounds(162, 154, 133, 31);
 		startDateTextField.setText("01/01/2022");
 		startDateTextField.setColumns(10);
 
 		endDateTextField = new JTextField();
+		endDateTextField.setBounds(162, 196, 133, 31);
 		endDateTextField.setText("31/12/2022");
 		endDateTextField.setColumns(10);
 
 		guestCapacityTextField = new JTextField();
+		guestCapacityTextField.setBounds(162, 238, 130, 31);
 		guestCapacityTextField.setText("0");
 		guestCapacityTextField.setColumns(10);
 
@@ -3267,33 +3276,43 @@ public class Search extends javax.swing.JFrame {
 				"Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", "Sunderland", "Truro",
 				"Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 		locationComboBox = new JComboBox(cityNames);
+		locationComboBox.setBounds(162, 280, 133, 31);
 		// locationComboBox.setSelectedItem("");
 
 		JLabel minPriceLabel = new JLabel("Minimum Price Per Night");
-		minPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		minPriceLabel.setBounds(10, 66, 239, 31);
+		minPriceLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		maxPriceLabel = new JLabel("Maximum Price Per Night");
-		maxPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		maxPriceLabel.setBounds(10, 110, 239, 31);
+		maxPriceLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		startDateLabel = new JLabel("Start Date");
-		startDateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		startDateLabel.setBounds(10, 152, 239, 31);
+		startDateLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		endDateLabel = new JLabel("End Date");
-		endDateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		endDateLabel.setBounds(10, 196, 239, 31);
+		endDateLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		guestCapacityLabel = new JLabel("Guest Capacity");
-		guestCapacityLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		guestCapacityLabel.setBounds(10, 238, 239, 31);
+		guestCapacityLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		locationLabel = new JLabel("Location");
-		locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		locationLabel.setBounds(10, 280, 239, 31);
+		locationLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		propertyIdLabel = new JLabel("Property ID");
-		propertyIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		propertyIdLabel.setBounds(13, 430, 239, 31);
+		propertyIdLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		propertyIDTextField = new JTextField();
+		propertyIDTextField.setBounds(162, 431, 130, 31);
 		propertyIDTextField.setColumns(10);
 
 		JButton backButton = new JButton("Back");
+		backButton.setBounds(66, 11, 91, 29);
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (mainModule.userState == USER.GUEST) {
@@ -3316,93 +3335,6 @@ public class Search extends javax.swing.JFrame {
 
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup()
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout
-						.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-								.createSequentialGroup()
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(locationLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(guestCapacityLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(startDateLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(endDateLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(maxPriceLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(minPriceLabel, GroupLayout.PREFERRED_SIZE, 239,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(backButton, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 91,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(locationComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(maxPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-										.addComponent(minPriceTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-										.addComponent(startDateTextField, GroupLayout.DEFAULT_SIZE, 166,
-												Short.MAX_VALUE)
-										.addComponent(endDateTextField, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-										.addComponent(guestCapacityTextField, GroupLayout.PREFERRED_SIZE, 166,
-												GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(viewPropertyButton).addComponent(propertyIdLabel,
-														GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
-										.addGap(18).addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 166,
-												GroupLayout.PREFERRED_SIZE)))
-						.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(174).addComponent(btnNewButton)
-								.addPreferredGap(ComponentPlacement.RELATED)))
-				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE).addGap(22)));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout
-				.createSequentialGroup().addGap(68)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(minPriceTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(minPriceLabel, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-								.addComponent(
-										maxPriceTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(startDateTextField, GroupLayout.PREFERRED_SIZE, 31,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(startDateLabel, GroupLayout.PREFERRED_SIZE, 31,
-												GroupLayout.PREFERRED_SIZE)))
-						.addComponent(maxPriceLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(endDateTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(endDateLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(guestCapacityTextField, GroupLayout.PREFERRED_SIZE, 31,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(guestCapacityLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(locationLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-				.addGap(119)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(propertyIdLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(propertyIDTextField, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-				.addGap(79).addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-				.addGap(18).addComponent(viewPropertyButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-				.addGap(30)).addGroup(
-						jPanel1Layout.createSequentialGroup().addContainerGap()
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 634,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(backButton))
-								.addContainerGap(21, Short.MAX_VALUE)));
-		jPanel1.setLayout(jPanel1Layout);
-
 		navBarPanel = new JPanel();
 		navBarPanel.setBackground(new Color(51, 255, 255));
 
@@ -3414,6 +3346,30 @@ public class Search extends javax.swing.JFrame {
 				layout.createSequentialGroup().addComponent(navBarPanel, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 666, GroupLayout.PREFERRED_SIZE)));
+		jPanel1.setLayout(null);
+		jPanel1.add(locationLabel);
+		jPanel1.add(guestCapacityLabel);
+		jPanel1.add(startDateLabel);
+		jPanel1.add(endDateLabel);
+		jPanel1.add(maxPriceLabel);
+		jPanel1.add(minPriceLabel);
+		jPanel1.add(backButton);
+		jPanel1.add(locationComboBox);
+		jPanel1.add(maxPriceTextField);
+		jPanel1.add(minPriceTextField);
+		jPanel1.add(startDateTextField);
+		jPanel1.add(endDateTextField);
+		jPanel1.add(guestCapacityTextField);
+		jPanel1.add(viewPropertyButton);
+		jPanel1.add(propertyIdLabel);
+		jPanel1.add(propertyIDTextField);
+		jPanel1.add(btnNewButton);
+		jPanel1.add(jScrollPane1);
+		
+		lblNewLabel = new JLabel("View a Property to Book:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(10, 367, 227, 31);
+		jPanel1.add(lblNewLabel);
 
 		// NAVBAR
 

@@ -135,7 +135,7 @@ public class BookProperty extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnBookProperty.setBounds(200, 625, 237, 29);
+		btnBookProperty.setBounds(203, 672, 237, 29);
 		bookPropertyPanel.add(btnBookProperty);
 
 		JButton reviewsButton = new JButton("Property Reviews");
@@ -150,7 +150,7 @@ public class BookProperty extends JFrame {
 				frame.dispose();
 			}
 		});
-		reviewsButton.setBounds(224, 573, 196, 29);
+		reviewsButton.setBounds(227, 620, 196, 29);
 		bookPropertyPanel.add(reviewsButton);
 
 		JLabel numOfBedsLabel = new JLabel("Number of Beds");
