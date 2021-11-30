@@ -233,15 +233,16 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
-	    				   
+	    			   //if the start date and end date entered are before or after cb start date end date
+	    			   
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
+	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+	    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+	    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+	    				   ){
 	    				   propId = gettingAllCb.getInt("property_id");
+	    				   System.out.println("THIS IS THE ID IN property: "+propId);
+
 	    				   
 	    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where property_id=?";
 	            		   
@@ -461,13 +462,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				   ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -650,13 +649,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -718,13 +715,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -850,13 +845,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if((sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -919,13 +912,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -1048,13 +1039,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
@@ -1120,13 +1109,11 @@ public class Search extends javax.swing.JFrame {
 
 	    		   System.out.println(getAllCb);
 	    		   while(gettingAllCb.next()) {
-	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
-	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
-	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
-	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
-		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
-		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
-	    					) {
+	    			   if( (sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && 
+		    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd)) ||
+		    				   (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		    				    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate")))) 
+		    				 ) {
 	    				   
 	    				   propId = gettingAllCb.getInt("property_id");
 	    				   
