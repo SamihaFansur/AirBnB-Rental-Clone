@@ -61,7 +61,7 @@ public class AddProperty extends JFrame {
 
 	//Constructor for addProperty
 	public AddProperty(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditProperty();
+		//initializeEditProperty();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
@@ -192,7 +192,7 @@ public class AddProperty extends JFrame {
 		editPropertyPanel.add(descriptionTextField);
 		
 		JLabel breakfastLabel = new JLabel("Breakfast offered"); // fix text box dimensions
-		breakfastLabel.setBounds(97, 10, 93, 34);
+		breakfastLabel.setBounds(97, 655, 93, 34);
 		editPropertyPanel.add(breakfastLabel);
 
 		breakfastRadioBtn = new JRadioButton();
@@ -207,7 +207,7 @@ public class AddProperty extends JFrame {
 			}
 		});
 		
-		breakfastRadioBtn.setBounds(195, 10, 111, 23);
+		breakfastRadioBtn.setBounds(196, 666, 30, 23);
 		editPropertyPanel.add(breakfastRadioBtn);
 
 		JButton backButton = new JButton("Back");
@@ -282,7 +282,7 @@ public class AddProperty extends JFrame {
 				}
 			}
 		});
-		addEditPropertyButton.setBounds(248, 668, 91, 23);
+		addEditPropertyButton.setBounds(250, 711, 91, 23);
 		editPropertyPanel.add(addEditPropertyButton);
 
 		resetEditPropertyButton = new JButton("Reset");

@@ -1431,7 +1431,6 @@ public class Search extends javax.swing.JFrame {
 		propertyIDTextField.setText(model.getValueAt(i, 0).toString());
 	}
 	public void initializeSearch() {
-
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {

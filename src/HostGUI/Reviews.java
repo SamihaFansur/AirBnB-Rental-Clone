@@ -38,7 +38,7 @@ public class Reviews extends javax.swing.JFrame {
 		this.controller = controller;
 
 		initComponents();
-		Show_Facilities_In_JTable();
+		Show_Reviews_In_JTable();
 	}
 	
 	// get the connection
@@ -83,7 +83,7 @@ public class Reviews extends javax.swing.JFrame {
 	}
 
 	// Display Data In JTable
-	public void Show_Facilities_In_JTable() {
+	public void Show_Reviews_In_JTable() {
 		ArrayList<ReviewObject> list = getReviewsList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
 		Object[] row = new Object[8];
@@ -110,7 +110,7 @@ public class Reviews extends javax.swing.JFrame {
 				// refresh jtable data
 				DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
 				model.setRowCount(0);
-				Show_Facilities_In_JTable();
+				Show_Reviews_In_JTable();
 
 				JOptionPane.showMessageDialog(null, "Data " + message + " Successfully");
 			} else {
@@ -224,112 +224,111 @@ public class Reviews extends javax.swing.JFrame {
 		jTextField_description = new JTextField();
 		jTextField_description.setFont(new Font("Verdana", Font.PLAIN, 14));
 
-		lblPropertyRating = new JLabel();
-		lblPropertyRating.setText("Property Rating:");
-		lblPropertyRating.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblReviewRating = new JLabel();
+		lblReviewRating.setText("Review Rating:");
+		lblReviewRating.setFont(new Font("Verdana", Font.PLAIN, 18));
 
 		jTextField_propertyRating = new JTextField();
 		jTextField_propertyRating.setFont(new Font("Verdana", Font.PLAIN, 14));
+		
+		lblProeprtyRating = new JLabel();
+		lblProeprtyRating.setText("Property Rating:");
+		lblProeprtyRating.setFont(new Font("Verdana", Font.PLAIN, 18));
+		
+		propertyRatingTextField = new JTextField();
+		propertyRatingTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+		jPanel1Layout.setHorizontalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addContainerGap(33, Short.MAX_VALUE)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(6).addGroup(jPanel1Layout
-								.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 170,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(jTextField_description, GroupLayout.PREFERRED_SIZE, 129,
-												GroupLayout.PREFERRED_SIZE))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-												.addComponent(jLabel2).addComponent(jLabel4).addComponent(jLabel1)
+									.addComponent(lblProeprtyRating, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(propertyRatingTextField, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+									.addGap(6)
+									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+										.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+											.addComponent(lblReviewRating, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(jTextField_propertyRating, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
+										.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+											.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(jTextField_description, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
+										.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+											.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+												.addComponent(jLabel2)
+												.addComponent(jLabel4)
+												.addComponent(jLabel1)
 												.addComponent(jLabel3)
-												.addGroup(jPanel1Layout
-														.createParallelGroup(Alignment.TRAILING, false)
-														.addComponent(lblCleanliness, Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																lblCommunication, Alignment.LEADING,
-																GroupLayout.PREFERRED_SIZE, 170,
-																GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-												.addComponent(jTextField_cleanliness, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_communication, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_location, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_review_id, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_accuracy, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_valueForMoney, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)))
-								.addGroup(Alignment.TRAILING,
-										jPanel1Layout.createSequentialGroup()
-												.addComponent(lblPropertyRating, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addPreferredGap(ComponentPlacement.UNRELATED)
-												.addComponent(jTextField_propertyRating, GroupLayout.PREFERRED_SIZE,
-														129, GroupLayout.PREFERRED_SIZE)))
-								.addGap(18).addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409,
-										GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap()));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup()
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false).addGroup(jPanel1Layout
-						.createSequentialGroup().addGap(21).addComponent(backButton).addGap(18)
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPropertyRating, GroupLayout.PREFERRED_SIZE, 23,
-										GroupLayout.PREFERRED_SIZE)))
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(62)
-								.addComponent(jTextField_propertyRating, GroupLayout.PREFERRED_SIZE, 35,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(jTextField_review_id, GroupLayout.PREFERRED_SIZE, 35,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(jLabel1))
-								.addGap(11)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(jLabel2)
-										.addComponent(jTextField_accuracy, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(jLabel3)
-										.addComponent(jTextField_location, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(22)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(jTextField_valueForMoney, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(jLabel4))
-								.addGap(18)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblCommunication, GroupLayout.PREFERRED_SIZE, 23,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(jTextField_communication, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(17)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblCleanliness, GroupLayout.PREFERRED_SIZE, 23,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(jTextField_cleanliness, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(jTextField_description, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 23,
-												GroupLayout.PREFERRED_SIZE))))
-				.addContainerGap()));
+												.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
+													.addComponent(lblCleanliness, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addComponent(lblCommunication, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+												.addComponent(jTextField_cleanliness, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jTextField_communication, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jTextField_location, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jTextField_review_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jTextField_accuracy, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jTextField_valueForMoney, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))))))
+							.addGap(18)
+							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		jPanel1Layout.setVerticalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addGap(21)
+					.addComponent(backButton)
+					.addGap(14)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblProeprtyRating, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(propertyRatingTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTextField_propertyRating, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblReviewRating, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTextField_review_id, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel1))
+							.addGap(11)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jLabel2)
+								.addComponent(jTextField_accuracy, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jLabel3)
+								.addComponent(jTextField_location, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+							.addGap(22)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTextField_valueForMoney, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel4))
+							.addGap(18)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblCommunication, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jTextField_communication, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+							.addGap(17)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCleanliness, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jTextField_cleanliness, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTextField_description, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap())
+		);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -364,14 +363,17 @@ public class Reviews extends javax.swing.JFrame {
 		Double value1 = (Double.parseDouble(model.getValueAt(i, 3).toString()));
 		Double communication1 = (Double.parseDouble(model.getValueAt(i, 4).toString()));
 		Double cleanliness1 = (Double.parseDouble(model.getValueAt(i, 5).toString()));
-		Double description1 = (Double.parseDouble(model.getValueAt(i, 6).toString()));
-		Double propertyRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 + description1) / 6.0;
+		Double propertyRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 ) / 5.0;
 		// round to 2 dp
 		propertyRating1 = (double) Math.round(propertyRating1 * 100.0);
 		propertyRating1 = propertyRating1 / 100.0;
 
 		String propertyRating2 = Double.toString(propertyRating1);
 		jTextField_propertyRating.setText(propertyRating2);
+		
+		
+		
+		
 	}
 
 	/**
@@ -431,8 +433,10 @@ public class Reviews extends javax.swing.JFrame {
 	private JTextField jTextField_communication;
 	private JTextField jTextField_cleanliness;
 	private JTextField jTextField_description;
-	private JLabel lblPropertyRating;
+	private JLabel lblReviewRating;
 	private JTextField jTextField_propertyRating;
+	private JLabel lblProeprtyRating;
+	private JTextField propertyRatingTextField;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html

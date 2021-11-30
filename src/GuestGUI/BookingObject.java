@@ -15,11 +15,11 @@ public class BookingObject {
 	private int review_id;
 	private boolean provisional;
 	private Double totalPrice;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 
 	public BookingObject(int booking_id, int property_id, int host_id, int guest_id, boolean provisional,
-			Double totalPrice, Date startDate, Date endDate) {
+			Double totalPrice, String startDate, String endDate) {
 		this.booking_id = booking_id;
 		this.property_id = property_id;
 		this.host_id = host_id;
@@ -58,11 +58,11 @@ public class BookingObject {
 		return totalPrice;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,7 +36,9 @@ public class Review extends JFrame {
 	private int propertyId;
 	private int booking_id;
 	private int Id;
-
+	private int hostId;
+	private double reviewRating;
+	
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
@@ -55,6 +58,7 @@ public class Review extends JFrame {
 	public void initializeReview(int pId, int bId) {
 		propertyId = pId;
 		booking_id = bId;
+		
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
@@ -111,36 +115,124 @@ public class Review extends JFrame {
 		addReview.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				//Get host_id from propertyid
+				try {
+				connection = ConnectionManager.getConnection();
+				String hostIdfromProperty = "Select host_id from Property where property_id=?";
+
+				PreparedStatement getHosstId = connection.prepareStatement(hostIdfromProperty);
+				getHosstId.setInt(1, pId);
+
+				ResultSet gettingHostID = getHosstId.executeQuery();
+
+				while (gettingHostID.next()) {
+					hostId = gettingHostID.getInt("host_id");
+				}
+				}catch(Exception f) {
+					System.err.println("Got an exception2!");
+					System.err.println(f.getMessage());
+				}
 				// INSERT Property INFO INTO TEXT FIELDS
 				try {
 					connection = ConnectionManager.getConnection();
+					//calculate average rating for review
+					Double accuracy1 = (Double.parseDouble(AccuracyRatingTextField.getText()));
+					Double location1 = (Double.parseDouble(locationRatingTextField.getText()));
+					Double value1 = (Double.parseDouble(valueRatingTextField.getText()));
+					Double communication1 = (Double.parseDouble(communicationRatingTextField.getText()));
+					Double cleanliness1 = (Double.parseDouble(cleanlinessRatingTextField.getText()));
+					Double five = 5.0;
+					Double reviewRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 ) / five;
+					
+					// round to 2 dp
+					Double reviewRating2 = ((reviewRating1 * 100.00)/100.00);
 
-					String addReview = "insert into Review (property_id, booking_id, accuracy, location, valueForMoney, communication, cleanliness, description)"
-							+ " values(?,?,?,?,?,?,?,?)";
+					String averageReviewRating = Double.toString(reviewRating2);
+					
+					String addReview = "insert into Review (property_id, booking_id,host_id, accuracy, location, valueForMoney, communication, cleanliness, description, averageRating)"
+							+ " values(?,?,?,?,?,?,?,?,?,?)";
 					PreparedStatement ps_review = connection.prepareStatement(addReview);
-
-					if(Integer.parseInt(AccuracyRatingTextField.getText())<=5.0 && Integer.parseInt(locationRatingTextField.getText())<=5.0 &&
-							(Integer.parseInt(valueRatingTextField.getText())<=5.0)&& (Integer.parseInt(cleanlinessRatingTextField.getText())<=5.0)
-							&& (Integer.parseInt(communicationRatingTextField.getText())<=5.0)) {
+		
+					if(Double.parseDouble(AccuracyRatingTextField.getText())<=5.0 && Double.parseDouble(locationRatingTextField.getText())<=5.0 &&
+							(Double.parseDouble(valueRatingTextField.getText())<=5.0)&& (Double.parseDouble(cleanlinessRatingTextField.getText())<=5.0)
+							&& (Double.parseDouble(communicationRatingTextField.getText())<=5.0)) {
 					ps_review.setInt(1, propertyId);
 					ps_review.setInt(2, booking_id);
-					ps_review.setDouble(3, Integer.parseInt(AccuracyRatingTextField.getText()));
-					ps_review.setDouble(4, Integer.parseInt(locationRatingTextField.getText()));
-					ps_review.setDouble(5, Integer.parseInt(valueRatingTextField.getText()));
-					ps_review.setDouble(6, Integer.parseInt(communicationRatingTextField.getText()));
-					ps_review.setDouble(7, Integer.parseInt(cleanlinessRatingTextField.getText()));
-					ps_review.setString(8, descriptionTextField.getText());
+					ps_review.setInt(3, hostId);
+					ps_review.setDouble(4, Double.parseDouble(AccuracyRatingTextField.getText()));
+					ps_review.setDouble(5, Double.parseDouble(locationRatingTextField.getText()));
+					ps_review.setDouble(6, Double.parseDouble(valueRatingTextField.getText()));
+					ps_review.setDouble(7, Double.parseDouble(communicationRatingTextField.getText()));
+					ps_review.setDouble(8, Double.parseDouble(cleanlinessRatingTextField.getText()));
+					ps_review.setString(9, descriptionTextField.getText());
+					ps_review.setDouble(10, Double.parseDouble(averageReviewRating));
 					ps_review.executeUpdate();
 					}else {
 						JOptionPane.showMessageDialog(frame,"Rating must be number smaller than 5",
 							    "Inane error",
 							    JOptionPane.ERROR_MESSAGE);
 					}
-
 				} catch (Exception f) {
 					System.err.println("Got an exception!");
 					System.err.println(f.getMessage());
 				}
+				
+				//Updating superhost to true for host if average of host reviews is higher than 4.7 for this review
+				//select avg(yourColumnName) as anyVariableName from yourTableName;
+				
+				
+				
+				try {
+					connection = ConnectionManager.getConnection();
+
+					String getAverageReview = "Select avg(averageRating) as averageReviewRating from Review where host_id=?";
+
+					PreparedStatement getAverageRatingReview = connection.prepareStatement(getAverageReview);
+					getAverageRatingReview.setInt(1, hostId);
+
+					ResultSet gettingReviewRatings = getAverageRatingReview.executeQuery();
+
+					while (gettingReviewRatings.next()) {
+						reviewRating = gettingReviewRatings.getInt(1);
+					}				
+
+					connection.close();
+				} catch (Exception f) {
+					System.err.println("Got an exception234!");
+					System.err.println(f.getMessage());
+				}
+				
+				
+				//superHost
+				try {
+					boolean superhost = false;
+					
+					if(reviewRating > 4.7) {
+						System.out.println(reviewRating);
+						superhost = true;
+					}
+					
+					connection = ConnectionManager.getConnection();
+
+					String updateSuperHost = "update HostAccount set superHost=? where host_id =?";
+
+					PreparedStatement updatingSuperHostValue = connection.prepareStatement(updateSuperHost);
+					updatingSuperHostValue.setBoolean(1, superhost);
+					updatingSuperHostValue.setInt(2, hostId);
+	
+					System.out.println(updatingSuperHostValue.toString());
+
+					updatingSuperHostValue.executeUpdate();
+
+					connection.close();
+				} catch (Exception f) {
+					System.err.println("Got an exception!");
+					System.err.println(f.getMessage());
+				}
+				
+				
 			}
 		});
 		addReview.setFont(new Font("Tahoma", Font.PLAIN, 17));

@@ -80,7 +80,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
 							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
-							rs.getDouble("totalPrice"), rs.getDate("startDate"), rs.getDate("endDate"));
+							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
 					bookingsList.add(bookings);
 				}
 			} catch (Exception e) {
@@ -99,7 +99,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
 							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
-							rs.getDouble("totalPrice"), rs.getDate("startDate"), rs.getDate("endDate"));
+							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
 					bookingsList.add(bookings);
 				}
 			} catch (Exception e) {
