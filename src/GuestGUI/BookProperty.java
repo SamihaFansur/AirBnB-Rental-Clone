@@ -115,16 +115,19 @@ public class BookProperty extends JFrame {
 		bookPropertyPanel.add(numOfBedroomsLabel);
 
 		shortNameTextField = new JTextField();
+		shortNameTextField.setEditable(false);
 		shortNameTextField.setBounds(166, 161, 360, 29);
 		bookPropertyPanel.add(shortNameTextField);
 		shortNameTextField.setColumns(10);
 
 		guestCapacityTextField = new JTextField();
+		guestCapacityTextField.setEditable(false);
 		guestCapacityTextField.setColumns(10);
 		guestCapacityTextField.setBounds(166, 201, 131, 29);
 		bookPropertyPanel.add(guestCapacityTextField);
 
 		descriptionTextField = new JTextField();
+		descriptionTextField.setEditable(false);
 		descriptionTextField.setColumns(10);
 		descriptionTextField.setBounds(166, 247, 360, 93);
 		bookPropertyPanel.add(descriptionTextField);
@@ -164,18 +167,21 @@ public class BookProperty extends JFrame {
 		bookPropertyPanel.add(numOfBathsLabel);
 
 		numberOfBedroomsTextField = new JTextField();
+		numberOfBedroomsTextField.setEditable(false);
 		numberOfBedroomsTextField.setText("");
 		numberOfBedroomsTextField.setColumns(10);
 		numberOfBedroomsTextField.setBounds(195, 392, 331, 29);
 		bookPropertyPanel.add(numberOfBedroomsTextField);
 
 		numberOfBedsTextField = new JTextField();
+		numberOfBedsTextField.setEditable(false);
 		numberOfBedsTextField.setText("");
 		numberOfBedsTextField.setColumns(10);
 		numberOfBedsTextField.setBounds(195, 452, 331, 29);
 		bookPropertyPanel.add(numberOfBedsTextField);
 
 		numberOfBathsTextField = new JTextField();
+		numberOfBathsTextField.setEditable(false);
 		numberOfBathsTextField.setText("");
 		numberOfBathsTextField.setColumns(10);
 		numberOfBathsTextField.setBounds(195, 518, 331, 29);
@@ -187,6 +193,7 @@ public class BookProperty extends JFrame {
 		bookPropertyPanel.add(lblPropertyId);
 
 		jTextField_property_id = new JTextField();
+		jTextField_property_id.setEditable(false);
 		jTextField_property_id.setText("");
 		jTextField_property_id.setColumns(10);
 		jTextField_property_id.setBounds(166, 121, 360, 29);
