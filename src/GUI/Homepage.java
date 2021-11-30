@@ -18,9 +18,9 @@ public class Homepage extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
 	private JFrame frame ;
 

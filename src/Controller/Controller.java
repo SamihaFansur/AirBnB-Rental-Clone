@@ -109,67 +109,6 @@ public class Controller extends MainModule {
 		this.review = review;
 	}
 
-	public void setTitle(String title) {
-		model.setTitle(title);
-	}
-
-	public void setPassword(String password) {
-		model.setPassword(password);
-	}
-
-	public void setFirstName(String firstName) {
-		model.setFirstName(firstName);
-	}
-
-	public void setSurname(String surname) {
-		model.setSurname(surname);
-	}
-
-	public void setEmail(String email) {
-		model.setEmail(email);
-	}
-
-	public void setMobileNumber(String mobileNumber) {
-		model.setMobileNumber(mobileNumber);
-	}
-
-	public void setHouseNameNumber(String houseNameNumber) {
-		model.setHouseNameNum(houseNameNumber);
-	}
-
-	public void setStreetName(String streetName) {
-		model.setStreetName(streetName);
-	}
-
-	public void setCity(String city) {
-		model.setCity(city);
-	}
-
-	public void setPostcode(String postcode) {
-		model.setPostcode(postcode);
-	}
-
-	public void setAccountType(String accountType) {
-		model.setAccountType(accountType);
-	}
-
-	// edit property setters
-	public void setEditPropertyHouseNameNum(String houseNameNum) {
-		model.setEditPropertyHouseNameNum(houseNameNum);
-	}
-
-	public void setEditPropertyStreetName(String streetName) {
-		model.setEditPropertyStreetName(streetName);
-	}
-
-	public void setEditPropertyCity(String city) {
-		model.setEditPropertyCity(city);
-	}
-
-	public void setEditPropertyPostcode(String postcode) {
-		model.setEditPropertyPostcode(postcode);
-	}
-
 	// checking the state of the system:
 	public void drawNewView() {
 		if (mainModule.currentState == STATE.HOMEPAGE && mainModule.userState == USER.ENQUIRER) {
