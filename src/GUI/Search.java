@@ -444,6 +444,200 @@ public class Search extends javax.swing.JFrame {
 		}
 		
 		
+		////////////////////////////////////////////////////2 search criteria///////////////////////////////////////////////
+		//minMax, startEndDate
+		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && !sd.equals("") && !ed.equals("") && placeName.equals("")) {
+			int addressId, propId;
+			String city;
+
+			try {
+				   SearchObject search;
+				   
+				   String allCb = "select property_id, startDate, endDate from ChargeBands where totalPricePerNight>=? and totalPricePerNight<=?";
+			   		PreparedStatement getAllCb = connection.prepareStatement(allCb);
+			   		getAllCb.setDouble(1, minPPN);
+			   		getAllCb.setDouble(2, maxPPN);
+	    		   ResultSet gettingAllCb = getAllCb.executeQuery();
+
+	    		   System.out.println(getAllCb);
+	    		   while(gettingAllCb.next()) {
+	    			   if( sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && //equal works
+	    				   sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd) ||
+	    				   (startd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  //fix start and end after and before bits
+	    				    startd.before(sourceFormat.parse(gettingAllCb.getString("endDate")))) && 
+		    			    endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))) &&  
+		  	    		    endd.before(sourceFormat.parse(gettingAllCb.getString("endDate"))) 
+	    					) {
+	    				   
+	    				   propId = gettingAllCb.getInt("property_id");
+	    				   
+	    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where property_id=?";
+	            		   
+		   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+		   					getProperty.setInt(1, propId);
+		   					
+		   					ResultSet gettingProperty = getProperty.executeQuery();
+		   					   
+		   					while(gettingProperty.next()) {
+		   						addressId = gettingProperty.getInt("address_id");
+		   						
+		   						String placeNameFromAid = "Select placeName from Address where address_id=?";
+		   		        		   
+		   						PreparedStatement getPlaceName= connection.prepareStatement(placeNameFromAid);
+		   						getPlaceName.setInt(1, addressId);
+		   						
+		   						ResultSet gettingPlaceName = getPlaceName.executeQuery();
+		   						   
+		   						while(gettingPlaceName.next()) {
+		   							city = gettingPlaceName.getString("placeName");
+		   									   							
+		   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"),
+											gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+									searchList.add(search);
+		   						}
+		   					}
+	    			   }
+	    		   }
+				
+					//removes duplicate entries from table
+					for (int i = 0; i < searchList.size(); i++) {
+						for (int j = i + 1; j < searchList.size(); j++) {
+							if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+								searchList.remove(j);
+							}
+						}
+					}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//minMax, city
+		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && !placeName.equals("")) {
+			int addressId, propId;
+			String city;
+
+			try {
+				   SearchObject search;
+				   
+				   String allCb = "select property_id from ChargeBands where totalPricePerNight>=? and totalPricePerNight<=?";
+			   		PreparedStatement getAllCb = connection.prepareStatement(allCb);
+			   		getAllCb.setDouble(1, minPPN);
+			   		getAllCb.setDouble(2, maxPPN);
+	    		   ResultSet gettingAllCb = getAllCb.executeQuery();
+
+	    		   System.out.println(getAllCb);
+	    		   while(gettingAllCb.next()) {
+    				   propId = gettingAllCb.getInt("property_id");
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where property_id=?";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					getProperty.setInt(1, propId);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					   
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						
+	   						String placeNameFromAid = "Select placeName from Address where address_id=? and placeName=?";
+	   		        		   
+	   						PreparedStatement getPlaceName= connection.prepareStatement(placeNameFromAid);
+	   						getPlaceName.setInt(1, addressId);
+	   						getPlaceName.setString(2, placeName);
+	   						
+	   						ResultSet gettingPlaceName = getPlaceName.executeQuery();
+	   						   
+	   						while(gettingPlaceName.next()) {
+	   							city = gettingPlaceName.getString("placeName");
+	   									   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"),
+										gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+								searchList.add(search);
+	   						}
+	   					}
+	    			   
+	    		   }
+				
+					//removes duplicate entries from table
+					for (int i = 0; i < searchList.size(); i++) {
+						for (int j = i + 1; j < searchList.size(); j++) {
+							if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+								searchList.remove(j);
+							}
+						}
+					}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//minMax, guest
+		if (minPPN != 0 && maxPPN != 0 && guestCap != 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022") && placeName.equals("")) {
+			int addressId, propId;
+			String city;
+
+			try {
+				   SearchObject search;
+				   
+				   String allCb = "select property_id from ChargeBands where totalPricePerNight>=? and totalPricePerNight<=?";
+			   		PreparedStatement getAllCb = connection.prepareStatement(allCb);
+			   		getAllCb.setDouble(1, minPPN);
+			   		getAllCb.setDouble(2, maxPPN);
+	    		   ResultSet gettingAllCb = getAllCb.executeQuery();
+
+	    		   System.out.println(getAllCb);
+	    		   while(gettingAllCb.next()) {
+    				   propId = gettingAllCb.getInt("property_id");
+    				   
+    				   String propertyFromPid = "Select property_id, address_id, shortName, guestCapacity, breakfast from Property where property_id=? and guestCapacity=?";
+            		   
+	   					PreparedStatement getProperty = connection.prepareStatement(propertyFromPid);
+	   					getProperty.setInt(1, propId);
+	   					getProperty.setInt(2, guestCap);
+	   					
+	   					ResultSet gettingProperty = getProperty.executeQuery();
+	   					   
+	   					while(gettingProperty.next()) {
+	   						addressId = gettingProperty.getInt("address_id");
+	   						
+	   						String placeNameFromAid = "Select placeName from Address where address_id=?";
+	   		        		   
+	   						PreparedStatement getPlaceName= connection.prepareStatement(placeNameFromAid);
+	   						getPlaceName.setInt(1, addressId);
+	   						
+	   						ResultSet gettingPlaceName = getPlaceName.executeQuery();
+	   						   
+	   						while(gettingPlaceName.next()) {
+	   							city = gettingPlaceName.getString("placeName");
+	   									   							
+	   							search = new SearchObject(gettingProperty.getInt("property_id"), gettingProperty.getString("shortName"),
+										gettingProperty.getInt("guestCapacity"), city, gettingProperty.getBoolean("breakfast"));
+								searchList.add(search);
+	   						}
+	   					}
+	    			   
+	    		   }
+				
+					//removes duplicate entries from table
+					for (int i = 0; i < searchList.size(); i++) {
+						for (int j = i + 1; j < searchList.size(); j++) {
+							if (searchList.get(i).getPropertyId() == searchList.get(j).getPropertyId()) {
+								searchList.remove(j);
+							}
+						}
+					}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		
+		
+		
 		////////////////////////////////////////////////////3 search criteria////////////////////////////////////////////////
 		//minMax, startEndDate, city
 		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && !sd.equals("") && !ed.equals("") && !placeName.equals("")) {
