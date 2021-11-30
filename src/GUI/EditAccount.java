@@ -47,7 +47,7 @@ public class EditAccount extends JFrame {
 	private MainModule mainModule;
 
 	public EditAccount(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditAccount();
+		//initializeEditAccount();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
