@@ -9,7 +9,6 @@ import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import GuestGUI.Review;
-import GUI.Contact;
 import GUI.EditAccount;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
@@ -41,7 +40,6 @@ public class Controller extends MainModule {
 	private Register register;
 	private Search search;
 	private Login login;
-	private Contact contact;
 
 	// hostGUI
 	private AddFacility addFacility;
@@ -68,7 +66,7 @@ public class Controller extends MainModule {
 	private Review review;
 
 	public Controller(MainModule mainModule, Model model, Homepage homepage, Register register, Search search,
-			Login login, Contact contact,
+			Login login,
 
 			AddFacility addFacility, EditBathing editBathing, EditBathroom editBathroom, EditBedroom editBedroom,
 			EditKitchen editKitchen, EditLiving editLiving, EditOutdoors editOutdoors, AddProperty editProperty,
@@ -87,7 +85,6 @@ public class Controller extends MainModule {
 		this.register = register;
 		this.search = search;
 		this.login = login;
-		this.contact = contact;
 		this.addFacility = addFacility;
 		this.editBathing = editBathing;
 		this.editBathroom = editBathroom;
@@ -188,11 +185,9 @@ public class Controller extends MainModule {
 		} else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState == USER.ENQUIRER
 				|| mainModule.userState == USER.HOST || mainModule.userState == USER.GUEST)) {
 			search.initializeSearch();
-		} else if (mainModule.currentState == STATE.CONTACT_US && mainModule.userState == USER.ENQUIRER) {
-			contact.initializeContact();
-		}
+			
 		// added for HOST GUI:
-		else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState == USER.HOST) {		
+		}else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState == USER.HOST) {		
 			hostAccount.initializeHostAccount();
 		} else if (mainModule.currentState == STATE.GUEST_ACCOUNT && mainModule.userState == USER.GUEST) {
 			guestAccount.initializeGuestAccount();

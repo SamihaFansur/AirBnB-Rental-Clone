@@ -33,7 +33,6 @@ public class MainModule {
 	private Homepage homepage;
 	private Login login;
 	private Search search;
-	private Contact contact;
 
 	// hostGUI
 	private AddFacility addFacility;
@@ -63,8 +62,6 @@ public class MainModule {
 		HOMEPAGE, SELF_REGISTRATION,
 		/* property class also not being used */
 		LOGIN, SEARCH,
-		// could have others that correspond to new pages.
-		CONTACT_US,
 		// pages for host gui:
 		LOGOUT,
 
@@ -102,8 +99,6 @@ public class MainModule {
 		Login login = new Login(mainModule, controller, model);
 		// creating an instance of search class
 		Search search = new Search(mainModule, controller, model);
-		// creating instance of contact class
-		Contact contact = new Contact(mainModule, controller, model);
 		
 		// Objects for Guest GUI
 		Bookings bookings = new Bookings(mainModule, controller, model);
@@ -132,7 +127,7 @@ public class MainModule {
 		Review review = new Review(mainModule, controller, model);
 
 		// creating the controller
-		controller = new Controller(mainModule, model, homepage, register, search, login, contact, addFacility,
+		controller = new Controller(mainModule, model, homepage, register, search, login, addFacility,
 				editBathing, editBathroom, editBedroom, editKitchen, editLiving, editOutdoors, editProperty,
 				editSleeping, editUtility, facilities, editAPropertysFacilities, hostAccount, properties, editAccount,
 				reviews, chargeBands, guestAccount, bookings, bookProperty, provisionalBookings, review);

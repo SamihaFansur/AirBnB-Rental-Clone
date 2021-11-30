@@ -84,15 +84,5 @@ public class NavEnquirer extends JFrame{
 		});
 		navBarPanel.add(navLoginButton);
 
-		JButton navContactButton = new JButton("Contact");
-		navContactButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState=STATE.CONTACT_US;
-				MainModule.controller.drawNewView();
-				frame.dispose();
-			}
-		});
-		navBarPanel.add(navContactButton);
 	}
 }

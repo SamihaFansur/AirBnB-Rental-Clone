@@ -3244,27 +3244,27 @@ public class Search extends javax.swing.JFrame {
 		});
 
 		minPriceTextField = new JTextField();
-		minPriceTextField.setBounds(162, 68, 133, 31);
+		minPriceTextField.setBounds(175, 66, 133, 31);
 		minPriceTextField.setText("0");
 		minPriceTextField.setColumns(10);
 
 		maxPriceTextField = new JTextField();
-		maxPriceTextField.setBounds(162, 110, 133, 31);
+		maxPriceTextField.setBounds(175, 108, 133, 31);
 		maxPriceTextField.setText("0");
 		maxPriceTextField.setColumns(10);
 
 		startDateTextField = new JTextField();
-		startDateTextField.setBounds(162, 154, 133, 31);
+		startDateTextField.setBounds(175, 152, 133, 31);
 		startDateTextField.setText("01/01/2022");
 		startDateTextField.setColumns(10);
 
 		endDateTextField = new JTextField();
-		endDateTextField.setBounds(162, 196, 133, 31);
+		endDateTextField.setBounds(175, 194, 133, 31);
 		endDateTextField.setText("31/12/2022");
 		endDateTextField.setColumns(10);
 
 		guestCapacityTextField = new JTextField();
-		guestCapacityTextField.setBounds(162, 238, 130, 31);
+		guestCapacityTextField.setBounds(175, 236, 133, 31);
 		guestCapacityTextField.setText("0");
 		guestCapacityTextField.setColumns(10);
 
@@ -3276,7 +3276,7 @@ public class Search extends javax.swing.JFrame {
 				"Salisbury", "Sheffield", "Southampton", "St Albans", "Stoke-on-Trent", "Sunderland", "Truro",
 				"Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester", "York" };
 		locationComboBox = new JComboBox(cityNames);
-		locationComboBox.setBounds(162, 280, 133, 31);
+		locationComboBox.setBounds(175, 278, 133, 31);
 		// locationComboBox.setSelectedItem("");
 
 		JLabel minPriceLabel = new JLabel("Minimum Price Per Night");
