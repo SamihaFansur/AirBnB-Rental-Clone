@@ -53,7 +53,7 @@ public class BookProperty extends JFrame {
 	private JTextField endDateTextField;
 
 	public BookProperty(MainModule mainModule, Controller controller, Model model) {
-		initializeBookProperty();
+		//initializeBookProperty();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
