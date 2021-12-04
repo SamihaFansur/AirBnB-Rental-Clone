@@ -71,7 +71,7 @@ public class AddProperty extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void adddingFacility() {
-		JOptionPane.showMessageDialog(this, "You must save a property before adding a facility");
+		JOptionPane.showMessageDialog(this, "You must add a charge band before adding a facility");
 	}
 
 	public void adddingChargeband() {

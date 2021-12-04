@@ -132,7 +132,7 @@ public class Search extends javax.swing.JFrame {
 			e1.printStackTrace();
 		}
 		String placeName = model.getPlaceName();// city field
-
+		
 		///////////////////////////////////////// no search
 		///////////////////////////////////////// criteria////////////////////////////////////////////////////
 		if (minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022")

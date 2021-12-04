@@ -184,8 +184,11 @@ public class Login extends JFrame {
 					} else if (accountSelected == 1) {
 						mainModule.currentState = STATE.GUEST_ACCOUNT;
 						mainModule.userState = USER.GUEST;
-						
+
 						guestId = gettingTheGuestId(userName_login);
+						
+						model.setGuestId(guestId);
+						System.out.println("GUEST ID ON LOGIN = "+model.getGuestId());
 						
 					}
 					frame.dispose();
@@ -202,7 +205,8 @@ public class Login extends JFrame {
 					mainModule.userState = USER.GUEST;
 					
 					guestId = gettingTheGuestId(userName_login);
-					
+					model.setGuestId(guestId);
+					System.out.println("GUEST ID ON LOGIN = "+model.getGuestId());
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					frame.dispose();
 				}

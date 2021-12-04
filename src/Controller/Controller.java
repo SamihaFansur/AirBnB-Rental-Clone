@@ -1,17 +1,12 @@
 package Controller;
 
-import GUI.Homepage;
-import GUI.Login;
-import GUI.MainModule;
-import GUI.Register;
-import GUI.Search;
 import GuestGUI.BookProperty;
 import GuestGUI.Bookings;
 import GuestGUI.GuestAccount;
 import GuestGUI.Review;
-import GUI.EditAccount;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
+import GUI.ProvisionalBookings;
 import Model.*;
 import HostGUI.*;
 import HostGUI.AddFacility;
@@ -134,6 +129,7 @@ public class Controller extends MainModule {
 				&& (mainModule.userState == USER.HOST || mainModule.userState == USER.GUEST)) {
 			editAccount.initializeEditAccount();
 		}
+		
 	}
 
 	public void editPropertyView(int facilitiesId, int id) { // facilities id is property_id when using 'add

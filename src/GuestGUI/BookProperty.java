@@ -121,7 +121,7 @@ public class BookProperty extends JFrame {
 		propertyidAfter = propertyId;
 		//model.setGuestId(idAfter);
 		System.out.println("THIS IS THE GUEST ID FORM THE FUNCTION:   "+idAfter);
-		System.out.println("THIS IS THE GUEST ID:   "+model.getGuestId());
+		System.out.println("THIS IS THE GUEST email i ASSUME:   "+model.getEmail());
 
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -248,26 +248,28 @@ public class BookProperty extends JFrame {
 					
 					//checking if search dates overlap with input dates:
 					// this should be true to in order to add the booking
-					Boolean datesWithinSearchCriteria = checkingForDatesOverlap(userStartDateForBooking,userEndDateForBooking,startDateFromSearch,endDateFromSearch);					
+					//Boolean datesWithinSearchCriteria = checkingForDatesOverlap(userStartDateForBooking,userEndDateForBooking,startDateFromSearch,endDateFromSearch);					
 					
 					// checking if a booking already exists within the users dates
 					Boolean provisonalBookingIsPossible = checkForExistingBooking(userStartDateForBooking, userEndDateForBooking);
 					
-					System.out.println("booking dates within start&end dates from search: "+datesWithinSearchCriteria);
+					//check if users start date and end date is between start date and end date for the chargbands
+					Boolean checkDatesAgaistChargebands = checkIfDatesExistInChargeband(userStartDateForBooking, userEndDateForBooking);
+					
+					
+					//System.out.println("booking dates within start&end dates from search: "+datesWithinSearchCriteria);
 					System.out.println("Is the BOOKING POSSIBLE???? "+provisonalBookingIsPossible);
 				
 					
 					// if the users start and end dates are within search start&end dates AND a booking doesnt already exists
 					// between these dates, then add the booking:
-					if (datesWithinSearchCriteria && provisonalBookingIsPossible) {
+					
+					if (checkDatesAgaistChargebands && provisonalBookingIsPossible) {
 						// add booking to the table
 						addBooking();
 						// show pane saying booking accepted
 						
-					}else if(!datesWithinSearchCriteria) {
-						displayMessageForSearchDate();
-
-					}else if(!provisonalBookingIsPossible) {
+					}else{
 						displayMessageUnableToBook();
 					}
 					
@@ -456,11 +458,23 @@ public class BookProperty extends JFrame {
 			connection = ConnectionManager.getConnection();
 			System.out.println("IN PLACE TO ADD BOOKING TO THE DB");
 
+			String guestIdFromEmail = "select guest_id from GuestAccount where email=?";
+			PreparedStatement getGuestIdFromGuestAccount = connection.prepareStatement(guestIdFromEmail);
+			getGuestIdFromGuestAccount.setString(1, model.getEmail());
 
-			String addBookingQuery = "insert into Booking (property_id, host_id, guest_id, provisional, "
-					+ "totalPrice, startDate, endDate)" + " values(?,?,?,?,?,?,?)";
+			ResultSet gettingGuestIdFromGuestAccount = getGuestIdFromGuestAccount.executeQuery();
+			int guestId = 0;
+			while(gettingGuestIdFromGuestAccount.next()) {
+				guestId = gettingGuestIdFromGuestAccount.getInt("guest_id");
+			}
+			System.out.println("GUEST ID AFTER RESULTSET STUFF = "+guestId);
+
+
+			String addBookingQuery = "insert into Booking (property_id, host_id, guest_id, "
+					+ "totalPrice, startDate, endDate, provisional)" + " values(?,?,?,?,?,?,?)";
 			PreparedStatement addBookingPS = connection.prepareStatement(addBookingQuery);
 
+			System.out.println("A");
 
 			addBookingPS.setInt(1, propertyIdForBooking);
 			try {
@@ -482,11 +496,11 @@ public class BookProperty extends JFrame {
 			}
 			System.out.println("THIS IS THE host ID "+hostIdForProperty+" belonging to the property being booked: "+propertyIdForBooking);
 			
-			
+			System.out.println("B");			
 			addBookingPS.setInt(2, hostIdForProperty);
-			
-			addBookingPS.setInt(3, model.getGuestId());
-			addBookingPS.setBoolean(4, true);
+			System.out.println("C");
+			addBookingPS.setInt(3, guestId);
+
 			try {
 			//getting the total price for the property being booked
 				ResultSet rsForPrice = null;
@@ -507,14 +521,19 @@ public class BookProperty extends JFrame {
 			
 			System.out.println("THIS IS THE price per night ID "+pricePerNightForProperty+" belonging to the property being booked: "+propertyIdForBooking);
 			
-			addBookingPS.setDouble(5, pricePerNightForProperty);
-			addBookingPS.setString(6, userStartDateForBooking);
-			addBookingPS.setString(7, userEndDateForBooking);
-			
-			
-			addBookingPS.executeUpdate();
+			addBookingPS.setDouble(4, pricePerNightForProperty);
+			addBookingPS.setString(5, userStartDateForBooking);
+			addBookingPS.setString(6, userEndDateForBooking);
+			System.out.println("D");
 
-			connection.close();
+			addBookingPS.setString(7, "Pending");
+			
+			System.out.println("D");
+
+			addBookingPS.executeUpdate();
+			System.out.println("E");
+
+			//connection.close();
 			
 		} catch (Exception e2) {
 			System.err.println("Got an exception!");
@@ -684,14 +703,73 @@ public class BookProperty extends JFrame {
 		return datesOverlap;
 	}
 	
+
+	private boolean userDatesWithinCB;
+	public boolean checkIfDatesExistInChargeband(String userStartDate, String userEndDate) {
+		userDatesWithinCB = false;
+		try {
+			System.out.println("0");
+
+			String propertyCBQuery = "select property_id, startDate, endDate from ChargeBands where property_id=?";
+			PreparedStatement cbPS = connection.prepareStatement(propertyCBQuery);
+			propertyIdForBooking = Integer.parseInt(jTextField_property_id.getText());
+			cbPS.setInt(1,propertyIdForBooking);
+			ResultSet cbRS = cbPS.executeQuery();
+			System.out.println("1");
+			//looping through result set of all the bookings for a particular propertyID
+			while(cbRS.next()) {
+				// getting start date and end date from booking table
+				String startDateFromCBTable = cbRS.getString("startDate");
+				String endDateFromCBTable = cbRS.getString("endDate");
+				System.out.println("2");
+
+				try {
+					formattedStartDateForComparison= sourceFormat.parse(startDateFromCBTable);
+					formattedEndDateForComparison = sourceFormat.parse(endDateFromCBTable);
+					formattedStartDateFromUser = sourceFormat.parse(userStartDate);
+					formattedEndDateFromUser = sourceFormat.parse(userEndDate);
+
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
+				if( (formattedStartDateFromUser.equals(formattedStartDateForComparison) && formattedEndDateFromUser.equals(formattedEndDateForComparison))
+						|| (formattedStartDateFromUser.after(formattedStartDateForComparison) && formattedEndDateFromUser.equals(formattedEndDateForComparison)) 	
+						|| (formattedStartDateFromUser.after(formattedStartDateForComparison) && formattedEndDateFromUser.before(formattedEndDateForComparison)) 	
+						|| (formattedStartDateFromUser.equals(formattedStartDateForComparison) && formattedEndDateFromUser.before(formattedEndDateForComparison)) 	
+						 ) {
+					userDatesWithinCB = true;
+					System.out.println("breaking out of the loop because users dates exists within CB dates");
+					break;
+				} else {
+					userDatesWithinCB = false;
+				}
+				System.out.println("3");
+
+			}
+			System.out.println("4");
+
+		}
+		catch(SQLException e) {
+			System.out.println("5");
+
+				System.err.println(e.getMessage());
+		}
+		System.out.println("6");
+
+		return userDatesWithinCB;
+	}
+	
 	// checking for existing bookings in the Bookings table
+	// for a particular property, get the start date, end date, and provisional (accepted) values for a particular book
+	// if the user start dates and end dates overlap with the start date and end date for an ACCPETED booking, then 
+	// make provisionalBookingPossible = false;
 	public boolean checkForExistingBooking(String userStartDate, String userEndDate) {
 		provisionalBookingPossible = true;
 		
-		
 		try {
-			
-			String propertyBookingQuery = "select property_id, startDate, endDate from Booking where property_id=?";
+			System.out.println("it must be here");
+			String propertyBookingQuery = "select property_id, startDate, endDate, provisional from Booking where property_id=?";
 			PreparedStatement bookingPS = connection.prepareStatement(propertyBookingQuery);
 			propertyIdForBooking = Integer.parseInt(jTextField_property_id.getText());
 			bookingPS.setInt(1,propertyIdForBooking);
@@ -702,11 +780,12 @@ public class BookProperty extends JFrame {
 				// getting start date and end date from booking table
 				String startDateFromBookingTable = bookingRS.getString("startDate");
 				String endDateFromBookingTable = bookingRS.getString("endDate");
+				String bookingStatus = bookingRS.getString("provisional");
 
 				Boolean datesOvelapWithExistingBookings = checkingForOverlappingBookingDates(userStartDate, userEndDate, startDateFromBookingTable, endDateFromBookingTable);
 				
 				
-				if (datesOvelapWithExistingBookings) {
+				if (datesOvelapWithExistingBookings || (bookingStatus.equals("Accepted"))) {
 					provisionalBookingPossible = false;
 					System.out.println("breaking out of the loop because a booking between these dates already exists");
 					break;
@@ -752,6 +831,7 @@ public class BookProperty extends JFrame {
 		}
 
 	}
+	
 
 	public void displayMessageToLoginAsGuest() {
 		JOptionPane.showMessageDialog(this, "You must be logged in as a guest to book a property.");
@@ -760,7 +840,7 @@ public class BookProperty extends JFrame {
 		JOptionPane.showMessageDialog(this, "The dates entered are not within the search dates on the previous page. ");
 	}
 	public void displayMessageUnableToBook() {
-		JOptionPane.showMessageDialog(this, "The property has already been booked for these dates. Please choose different a different start date or end date. ");
+		JOptionPane.showMessageDialog(this, "The property is unavailable for the dates entered. Please change your start date or end date. ");
 	}
 
 }
