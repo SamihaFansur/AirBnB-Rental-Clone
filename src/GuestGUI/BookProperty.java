@@ -785,7 +785,7 @@ public class BookProperty extends JFrame {
 				Boolean datesOvelapWithExistingBookings = checkingForOverlappingBookingDates(userStartDate, userEndDate, startDateFromBookingTable, endDateFromBookingTable);
 				
 				
-				if (datesOvelapWithExistingBookings || (bookingStatus.equals("Accepted"))) {
+				if (datesOvelapWithExistingBookings && (bookingStatus.equals("Accepted"))) {
 					provisionalBookingPossible = false;
 					System.out.println("breaking out of the loop because a booking between these dates already exists");
 					break;
