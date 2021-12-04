@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -67,12 +68,15 @@ public class Bookings extends javax.swing.JFrame {
 		Connection connection = getConnection();
 		if (mainModule.userState == USER.GUEST) {
 
-			String query = "SELECT * FROM `Booking` where guest_id=" + Id;
-			Statement st;
-			ResultSet rs;
+			
 			try {
-				st = connection.createStatement();
-				rs = st.executeQuery(query);
+				String query = "SELECT * FROM `Booking` where guest_id=? and provisional!=?";
+				PreparedStatement st  = connection.prepareStatement(query);
+				st.setInt(1, model.getGuestId());
+				st.setString(2, "Pending");
+				
+				ResultSet rs = st.executeQuery();
+				
 				BookingObject bookings;
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
@@ -83,15 +87,16 @@ public class Bookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return bookingsList;
+			//return bookingsList;
 
-		} else {
-			String query = "SELECT * FROM `Booking` where host_id=" + Id;
-			Statement st;
-			ResultSet rs;
+		} else if(mainModule.userState == USER.HOST) {
 			try {
-				st = connection.createStatement();
-				rs = st.executeQuery(query);
+				String query = "SELECT * FROM `Booking` where host_id=? and provisional!=?";
+				PreparedStatement st = connection.prepareStatement(query);
+				st.setInt(1, model.getHostId());
+				st.setString(2, "Pending");
+
+				ResultSet rs = st.executeQuery();
 				BookingObject bookings;
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
@@ -102,8 +107,10 @@ public class Bookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return bookingsList;
+			//return bookingsList;
 		}
+		
+		return bookingsList;
 	}
 
 	// Display Data In JTable

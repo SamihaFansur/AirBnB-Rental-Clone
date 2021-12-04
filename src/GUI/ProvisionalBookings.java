@@ -243,12 +243,52 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 				}
 			}
 		});
+
 		
-		JButton acceptButton = new JButton("Accept");
+		acceptButton = new JButton("Accept");
 		acceptButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		acceptButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mainModule.userState == USER.HOST) {
+					//get the booking id
+					//update value in prov col form pending to accept
+					//
+					try {
+					connection = ConnectionManager.getConnection();
+					
+					int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
+					System.out.println("BOOKING ID BEING ACCEPTED = "+bookingID);
+					
+					String acceptBooking = "update Booking set provisional=? where booking_id=?";
+					PreparedStatement acceptingBooking = connection.prepareStatement(acceptBooking);
+					acceptingBooking.setString(1, "Accept");
+					acceptingBooking.setInt(2, bookingID);
+
+					acceptingBooking.executeUpdate();
+
+
+
+					}catch(Exception e1) {
+						e1.printStackTrace();
+						
+					}
+
+
+					
+					
+				} else if(mainModule.userState == USER.GUEST) {
+					//error msg or smth
+				}
+			}
+		});
+
 		
 		declineButton = new JButton("Decline");
 		declineButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		
+		
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
@@ -385,6 +425,8 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	private static int propertyId;
 	private  int id;
 	private JButton declineButton;
+	private JButton acceptButton;
+	private Connection connection;
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
