@@ -13,12 +13,12 @@ public class BookingObject {
 	private int host_id;
 	private int guest_id;
 	private int review_id;
-	private boolean provisional;
+	private String provisional;
 	private Double totalPrice;
 	private String startDate;
 	private String endDate;
 
-	public BookingObject(int booking_id, int property_id, int host_id, int guest_id, boolean provisional,
+	public BookingObject(int booking_id, int property_id, int host_id, int guest_id, String provisional,
 			Double totalPrice, String startDate, String endDate) {
 		this.booking_id = booking_id;
 		this.property_id = property_id;
@@ -50,7 +50,7 @@ public class BookingObject {
 		return review_id;
 	}
 
-	public boolean getProvisional() {
+	public String getProvisional() {
 		return provisional;
 	}
 

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -63,50 +64,75 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 	// get a list of users from mysql database
 	public ArrayList<BookingObject> getBookingsList() {
+		System.out.println("1");
 
 		ArrayList<BookingObject> bookingsList = new ArrayList<>();
 		Connection connection = getConnection();
+		System.out.println("2");
+		if (mainModule.userState == USER.HOST) {			
+			System.out.println("3");
+			try {		
+			
 
-		if (mainModule.userState == USER.HOST) {
+				connection = ConnectionManager.getConnection();
 
-			String query = "SELECT * FROM `Booking` where host_id=" + Id + " and provisional=true";
-			Statement st;
-			ResultSet rs;
+				
+				
+				String query = "select * from Booking where host_id=? and provisional=?";
 
-			try {
-				st = connection.createStatement();
-				rs = st.executeQuery(query);
 				BookingObject bookings;
+				
+    			PreparedStatement st = connection.prepareStatement(query);
+				st.setInt(1, model.getHostId());
+				st.setString(2, "Pending");
+
+				ResultSet rs = st.executeQuery();
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
-							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
+							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getString("provisional"),
 							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
 					bookingsList.add(bookings);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return bookingsList;
+			//return bookingsList;
 
-		} else {
-			String query = "SELECT * FROM `Booking` where guest_id=" + Id + " and provisional=true";
-			Statement st;
-			ResultSet rs;
-			try {
-				st = connection.createStatement();
-				rs = st.executeQuery(query);
+		} else if (mainModule.userState == USER.GUEST){			
+			System.out.println("a");	
+			
+			try {		
+				System.out.println("b");
+				String query = "select * from Booking where guest_id=? and provisional=?";
+
+				connection = ConnectionManager.getConnection();
+
+				
 				BookingObject bookings;
-				while (rs.next()) {
-					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
-							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
-							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
+				PreparedStatement st = connection.prepareStatement(query);
+				System.out.println("c");
+				st.setInt(1, model.getGuestId());
+				System.out.println("omggggggggggg = "+model.getGuestId());
+				st.setString(2, "Pending");
+				System.out.println("d");
+				
+				System.out.println(st);
+				ResultSet r = st.executeQuery();
+				
+				System.out.println("e");
+			
+				while (r.next()) {
+					bookings = new BookingObject(r.getInt("booking_id"), r.getInt("property_id"),
+							r.getInt("host_id"), r.getInt("guest_id"), r.getString("provisional"),
+							r.getDouble("totalPrice"), r.getString("startDate"), r.getString("endDate"));
 					bookingsList.add(bookings);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return bookingsList;
+			//return bookingsList;
 		}
+		return bookingsList;
 	}
 
 	// Display Data In JTable
@@ -301,9 +327,10 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	public void initializeProvisionalBookings(int fId, int id) {
+	public void initializeProvisionalBookings(int fId, int id_id) {
 		propertyId = fId;
-		Id = id;
+		id = id_id;
+		System.out.println("ID IN INIT FUNC = "+id);
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -343,12 +370,20 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable jTable_Display_Reviews;
 	private javax.swing.JTextField jTextField_booking_id;
+	private javax.swing.JTextField jTextField_property_id;
+	private javax.swing.JTextField jTextField_host_id;
+	private javax.swing.JTextField jTextField_guest_id;
+	private javax.swing.JTextField jTextField_provisional;
+	private javax.swing.JTextField jTextField_totalPrice;
+	private javax.swing.JTextField jTextField_startDate;
+	private javax.swing.JTextField jTextField_endDate;
+
 	private javax.swing.JTextField jTextField_sleeping_id;
 	private javax.swing.JTextField jTextField_bathing_id;
 	private javax.swing.JTextField jTextField_living_id;
 	private JButton backButton;
 	private static int propertyId;
-	private static int Id;
+	private  int id;
 	private JButton declineButton;
 }
 

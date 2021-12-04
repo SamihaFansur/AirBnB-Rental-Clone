@@ -180,7 +180,13 @@ public class Controller extends MainModule {
 			model.setGuestId(id);
 			bookProperty.initializeBookProperty(facilitiesId, id);
 		} else if (mainModule.editPropertyState == EDITPROPERTY.PROVISIONAL_BOOKINGS) {
-			model.setHostId(id);
+			if(mainModule.userState == USER.HOST) {
+				model.setHostId(id);
+			}else if(mainModule.userState == USER.HOST) {
+				model.setGuestId(id);
+			}
+			
+			System.out.println("id in controller = "+id);
 			provisionalBookings.initializeProvisionalBookings(facilitiesId, id);
 		} else if (mainModule.userState == USER.GUEST && mainModule.editPropertyState == EDITPROPERTY.REVIEW) {
 			model.setHostId(id);

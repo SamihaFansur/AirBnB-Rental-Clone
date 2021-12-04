@@ -76,7 +76,7 @@ public class Bookings extends javax.swing.JFrame {
 				BookingObject bookings;
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
-							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
+							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getString("provisional"),
 							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
 					bookingsList.add(bookings);
 				}
@@ -95,7 +95,7 @@ public class Bookings extends javax.swing.JFrame {
 				BookingObject bookings;
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
-							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getBoolean("provisional"),
+							rs.getInt("host_id"), rs.getInt("guest_id"), rs.getString("provisional"),
 							rs.getDouble("totalPrice"), rs.getString("startDate"), rs.getString("endDate"));
 					bookingsList.add(bookings);
 				}
