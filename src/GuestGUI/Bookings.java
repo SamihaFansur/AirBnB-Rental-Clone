@@ -337,18 +337,23 @@ public class Bookings extends javax.swing.JFrame {
 
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
+		jLabel1.setBounds(35, 118, 113, 23);
 		jLabel2 = new javax.swing.JLabel();
+		jLabel2.setBounds(35, 185, 110, 23);
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
 		jLabel7 = new javax.swing.JLabel();
 
 		jTextField_booking_id = new javax.swing.JTextField();
+		jTextField_booking_id.setBounds(158, 118, 84, 35);
 		jTextField_property_id = new javax.swing.JTextField();
+		jTextField_property_id.setBounds(158, 185, 84, 34);
 		jTextField_sleeping_id = new javax.swing.JTextField();
 		jTextField_bathing_id = new javax.swing.JTextField();
 		jTextField_living_id = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setBounds(252, 62, 584, 462);
 		jTable_Display_Bookings = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -383,7 +388,7 @@ public class Bookings extends javax.swing.JFrame {
 		
 		jTable_Display_Bookings
 				.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] { 
-						"Booking Id", "Property Id", "Sercive Charge (£)", "Cleaning Charge (£)",
+						"Booking Id", "Property Id", "Service Charge (£)", "Cleaning Charge (£)",
 						"Overall Price (£)", "Total Nights", "Provisional", "Start Date", "End Date" }));
 
 		jTable_Display_Bookings.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -395,6 +400,7 @@ public class Bookings extends javax.swing.JFrame {
 		jScrollPane1.setViewportView(jTable_Display_Bookings);
 
 		backButton = new JButton("Back");
+		backButton.setBounds(35, 21, 91, 29);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -413,6 +419,7 @@ public class Bookings extends javax.swing.JFrame {
 		});
 
 		JButton reviewButton = new JButton("Review");
+		reviewButton.setBounds(83, 279, 91, 29);
 		reviewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -428,6 +435,7 @@ public class Bookings extends javax.swing.JFrame {
 
 		
 		confidentialInformationButton = new JButton("View Confidential Info");
+		confidentialInformationButton.setBounds(35, 347, 201, 29);
 		confidentialInformationButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		confidentialInformationButton.addActionListener(new ActionListener() {
 			@Override
@@ -655,72 +663,27 @@ public class Bookings extends javax.swing.JFrame {
 				
 			}
 		});
-		
-		
-		
-		// Adds all of the GUI objects to the frame and panels.
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap(35, Short.MAX_VALUE)
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(jLabel1)
-										.addComponent(jLabel2))
-									.addGap(61)
-									.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-										.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-									.addGap(112)
-									.addComponent(reviewButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-									.addGap(47)
-									.addComponent(confidentialInformationButton, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)))
-							.addGap(18)
-							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		jPanel1Layout.setVerticalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addGap(62)
-					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(44))
-				.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					.addGap(21)
-					.addComponent(backButton)
-					.addGap(64)
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLabel1))
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGap(156)
-							.addComponent(reviewButton))
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGap(32)
-							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jLabel2)
-								.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))))
-					.addGap(65)
-					.addComponent(confidentialInformationButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(107, Short.MAX_VALUE))
-		);
-		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(jPanel1,
-				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
-						.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		jPanel1.setLayout(null);
+		jPanel1.add(backButton);
+		jPanel1.add(jLabel1);
+		jPanel1.add(jLabel2);
+		jPanel1.add(jTextField_booking_id);
+		jPanel1.add(jTextField_property_id);
+		jPanel1.add(reviewButton);
+		jPanel1.add(confidentialInformationButton);
+		jPanel1.add(jScrollPane1);
 		getContentPane().setLayout(layout);
 
 		pack();

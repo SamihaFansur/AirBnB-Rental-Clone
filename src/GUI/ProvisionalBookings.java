@@ -336,16 +336,19 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	private void initComponents() {
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
+		jLabel1.setBounds(26, 109, 113, 23);
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
 		jLabel7 = new javax.swing.JLabel();
 
 		jTextField_booking_id = new javax.swing.JTextField();
+		jTextField_booking_id.setBounds(159, 105, 91, 35);
 		jTextField_sleeping_id = new javax.swing.JTextField();
 		jTextField_bathing_id = new javax.swing.JTextField();
 		jTextField_living_id = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setBounds(260, 62, 599, 462);
 		jTable_Display_Reviews = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -375,7 +378,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 		jTable_Display_Reviews
 				.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] {
-						"Booking Id", "Property Id", "Sercive Charge (£)", "Cleaning Charge (£)",
+						"Booking Id", "Property Id", "Service Charge (£)", "Cleaning Charge (£)",
 						"Overall Price (£)", "Total Nights", "Provisional", "Start Date", "End Date" }));
 
 		jTable_Display_Reviews.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -388,6 +391,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 		//Button to return you to previous GUI page
 		backButton = new JButton("Back");
+		backButton.setBounds(33, 21, 91, 29);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -407,6 +411,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 		//Button to accept the provisional booking and update it to a booking
 		acceptButton = new JButton("Accept");
+		acceptButton.setBounds(78, 223, 91, 29);
 		acceptButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		acceptButton.addActionListener(new ActionListener() {
 			@Override
@@ -516,6 +521,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 		//Button to decline provisional booking and deltes it from the database
 		declineButton = new JButton("Decline");
+		declineButton.setBounds(78, 343, 91, 29);
 		declineButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		declineButton.addActionListener(new ActionListener() {
 			@Override
@@ -543,60 +549,23 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 				}
 			}
 		});
-		
-		// Adds all of the GUI objects to the frame and panels.
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap(33, Short.MAX_VALUE)
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jLabel1)
-									.addGap(61)
-									.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-									.addGap(95)
-									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(declineButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-										.addComponent(acceptButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))))
-							.addGap(18)
-							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		jPanel1Layout.setVerticalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGap(21)
-							.addComponent(backButton)
-							.addGap(55)
-							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jLabel1))
-							.addGap(105)
-							.addComponent(acceptButton)
-							.addGap(73)
-							.addComponent(declineButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addGap(62)
-							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(jPanel1,
-				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+		);
+		jPanel1.setLayout(null);
+		jPanel1.add(backButton);
+		jPanel1.add(jLabel1);
+		jPanel1.add(jTextField_booking_id);
+		jPanel1.add(declineButton);
+		jPanel1.add(acceptButton);
+		jPanel1.add(jScrollPane1);
 		getContentPane().setLayout(layout);
 
 		pack();
