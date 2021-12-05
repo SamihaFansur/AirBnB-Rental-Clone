@@ -294,7 +294,7 @@ public class Register extends JFrame {
 				passwordTextField.setText("");
 				houseNumberTextField.setText("");
 				streetNameTextField.setText("");
-				cityComboBox.setSelectedItem("Bath");
+				cityComboBox.setSelectedItem("");
 				postcodeTextField.setText("");
 				accountTypeComboBox.setSelectedItem("Host");
 			}

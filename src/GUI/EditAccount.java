@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -36,7 +38,7 @@ public class EditAccount extends JFrame {
 	private JFrame frame;
 	private JTextField firstNameTextField;
 	private JTextField surnameTextField;
-	private JTextField passwordTextField;
+	private JPasswordField passwordTextField;
 	private JButton addEditPropertyButton;
 	private JComboBox titleComboBox;
 
@@ -46,8 +48,14 @@ public class EditAccount extends JFrame {
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
-	private JTextField newPasswordTextField;
-	private JTextField confirmNewPasswordTextField;
+	private JPasswordField newPasswordTextField;
+	private JPasswordField confirmNewPasswordTextField;
+
+	private boolean validateFirstNameInput = false;
+	private boolean validateSurnameInput = false;
+	private boolean validateOldPassword = false;
+	private boolean checkNewPasswordFieldMatch = false;
+	private boolean checkNewPasswordStrength = false;
 
 	public EditAccount(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
@@ -88,7 +96,7 @@ public class EditAccount extends JFrame {
 
 			// Gets the preexisting information of the account being edited from the
 			// database.
-			String selectAccountRecord = "SELECT title, firstName," + " surname, password from Account where email = ?";
+			String selectAccountRecord = "SELECT title, firstName, surname from Account where email = ?";
 
 			PreparedStatement selectingAccountValues = connection.prepareStatement(selectAccountRecord);
 			selectingAccountValues.setString(1, model.getEmail());
@@ -99,7 +107,6 @@ public class EditAccount extends JFrame {
 				title = rs.getString("title");
 				firstName = rs.getString("firstName");
 				surname = rs.getString("surname");
-				password = rs.getString("password");
 			}
 			connection.close();
 		} catch (Exception e) {
@@ -142,7 +149,7 @@ public class EditAccount extends JFrame {
 		passwordLabel.setBounds(103, 362, 132, 34);
 		editACcountPanel.add(passwordLabel);
 
-		passwordTextField = new JTextField(password);
+		passwordTextField = new JPasswordField(password);
 		passwordTextField.setColumns(10);
 		passwordTextField.setBounds(245, 362, 274, 34);
 		editACcountPanel.add(passwordTextField);
@@ -152,16 +159,29 @@ public class EditAccount extends JFrame {
 		addEditPropertyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean validateFirstNameInput = validateName(firstNameTextField.getText());
-				boolean validateSurnameInput = validateName(surnameTextField.getText());
+
+				validateFirstNameInput = validateName(firstNameTextField.getText());
+				validateSurnameInput = validateName(surnameTextField.getText());
+				validateOldPassword = checkOldPassword(passwordTextField.getText());
+				checkNewPasswordFieldMatch = false;
+				checkNewPasswordStrength = false;
+
+				if ((newPasswordTextField.getText()).matches(confirmNewPasswordTextField.getText())) {
+					checkNewPasswordFieldMatch = true;
+					if (checkNewPasswordStrength(newPasswordTextField.getText())) {
+						checkNewPasswordStrength = true;
+					}
+				}
 				// Checks if the information in the text fields is valid
-				if (validateFirstNameInput && validateSurnameInput) {
+				if (validateFirstNameInput && validateSurnameInput && validateOldPassword && checkNewPasswordFieldMatch
+						&& checkNewPasswordStrength) {
 					// Sets the values of the edited Account using the information in
 					// the textFields
+
 					model.setTitle(titleComboBox.getSelectedItem().toString());
 					model.setFirstName(firstNameTextField.getText());
 					model.setSurname(surnameTextField.getText());
-					model.setPassword(passwordTextField.getText());
+					model.setPassword(newPasswordTextField.getText());
 					// Calls the function to edit the Account
 					addEditAccountDetails();
 					frame.dispose();
@@ -223,21 +243,21 @@ public class EditAccount extends JFrame {
 
 		titleComboBox.setBounds(245, 180, 276, 23);
 		editACcountPanel.add(titleComboBox);
-		
+
 		JLabel newPasswordLabel = new JLabel("New Password:");
 		newPasswordLabel.setBounds(103, 419, 93, 34);
 		editACcountPanel.add(newPasswordLabel);
-		
-		newPasswordTextField = new JTextField((String) null);
+
+		newPasswordTextField = new JPasswordField((String) null);
 		newPasswordTextField.setColumns(10);
 		newPasswordTextField.setBounds(245, 419, 274, 34);
 		editACcountPanel.add(newPasswordTextField);
-		
+
 		JLabel confirmNewPasswordLabel = new JLabel("Confirm New Password:");
 		confirmNewPasswordLabel.setBounds(103, 483, 132, 34);
 		editACcountPanel.add(confirmNewPasswordLabel);
-		
-		confirmNewPasswordTextField = new JTextField((String) null);
+
+		confirmNewPasswordTextField = new JPasswordField((String) null);
 		confirmNewPasswordTextField.setColumns(10);
 		confirmNewPasswordTextField.setBounds(245, 483, 274, 34);
 		editACcountPanel.add(confirmNewPasswordTextField);
@@ -259,24 +279,78 @@ public class EditAccount extends JFrame {
 
 	// Displays error when user input invalid information into the textFields
 	public void displayError() {
-		JOptionPane.showMessageDialog(this, "Invalid input, please try again.");
+		ArrayList<String> arlist = new ArrayList<>();
+		if (!validateFirstNameInput) {
+			arlist.add(" First name input is invalid");
+		}
+		if (!validateSurnameInput) {
+			arlist.add(" Surname input is invalid");
+		}
+		if (!validateOldPassword) {
+			arlist.add("Old password is incorrect");
+		}
+		if (!checkNewPasswordFieldMatch) {
+			arlist.add("New password fields mismatch");
+		}
+		if (!checkNewPasswordStrength) {
+			arlist.add(
+					" Password is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
+							+ "and has more than 8 characters.");
+		}
+		JOptionPane.showMessageDialog(this, arlist);
+	}
+
+	public boolean checkOldPassword(String password) {
+		boolean passwordCorrect = false;
+		try {
+			String oldpasswordsalt = "";
+			connection = ConnectionManager.getConnection();
+			String getSaltQuery = "SELECT salt from Account where email = ?";
+			PreparedStatement saltQuery = connection.prepareStatement(getSaltQuery);
+			saltQuery.setString(1, model.getEmail());
+			ResultSet rsSalt = saltQuery.executeQuery();
+			while (rsSalt.next()) {
+				oldpasswordsalt = rsSalt.getString("salt");
+			}
+			String securePassword = Password.get_SHA_512_SecurePassword(passwordTextField.getText(), oldpasswordsalt);
+			String query = "Select password from Account where email=?";
+			PreparedStatement passwordQuery = connection.prepareStatement(query);
+			passwordQuery.setString(1, model.getEmail());
+			ResultSet rs = passwordQuery.executeQuery();
+			if (rs.next()) {
+				if (securePassword.matches(rs.getString("password"))){
+					passwordCorrect = true;
+				} else {
+					passwordCorrect = false;
+				}
+	
+			}
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+		return passwordCorrect;
+
 	}
 
 	// Updates the database with the new information for the account
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
-//			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = AES_ENCRYPT(?,'key') where email = ?";
+
+			String salt = Password.getSalt();
+			String securePassword = Password.get_SHA_512_SecurePassword(model.getPassword(), salt);
 
 			// Updates account with new user information in the database
-			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = ? where email = ?";
+			String updateAccountQuery = "UPDATE Account SET title = ?, firstName = ?, surname = ?, password = ?, salt = ? WHERE email = ?";
 
 			PreparedStatement updateAccount = connection.prepareStatement(updateAccountQuery);
 			updateAccount.setString(1, model.getTitle());
 			updateAccount.setString(2, model.getFirstName());
 			updateAccount.setString(3, model.getSurname());
-			updateAccount.setString(4, model.getPassword());
-			updateAccount.setString(5, model.getEmail());
+			updateAccount.setString(4,securePassword);
+			updateAccount.setString(5, salt);
+			updateAccount.setString(6, model.getEmail());
 
 			int i = updateAccount.executeUpdate();
 			if (i > 0) {
@@ -289,6 +363,46 @@ public class EditAccount extends JFrame {
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
+		}
+	}
+
+	private static boolean checkNewPasswordStrength(String password) {
+		// https://www.javacodeexamples.com/check-password-strength-in-java-example/668
+		int passwordRating = 0;
+
+		if (password.length() < 8) {
+			passwordRating = 0;
+		} else {
+			passwordRating += 1;
+		}
+		/*
+		 * if password contains 1 digit add 1 to rating
+		 */
+		if (password.matches("(?=.*[0-9]).*"))
+			passwordRating += 1;
+
+		// if password contains 1 lower case letter, add 1 to rating
+		if (password.matches("(?=.*[a-z]).*"))
+			passwordRating += 1;
+
+		/*
+		 * if password contains 1 upper case letter then add 1 to rating.
+		 */
+
+		if (password.matches("(?=.*[A-Z]).*"))
+			passwordRating += 1;
+
+		/*
+		 * if password contains 1 special character add 1 to rating.
+		 */
+		if (password.matches("(?=.*[~!@#$%^&*()_-]).*"))
+			passwordRating += 1;
+
+		// if passwordRating is less than 5, then it is not strong enough
+		if (passwordRating < 5) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 
