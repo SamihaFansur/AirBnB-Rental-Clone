@@ -599,8 +599,14 @@ public class Properties extends javax.swing.JFrame {
 			DefaultTableModel model = (DefaultTableModel) jTable_Display_Properties.getModel();
 			model.setRowCount(0);
 			Show_Users_In_JTable();
+			jTextField_property_id.setText("");
 
-			JOptionPane.showMessageDialog(null, "Data deleted Succefully");
+			jTextField_Description.setText("");
+
+			jTextField_shortName.setText("");
+
+			jTextField_guestCapacity.setText("");
+			JOptionPane.showMessageDialog(null, "Data deleted Successfully");
 			connection.close();
 
 		} catch (Exception e) {

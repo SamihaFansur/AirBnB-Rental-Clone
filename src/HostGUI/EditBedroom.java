@@ -7,8 +7,13 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,6 +43,7 @@ public class EditBedroom extends JFrame {
 
 	private JButton addBedType;
 	private JTable table = new JTable();
+	private javax.swing.JTable jTable_Display_Properties;
 
 	private JTextField bedroomId;
 	private JTextField bed1People;
@@ -58,6 +64,23 @@ public class EditBedroom extends JFrame {
 		frame.dispose();
 	}
 
+	// get the connection
+
+	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
+	private static String username = "team018";
+	private static String pwd = "7854a03f";
+
+	public Connection getConnection() {
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(serverName, username, pwd);
+			return connection;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	/**
 	 * Create the application.
 	 */
@@ -67,13 +90,48 @@ public class EditBedroom extends JFrame {
 	private MainModule mainModule;
 
 	public EditBedroom(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditBedroom();
+
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
 
+	// Creates a list of property objects using the information in the Property
+	// table
+	// within the database
+	public ArrayList<Bedroom> getUsersList() {
+		ArrayList<Bedroom> Bedroom = new ArrayList<>();
+		Connection connection = getConnection();
+		int sleepid = 0;
+		String getSleepingId = "SELECT sleeping_id FROM Facilities WHERE facilities_id = " + facilitiesidAfter;
+		try {
+			PreparedStatement sleeping = connection.prepareStatement(getSleepingId);
+			ResultSet getsleep = sleeping.executeQuery();
+			while (getsleep.next()) {
+				sleepid = getsleep.getInt("sleeping_id");
+			}
+			
+			String query = "SELECT * FROM `Sleeping_BedType` WHERE sleeping_id = ?" ;
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, sleepid);
+			ResultSet rs = st.executeQuery();
+			Bedroom bedroom;
+			while (rs.next()) {
+				bedroom = new Bedroom(rs.getInt("sleeping_id"), rs.getInt("bedType_id"), rs.getInt("peopleInBedroom"),
+						rs.getBoolean("bed1"), rs.getString("bed1ChoiceField"),rs.getInt("bed1People"), rs.getBoolean("bed2"),
+						rs.getString("bed2ChoiceField"), rs.getInt("bed2People"));
+				Bedroom.add(bedroom);
+			}
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Bedroom;
+	}
+
 	/**
+	 * {
+	 * 
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeEditBedroom(int facilitiesId, int id) {
@@ -103,7 +161,19 @@ public class EditBedroom extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(colomns);
 		table.setModel(model);
-
+		ArrayList<Bedroom> list = getUsersList();
+		Object[] row = new Object[7];
+		for (Bedroom element : list) {
+			row[0] = element.getbedType_id();
+			row[1] = element.getbed1();
+			row[2] = element.getbed1ChoiceField();
+			row[3] = element.getbed1People();
+			row[4] = element.getbed2();
+			row[5] = element.getbed2ChoiceField();
+			row[6] = element.getbed2People();
+			model.addRow(row);
+	
+		}
 		bedroomId = new JTextField();
 		bedroomId.setBounds(146, 228, 133, 20);
 		editBedroomPanel.add(bedroomId);
@@ -143,7 +213,7 @@ public class EditBedroom extends JFrame {
 		scrollPane.setBounds(67, 470, 464, 115);
 		editBedroomPanel.add(scrollPane);
 
-		String bedTypes[] = { "King", "Bunk", "Single", "Double" };
+		String bedTypes[] = {"King", "Bunk", "Single", "Double" };
 
 		BedType1ComboBox = new JComboBox(bedTypes);
 		BedType1ComboBox.setBounds(146, 289, 133, 22);
@@ -208,9 +278,9 @@ public class EditBedroom extends JFrame {
 				// Delete form after adding data
 				bedroomId.setText("");
 				Bed1RadioButton.setSelected(false);
-				BedType1ComboBox.setSelectedItem("King");
+				BedType1ComboBox.setSelectedItem("");
 				bed1People.setText("");
-				BedType1ComboBox.setSelectedItem("King");
+				BedType1ComboBox.setSelectedItem("");
 				Bed2RadioButton.setSelected(false);
 				bed2People.setText("");
 			}
