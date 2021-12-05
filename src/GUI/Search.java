@@ -19,6 +19,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -114,7 +115,87 @@ public class Search extends javax.swing.JFrame {
 			return null;
 		}
 	}
+	public Boolean validateDate(int day, int month, int year) {
 
+		boolean dateAccepted = false;
+		if (year == 2022 && month >= 1 && month <= 12 && day >= 1) {
+
+			switch (month) {
+			// jan
+			case 1:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+			// feb
+			case 2:
+				if (day <= 28)
+					dateAccepted = true;
+				break;
+			// march
+			case 3:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+			// april
+			case 4:
+				if (day <= 30)
+					dateAccepted = true;
+				break;
+			// may
+			case 5:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+			// june
+			case 6:
+				if (day <= 30)
+					dateAccepted = true;
+
+				break;
+			// july
+			case 7:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+			// aug
+			case 8:
+				if (day <= 31)
+					dateAccepted = true;
+
+				break;
+			// sept
+			case 9:
+				if (day <= 30)
+					dateAccepted = true;
+				break;
+			// oct
+			case 10:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+			// nov
+			case 11:
+				if (day <= 30)
+					dateAccepted = true;
+				break;
+			// dec
+			case 12:
+				if (day <= 31)
+					dateAccepted = true;
+				break;
+
+			default:
+				return dateAccepted = false;
+			}
+
+		} else {
+			return dateAccepted = false;
+		}
+
+		return dateAccepted;
+
+	}
+	
 	// get a list of properties from mysql database
 	public ArrayList<SearchObject> getSearchList() {
 		Connection connection = getConnection();
@@ -1176,7 +1257,59 @@ public class Search extends javax.swing.JFrame {
 				// later in the query)
 				// if end date is empty set to 31/12/2022
 				// location is not chosen then set to an empty string: ""
+				Boolean startDateIsEmpty = startDateTextField.getText().isBlank();
+				Boolean endDateIsEmpty = endDateTextField.getText().isBlank();
+				if (!startDateIsEmpty && !endDateIsEmpty) {
+					// checking date format:
+					Boolean startDateValidation = startDateTextField.getText().matches("\\d{2}/\\d{2}/\\d{4}");
+					Boolean endDateValidation = endDateTextField.getText().matches("\\d{2}/\\d{2}/\\d{4}");
 
+					// checking if date matches DATE object format
+					if (startDateValidation && endDateValidation) {
+
+						Date formattedStartDate = null;
+						Date formattedEndDate = null;
+						try {
+							formattedStartDate = sourceFormat.parse(startDateTextField.getText());
+							formattedEndDate = sourceFormat.parse(endDateTextField.getText());
+
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
+						Boolean timeCheck = formattedStartDate.before(formattedEndDate);
+
+						// checking if dates are in the year 2022
+						String startDateParts[] = startDateTextField.getText().split("/");
+						String endDateParts[] = endDateTextField.getText().split("/");
+
+						// Getting day, month, and year for start date:
+						int startDay = Integer.parseInt(startDateParts[0]);
+						int startMonth = Integer.parseInt(startDateParts[1]);
+						int startYear = Integer.parseInt(startDateParts[2]);
+
+						// getting day, month, and year for end date:
+						int endDay = Integer.parseInt(endDateParts[0]);
+						int endMonth = Integer.parseInt(endDateParts[1]);
+						int endYear = Integer.parseInt(endDateParts[2]);
+
+						// call function to validate the date:
+						Boolean startDateAccepted = validateDate(startDay, startMonth, startYear);
+						Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
+
+						// finally checking if the start time is less than the end time:
+						if (!timeCheck || !startDateAccepted || !endDateAccepted) {
+							displayInvalidStartEndTimeMessage();
+						}
+					} else {
+						displayInvalidDateMessage();
+
+					}
+
+				} else {
+					displayEmptyStringsMessage();
+
+				}
+				
 				// setting min price
 				if (minPriceTextField.getText().isEmpty()) {
 					model.setMinPPN(0);
@@ -1420,6 +1553,19 @@ public class Search extends javax.swing.JFrame {
 		}
 		getContentPane().setLayout(layout);
 		pack();
+	}
+	public void displayInvalidDateMessage() {
+		JOptionPane.showMessageDialog(this,
+				"Please type dates in the format DD/MM/YYYY.");
+	}
+
+	public void displayEmptyStringsMessage() {
+		JOptionPane.showMessageDialog(this, "Please do not leave fields empty");
+	}
+
+	public void displayInvalidStartEndTimeMessage() {
+		JOptionPane.showMessageDialog(this,
+				"The start date is after end date or the dates you have picked are not in 2022. ");
 	}
 	// show jtable row data in jtextfields in the mouse clicked event
 	private void jTable_Display_SearchMouseClicked(java.awt.event.MouseEvent evt) {
