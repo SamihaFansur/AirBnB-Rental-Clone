@@ -163,25 +163,24 @@ public class Facilities extends javax.swing.JFrame {
 
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
-		jLabel2 = new javax.swing.JLabel();
-		jLabel3 = new javax.swing.JLabel();
-		jLabel4 = new javax.swing.JLabel();
+		jLabel1.setBounds(33, 130, 98, 23);
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
 		jLabel7 = new javax.swing.JLabel();
 
 		jTextField_facilities_id = new javax.swing.JTextField();
-		jTextField_utility_id = new javax.swing.JTextField();
-		jTextField_outdoors_id = new javax.swing.JTextField();
-		jTextField_kitchen_id = new javax.swing.JTextField();
+		jTextField_facilities_id.setBounds(141, 126, 129, 35);
 		jTextField_sleeping_id = new javax.swing.JTextField();
 		jTextField_bathing_id = new javax.swing.JTextField();
 		jTextField_living_id = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setBounds(294, 68, 455, 429);
 		jTable_Display_Facilities = new javax.swing.JTable();
 		jButton_Update = new javax.swing.JButton();
+		jButton_Update.setBounds(93, 266, 119, 46);
 		jButton_Delete = new javax.swing.JButton();
+		jButton_Delete.setBounds(93, 383, 119, 46);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,15 +188,6 @@ public class Facilities extends javax.swing.JFrame {
 
 		jLabel1.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel1.setText("Facility ID:");
-
-		jLabel2.setFont(new java.awt.Font("Verdana", 0, 18));
-		jLabel2.setText("Utility:");
-
-		jLabel3.setFont(new java.awt.Font("Verdana", 0, 18));
-		jLabel3.setText("Outdoors:");
-
-		jLabel4.setFont(new java.awt.Font("Verdana", 0, 18));
-		jLabel4.setText("Kitchen");
 
 		jLabel5.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel5.setText("Sleeping:");
@@ -209,12 +199,6 @@ public class Facilities extends javax.swing.JFrame {
 		jLabel7.setText("Living:");
 
 		jTextField_facilities_id.setFont(new java.awt.Font("Verdana", 0, 14));
-
-		jTextField_utility_id.setFont(new java.awt.Font("Verdana", 0, 14));
-
-		jTextField_outdoors_id.setFont(new java.awt.Font("Verdana", 0, 14));
-
-		jTextField_kitchen_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_sleeping_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
@@ -258,6 +242,7 @@ public class Facilities extends javax.swing.JFrame {
 
 		//Button for returning to the previous GUI page
 		backButton = new JButton("Back");
+		backButton.setBounds(33, 21, 91, 29);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -271,78 +256,27 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 
-		// Adds all of the GUI objects to the frame and panels.
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
-								.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout
-												.createParallelGroup(Alignment.LEADING).addComponent(jLabel2)
-												.addComponent(jLabel4).addComponent(jLabel3).addComponent(jLabel1))
-										.addGap(10)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-												.addComponent(jTextField_facilities_id, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_utility_id, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_outdoors_id, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_kitchen_id, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup().addGap(99).addGroup(jPanel1Layout
-										.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(jButton_Update, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(jButton_Delete, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-								.addGap(24).addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409,
-										GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap()));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(21).addComponent(backButton).addGap(18)
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_facilities_id, GroupLayout.PREFERRED_SIZE, 35,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel1))
-										.addGap(11)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jLabel2).addComponent(jTextField_utility_id,
-														GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_outdoors_id, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel3))
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_kitchen_id, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel4))
-										.addGap(69)
-										.addComponent(jButton_Update, GroupLayout.PREFERRED_SIZE, 46,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(jButton_Delete, GroupLayout.PREFERRED_SIZE, 46,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(45)))));
-		jPanel1.setLayout(jPanel1Layout);
-
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 759, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		jPanel1.setLayout(null);
+		jPanel1.add(backButton);
+		jPanel1.add(jLabel1);
+		jPanel1.add(jTextField_facilities_id);
+		jPanel1.add(jButton_Update);
+		jPanel1.add(jButton_Delete);
+		jPanel1.add(jScrollPane1);
 
 		pack();
 	}
@@ -416,9 +350,6 @@ public class Facilities extends javax.swing.JFrame {
 	private javax.swing.JButton jButton_Delete;
 	private javax.swing.JButton jButton_Update;
 	private javax.swing.JLabel jLabel1;
-	private javax.swing.JLabel jLabel2;
-	private javax.swing.JLabel jLabel3;
-	private javax.swing.JLabel jLabel4;
 	private javax.swing.JLabel jLabel5;
 	private javax.swing.JLabel jLabel6;
 	private javax.swing.JLabel jLabel7;
@@ -426,9 +357,6 @@ public class Facilities extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable jTable_Display_Facilities;
 	private javax.swing.JTextField jTextField_facilities_id;
-	private javax.swing.JTextField jTextField_utility_id;
-	private javax.swing.JTextField jTextField_outdoors_id;
-	private javax.swing.JTextField jTextField_kitchen_id;
 	private javax.swing.JTextField jTextField_sleeping_id;
 	private javax.swing.JTextField jTextField_bathing_id;
 	private javax.swing.JTextField jTextField_living_id;
