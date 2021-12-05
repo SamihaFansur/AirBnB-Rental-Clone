@@ -305,6 +305,7 @@ public class AddProperty extends JFrame {
 
 		frame.setBounds(100, 100, 600, 800);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 

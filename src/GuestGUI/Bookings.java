@@ -358,6 +358,7 @@ public class Bookings extends javax.swing.JFrame {
 
 			@Override
 			public void run() {
+				setLocationRelativeTo(null);
 				new Bookings(mainModule, controller, model).setVisible(true);
 
 			}

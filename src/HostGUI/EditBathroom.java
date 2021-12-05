@@ -258,6 +258,7 @@ public class EditBathroom extends JFrame {
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -342,5 +343,3 @@ public class EditBathroom extends JFrame {
 		}
 	}
 }
-
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

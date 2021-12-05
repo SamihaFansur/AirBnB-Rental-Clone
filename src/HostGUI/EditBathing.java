@@ -154,6 +154,7 @@ public class EditBathing extends JFrame {
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 

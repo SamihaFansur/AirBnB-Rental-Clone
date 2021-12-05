@@ -485,7 +485,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 
 			@Override
 			public void run() {
-
+				setLocationRelativeTo(null);
 				new ProvisionalBookings(mainModule, controller, model).setVisible(true);
 
 			}

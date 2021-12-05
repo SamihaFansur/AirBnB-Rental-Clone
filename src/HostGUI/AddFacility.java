@@ -417,6 +417,7 @@ public class AddFacility extends JFrame {
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 	//Displays error message if user tries to add a facility that already exists in the property

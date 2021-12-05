@@ -405,7 +405,7 @@ public class Facilities extends javax.swing.JFrame {
 
 			@Override
 			public void run() {
-
+				setLocationRelativeTo(null);
 				new Facilities(mainModule, controller, model).setVisible(true);
 
 			}

@@ -412,7 +412,7 @@ public class Reviews extends javax.swing.JFrame {
 
 			@Override
 			public void run() {
-
+				setLocationRelativeTo(null);
 				new Reviews(mainModule, controller, model).setVisible(true);
 
 			}
