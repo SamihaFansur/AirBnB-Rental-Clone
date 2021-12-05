@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -49,7 +48,6 @@ public class BookProperty extends JFrame {
 	private MainModule mainModule;
 	private int idAfter;
 	private int propertyidAfter;
-
 	Connection connection = null;
 
 	private JTextField shortNameTextField;
@@ -183,22 +181,26 @@ public class BookProperty extends JFrame {
 		btnBookProperty.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-/*				Boolean startDateIsEmpty = startDateTextField.getText().isBlank();
+				Boolean startDateIsEmpty = startDateTextField.getText().isBlank();
 				Boolean endDateIsEmpty = endDateTextField.getText().isBlank();
 				if (!startDateIsEmpty && !endDateIsEmpty) {
 					// checking date format:
 					Boolean startDateValidation = startDateTextField.getText().matches("\\d{2}/\\d{2}/\\d{4}");
 					Boolean endDateValidation = endDateTextField.getText().matches("\\d{2}/\\d{2}/\\d{4}");
-					
+
 					// checking if date matches DATE object format
 					if (startDateValidation && endDateValidation) {
-						
-						// Date formattedEndDate = parseDate(endDate.getText());
-						// checking if start date < end date
-						// NOTE: cant do the following time check until dates are converted to date
-						// objects
+
+						Date formattedStartDate = null;
+						Date formattedEndDate = null;
+						try {
+							formattedStartDate = sourceFormat.parse(startDateTextField.getText());
+							formattedEndDate = sourceFormat.parse(endDateTextField.getText());
+
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
 						Boolean timeCheck = formattedStartDate.before(formattedEndDate);
-				
 
 						// checking if dates are in the year 2022
 						String startDateParts[] = startDateTextField.getText().split("/");
@@ -219,10 +221,9 @@ public class BookProperty extends JFrame {
 						Boolean endDateAccepted = validateDate(endDay, endMonth, endYear);
 
 						// finally checking if the start time is less than the end time:
-						if !(timeCheck && startDateAccepted && endDateAccepted) {
+						if (!timeCheck || !startDateAccepted || !endDateAccepted) {
 							displayInvalidStartEndTimeMessage();
 						}
-
 					} else {
 						displayInvalidDateMessage();
 
@@ -230,53 +231,57 @@ public class BookProperty extends JFrame {
 
 				} else {
 					displayEmptyStringsMessage();
+
 				}
-				
-*/				
-				//check if user is logged in first:
-				if(mainModule.userState == USER.ENQUIRER || mainModule.userState == USER.HOST) {
+				// check if user is logged in first:
+				if (mainModule.userState == USER.ENQUIRER || mainModule.userState == USER.HOST) {
 					displayMessageToLoginAsGuest();
-				}else if(mainModule.userState == USER.GUEST){
-					
-					// first check if start and end dates entered on this page are within start date and 
-					// end date entered on search page 
-					
+				} else if (mainModule.userState == USER.GUEST) {
+
+					// first check if start and end dates entered on this page are within start date
+					// and
+					// end date entered on search page
+
 					userStartDateForBooking = startDateTextField.getText();
 					userEndDateForBooking = endDateTextField.getText();
 					startDateFromSearch = model.getSD();
 					endDateFromSearch = model.getED();
-					
-					//checking if search dates overlap with input dates:
+
+					// checking if search dates overlap with input dates:
 					// this should be true to in order to add the booking
-					//Boolean datesWithinSearchCriteria = checkingForDatesOverlap(userStartDateForBooking,userEndDateForBooking,startDateFromSearch,endDateFromSearch);					
-					
+					// Boolean datesWithinSearchCriteria =
+					// checkingForDatesOverlap(userStartDateForBooking,userEndDateForBooking,startDateFromSearch,endDateFromSearch);
+
 					// checking if a booking already exists within the users dates
-					Boolean provisonalBookingIsPossible = checkForExistingBooking(userStartDateForBooking, userEndDateForBooking);
-					
-					//check if users start date and end date is between start date and end date for the chargbands
-					Boolean checkDatesAgaistChargebands = checkIfDatesExistInChargeband(userStartDateForBooking, userEndDateForBooking);
-					
-					
-					//System.out.println("booking dates within start&end dates from search: "+datesWithinSearchCriteria);
-					System.out.println("Is the BOOKING POSSIBLE???? "+provisonalBookingIsPossible);
-				
-					
-					// if the users start and end dates are within search start&end dates AND a booking doesnt already exists
+					Boolean provisonalBookingIsPossible = checkForExistingBooking(userStartDateForBooking,
+							userEndDateForBooking);
+
+					// check if users start date and end date is between start date and end date for
+					// the chargbands
+					Boolean checkDatesAgaistChargebands = checkIfDatesExistInChargeband(userStartDateForBooking,
+							userEndDateForBooking);
+
+					// System.out.println("booking dates within start&end dates from search:
+					// "+datesWithinSearchCriteria);
+					System.out.println("Is the BOOKING POSSIBLE???? " + provisonalBookingIsPossible);
+
+					// if the users start and end dates are within search start&end dates AND a
+					// booking doesnt already exists
 					// between these dates, then add the booking:
-					
+
 					if (checkDatesAgaistChargebands && provisonalBookingIsPossible) {
 						// add booking to the table
 						addBooking();
 						// show pane saying booking accepted
-						
-					}else{
+
+					} else {
 						displayMessageUnableToBook();
 					}
-					
+
 					System.out.println("GOT HERE");
 
 				}
-				
+
 			}
 		});
 		btnBookProperty.setBounds(195, 725, 237, 29);
@@ -809,11 +814,11 @@ public class BookProperty extends JFrame {
 	
 	public void displayInvalidDateMessage() {
 		JOptionPane.showMessageDialog(this,
-				"Please check entries for prices and dates. Prices should be numbers or decimals. Please type dates in the format DD/MM/YYYY.");
+				"Please type dates in the format DD/MM/YYYY.");
 	}
 
 	public void displayEmptyStringsMessage() {
-		JOptionPane.showMessageDialog(this, "All fields must be completed to add a chargeband");
+		JOptionPane.showMessageDialog(this, "Please do not leave fields empty");
 	}
 
 	public void displayInvalidStartEndTimeMessage() {
