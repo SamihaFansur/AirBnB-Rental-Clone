@@ -46,6 +46,8 @@ public class EditAccount extends JFrame {
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
+	private JTextField newPasswordTextField;
+	private JTextField confirmNewPasswordTextField;
 
 	public EditAccount(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
@@ -106,7 +108,7 @@ public class EditAccount extends JFrame {
 		}
 		// Objects for GUI are added to panel/frame
 		JLabel TitleLabel = new JLabel("Title:");
-		TitleLabel.setBounds(104, 268, 93, 34);
+		TitleLabel.setBounds(103, 174, 132, 34);
 		editACcountPanel.add(TitleLabel);
 
 		String titles[] = { "Mr", "Mrs", "Miss", "Ms", "Dr" };
@@ -119,30 +121,30 @@ public class EditAccount extends JFrame {
 		}
 		JComboBox titleComboBox = new JComboBox(titles);
 		JLabel firstNameLabel = new JLabel("First Name:");
-		firstNameLabel.setBounds(104, 336, 93, 34);
+		firstNameLabel.setBounds(103, 242, 93, 34);
 		editACcountPanel.add(firstNameLabel);
 
 		firstNameTextField = new JTextField(firstName);
 		firstNameTextField.setColumns(10);
-		firstNameTextField.setBounds(207, 336, 274, 34);
+		firstNameTextField.setBounds(245, 242, 274, 34);
 		editACcountPanel.add(firstNameTextField);
 
 		JLabel surnameLabel = new JLabel("Surname:");
-		surnameLabel.setBounds(104, 402, 93, 34);
+		surnameLabel.setBounds(103, 308, 93, 34);
 		editACcountPanel.add(surnameLabel);
 
 		surnameTextField = new JTextField(surname);
 		surnameTextField.setColumns(10);
-		surnameTextField.setBounds(207, 402, 274, 34);
+		surnameTextField.setBounds(245, 308, 274, 34);
 		editACcountPanel.add(surnameTextField);
 
-		JLabel passwordLabel = new JLabel("Password:");
-		passwordLabel.setBounds(104, 456, 93, 34);
+		JLabel passwordLabel = new JLabel("Enter Current Password:");
+		passwordLabel.setBounds(103, 362, 132, 34);
 		editACcountPanel.add(passwordLabel);
 
 		passwordTextField = new JTextField(password);
 		passwordTextField.setColumns(10);
-		passwordTextField.setBounds(207, 456, 274, 34);
+		passwordTextField.setBounds(245, 362, 274, 34);
 		editACcountPanel.add(passwordTextField);
 
 		// Button to save the changes of the edited account and update the database.
@@ -177,7 +179,7 @@ public class EditAccount extends JFrame {
 				}
 			}
 		});
-		addEditPropertyButton.setBounds(368, 548, 113, 23);
+		addEditPropertyButton.setBounds(369, 576, 113, 23);
 		editACcountPanel.add(addEditPropertyButton);
 
 		// Button to take you back to previous GUI page
@@ -204,7 +206,7 @@ public class EditAccount extends JFrame {
 		// Button to delete Account and remove information from database
 		JButton deleteAccountButton = new JButton("Delete Account");
 		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		deleteAccountButton.setBounds(207, 548, 113, 23);
+		deleteAccountButton.setBounds(211, 576, 113, 23);
 		editACcountPanel.add(deleteAccountButton);
 		deleteAccountButton.addActionListener(new ActionListener() {
 			@Override
@@ -219,8 +221,26 @@ public class EditAccount extends JFrame {
 
 		);
 
-		titleComboBox.setBounds(207, 274, 276, 23);
+		titleComboBox.setBounds(245, 180, 276, 23);
 		editACcountPanel.add(titleComboBox);
+		
+		JLabel newPasswordLabel = new JLabel("New Password:");
+		newPasswordLabel.setBounds(103, 419, 93, 34);
+		editACcountPanel.add(newPasswordLabel);
+		
+		newPasswordTextField = new JTextField((String) null);
+		newPasswordTextField.setColumns(10);
+		newPasswordTextField.setBounds(245, 419, 274, 34);
+		editACcountPanel.add(newPasswordTextField);
+		
+		JLabel confirmNewPasswordLabel = new JLabel("Confirm New Password:");
+		confirmNewPasswordLabel.setBounds(103, 483, 132, 34);
+		editACcountPanel.add(confirmNewPasswordLabel);
+		
+		confirmNewPasswordTextField = new JTextField((String) null);
+		confirmNewPasswordTextField.setColumns(10);
+		confirmNewPasswordTextField.setBounds(245, 483, 274, 34);
+		editACcountPanel.add(confirmNewPasswordTextField);
 
 		frame.setBounds(100, 100, 600, 700);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
