@@ -293,10 +293,6 @@ public class Facilities extends javax.swing.JFrame {
 		// Display Selected Row In JTextFields
 		jTextField_facilities_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_facilities_id.setEditable(false);
-		jTextField_utility_id.setText(model.getValueAt(i, 1).toString());
-		jTextField_outdoors_id.setText(model.getValueAt(i, 2).toString());
-		jTextField_kitchen_id.setText(model.getValueAt(i, 3).toString());
-		jTextField_sleeping_id.setText(model.getValueAt(i, 4).toString());
 	}
 
 	// Button to edit Facility
