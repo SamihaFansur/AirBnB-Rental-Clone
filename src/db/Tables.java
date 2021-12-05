@@ -15,7 +15,7 @@ public class Tables {
 		String createAccountTable = "CREATE TABLE Account("
 				+ "email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
 				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(255), "
-				+ "password VARCHAR(255), address_id INT, FOREIGN KEY (address_id) REFERENCES Address(address_id))";
+				+ "password VARCHAR(255), address_id INT, FOREIGN KEY (address_id) REFERENCES Address(address_id), salt VARCHAR(255))";
 
 		String createHostAccountTable = "CREATE TABLE HostAccount("
 				+ "host_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email), "
@@ -46,10 +46,6 @@ public class Tables {
 				+ "utility_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, heating BOOL, washingMachine BOOL, "
 				+ "dryingMachine BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
 
-//		String createBedTypeTable = "CREATE TABLE BedType("
-//				+ "bedType_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-//				+ "bed1ChoiceField VARCHAR(255), bed2ChoiceField VARCHAR(255), bed1People INT, bed2People INT)";
-
 		String createSleepingTable = "CREATE TABLE Sleeping("
 				+ "sleeping_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bedLinen BOOL, towels BOOL, noOfBeds INT, noOfBedrooms INT)";
 
@@ -72,8 +68,6 @@ public class Tables {
 				+ "property_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, address_id INT, "
 				+ "FOREIGN KEY (address_id) REFERENCES Address(address_id), "
 				+ "host_id INT , FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
-//				+ "facilities_id INT, FOREIGN KEY (facilities_id) REFERENCES Facilities(facilities_id), "
-//				+ "review_id INT REFERENCES Review, "
 				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT, breakfast BOOL)";
 
 		String createFacilitiesTable = "CREATE TABLE Facilities("
@@ -95,23 +89,16 @@ public class Tables {
 				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
 				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
 				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
-//
-//		String[] allCreateQueries = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable, createReviewTable, 
-//				createOutdoorsTable, createLivingTable, createKitchenTable,createUtilityTable, createBathTypeTable, createBathingTable, 
-//				createBathing_BathTypeTable, createSleepingTable, createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, createPropertyTable, createChargeBandsTable, createBookingTable};
-//		
-//
+
 		String[] allDropQueries = {  "DROP TABLE IF EXISTS Sleeping_BedType",
 				"DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Facilities",
-				"DROP TABLE IF EXISTS ChargeBands", "DROP TABLE IF EXISTS Booking","DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS Outdoors",
+				"DROP TABLE IF EXISTS ChargeBands", "DROP TABLE IF EXISTS Review", "DROP TABLE IF EXISTS Booking","DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS Outdoors",
 				"DROP TABLE IF EXISTS Living", "DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility",
 				"DROP TABLE IF EXISTS Sleeping", "DROP TABLE IF EXISTS Bathing","DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS HostAccount",
-			"DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Address", "DROP TABLE IF EXISTS Review"};
-		//dropAllTables(allDropQueries);
+			"DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Address"};
+		dropAllTables(allDropQueries);
 		
 
-		//String[] allDropQueries = { "DROP TABLE IF EXISTS Review"};
-		//dropAllTables(allDropQueries);
 		
 // make sure all tables created before facilities
 		
@@ -119,15 +106,8 @@ public class Tables {
 				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
 				createBathing_BathTypeTable, createSleepingTable, createSleeping_BedTypeTable, createPropertyTable,
 				createFacilitiesTable, createChargeBandsTable, createBookingTable, createReviewTable};
-		
-	////String[] create = {createReviewTable};
 
 		createAllTables(create);
-		
-//		dropTable("DROP TABLE IF EXISTS Review");
-//		dropTable("DROP TABLE IF EXISTS Booking");
-//		createTable(createBookingTable);
-//		createTable(createReviewTable);
 
 	}
 

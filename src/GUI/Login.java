@@ -139,14 +139,23 @@ public class Login extends JFrame {
 	public void logUserIn() {
 
 		try {
+			String salt = "";
 			connection = ConnectionManager.getConnection();
+			String getSaltQuery = "SELECT salt from Account where email = ?";
+			PreparedStatement saltQuery = connection.prepareStatement(getSaltQuery);
+			saltQuery.setString(1, userName_login);
+			ResultSet rsSalt = saltQuery.executeQuery();
+			while (rsSalt.next()) {
+				salt = rsSalt.getString("salt");
+			}
+			String securePassword = Password.get_SHA_512_SecurePassword(password_login, salt);
+
 			String query = "Select email, password from Account where email=? and password= ?";
-//			String query = "Select email, password from Account where email=? and password= AES_ENCRYPT(?, 'key')";
 			PreparedStatement loginQuery = connection
 					.prepareStatement(query);
 
 			loginQuery.setString(1, userName_login);
-			loginQuery.setString(2, password_login);
+			loginQuery.setString(2, securePassword);
 			ResultSet rs = loginQuery.executeQuery();
 			/*
 			 * Need to check if the email belongs to a "host and guest" account. If so, ask

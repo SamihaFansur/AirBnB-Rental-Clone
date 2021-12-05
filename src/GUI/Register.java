@@ -444,11 +444,11 @@ public class Register extends JFrame {
 	}
 
 	public void submit() {
-
 		try {
+			String salt = Password.getSalt();
+			String securePassword = Password.get_SHA_512_SecurePassword(model.getPassword(), salt);
 			connection = ConnectionManager.getConnection();
-			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
-//			String insertAccountQuery = "insert into Account values(?,?,?,?,?,AES_ENCRYPT(?, 'key'),(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?))";
+			String insertAccountQuery = "insert into Account values(?,?,?,?,?,?,(SELECT address_id FROM Address WHERE houseNameNumber = ? AND postcode = ?), ?)";
 			String insertAddressQuery = "insert into Address(houseNameNumber, streetName, placeName, postcode) values(?,?,?,?) ";
 			String insertIntoHostAccountTable = "insert into HostAccount (email) "
 					+ "values((SELECT email FROM Account WHERE email=?))";
@@ -473,9 +473,10 @@ public class Register extends JFrame {
 			ps_account.setString(3, model.getFirstName());
 			ps_account.setString(4, model.getSurname());
 			ps_account.setString(5, model.getMobileNumber());
-			ps_account.setString(6, model.getPassword());
+			ps_account.setString(6, securePassword);
 			ps_account.setString(7, model.getHouseNameNum());
 			ps_account.setString(8, model.getPostcode());
+			ps_account.setString(9, salt);
 
 			int i = ps_account.executeUpdate();
 
