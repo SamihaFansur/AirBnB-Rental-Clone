@@ -30,6 +30,10 @@ import GUI.MainModule.USER;
 import GuestGUI.BookingObject;
 import Model.Model;
 
+
+/*
+ * Class for displaying booking objects and initialising reviews for the provisional bookings.
+ */
 public class ProvisionalBookings extends javax.swing.JFrame {
 
 	private Controller controller;
@@ -37,7 +41,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	private MainModule mainModule;
 
 	/**
-	 * Creates new form Java_Insert_Update_Delete_Display
+	 * Gui for displaying all of the booking objects within the database in a table that are provisional
 	 */
 	public ProvisionalBookings(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
@@ -48,8 +52,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		Show_Bookings_In_JTable();
 	}
 
-	// get the connection
-
+	// Gets the connection to the database
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
@@ -65,22 +68,18 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		}
 	}
 
-	// get a list of users from mysql database
+	// Creates a list of bookings from mysql database and puts them into an ArrayList
+	// to use.
 	public ArrayList<BookingObject> getBookingsList() {
-		System.out.println("1");
 
 		ArrayList<BookingObject> bookingsList = new ArrayList<>();
 		Connection connection = getConnection();
-		System.out.println("2");
 		if (mainModule.userState == USER.HOST) {			
-			System.out.println("3");
 			try {		
 			
-
 				connection = ConnectionManager.getConnection();
-
 				
-				
+				// Gets the information for a booking from the host database if it is provisional
 				String query = "select * from Booking where host_id=? and provisional=?";
 
 				BookingObject bookings;
@@ -99,30 +98,24 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//return bookingsList;
 
 		} else if (mainModule.userState == USER.GUEST){			
-			System.out.println("a");	
 			
 			try {		
-				System.out.println("b");
+				
+				// Gets the information for a booking from the guest database if it is provisional
 				String query = "select * from Booking where guest_id=? and provisional=?";
 
 				connection = ConnectionManager.getConnection();
 
-				
 				BookingObject bookings;
 				PreparedStatement st = connection.prepareStatement(query);
-				System.out.println("c");
 				st.setInt(1, model.getGuestId());
-				System.out.println("omggggggggggg = "+model.getGuestId());
 				st.setString(2, "Pending");
-				System.out.println("d");
 				
 				System.out.println(st);
 				ResultSet r = st.executeQuery();
 				
-				System.out.println("e");
 			
 				while (r.next()) {
 					bookings = new BookingObject(r.getInt("booking_id"), r.getInt("property_id"),
@@ -133,12 +126,11 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//return bookingsList;
 		}
 		return bookingsList;
 	}
 
-	// Display Data In JTable
+	// Display bookings from the bookings list  In JTable
 	public void Show_Bookings_In_JTable() {
 		ArrayList<BookingObject> list = getBookingsList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
@@ -175,7 +167,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 	}
-
+	// Function for defining all of the GUI objects
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 		jPanel1 = new javax.swing.JPanel();
@@ -229,6 +221,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		});
 		jScrollPane1.setViewportView(jTable_Display_Reviews);
 
+		//Button to return you to previous GUI page
 		backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
@@ -247,22 +240,19 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			}
 		});
 
-		
+		//Button to accept the provisional booking and update it to a booking
 		acceptButton = new JButton("Accept");
 		acceptButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		acceptButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (mainModule.userState == USER.HOST) {
-					//get the booking id
-					//update value in prov col form pending to accept
 
-					//decline all other bookings for the same property id, within the same cb
+					//Decline all other bookings for the same property id, within the same table
 					try {
 						connection = ConnectionManager.getConnection();
 						
 						int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
-						System.out.println("BOOKING ID BEING ACCEPTED = "+bookingID);
 						
 						String acceptBooking = "update Booking set provisional=? where booking_id=?";
 						PreparedStatement acceptingBooking = connection.prepareStatement(acceptBooking);
@@ -279,14 +269,14 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 					
 					try {
 							
+						
 						int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
-					    //get property id of accpeted booking
+					    //Updates the property with a booking id
 						String propertyDetailsForAcptdBooking = "select property_id, startDate, endDate from Booking where booking_id=? and provisional=?";
 						PreparedStatement propertyDetailsForAcptdBookingPS = connection.prepareStatement(propertyDetailsForAcptdBooking);
 						propertyDetailsForAcptdBookingPS.setInt(1, bookingID);
 						propertyDetailsForAcptdBookingPS.setString(2, "Accepted");
 	
-						System.out.println("booking id of booking just accepted = "+bookingID);
 	
 						int propId = 0;
 						String startDate = "";
@@ -298,17 +288,10 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 							startDate = propertyDetailsForAcptdBookingRS.getString("startDate");
 							endDate = propertyDetailsForAcptdBookingRS.getString("endDate");
 						}
-						System.out.println("PID of booking just accepted = "+propId);
-						System.out.println("start date of booking just accepted = "+startDate);
-						System.out.println("end date of booking just accepted = "+endDate);
 	
 	
-						// loop through all provisional bookings. If the dates for the aceptaed booking overlap with existing provisional
+						// Looks through all provisional bookings. If the dates for the accepted booking overlap with existing provisional
 						// bookings for the same property then decline those bookings.
-						
-						// getting the dates of all the provisional bookings:
-						
-							
 						String query = "select * from Booking where host_id=? and provisional=? and property_id=?";
 						//BookingObject bookings;
 						PreparedStatement st = connection.prepareStatement(query);
@@ -319,23 +302,22 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 						ResultSet rs = st.executeQuery();
 						while (rs.next()) {
 							int tempBookingId = rs.getInt("booking_id");
-							System.out.println("booking ids of propertys which are pending atm = "+tempBookingId);
-							// get start date, end date from Bookings table
+							// Gets start date, end date from Bookings table
 							String startDateProvBooking = rs.getString("startDate");
 							String endDateProvBooking = rs.getString("endDate");
 							String provisionalStatus = rs.getString("provisional");
 							
-							// start and end dates for accepted bookings:
+							// Sets the start and end dates for accepted bookings to variables 
 							String startDateAcceptedBooking = startDate;
 							String endDateAcceptedBooking = endDate;
 							
-							//format dates
+							//Formats dates the strings to dates
 							Date fmtdStartDateProvBkng = sourceFormat.parse(startDateProvBooking);
 							Date fmtdEndDateProvBkng = sourceFormat.parse(endDateProvBooking);
 							Date fmtdStartDateAcptdBkng = sourceFormat.parse(startDateAcceptedBooking);
 							Date fmtdEndDateAcptdBkng = sourceFormat.parse(endDateAcceptedBooking);
 							
-							//call function to check what current provisonal bookings overlap with the accepted booking.
+							//Call function to check what current provisonal bookings overlap with the accepted booking.
 							// if true then this provisional booking overlaps with the accepted booking
 
 							if (	fmtdStartDateAcptdBkng.equals(fmtdStartDateProvBkng) || 
@@ -347,11 +329,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 									|| (fmtdStartDateAcptdBkng.equals(fmtdEndDateProvBkng)))) {
 							
 								
-								System.out.println("booking ids TO BE CHANGED TO DECLINED:  "+tempBookingId);
-								
-								
-								
-								// change this provisional booking to declined:
+								// Change this provisional booking to declined if it has been declines by host
 								String declineBooking = "update Booking set provisional=? where booking_id=? and property_id=? and host_id=? ";
 								PreparedStatement declineBookingPS = connection.prepareStatement(declineBooking);
 								declineBookingPS.setString(1, "Declined");
@@ -359,47 +337,31 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 								declineBookingPS.setInt(3, propId);
 								declineBookingPS.setInt(4, model.getHostId());
 	
-								declineBookingPS.executeUpdate();
-								
-								//make sure the accepted booking isnt changed to declined 
-								System.out.println("OVERLAPPING PROVISIONLAL BOOKING");
-								
-								
+								declineBookingPS.executeUpdate();							
 							}	
 					}
-					
-					
-					
-
 					}catch(Exception e1) {
 						e1.printStackTrace();
 						
 					}
-
-
-					
-					
 				} else if(mainModule.userState == USER.GUEST) {
-					//error msg or smth
 				}
 			}
 		});
 
-		
+		//Button to decline provisional booking and deltes it from the database
 		declineButton = new JButton("Decline");
 		declineButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		declineButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (mainModule.userState == USER.HOST) {
-					//get the booking id
-					//update value in prov col form pending to decline
-
+					//Gets the booking id
+					//Updates value in provisional column form pending to decline 
 					try {
 					connection = ConnectionManager.getConnection();
 					
 					int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
-					System.out.println("BOOKING ID BEING DECLINE = "+bookingID);
 					
 					String declineBooking = "update Booking set provisional=? where booking_id=?";
 					PreparedStatement decliningBooking = connection.prepareStatement(declineBooking);
@@ -412,19 +374,12 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 						e1.printStackTrace();
 						
 					}
-
-
-					
-					
 				} else if(mainModule.userState == USER.GUEST) {
-					//error msg or smth
 				}
 			}
 		});
-
 		
-		
-
+		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -482,9 +437,11 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		pack();
 	}
 
-	// show jtable row data in jtextfields in the mouse clicked event
+	// Function that displays the information of a booking that is clicked on with
+	// mouse within the JTable into theie
+	// corresponding TextFields
 	private void jTable_Display_ReviewsMouseClicked(java.awt.event.MouseEvent evt) {
-		// Get The Index Of The Slected Row
+		// Get The Index Of The Selected Row
 		int i = jTable_Display_Reviews.getSelectedRow();
 
 		TableModel model = jTable_Display_Reviews.getModel();
@@ -499,13 +456,10 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		jTextField_endDate.setText(model.getValueAt(i, 7).toString());
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
+	// Initialises the Provisional Bookings GUI when called from other GUI pages
 	public void initializeProvisionalBookings(int fId, int id_id) {
 		propertyId = fId;
 		id = id_id;
-		System.out.println("ID IN INIT FUNC = "+id);
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -537,6 +491,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			}
 		});
 	}
+	// Variables used on the GUI initialised.
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel5;
 	private javax.swing.JLabel jLabel6;

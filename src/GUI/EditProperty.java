@@ -16,6 +16,9 @@ import Controller.Controller;
 import GUI.MainModule.STATE;
 import Model.Model;
 
+/*
+ * GUI pages for editing a property 
+ */
 public class EditProperty extends JFrame {
 
 	Connection connection = null;
@@ -34,6 +37,7 @@ public class EditProperty extends JFrame {
 	private String postcode;
 	private String shortName;
 
+	//getters and setters for Property
 	public int getId() {
 		return id;
 	}
@@ -66,18 +70,20 @@ public class EditProperty extends JFrame {
 		this.shortName = shortName;
 	}
 
+	//Constructor for editProperty
 	public EditProperty(MainModule mainModule, Controller controller, Model model) {
-		initializeProperty();
 		this.mainModule = mainModule;
 		this.controller = controller;
 		this.model = model;
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the GUI so that it can be called from other GUI
+	 * pages.
 	 */
 	public void initializeProperty() {
 		mainModule.currentState = STATE.PROPERTIES;
+		//Creates Frame and adds a NavBar
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
@@ -86,12 +92,15 @@ public class EditProperty extends JFrame {
 			System.err.println(e.getMessage());
 		}
 
+		//Creates the main panel for gui
 		JPanel propertyPanel = new JPanel();
 
 		propertyPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(propertyPanel, BorderLayout.CENTER);
 		propertyPanel.setLayout(null);
 
+		//Creates the GUI objects such as labels and textFields
+		//also sets their attributes such as font, size and location
 		JLabel propertyLabel = new JLabel("Property");
 		propertyLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		propertyLabel.setBounds(253, 73, 118, 31);
