@@ -25,6 +25,10 @@ import GuestGUI.NavGuest;
 import HostGUI.NavHost;
 import Model.Model;
 
+/*
+ * GUI pages for editing the account of a user
+ */
+
 public class EditAccount extends JFrame {
 
 	private NavHost navForHost = new NavHost();
@@ -39,24 +43,22 @@ public class EditAccount extends JFrame {
 	private String title, firstName, surname, password;
 	Connection connection = null;
 
-	/**
-	 * Create the application.
-	 */
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 
 	public EditAccount(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditAccount();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the GUI so that it can be called from other GUI
+	 * pages.
 	 */
 	public void initializeEditAccount() {
+		// Creates a frame and adds a NavBar
 		try {
 			frame = new JFrame();
 			if (mainModule.userState == USER.GUEST) {
@@ -67,6 +69,7 @@ public class EditAccount extends JFrame {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		// Creates the main editAccount Panel to display GUI objects
 		JPanel editACcountPanel = new JPanel();
 		editACcountPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editACcountPanel, BorderLayout.CENTER);
@@ -77,16 +80,19 @@ public class EditAccount extends JFrame {
 		editAccountLabel.setBounds(222, 53, 183, 57);
 		editACcountPanel.add(editAccountLabel);
 
+		// Gets a connection with the database
 		try {
 			connection = ConnectionManager.getConnection();
-			// String selectAccountRecord = "SELECT title, firstName, surname, AES_DECRYPT(password,'key') as decrypt from Account where email = ?";
-			String selectAccountRecord = "SELECT title, firstName,"
-					+ " surname, password from Account where email = ?";
+
+			// Gets the preexisting information of the account being edited from the
+			// database.
+			String selectAccountRecord = "SELECT title, firstName," + " surname, password from Account where email = ?";
 
 			PreparedStatement selectingAccountValues = connection.prepareStatement(selectAccountRecord);
 			selectingAccountValues.setString(1, model.getEmail());
 			ResultSet rs = selectingAccountValues.executeQuery();
-			
+
+			// Creates variables using account information from account primed for editing
 			while (rs.next()) {
 				title = rs.getString("title");
 				firstName = rs.getString("firstName");
@@ -98,6 +104,7 @@ public class EditAccount extends JFrame {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
+		// Objects for GUI are added to panel/frame
 		JLabel TitleLabel = new JLabel("Title:");
 		TitleLabel.setBounds(104, 268, 93, 34);
 		editACcountPanel.add(TitleLabel);
@@ -138,17 +145,22 @@ public class EditAccount extends JFrame {
 		passwordTextField.setBounds(207, 456, 274, 34);
 		editACcountPanel.add(passwordTextField);
 
+		// Button to save the changes of the edited account and update the database.
 		addEditPropertyButton = new JButton("Save");
 		addEditPropertyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean validateFirstNameInput = validateName(firstNameTextField.getText());
 				boolean validateSurnameInput = validateName(surnameTextField.getText());
+				// Checks if the information in the text fields is valid
 				if (validateFirstNameInput && validateSurnameInput) {
+					// Sets the values of the edited Account using the information in
+					// the textFields
 					model.setTitle(titleComboBox.getSelectedItem().toString());
 					model.setFirstName(firstNameTextField.getText());
 					model.setSurname(surnameTextField.getText());
 					model.setPassword(passwordTextField.getText());
+					// Calls the function to edit the Account
 					addEditAccountDetails();
 					frame.dispose();
 
@@ -168,6 +180,7 @@ public class EditAccount extends JFrame {
 		addEditPropertyButton.setBounds(368, 548, 113, 23);
 		editACcountPanel.add(addEditPropertyButton);
 
+		// Button to take you back to previous GUI page
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(22, 75, 91, 23);
@@ -188,6 +201,7 @@ public class EditAccount extends JFrame {
 		});
 		editACcountPanel.add(backButton);
 
+		// Button to delete Account and remove information from database
 		JButton deleteAccountButton = new JButton("Delete Account");
 		deleteAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		deleteAccountButton.setBounds(207, 548, 113, 23);
@@ -213,6 +227,7 @@ public class EditAccount extends JFrame {
 		frame.setVisible(true);
 	}
 
+	// Function to validate the user name using regex
 	public boolean validateName(String name) {
 		if (!name.matches("[a-zA-Z]*") || name.matches("")) {
 			return false;
@@ -221,14 +236,18 @@ public class EditAccount extends JFrame {
 		}
 	}
 
+	// Displays error when user input invalid information into the textFields
 	public void displayError() {
 		JOptionPane.showMessageDialog(this, "Invalid input, please try again.");
 	}
 
+	// Updates the database with the new information for the account
 	public void addEditAccountDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
 //			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = AES_ENCRYPT(?,'key') where email = ?";
+
+			// Updates account with new user information in the database
 			String updateAccountQuery = "UPDATE Account set title = ?, firstName = ?, surname = ?, password = ? where email = ?";
 
 			PreparedStatement updateAccount = connection.prepareStatement(updateAccountQuery);
@@ -252,6 +271,8 @@ public class EditAccount extends JFrame {
 		}
 	}
 
+	// Function for deleting account and removing all related information from the
+	// database
 	public void deleteAccount() {
 		try {
 			connection = ConnectionManager.getConnection();
@@ -263,6 +284,7 @@ public class EditAccount extends JFrame {
 			while (rs_host.next()) {
 				host_id = rs_host.getInt("host_id");
 			}
+			// Gets all of the properties that the account owns if it is a host
 			String selectPropertyRecord = "SELECT property_id,address_id from Property where host_id = ?";
 
 			PreparedStatement selectPropertyValues = connection.prepareStatement(selectPropertyRecord,
@@ -274,8 +296,9 @@ public class EditAccount extends JFrame {
 			while (rs.next()) {
 				model.setPropertyId(rs.getInt("property_id"));
 				address = rs.getInt("address_id");
+				// Gets all the facilities related to the accounts properties
 				String selectFacilitiesRecord = "SELECT facilities_id,outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE property_id = ? ";
-			
+
 				PreparedStatement selectFacilitiesValues = connection.prepareStatement(selectFacilitiesRecord,
 						ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 				selectFacilitiesValues.setInt(1, model.getPropertyId());
@@ -291,6 +314,7 @@ public class EditAccount extends JFrame {
 					kitchen = rs_facilities.getInt("kitchen_id");
 					rs_facilities.deleteRow();
 
+					// Deletes the information out of the facilities related to the account
 					String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHERE sleeping_id = ?";
 					PreparedStatement deleteSleeping_BedType = connection.prepareStatement(deleteSleeping_BedTypeQuery);
 					deleteSleeping_BedType.setInt(1, sleeping);
@@ -340,6 +364,7 @@ public class EditAccount extends JFrame {
 					if (k > 0) {
 					}
 				}
+				// Deletes the account from the address database
 				rs.deleteRow();
 				String deleteAddressQuery = "DELETE FROM Address WHERE address_id = ?";
 				PreparedStatement deleteAddress = connection.prepareStatement(deleteAddressQuery);
@@ -348,6 +373,7 @@ public class EditAccount extends JFrame {
 				if (m > 0) {
 				}
 			}
+			// Deletes account out of the address table
 			String deleteAccountAddressQuery = "DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
 			PreparedStatement deleteAccountAddress = connection.prepareStatement(deleteAccountAddressQuery);
 			deleteAccountAddress.setString(1, model.getHouseNameNum());
@@ -355,18 +381,21 @@ public class EditAccount extends JFrame {
 			int l = deleteAccountAddress.executeUpdate();
 			if (l > 0) {
 			}
+			// Deletes account out of the hostAccount table
 			String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
 			PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
 			deleteHostAccount.setString(1, model.getEmail());
 			int j = deleteHostAccount.executeUpdate();
 			if (j > 0) {
 			}
+			// Deletes account out of the guestAccount table
 			String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
 			PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
 			deleteGuestAccount.setString(1, model.getEmail());
 			int k = deleteGuestAccount.executeUpdate();
 			if (k > 0) {
 			}
+			// Deletes account out of the account table
 			String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
 			PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
 			deleteAccount.setString(1, model.getEmail());

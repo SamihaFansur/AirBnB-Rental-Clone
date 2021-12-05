@@ -95,7 +95,7 @@ public class AddFacility extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_SLEEPING;
 
-				// checking value of sleeping id. Once it's been completed for the first time
+				// Checks value of sleeping id. Once it's been completed for the first time
 				// the host wont have access to edit this facility from here.
 
 				if (model.getCurrentSleepingId() == 0) {
