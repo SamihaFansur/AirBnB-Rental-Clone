@@ -8,7 +8,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -253,21 +256,120 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 				if (mainModule.userState == USER.HOST) {
 					//get the booking id
 					//update value in prov col form pending to accept
-					//
+
+					//decline all other bookings for the same property id, within the same cb
 					try {
-					connection = ConnectionManager.getConnection();
+						connection = ConnectionManager.getConnection();
+						
+						int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
+						System.out.println("BOOKING ID BEING ACCEPTED = "+bookingID);
+						
+						String acceptBooking = "update Booking set provisional=? where booking_id=?";
+						PreparedStatement acceptingBooking = connection.prepareStatement(acceptBooking);
+						acceptingBooking.setString(1, "Accepted");
+						acceptingBooking.setInt(2, bookingID);
+	
+						acceptingBooking.executeUpdate();
+
 					
-					int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
-					System.out.println("BOOKING ID BEING ACCEPTED = "+bookingID);
+					}catch(Exception e2) {
+						System.err.println(e2.getMessage());
+					}
 					
-					String acceptBooking = "update Booking set provisional=? where booking_id=?";
-					PreparedStatement acceptingBooking = connection.prepareStatement(acceptBooking);
-					acceptingBooking.setString(1, "Accept");
-					acceptingBooking.setInt(2, bookingID);
+					
+					try {
+							
+						int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
+					    //get property id of accpeted booking
+						String propertyDetailsForAcptdBooking = "select property_id, startDate, endDate from Booking where booking_id=? and provisional=?";
+						PreparedStatement propertyDetailsForAcptdBookingPS = connection.prepareStatement(propertyDetailsForAcptdBooking);
+						propertyDetailsForAcptdBookingPS.setInt(1, bookingID);
+						propertyDetailsForAcptdBookingPS.setString(2, "Accepted");
+	
+						System.out.println("booking id of booking just accepted = "+bookingID);
+	
+						int propId = 0;
+						String startDate = "";
+						String endDate = "";
+	
+						ResultSet propertyDetailsForAcptdBookingRS = propertyDetailsForAcptdBookingPS.executeQuery();
+						while(propertyDetailsForAcptdBookingRS.next()) {
+							propId = propertyDetailsForAcptdBookingRS.getInt("property_id");
+							startDate = propertyDetailsForAcptdBookingRS.getString("startDate");
+							endDate = propertyDetailsForAcptdBookingRS.getString("endDate");
+						}
+						System.out.println("PID of booking just accepted = "+propId);
+						System.out.println("start date of booking just accepted = "+startDate);
+						System.out.println("end date of booking just accepted = "+endDate);
+	
+	
+						// loop through all provisional bookings. If the dates for the aceptaed booking overlap with existing provisional
+						// bookings for the same property then decline those bookings.
+						
+						// getting the dates of all the provisional bookings:
+						
+							
+						String query = "select * from Booking where host_id=? and provisional=? and property_id=?";
+						//BookingObject bookings;
+						PreparedStatement st = connection.prepareStatement(query);
+						st.setInt(1, model.getHostId());
+						st.setString(2, "Pending");
+						st.setInt(3, propId);
+	
+						ResultSet rs = st.executeQuery();
+						while (rs.next()) {
+							int tempBookingId = rs.getInt("booking_id");
+							System.out.println("booking ids of propertys which are pending atm = "+tempBookingId);
+							// get start date, end date from Bookings table
+							String startDateProvBooking = rs.getString("startDate");
+							String endDateProvBooking = rs.getString("endDate");
+							String provisionalStatus = rs.getString("provisional");
+							
+							// start and end dates for accepted bookings:
+							String startDateAcceptedBooking = startDate;
+							String endDateAcceptedBooking = endDate;
+							
+							//format dates
+							Date fmtdStartDateProvBkng = sourceFormat.parse(startDateProvBooking);
+							Date fmtdEndDateProvBkng = sourceFormat.parse(endDateProvBooking);
+							Date fmtdStartDateAcptdBkng = sourceFormat.parse(startDateAcceptedBooking);
+							Date fmtdEndDateAcptdBkng = sourceFormat.parse(endDateAcceptedBooking);
+							
+							//call function to check what current provisonal bookings overlap with the accepted booking.
+							// if true then this provisional booking overlaps with the accepted booking
 
-					acceptingBooking.executeUpdate();
-
-
+							if (	fmtdStartDateAcptdBkng.equals(fmtdStartDateProvBkng) || 
+									fmtdEndDateAcptdBkng.equals(fmtdEndDateProvBkng)
+									|| (fmtdStartDateProvBkng.after(fmtdStartDateAcptdBkng) && fmtdStartDateProvBkng.before(fmtdEndDateAcptdBkng))
+									|| (fmtdEndDateProvBkng.after(fmtdStartDateAcptdBkng) && fmtdEndDateProvBkng.before(fmtdEndDateAcptdBkng))
+									|| (fmtdStartDateProvBkng.before(fmtdStartDateAcptdBkng) && fmtdEndDateProvBkng.after(fmtdEndDateAcptdBkng)
+									|| (fmtdEndDateAcptdBkng.equals(fmtdStartDateProvBkng))
+									|| (fmtdStartDateAcptdBkng.equals(fmtdEndDateProvBkng)))) {
+							
+								
+								System.out.println("booking ids TO BE CHANGED TO DECLINED:  "+tempBookingId);
+								
+								
+								
+								// change this provisional booking to declined:
+								String declineBooking = "update Booking set provisional=? where booking_id=? and property_id=? and host_id=? ";
+								PreparedStatement declineBookingPS = connection.prepareStatement(declineBooking);
+								declineBookingPS.setString(1, "Declined");
+								declineBookingPS.setInt(2, tempBookingId);
+								declineBookingPS.setInt(3, propId);
+								declineBookingPS.setInt(4, model.getHostId());
+	
+								declineBookingPS.executeUpdate();
+								
+								//make sure the accepted booking isnt changed to declined 
+								System.out.println("OVERLAPPING PROVISIONLAL BOOKING");
+								
+								
+							}	
+					}
+					
+					
+					
 
 					}catch(Exception e1) {
 						e1.printStackTrace();
@@ -286,7 +388,40 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		
 		declineButton = new JButton("Decline");
 		declineButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		
+		declineButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mainModule.userState == USER.HOST) {
+					//get the booking id
+					//update value in prov col form pending to decline
+
+					try {
+					connection = ConnectionManager.getConnection();
+					
+					int bookingID = 	Integer.parseInt(jTextField_booking_id.getText());
+					System.out.println("BOOKING ID BEING DECLINE = "+bookingID);
+					
+					String declineBooking = "update Booking set provisional=? where booking_id=?";
+					PreparedStatement decliningBooking = connection.prepareStatement(declineBooking);
+					decliningBooking.setString(1, "Declined");
+					decliningBooking.setInt(2, bookingID);
+
+					decliningBooking.executeUpdate();
+
+					}catch(Exception e1) {
+						e1.printStackTrace();
+						
+					}
+
+
+					
+					
+				} else if(mainModule.userState == USER.GUEST) {
+					//error msg or smth
+				}
+			}
+		});
+
 		
 		
 
@@ -427,6 +562,8 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	private JButton declineButton;
 	private JButton acceptButton;
 	private Connection connection;
+	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+
 }
 
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
