@@ -23,15 +23,16 @@ import Controller.Controller;
 import GUI.MainModule;
 import Model.Model;
 
+/**
+ * Class for displaying the reviews in the database onto a GUI
+ */
 public class Reviews extends javax.swing.JFrame {
 
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 
-	/**
-	 * Creates new form Java_Insert_Update_Delete_Display
-	 */
+	//Constructor for reviews
 	public Reviews(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
 		this.mainModule = mainModule;
@@ -41,11 +42,12 @@ public class Reviews extends javax.swing.JFrame {
 		Show_Reviews_In_JTable();
 	}
 	
-	// get the connection
+	// Sets the database information to get a connection later
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
 
+	//Gets a connection to the database
 	public Connection getConnection() {
 		Connection connection;
 		try {
@@ -57,7 +59,8 @@ public class Reviews extends javax.swing.JFrame {
 		}
 	}
 
-	// get a list of users from mysql database
+	// Creates a list of review objects using the information in the review table 
+	// within the database
 	public ArrayList<ReviewObject> getReviewsList() {
 		ArrayList<ReviewObject> reviewsList = new ArrayList<>();
 		Connection connection = getConnection();
@@ -82,7 +85,7 @@ public class Reviews extends javax.swing.JFrame {
 		return reviewsList;
 	}
 
-	// Display Data In JTable
+	// Displays the review Objects' information from the reviewsList on to a JTable
 	public void Show_Reviews_In_JTable() {
 		ArrayList<ReviewObject> list = getReviewsList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
@@ -120,7 +123,7 @@ public class Reviews extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 	}
-
+	// Function for defining all of the GUI objects and their attributes
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 		jPanel1 = new javax.swing.JPanel();
@@ -168,7 +171,6 @@ public class Reviews extends javax.swing.JFrame {
 		jLabel7.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel7.setText("Living:");
 
-		// NAVBAR
 
 		jTextField_review_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
@@ -184,6 +186,7 @@ public class Reviews extends javax.swing.JFrame {
 
 		jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
+		//Creates a JTable for displaying reviews and Sets the headers for the columns
 		jTable_Display_Reviews.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] {
 				"Review_ID", "Accuracy", "Location", "ValueForMoney", "Communication", "Cleanliness", "Description" }));
 
@@ -195,6 +198,7 @@ public class Reviews extends javax.swing.JFrame {
 		});
 		jScrollPane1.setViewportView(jTable_Display_Reviews);
 
+		//Button to return to previous GUI page
 		backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
@@ -203,6 +207,7 @@ public class Reviews extends javax.swing.JFrame {
 				setVisible(false);
 			}
 		});
+		//Create label and textfields for GUI
 		lblCommunication = new JLabel();
 		lblCommunication.setText("Communication:");
 		lblCommunication.setFont(new Font("Verdana", Font.PLAIN, 18));
@@ -238,6 +243,7 @@ public class Reviews extends javax.swing.JFrame {
 		propertyRatingTextField = new JTextField();
 		propertyRatingTextField.setFont(new Font("Verdana", Font.PLAIN, 14));
 
+		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
@@ -341,14 +347,16 @@ public class Reviews extends javax.swing.JFrame {
 		pack();
 	}
 
-	// show jtable row data in jtextfields in the mouse clicked event
+	// Function that displays the information of a review that is clicked on with
+	// mouse within the JTable into their
+	// corresponding TextFields
 	private void jTable_Display_ReviewsMouseClicked(java.awt.event.MouseEvent evt) {
-		// Get The Index Of The Slected Row
+		// Get The Index Of The Selected Row
 		int i = jTable_Display_Reviews.getSelectedRow();
 
 		TableModel model = jTable_Display_Reviews.getModel();
 
-		// Display Slected Row In JTexteFields
+		// Display Selected Row In JTextFields
 		jTextField_review_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_accuracy.setText(model.getValueAt(i, 1).toString());
 		jTextField_location.setText(model.getValueAt(i, 2).toString());
@@ -363,8 +371,10 @@ public class Reviews extends javax.swing.JFrame {
 		Double value1 = (Double.parseDouble(model.getValueAt(i, 3).toString()));
 		Double communication1 = (Double.parseDouble(model.getValueAt(i, 4).toString()));
 		Double cleanliness1 = (Double.parseDouble(model.getValueAt(i, 5).toString()));
+		//Calculates the rating of the review and displays it 
+		//in a textField
 		Double propertyRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 ) / 5.0;
-		// round to 2 dp
+		// Roudns rating to 2 dp
 		propertyRating1 = (double) Math.round(propertyRating1 * 100.0);
 		propertyRating1 = propertyRating1 / 100.0;
 
@@ -377,7 +387,7 @@ public class Reviews extends javax.swing.JFrame {
 	}
 
 	/**
-	 * @param args the command line arguments
+	 * 	Initialises the Reviews GUI when called from other GUI pages
 	 */
 	public void initializeReviews(int fId, int id) {
 		propertyId = fId;
@@ -408,6 +418,7 @@ public class Reviews extends javax.swing.JFrame {
 			}
 		});
 	}
+	// Variables used on the GUI initialised.
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;

@@ -222,7 +222,7 @@ public class Facilities extends javax.swing.JFrame {
 
 		jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
-		//Creates a JTable for displaying facilties and Sets the headers for the columns
+		//Creates a JTable for displaying facilities and Sets the headers for the columns
 		jTable_Display_Facilities.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
 				new String[] { "Facility ID", "Utility", "Outdoors", "Kitchen", "Sleeping", "Bathing", "Living" }));
 

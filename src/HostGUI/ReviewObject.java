@@ -1,5 +1,9 @@
 package HostGUI;
 
+/*
+ * This class constructs Review objects and is the helper class
+ * for other classes relating to Reviews.
+ */
 public class ReviewObject {
 
 	private int review_id;
@@ -11,6 +15,7 @@ public class ReviewObject {
 	private Double cleanliness;
 	private String description;
 
+	//Constructor for review objects
 	public ReviewObject(int review_id, int property_id, Double accuracy, Double location, Double valueForMoney,
 			Double communication, Double cleanliness, String description) {
 		this.review_id = review_id;
@@ -23,6 +28,7 @@ public class ReviewObject {
 		this.description = description;
 	}
 
+	//Getters and setters for information relating to reviews
 	public int getReview_id() {
 		return review_id;
 	}
