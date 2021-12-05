@@ -48,9 +48,9 @@ public class Homepage extends JFrame{
 			frame.getContentPane().add(homepagePanel, BorderLayout.CENTER);
 			homepagePanel.setLayout(null);
 
-			JLabel homePageLabel = new JLabel("Home Page");
+			JLabel homePageLabel = new JLabel("HomeBreaks Plc");
 			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
-			homePageLabel.setBounds(202, -27, 222, 152);
+			homePageLabel.setBounds(190, -27, 250, 152);
 			homepagePanel.add(homePageLabel);
 			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
