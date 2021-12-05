@@ -13,24 +13,27 @@ public class BookingObject {
 
 	private int booking_id;
 	private int property_id;
-	private int host_id;
-	private int guest_id;
+	private double serviceCharge;
+	private double cleaningCharge;
+	private double overallPrice;
+	private int noOfNights;
 	private int review_id;
 	private String provisional;
-	private Double totalPrice;
 	private String startDate;
 	private String endDate;
 
 	
 	//Constructor for Booking Objects
-	public BookingObject(int booking_id, int property_id, int host_id, int guest_id, String provisional,
-			Double totalPrice, String startDate, String endDate) {
+	public BookingObject(int booking_id, int property_id, double serviceCharge, double cleaningCharge,
+						double overallPrice, int noOfNights, String provisional, String startDate, 
+						String endDate) {
 		this.booking_id = booking_id;
 		this.property_id = property_id;
-		this.host_id = host_id;
-		this.guest_id = guest_id;
+		this.serviceCharge = serviceCharge;
+		this.cleaningCharge = cleaningCharge;
+		this.overallPrice = overallPrice;
+		this.noOfNights = noOfNights;
 		this.provisional = provisional;
-		this.totalPrice = totalPrice;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
@@ -45,24 +48,28 @@ public class BookingObject {
 		return property_id;
 	}
 
-	public int getHost_id() {
-		return host_id;
-	}
-
-	public int getGuest_id() {
-		return guest_id;
-	}
-
 	public int getReview_id() {
 		return review_id;
 	}
 
-	public String getProvisional() {
-		return provisional;
+	public double getServiceCharge() {
+		return serviceCharge;
 	}
 
-	public Double getTotalPrice() {
-		return totalPrice;
+	public double getCleaningCharge() {
+		return cleaningCharge;
+	}
+	
+	public double getOverallPrice() {
+		return overallPrice;
+	}
+	
+	public int getNoOfNights() {
+		return noOfNights;
+	}
+
+	public String getProvisional() {
+		return provisional;
 	}
 
 	public String getStartDate() {
