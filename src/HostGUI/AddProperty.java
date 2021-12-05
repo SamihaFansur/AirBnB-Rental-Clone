@@ -389,6 +389,7 @@ public class AddProperty extends JFrame {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
+		JOptionPane.showMessageDialog(this, "Property added to database, click Add Facility/Add Chargebands to add more information about the property");
 	}
 	//checks if guest capacity is a valid amount
 	public boolean validateGuestCapacity(String guestCapacity) {

@@ -141,7 +141,7 @@ public class Properties extends javax.swing.JFrame {
 				model.setRowCount(0);
 				Show_Users_In_JTable();
 
-				JOptionPane.showMessageDialog(null, "Data " + message + " Succefully");
+				JOptionPane.showMessageDialog(null, "Data " + message + " Successfully");
 			} else {
 				JOptionPane.showMessageDialog(null, "Data Not " + message);
 			}
@@ -455,6 +455,7 @@ public class Properties extends javax.swing.JFrame {
 
 		// Display Selected Row In JTextFields
 		jTextField_property_id.setText(model.getValueAt(i, 0).toString());
+		jTextField_property_id.setEditable(false);
 		jTextField_Description.setText(model.getValueAt(i, 1).toString());
 		jTextField_shortName_1.setText(model.getValueAt(i, 2).toString());
 		jTextField_guestCapacity_1.setText(model.getValueAt(i, 3).toString());
