@@ -1,5 +1,9 @@
 package HostGUI;
 
+/*
+ * This class constructs Facility objects and is the helper class
+ * for other classes relating to Facilities.
+ */
 public class FacilitiesObject {
 
 	private int facilities_id;
@@ -10,6 +14,7 @@ public class FacilitiesObject {
 	private int bathing_id;
 	private int living_id;
 
+	//Constructor for facility objects
 	public FacilitiesObject(int facilities_id, int utility_id, int outdoors_id, int kitchen_id, int sleeping_id,
 			int bathing_id, int living_id) {
 		this.facilities_id = facilities_id;
@@ -22,6 +27,7 @@ public class FacilitiesObject {
 
 	}
 
+	//Getters and setters for information relating to facilities
 	public int getFacilitiesId() {
 		return facilities_id;
 	}
@@ -49,5 +55,4 @@ public class FacilitiesObject {
 	public int getLivingId() {
 		return living_id;
 	}
-
 }

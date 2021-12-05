@@ -31,22 +31,17 @@ import GUI.MainModule.USER;
 import Model.Model;
 
 /**
- *
- * @author 1bestcsharp.blogspot.com
+ * Class for displaying the properties in the database onto a GUI
  */
 public class Properties extends javax.swing.JFrame {
 
-	/**
-	 * Creates new form Java_Insert_Update_Delete_Display
-	 */
-//
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
 
-	// Variables declaration - do not modify
+	// Declares variables and objects on GUI page
 	private javax.swing.JButton jButton_Delete;
 	private javax.swing.JButton jButton_Update;
 	private javax.swing.JButton jButton_EditFacilities;
@@ -70,6 +65,7 @@ public class Properties extends javax.swing.JFrame {
 	private JPanel panel;
 	private JButton jButton_Reviews;
 
+	//Constructor for properties
 	public Properties(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
 		this.mainModule = mainModule;
@@ -79,11 +75,12 @@ public class Properties extends javax.swing.JFrame {
 		Show_Users_In_JTable();
 	}
 
-	// get the connection
+	// Sets the database information to get a connection later
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
 
+	//Gets a connection to the database
 	public Connection getConnection() {
 		Connection connection;
 		try {
@@ -95,7 +92,8 @@ public class Properties extends javax.swing.JFrame {
 		}
 	}
 
-	// get a list of users from mysql database
+	// Creates a list of property objects using the information in the Property table 
+	// within the database
 	public ArrayList<PropertyObject> getUsersList() {
 		ArrayList<PropertyObject> propertiesList = new ArrayList<>();
 		Connection connection = getConnection();
@@ -118,7 +116,7 @@ public class Properties extends javax.swing.JFrame {
 		return propertiesList;
 	}
 
-	// Display Data In JTable
+	// Displays the proeprty Objects' information from the proeprtyList on to a JTable
 	public void Show_Users_In_JTable() {
 		ArrayList<PropertyObject> list = getUsersList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Properties.getModel();
@@ -139,7 +137,6 @@ public class Properties extends javax.swing.JFrame {
 		try {
 			st = connection.createStatement();
 			if ((st.executeUpdate(query)) == 1) {
-				// refresh jtable data
 				DefaultTableModel model = (DefaultTableModel) jTable_Display_Properties.getModel();
 				model.setRowCount(0);
 				Show_Users_In_JTable();
@@ -153,7 +150,7 @@ public class Properties extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 	}
-
+	// Function for defining all of the GUI objects and their attributes
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
@@ -184,7 +181,6 @@ public class Properties extends javax.swing.JFrame {
 		jLabel_description.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel_description.setText("Description");
 
-		// NAVBAR
 		jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_Description.setFont(new java.awt.Font("Verdana", 0, 14));
@@ -193,10 +189,12 @@ public class Properties extends javax.swing.JFrame {
 
 		jTextField_guestCapacity.setFont(new java.awt.Font("Verdana", 0, 14));
 
+		//Creates a JTable for displaying properties and Sets the headers for the columns
 		jTable_Display_Properties.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
 		}, new String[] { "property_id", "description", "shortName", "guestCapacity" }));
 
+		
 		jTable_Display_Properties.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -206,6 +204,7 @@ public class Properties extends javax.swing.JFrame {
 		});
 		jScrollPane1.setViewportView(jTable_Display_Properties);
 
+		//Button for updating the information of a property
 		jButton_Update.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
 		jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
 		jButton_Update.setText("Edit");
@@ -215,7 +214,7 @@ public class Properties extends javax.swing.JFrame {
 				jButton_UpdateActionPerformed(evt);
 			}
 		});
-
+		//Button for deleting a property
 		jButton_Delete.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
 		jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); // NOI18N
 		jButton_Delete.setText("Delete");
@@ -225,7 +224,8 @@ public class Properties extends javax.swing.JFrame {
 				jButton_DeleteActionPerformed(evt);
 			}
 		});
-
+		
+		//Button to edit the facilities for the Property
 		jButton_EditFacilities.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
 		jButton_EditFacilities.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
 		jButton_EditFacilities.setText("Edit Property Facilities");
@@ -235,7 +235,7 @@ public class Properties extends javax.swing.JFrame {
 				jButton_EditFacilitiesActionPerformed(evt);
 			}
 		});
-
+		//Button to edit the chargeBands for the Property
 		jButton_EditChargeBands.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
 		jButton_EditChargeBands.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); // NOI18N
 		jButton_EditChargeBands.setText("Edit Property Charge Bands");
@@ -245,7 +245,7 @@ public class Properties extends javax.swing.JFrame {
 				jButton_UpdateChargeBandsActionPerformed(evt);
 			}
 		});
-
+		//Button for returning to the previous GUI page
 		backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
@@ -288,6 +288,7 @@ public class Properties extends javax.swing.JFrame {
 		jButton_Reviews.setText("Reviews");
 		jButton_Reviews.setFont(new Font("Verdana", Font.BOLD, 14));
 
+		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
 				.createSequentialGroup().addGap(33)
@@ -443,14 +444,16 @@ public class Properties extends javax.swing.JFrame {
 		pack();
 	}
 
-	// show jtable row data in jtextfields in the mouse clicked event
+	// Function that displays the information of a property that is clicked on with
+	// mouse within the JTable into their
+	// corresponding TextFields
 	private void jTable_Display_UsersMouseClicked(java.awt.event.MouseEvent evt) {
-		// Get The Index Of The Slected Row
+		// Get The Index Of The Selected Row
 		int i = jTable_Display_Properties.getSelectedRow();
 
 		TableModel model = jTable_Display_Properties.getModel();
 
-		// Display Slected Row In JTexteFields
+		// Display Selected Row In JTextFields
 		jTextField_property_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_Description.setText(model.getValueAt(i, 1).toString());
 		jTextField_shortName_1.setText(model.getValueAt(i, 2).toString());
@@ -473,7 +476,7 @@ public class Properties extends javax.swing.JFrame {
 		setVisible(false);
 	}
 
-	// Button Update
+	// Button to Update proeprty
 	private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			String updatePropertyQuery = "update Property set  description=?, " + "shortName=?, guestcapacity=? "
@@ -498,7 +501,7 @@ public class Properties extends javax.swing.JFrame {
 		setVisible(false);
 	}
 
-	// Button Delete
+	// Button to Delete property
 	private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			Connection connection = getConnection();
@@ -518,6 +521,7 @@ public class Properties extends javax.swing.JFrame {
 				kitchen = rs.getInt("kitchen_id");
 			}
 
+			//Queries to delete facilities that correspond to the property
 			String deleteFacilitiesQuery = "DELETE FROM Facilities WHERE facilities_id = ?";
 			PreparedStatement deleteFacilities = connection.prepareStatement(deleteFacilitiesQuery);
 			deleteFacilities.setInt(1, facilities);
@@ -604,17 +608,14 @@ public class Properties extends javax.swing.JFrame {
 		}
 	}
 
-	// Button Edit Facilities
+	// Button to Edit Facilities of property
 	private void jButton_EditFacilitiesActionPerformed(java.awt.event.ActionEvent evt) {
 		mainModule.editPropertyState = EDITPROPERTY.FACILITIES;
-		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), 0); // fix the params
+		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_property_id.getText()), 0); 
 		setVisible(false);
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
-
+	// Initialises the Properties GUI when called from other GUI pages
 	public void initializeProperties(int host_Id, int id) {
 		hostId = host_Id;
 		try {

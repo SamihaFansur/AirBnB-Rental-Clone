@@ -24,15 +24,17 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
+
+/**
+ * Class for displaying the facilities in the database onto a GUI
+ */
 public class Facilities extends javax.swing.JFrame {
 
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
 
-	/**
-	 * Creates new form 
-	 */
+	//Constructor for facilities
 	public Facilities(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
 		this.mainModule = mainModule;
@@ -42,11 +44,12 @@ public class Facilities extends javax.swing.JFrame {
 		Show_Facilities_In_JTable();
 	}
 
-	// get the connection
+	// Sets the database information to get a connection later
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
 
+	//Gets a connection to the database
 	public Connection getConnection() {
 		Connection connection;
 		try {
@@ -58,7 +61,8 @@ public class Facilities extends javax.swing.JFrame {
 		}
 	}
 
-	// get a list of facilities from  database
+	// Creates a list of facility objects using the information in the Facility table 
+	// within the database
 	public ArrayList<FacilitiesObject> getFacilitiesList() {
 		ArrayList<FacilitiesObject> facilitiesList = new ArrayList<>();
 		Connection connection = getConnection();
@@ -84,8 +88,7 @@ public class Facilities extends javax.swing.JFrame {
 		return facilitiesList;
 	}
 
-	// Display Data In JTable
-
+	// Displays the facility Objects' information from the facilitiesList on to a JTable
 	public void Show_Facilities_In_JTable() {
 		ArrayList<FacilitiesObject> list = getFacilitiesList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Facilities.getModel();
@@ -140,7 +143,6 @@ public class Facilities extends javax.swing.JFrame {
 		try {
 			st = connection.createStatement();
 			if ((st.executeUpdate(query)) == 1) {
-				// refresh jtable data
 				DefaultTableModel model = (DefaultTableModel) jTable_Display_Facilities.getModel();
 				model.setRowCount(0);
 				Show_Facilities_In_JTable();
@@ -155,7 +157,7 @@ public class Facilities extends javax.swing.JFrame {
 		}
 	}
 
-	
+	// Function for defining all of the GUI objects and their attributes
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
@@ -206,8 +208,6 @@ public class Facilities extends javax.swing.JFrame {
 		jLabel7.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel7.setText("Living:");
 
-		// NAVBAR
-
 		jTextField_facilities_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_utility_id.setFont(new java.awt.Font("Verdana", 0, 14));
@@ -222,6 +222,7 @@ public class Facilities extends javax.swing.JFrame {
 
 		jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
+		//Creates a JTable for displaying facilties and Sets the headers for the columns
 		jTable_Display_Facilities.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
 				new String[] { "Facility ID", "Utility", "Outdoors", "Kitchen", "Sleeping", "Bathing", "Living" }));
 
@@ -233,6 +234,7 @@ public class Facilities extends javax.swing.JFrame {
 		});
 		jScrollPane1.setViewportView(jTable_Display_Facilities);
 
+		//Button for updating the information of a facility
 		jButton_Update.setFont(new java.awt.Font("Verdana", 1, 14)); 
 		jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/refresh.png"))); 
 		jButton_Update.setText("Edit");
@@ -243,6 +245,7 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 
+		//Button for deleting a facility
 		jButton_Delete.setFont(new java.awt.Font("Verdana", 1, 14)); 
 		jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/delete.png"))); 
 		jButton_Delete.setText("Delete");
@@ -253,6 +256,7 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 
+		//Button for returning to the previous GUI page
 		backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.addActionListener(new ActionListener() {
@@ -267,6 +271,7 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 
+		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
 				.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
@@ -342,14 +347,16 @@ public class Facilities extends javax.swing.JFrame {
 		pack();
 	}
 
-	// show jtable row data in jtextfields in the mouse clicked event
+	// Function that displays the information of a facility that is clicked on with
+	// mouse within the JTable into their
+	// corresponding TextFields
 	private void jTable_Display_FacilitiesMouseClicked(java.awt.event.MouseEvent evt) {
-		// Get The Index Of The Slected Row
+		// Get The Index Of The Selected Row
 		int i = jTable_Display_Facilities.getSelectedRow();
 
 		TableModel model = jTable_Display_Facilities.getModel();
 
-		// Display Slected Row In JTexteFields
+		// Display Selected Row In JTextFields
 		jTextField_facilities_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_utility_id.setText(model.getValueAt(i, 1).toString());
 		jTextField_outdoors_id.setText(model.getValueAt(i, 2).toString());
@@ -357,21 +364,19 @@ public class Facilities extends javax.swing.JFrame {
 		jTextField_sleeping_id.setText(model.getValueAt(i, 4).toString());
 	}
 
-	// Button Update
+	// Button to edit Facility
 	private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
 		mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
 		MainModule.controller.editPropertyView(Integer.parseInt(jTextField_facilities_id.getText()), 0);
 	}
 
-	// Button Delete
+	// Button to delete Facility
 	private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
 		String query = "DELETE FROM `Facilities` WHERE facilities_id = " + jTextField_facilities_id.getText();
 		executeSQlQuery(query, "Deleted");
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
+	// Initialises the Facilities GUI when called from other GUI pages
 	public void initializeFacilities(int fId, int id) {
 		propertyId = fId;
 		try {
@@ -406,7 +411,7 @@ public class Facilities extends javax.swing.JFrame {
 			}
 		});
 	}
-
+	// Variables used on the GUI initialised.
 	private javax.swing.JButton jButton_Delete;
 	private javax.swing.JButton jButton_Update;
 	private javax.swing.JLabel jLabel1;

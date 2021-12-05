@@ -319,16 +319,16 @@ public class Bookings extends javax.swing.JFrame {
 	}
 
 	// Function that displays the information of a booking that is clicked on with
-	// mouse within the JTable into theie
+	// mouse within the JTable into their
 	// corresponding TextFields
 	private void jTable_Display_BookingsMouseClicked(java.awt.event.MouseEvent evt) {
 
-		// Gets The Index Of The Slected Row
+		// Gets The Index Of The Selected Row
 		int i = jTable_Display_Bookings.getSelectedRow();
 
 		TableModel model = jTable_Display_Bookings.getModel();
 
-		// Display Slected Row In JTexteFields
+		// Display Selected Row In JTextFields
 		jTextField_booking_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_property_id.setText(model.getValueAt(i, 1).toString());
 	}
