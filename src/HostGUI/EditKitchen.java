@@ -24,6 +24,10 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.USER;
 import Model.Model;
 
+
+/*
+ * Class to editKitchen object's information already in database
+ */
 public class EditKitchen extends JFrame {
 
 	private JFrame frame;
@@ -34,7 +38,7 @@ public class EditKitchen extends JFrame {
 	}
 
 	/**
-	 * Create the application.
+	 *  Initialses buttons and variables needed for functions
 	 */
 
 	private Controller controller;
@@ -56,17 +60,18 @@ public class EditKitchen extends JFrame {
 
 	Connection connection = null;
 
+	//Constrctor for the EditKitchen class
 	public EditKitchen(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditKitchen();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame so that is can be used from other GUIs
 	 */
 	public void initializeEditKitchen(int facilitiesId, int id) {
+		//Creates frame and adds a NavBar
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -78,6 +83,7 @@ public class EditKitchen extends JFrame {
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
 
+		//Creates main panel and adds to frame
 		JPanel editKitchenPanel = new JPanel();
 		editKitchenPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editKitchenPanel, BorderLayout.CENTER);
@@ -88,6 +94,8 @@ public class EditKitchen extends JFrame {
 		editKitchenLabel.setBounds(186, 48, 261, 57);
 		editKitchenPanel.add(editKitchenLabel);
 
+		//Selects the kitchen that is being edited from database and sets
+		// the values to variables
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -115,6 +123,8 @@ public class EditKitchen extends JFrame {
 			System.err.println(e.getMessage());
 		}
 
+		//Creates the objects for the GUi such as labels and textFields
+		// and adds them to the panel/frame
 		JLabel refrigeratorLabel = new JLabel("Refrigerator");
 		refrigeratorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		refrigeratorLabel.setBounds(170, 135, 167, 34);
@@ -197,6 +207,7 @@ public class EditKitchen extends JFrame {
 		addKitchen.setBounds(248, 602, 91, 23);
 		editKitchenPanel.add(addKitchen);
 
+		//Button to return user to previous GUI page
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(31, 58, 91, 23);
@@ -216,10 +227,13 @@ public class EditKitchen extends JFrame {
 		frame.setVisible(true);
 	}
 
+	//Function to update the information of a kitchen in the database
 	public void updateKitchenDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
 
+			//displays the kitchen to be editeded's information in the radiobuttons 
+			//so user can see current values
 			model.setRefrigerator(refrigeratorRadioBtn.isSelected());
 			model.setMicrowave(microwaveRadioBtn.isSelected());
 			model.setOven(ovenRadioBtn.isSelected());
@@ -229,6 +243,7 @@ public class EditKitchen extends JFrame {
 			model.setCookware(cookwareRadioBtn.isSelected());
 			model.setBasicProvisions(basicProvisionsRadioBtn.isSelected());
 
+			//Updates the database with the new values that the use imputs 
 			String updateKitchenRecord = "update Kitchen set refrigerator=?, microwave=?, "
 					+ "oven=?, stove=?, dishwasher=?, tableware=?, " + "cookware=?, basicProvision=?  "
 					+ "where kitchen_id=?";
@@ -259,5 +274,3 @@ public class EditKitchen extends JFrame {
 		}
 	}
 }
-
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

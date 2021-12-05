@@ -33,8 +33,8 @@ public class EditUtility extends JFrame {
 		frame.dispose();
 	}
 
-	/**
-	 * Create the application.
+	/*
+	 * Class to editUtility object's information already in database
 	 */
 	private Controller controller;
 	private Model model;
@@ -53,16 +53,17 @@ public class EditUtility extends JFrame {
 
 	Connection connection = null;
 
+	//Consturctor for editUtility Class
 	public EditUtility(MainModule mainModule, Controller controller, Model model) {
-		// initializeEditUtility();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame so that it can be called from other GUI pages
 	 */
 	public void initializeEditUtility(int facilitiesId, int id) {
+		//Creates the frame and adds a NavBar
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -73,6 +74,7 @@ public class EditUtility extends JFrame {
 		idAfter = id;
 		facilitiesidAfter = facilitiesId;
 
+		//Creates the main panel for the editUtility Page
 		JPanel editUtilityPanel = new JPanel();
 		editUtilityPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editUtilityPanel, BorderLayout.CENTER);
@@ -86,6 +88,8 @@ public class EditUtility extends JFrame {
 		try {
 			connection = ConnectionManager.getConnection();
 
+			//Gets the information for the kitchen in the database and sets the values
+			//to variables
 			String selectUtilityRecord = "select heating, washingMachine, dryingMachine, fireExtinguisher, "
 					+ "smokeAlarm, firstAidKit from Utility where utility_id=?";
 
@@ -107,7 +111,7 @@ public class EditUtility extends JFrame {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-
+		//Creates the objects such as labels and textFields and adds them to the panel
 		JLabel heatingLabel = new JLabel("Heating");
 		heatingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		heatingLabel.setBounds(146, 135, 167, 34);
@@ -162,6 +166,7 @@ public class EditUtility extends JFrame {
 		firstAidKitRadioBtn.setBounds(395, 435, 21, 23);
 		editUtilityPanel.add(firstAidKitRadioBtn);
 
+		//Button to update the Kitchens information in the database
 		addUtility = new JButton("Save");
 		addUtility.addActionListener(new ActionListener() {
 			@Override
@@ -172,21 +177,18 @@ public class EditUtility extends JFrame {
 		addUtility.setBounds(248, 500, 91, 23);
 		editUtilityPanel.add(addUtility);
 
+		//Button to return user to the previous GUI page
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		backButton.setBounds(29, 66, 91, 23);
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Homepage sp = new Homepage();
 
-				// mainModule.currentState=STATE.EDIT_PROPERTY;
 				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
-//				close();
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); 
 				frame.dispose();
-
 			}
 		});
 		editUtilityPanel.add(backButton);
@@ -196,10 +198,13 @@ public class EditUtility extends JFrame {
 		frame.setVisible(true);
 	}
 
+	//Function to update the kitchens values in the database
 	public void updateUtilityDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
 
+			//Sets the radio button son GUI to display the inforamtion about th kitchen
+			// in the database so the user can see what they are editing
 			model.setHeating(heatingRadioBtn.isSelected());
 			model.setWashingMachine(washingMachineRadioBtn.isSelected());
 			model.setFireExtinguisher(fireExtinguisherRadioBtn.isSelected());
@@ -207,6 +212,8 @@ public class EditUtility extends JFrame {
 			model.setSmokeAlarm(smokeAlarmRadioBtn.isSelected());
 			model.setFirstAidKit(firstAidKitRadioBtn.isSelected());
 
+			//Updates the database with the new information from the radioButtons
+			//that the user has changed
 			String updateUtilityRecord = "update Utility set heating=?, washingMachine=?, "
 					+ "dryingMachine=?, fireExtinguisher=?, smokeAlarm=?, firstAidKit=? " + "where utility_id=?";
 
@@ -236,4 +243,3 @@ public class EditUtility extends JFrame {
 		}
 	}
 }
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
