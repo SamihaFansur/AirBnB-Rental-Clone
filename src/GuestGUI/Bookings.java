@@ -64,7 +64,7 @@ public class Bookings extends javax.swing.JFrame {
 		}
 	}
 
-	// Creates a list of users from mysql database and puts them into an ArrayList
+	// Creates a list of bookings from mysql database and puts them into an ArrayList
 	// to use.
 	public ArrayList<BookingObject> getBookingsList() {
 
@@ -161,16 +161,12 @@ public class Bookings extends javax.swing.JFrame {
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
-		jLabel3 = new javax.swing.JLabel();
-		jLabel4 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
 		jLabel7 = new javax.swing.JLabel();
 
 		jTextField_booking_id = new javax.swing.JTextField();
 		jTextField_property_id = new javax.swing.JTextField();
-		jTextField_host_id = new javax.swing.JTextField();
-		jTextField_guest_id = new javax.swing.JTextField();
 		jTextField_sleeping_id = new javax.swing.JTextField();
 		jTextField_bathing_id = new javax.swing.JTextField();
 		jTextField_living_id = new javax.swing.JTextField();
@@ -188,12 +184,6 @@ public class Bookings extends javax.swing.JFrame {
 		jLabel2.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel2.setText("Property_ID");
 
-		jLabel3.setFont(new java.awt.Font("Verdana", 0, 18));
-		jLabel3.setText("Host_ID");
-
-		jLabel4.setFont(new java.awt.Font("Verdana", 0, 18));
-		jLabel4.setText("Guest ID:");
-
 		jLabel5.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel5.setText("Sleeping:");
 
@@ -206,10 +196,6 @@ public class Bookings extends javax.swing.JFrame {
 		jTextField_booking_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
-
-		jTextField_host_id.setFont(new java.awt.Font("Verdana", 0, 14));
-
-		jTextField_guest_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_sleeping_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
@@ -247,34 +233,6 @@ public class Bookings extends javax.swing.JFrame {
 			}
 		});
 
-		lblCommunication = new JLabel();
-		lblCommunication.setText("Provisional:");
-		lblCommunication.setFont(new Font("Verdana", Font.PLAIN, 18));
-
-		lblCleanliness = new JLabel();
-		lblCleanliness.setText("Total Price:");
-		lblCleanliness.setFont(new Font("Verdana", Font.PLAIN, 18));
-
-		lblDescription = new JLabel();
-		lblDescription.setText("Start Date:");
-		lblDescription.setFont(new Font("Verdana", Font.PLAIN, 18));
-
-		jTextField_provisional = new JTextField();
-		jTextField_provisional.setFont(new Font("Verdana", Font.PLAIN, 14));
-
-		jTextField_totalPrice = new JTextField();
-		jTextField_totalPrice.setFont(new Font("Verdana", Font.PLAIN, 14));
-
-		jTextField_startDate = new JTextField();
-		jTextField_startDate.setFont(new Font("Verdana", Font.PLAIN, 14));
-
-		jTextField_endDate = new JTextField();
-		jTextField_endDate.setFont(new Font("Verdana", Font.PLAIN, 14));
-
-		lblEndDate = new JLabel();
-		lblEndDate.setText("End Date:");
-		lblEndDate.setFont(new Font("Verdana", Font.PLAIN, 18));
-
 		JButton reviewButton = new JButton("Review");
 		reviewButton.addActionListener(new ActionListener() {
 			@Override
@@ -288,110 +246,64 @@ public class Bookings extends javax.swing.JFrame {
 			}
 		});
 		reviewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		
+		confidentialInformationButton = new JButton("View Confidential Info");
+		confidentialInformationButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
 		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+		jPanel1Layout.setHorizontalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addContainerGap(35, Short.MAX_VALUE)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel1Layout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(jPanel1Layout.createSequentialGroup()
-												.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 170,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(jTextField_startDate, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE))
-										.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
-												.createParallelGroup(Alignment.LEADING).addComponent(jLabel2)
-												.addComponent(jLabel4).addComponent(jLabel1).addComponent(jLabel3)
-												.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
-														.addComponent(lblCleanliness, Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(lblCommunication, Alignment.LEADING,
-																GroupLayout.PREFERRED_SIZE, 170,
-																GroupLayout.PREFERRED_SIZE)))
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-														.addComponent(jTextField_totalPrice, GroupLayout.PREFERRED_SIZE,
-																129, GroupLayout.PREFERRED_SIZE)
-														.addComponent(jTextField_provisional,
-																GroupLayout.PREFERRED_SIZE, 129,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jTextField_host_id, GroupLayout.PREFERRED_SIZE,
-																129, GroupLayout.PREFERRED_SIZE)
-														.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE,
-																129, GroupLayout.PREFERRED_SIZE)
-														.addComponent(jTextField_property_id,
-																GroupLayout.PREFERRED_SIZE, 129,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jTextField_guest_id, GroupLayout.PREFERRED_SIZE,
-																129, GroupLayout.PREFERRED_SIZE)))
-										.addGroup(jPanel1Layout.createSequentialGroup()
-												.addComponent(lblEndDate, GroupLayout.PREFERRED_SIZE, 170,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(jTextField_endDate, GroupLayout.PREFERRED_SIZE, 129,
-														GroupLayout.PREFERRED_SIZE)))
-								.addGap(18).addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409,
-										GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap())
-				.addGroup(Alignment.LEADING,
-						jPanel1Layout.createSequentialGroup().addGap(142)
-								.addComponent(reviewButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(542, Short.MAX_VALUE)));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
-				.createSequentialGroup()
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout
-						.createSequentialGroup().addGap(21).addComponent(backButton).addGap(18).addGroup(jPanel1Layout
-								.createParallelGroup(Alignment.LEADING)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 35,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel1))
-										.addGap(11)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jLabel2).addComponent(jTextField_property_id,
-														GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jLabel3).addComponent(jTextField_host_id,
-														GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-										.addGap(22)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_guest_id, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel4))
-										.addGap(18)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblCommunication, GroupLayout.PREFERRED_SIZE, 23,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_provisional, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE))
-										.addGap(17)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblCleanliness, GroupLayout.PREFERRED_SIZE, 23,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_totalPrice, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(jTextField_startDate, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 23,
-														GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup().addGap(361)
-										.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblEndDate, GroupLayout.PREFERRED_SIZE, 23,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(jTextField_endDate, GroupLayout.PREFERRED_SIZE, 34,
-														GroupLayout.PREFERRED_SIZE)))))
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(62).addComponent(jScrollPane1,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addGap(4).addComponent(reviewButton).addContainerGap()));
+									.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+										.addComponent(jLabel1)
+										.addComponent(jLabel2))
+									.addGap(61)
+									.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+										.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(jPanel1Layout.createSequentialGroup()
+									.addGap(112)
+									.addComponent(reviewButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
+								.addGroup(jPanel1Layout.createSequentialGroup()
+									.addGap(47)
+									.addComponent(confidentialInformationButton, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		jPanel1Layout.setVerticalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addGap(62)
+					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(44))
+				.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+					.addGap(21)
+					.addComponent(backButton)
+					.addGap(64)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jTextField_booking_id, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel1))
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGap(156)
+							.addComponent(reviewButton))
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGap(32)
+							.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jLabel2)
+								.addComponent(jTextField_property_id, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))))
+					.addGap(65)
+					.addComponent(confidentialInformationButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(107, Short.MAX_VALUE))
+		);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -419,12 +331,6 @@ public class Bookings extends javax.swing.JFrame {
 		// Display Slected Row In JTexteFields
 		jTextField_booking_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_property_id.setText(model.getValueAt(i, 1).toString());
-		jTextField_host_id.setText(model.getValueAt(i, 2).toString());
-		jTextField_guest_id.setText(model.getValueAt(i, 3).toString());
-		jTextField_provisional.setText(model.getValueAt(i, 4).toString());
-		jTextField_totalPrice.setText(model.getValueAt(i, 5).toString());
-		jTextField_startDate.setText(model.getValueAt(i, 6).toString());
-		jTextField_endDate.setText(model.getValueAt(i, 7).toString());
 	}
 
 	// Initialises the Booking GUI when called from other GUI pages
@@ -461,8 +367,6 @@ public class Bookings extends javax.swing.JFrame {
 	// Variables used on the GUI initialised.
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
-	private javax.swing.JLabel jLabel3;
-	private javax.swing.JLabel jLabel4;
 	private javax.swing.JLabel jLabel5;
 	private javax.swing.JLabel jLabel6;
 	private javax.swing.JLabel jLabel7;
@@ -471,21 +375,12 @@ public class Bookings extends javax.swing.JFrame {
 	private javax.swing.JTable jTable_Display_Bookings;
 	private javax.swing.JTextField jTextField_booking_id;
 	private javax.swing.JTextField jTextField_property_id;
-	private javax.swing.JTextField jTextField_host_id;
-	private javax.swing.JTextField jTextField_guest_id;
 	private javax.swing.JTextField jTextField_sleeping_id;
 	private javax.swing.JTextField jTextField_bathing_id;
 	private javax.swing.JTextField jTextField_living_id;
 	private JButton backButton;
 	private static int propertyId;
 	private static int Id;
-	private JLabel lblCommunication;
-	private JLabel lblCleanliness;
-	private JLabel lblDescription;
-	private JTextField jTextField_provisional;
-	private JTextField jTextField_totalPrice;
-	private JTextField jTextField_startDate;
-	private JTextField jTextField_endDate;
-	private JLabel lblEndDate;
+	private JButton confidentialInformationButton;
 }
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
