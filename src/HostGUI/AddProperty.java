@@ -28,7 +28,7 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
-//Class to add a property to the database
+//Class to add a property object to the Property database table
 public class AddProperty extends JFrame {
 
 	private NavHost navForHost = new NavHost();
@@ -54,34 +54,34 @@ public class AddProperty extends JFrame {
 	private Model model;
 	private MainModule mainModule;
 
-	//function to close the frame
+	//Function to close the frame
 	public void close() {
 		frame.dispose();
 	}
 
 	//Constructor for addProperty
 	public AddProperty(MainModule mainModule, Controller controller, Model model) {
-		//initializeEditProperty();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	//Function for showing a pop-up when a facility is added
 	public void adddingFacility() {
 		JOptionPane.showMessageDialog(this, "You must add a charge band before adding a facility");
 	}
-
+	//Function for showing a pop-up when a chargeBand is added
 	public void adddingChargeband() {
 		JOptionPane.showMessageDialog(this, "You must save a property before adding a charge band");
 	}
 
-	
+	/**
+	 * Initialize the contents of the frame so that it can be called from other GUIs
+	 */
 	public void initializeEditProperty() {
 
 		model.setPreviouslyInPropertiesList(false);
+		//Creates a frame and adds a NavBar
 		try {
 			frame = new JFrame();
 			frame.setResizable(false);
@@ -91,6 +91,7 @@ public class AddProperty extends JFrame {
 			System.err.println(e.getMessage());
 		}
 
+		//Creates and adds the main panel to the frame
 		JPanel editPropertyPanel = new JPanel();
 		editPropertyPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(editPropertyPanel, BorderLayout.CENTER);
@@ -101,8 +102,9 @@ public class AddProperty extends JFrame {
 		editPropertyLabel.setBounds(222, 53, 183, 57);
 		editPropertyPanel.add(editPropertyLabel);
 
+		
+		//Button to add facility to the database
 		JButton addFacilityButton = new JButton("Add Facility");
-
 		addFacilityButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -122,6 +124,7 @@ public class AddProperty extends JFrame {
 		addFacilityButton.setBounds(206, 142, 183, 34);
 		editPropertyPanel.add(addFacilityButton);
 
+		//Creates and adds objects to panel such as labels and textFields
 		JLabel postcodeLabel = new JLabel("Postcode:");
 		postcodeLabel.setBounds(97, 248, 93, 34);
 		editPropertyPanel.add(postcodeLabel);
@@ -143,7 +146,8 @@ public class AddProperty extends JFrame {
 		JLabel cityLabel = new JLabel("City/Town:");
 		cityLabel.setBounds(97, 338, 93, 34);
 		editPropertyPanel.add(cityLabel);
-
+		
+		//List of available city names to select when creating property
 		String cityNames[] = { "Bath", "Birmingham", "Bradford", "Brighton and Hove", "Bristol", "Cambridge",
 				"Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Coventry", "Derby", "Durham", "Ely",
 				"Exeter", "Gloucester", "Hereford", "Kingston upon Hull", "Lancaster", "Leeds", "Leicester",
@@ -182,7 +186,7 @@ public class AddProperty extends JFrame {
 		guestCapacityTextField.setBounds(195, 476, 274, 34);
 		editPropertyPanel.add(guestCapacityTextField);
 
-		JLabel descriptionLabel = new JLabel("Description"); // fix text box dimensions
+		JLabel descriptionLabel = new JLabel("Description"); 
 		descriptionLabel.setBounds(97, 521, 93, 34);
 		editPropertyPanel.add(descriptionLabel);
 
@@ -191,10 +195,11 @@ public class AddProperty extends JFrame {
 		descriptionTextField.setBounds(195, 521, 274, 120);
 		editPropertyPanel.add(descriptionTextField);
 		
-		JLabel breakfastLabel = new JLabel("Breakfast offered"); // fix text box dimensions
+		JLabel breakfastLabel = new JLabel("Breakfast offered"); 
 		breakfastLabel.setBounds(97, 655, 93, 34);
 		editPropertyPanel.add(breakfastLabel);
 
+		
 		breakfastRadioBtn = new JRadioButton();
 		breakfastRadioBtn.addActionListener(new ActionListener() {
 			@Override
@@ -393,5 +398,3 @@ public class AddProperty extends JFrame {
 		}
 	}
 }
-
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

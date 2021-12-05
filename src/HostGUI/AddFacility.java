@@ -56,7 +56,6 @@ public class AddFacility extends JFrame {
 
 	
 	public AddFacility(MainModule mainModule, Controller controller, Model model) {
-		// initializeAddFacility();
 		this.model = model;
 		this.mainModule = mainModule;
 		this.controller = controller;
@@ -78,7 +77,7 @@ public class AddFacility extends JFrame {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
+		//Creates the main panel
 		JPanel addFacilityPanel = new JPanel();
 		addFacilityPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(addFacilityPanel, BorderLayout.CENTER);
@@ -102,7 +101,7 @@ public class AddFacility extends JFrame {
 
 					try {
 						connection = ConnectionManager.getConnection();
-
+						//Creates a Sleeping facility row in database with initially empty values
 						String insertSleepingQuery = "insert into Sleeping (bedLinen, towels, noOfBeds, noOfBedrooms)"
 								+ " values(?,?,?,?)";
 						PreparedStatement ps_sleeping = connection.prepareStatement(insertSleepingQuery,
@@ -152,7 +151,7 @@ public class AddFacility extends JFrame {
 
 					try {
 						connection = ConnectionManager.getConnection();
-
+						//Creates a Bathing facility row in database with initially empty values
 						String insertBathingQuery = "insert into Bathing (hairDryer, toiletPaper, noOfBathrooms)"
 								+ " values(?,?,?)";
 						PreparedStatement ps_bathing = connection.prepareStatement(insertBathingQuery,
@@ -167,7 +166,7 @@ public class AddFacility extends JFrame {
 						if (rs.next()) {
 							bathingId = rs.getInt(1);
 						}
-						// sets bathing id to new row value
+						// Sets bathing id to new row value
 						model.setCurrentBathingId(bathingId);
 						String insertBathingId = "UPDATE Facilities SET bathing_id = ? WHERE facilities_id = ?";
 						PreparedStatement ps_bathingid = connection.prepareStatement(insertBathingId);
@@ -197,7 +196,8 @@ public class AddFacility extends JFrame {
 				if (model.getCurrentKitchedId() == 0) {
 					try {
 						connection = ConnectionManager.getConnection();
-
+						
+						//Creates a Kitchen facility row in database with initially empty values
 						String insertKitchenQuery = "insert into Kitchen (refrigerator, microwave, oven, "
 								+ "stove, dishwasher, tableware, cookware, basicProvision)"
 								+ " values(?,?,?,?,?,?,?,?) ";
@@ -248,11 +248,8 @@ public class AddFacility extends JFrame {
 				if (model.getCurrentUtilityId() == 0) {
 					try {
 						connection = ConnectionManager.getConnection();
-
-						String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMachine, " // change
-																													// to
-																													// machine
-																													// spelling
+						//Creates a Utlity facility row in database with initially empty values
+						String insertUtilityQuery = "insert into Utility (heating, washingMachine, dryingMachine, " 																					
 								+ "fireExtinguisher, smokeAlarm, firstAidKit)" + " values(?,?,?,?,?,?) ";
 						PreparedStatement ps_utility = connection.prepareStatement(insertUtilityQuery,
 								Statement.RETURN_GENERATED_KEYS);
@@ -295,13 +292,13 @@ public class AddFacility extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_LIVING;
-				// create a record and set values to null
+				// Creates a record and set values to null
 
 				if (model.getCurrentLivingId() == 0) {
 
 					try {
 						connection = ConnectionManager.getConnection();
-
+						//Creates a Living facility row in database with initially empty values
 						String insertLivingQuery = "insert into Living (wifi, television, satellite, "
 								+ "streaming, dvdPlayer, boardGames)" + " values(?,?,?,?,?,?) ";
 
@@ -345,11 +342,12 @@ public class AddFacility extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_OUTDOORS;
-				// create a record and set values to null
+				// Creates a record and set values to null
 				if (model.getCurrentOutdoorsId() == 0) {
 					try {
 						connection = ConnectionManager.getConnection();
-
+						
+						//Creates a Outdoors facility row in database with initially empty values
 						String insertOutdoorsQuery = "insert into Outdoors (freeOnSiteParking, onRoadParking, paidCarPark, "
 								+ "patio, barbeque) " + " values(?,?,?,?,?) ";
 
@@ -387,6 +385,7 @@ public class AddFacility extends JFrame {
 		});
 		btnAddOutdoorsFacility.setBounds(192, 566, 196, 51);
 		addFacilityPanel.add(btnAddOutdoorsFacility);
+		
 		//Button for returning to the previous GUI page
 		JButton backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
