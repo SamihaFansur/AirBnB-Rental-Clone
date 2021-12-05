@@ -246,10 +246,239 @@ public class Bookings extends javax.swing.JFrame {
 			}
 		});
 		reviewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+
 		
 		confidentialInformationButton = new JButton("View Confidential Info");
 		confidentialInformationButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		confidentialInformationButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//first check if the booking is accepted.
+				// get booking id, propid, hostid, guest id,
+				// use above to show guest info in a pop up
+				
+				
+				
+				try {
+					bookingId = Integer.parseInt(jTextField_booking_id.getText().toString());
+					hostId = 0;
+					guestId = 0;
+					propId = Integer.parseInt(jTextField_property_id.getText().toString());
 
+
+					Connection connection = getConnection();
+					
+					String checkIfBookingAccepted = "select booking_id, host_id, guest_id from Booking where booking_id=? and provisional=?";
+					PreparedStatement checksProvisional = connection.prepareStatement(checkIfBookingAccepted);
+					checksProvisional.setInt(1, bookingId);
+					checksProvisional.setString(2, "Accepted");
+					
+					//this resultset will gimme booking id for all accepted bookings
+					//now need to get confi info
+					ResultSet getsConfidentialInfo = checksProvisional.executeQuery();
+					while(getsConfidentialInfo.next()) {
+						hostId = getsConfidentialInfo.getInt("host_id");
+						guestId = getsConfidentialInfo.getInt("guest_id");
+
+					
+						System.out.println("Booking: "+bookingId);
+						System.out.println("Guest id: "+guestId);
+						System.out.println("host id: "+hostId);
+						
+						String addressInfo = "select address_id from Property where property_id=?";
+						PreparedStatement getAddressInfo = connection.prepareStatement(addressInfo);
+						getAddressInfo.setInt(1, propId);
+
+				
+						System.out.println("property id: "+propId);
+
+						int addressIdProperty = 0;
+						ResultSet gettingAddressIdProperty = getAddressInfo.executeQuery();
+						while(gettingAddressIdProperty.next()) {
+							addressIdProperty = gettingAddressIdProperty.getInt("address_id");
+
+							String propertyInformation = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+							PreparedStatement getPropertyInfoPS = connection.prepareStatement(propertyInformation);
+							getPropertyInfoPS.setInt(1, addressIdProperty);
+							
+							System.out.println("addressid property: "+addressIdProperty);
+							
+							houseNameNumber = "";
+							streetName = "";
+							placeName = "";
+							postcode = "";
+
+
+							ResultSet gettingPropertyInfo = getPropertyInfoPS.executeQuery();
+
+							while(gettingPropertyInfo.next()) {
+								houseNameNumber = gettingPropertyInfo.getString("houseNameNumber");
+								streetName = gettingPropertyInfo.getString("streetName");
+								placeName = gettingPropertyInfo.getString("placeName");
+								postcode = gettingPropertyInfo.getString("postcode");
+							}
+						
+							System.out.println("houseNameNumber: "+houseNameNumber);
+							System.out.println("streetName: "+streetName);
+							System.out.println("placeName: "+placeName);
+							System.out.println("postcode: "+postcode);
+
+
+
+						}
+						
+						
+
+						
+						/////////-----host confidential info--------------
+						
+						// first go to hostAccoutn table to get email using host_id, 
+						//se email to get address id from address table
+						// use address id to get hosts address from address table
+						//use email to get hosts confidential info from Account table
+						
+						String hostEmailQuery = "select email from HostAccount where host_id=?";
+						PreparedStatement hostEmailPS = connection.prepareStatement(hostEmailQuery);
+						hostEmailPS.setInt(1, hostId);
+						ResultSet hostIdRS = hostEmailPS.executeQuery();
+						hostEmail = "";
+						while(hostIdRS.next()) {
+							hostEmail = hostIdRS.getString("email");
+						}
+						
+						System.out.println("host email = "+hostEmail);
+						
+						// getting hosts personal information from Account table (including address id to be used later):
+						String hostInfoIDQuery = "select title, firstName, surname, mobileNumber, address_id from Account where email=?";
+						PreparedStatement hostInfoPS = connection.prepareStatement(hostInfoIDQuery);
+						hostInfoPS.setString(1, hostEmail);
+						ResultSet hostInfoRS = hostInfoPS.executeQuery();
+						hostTitle = "";
+						hostFirstName = "";
+						hostSurname="";
+						hostMobileNumber="";
+						
+						int hostAddressId = 0;
+						
+						while(hostInfoRS.next()) {
+							hostTitle = hostInfoRS.getString("title");
+							hostFirstName = hostInfoRS.getString("firstName");
+							hostSurname = hostInfoRS.getString("surname");
+							hostMobileNumber = hostInfoRS.getString("mobileNumber");
+							hostAddressId = hostInfoRS.getInt("address_id");
+						}
+						System.out.println("hostTitle: "+hostTitle);
+						System.out.println("hostFirstName: "+hostFirstName);
+						System.out.println("hostSurname: "+hostSurname);
+						System.out.println("hostMobileNumber: "+hostMobileNumber);
+						System.out.println("hostAddressId: "+hostAddressId);
+						
+						//getting hosts address from Address table:
+						String hostPropertyInfo = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+						PreparedStatement getHostPropertyInfoPS = connection.prepareStatement(hostPropertyInfo);
+						getHostPropertyInfoPS.setInt(1, hostAddressId);
+						
+						hostHouseNameNumber = "";
+						hostStreetName = "";
+						hostPlaceName = "";
+						hostPostcode = "";
+
+						ResultSet gettingHostPropertyInfo = getHostPropertyInfoPS.executeQuery();
+
+						while(gettingHostPropertyInfo.next()) {
+							hostHouseNameNumber = gettingHostPropertyInfo.getString("houseNameNumber");
+							hostStreetName = gettingHostPropertyInfo.getString("streetName");
+							hostPlaceName = gettingHostPropertyInfo.getString("placeName");
+							hostPostcode = gettingHostPropertyInfo.getString("postcode");
+						}
+						
+						
+							System.out.println("hosthouseNameNumber: "+hostHouseNameNumber);
+							System.out.println("hoststreetName: "+hostStreetName);
+							System.out.println("hostplaceName: "+hostPlaceName);
+							System.out.println("hostpostcode: "+hostPostcode);
+
+						//--------guest confidential info--------
+						guestEmail = "";
+						
+						String getGuestEmail = "select email from GuestAccount where guest_id=?";
+						PreparedStatement getsGuestEmail = connection.prepareStatement(getGuestEmail);
+						getsGuestEmail.setInt(1, guestId);
+
+						ResultSet gettingGuestEmail = getsGuestEmail.executeQuery();
+						while(gettingGuestEmail.next()){
+							guestEmail = gettingGuestEmail.getString("email");
+							
+							//gets address id from accounts table
+							int guestAddressId = 0;
+							guestTitle = "";
+							guestFirstName = "";
+							guestSurname = "";
+							guestMobileNum = "";
+
+							
+							String getGuestAddressId = "select address_id, title, firstName, surname, mobileNumber from Account where email=?";
+							PreparedStatement getsGuestAddressId = connection.prepareStatement(getGuestAddressId);
+							getsGuestAddressId.setString(1, guestEmail);
+							
+							ResultSet gettingGuestAddressId = getsGuestAddressId.executeQuery();
+							while(gettingGuestAddressId.next()) {
+								guestAddressId = gettingGuestAddressId.getInt("address_id");
+								guestFirstName = gettingGuestAddressId.getString("firstName");
+								guestSurname = gettingGuestAddressId.getString("surname");
+								guestTitle = gettingGuestAddressId.getString("title");
+								guestMobileNum = gettingGuestAddressId.getString("mobileNumber");
+
+								String propertyInfoGuest = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+								PreparedStatement getPropertyInfoGuest = connection.prepareStatement(propertyInfoGuest);
+								getPropertyInfoGuest.setInt(1, guestAddressId);
+								
+								
+								System.out.println("guestEmail: "+guestEmail);
+								System.out.println("guestTitle: "+guestTitle);
+								System.out.println("guestFirstName: "+guestFirstName);
+								System.out.println("guestSurname: "+guestSurname);
+								System.out.println("guestMobileNum: "+guestMobileNum);
+								
+								
+								houseNameNumberGuest = "";
+								streetNameGuest = "";
+								placeNameGuest = "";
+								postcodeGuest = "";
+
+
+								ResultSet gettingPropertyInfoGuest = getPropertyInfoGuest.executeQuery();
+
+								while(gettingPropertyInfoGuest.next()) {
+									houseNameNumberGuest = gettingPropertyInfoGuest.getString("houseNameNumber");
+									streetNameGuest = gettingPropertyInfoGuest.getString("streetName");
+									placeNameGuest = gettingPropertyInfoGuest.getString("placeName");
+									postcodeGuest = gettingPropertyInfoGuest.getString("postcode");
+								}	
+
+								
+							System.out.println("guesthouseNameNumber: "+houseNameNumberGuest);
+							System.out.println("guestplaceName: "+placeNameGuest);
+							System.out.println("guestStreetName: "+streetNameGuest);
+							System.out.println("guestpostcode: "+postcodeGuest);		
+							}
+						}
+					}
+					
+					displayConfidentialInfoMessage();
+					
+				}
+				catch(Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		
+		
+		
 		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
@@ -319,16 +548,16 @@ public class Bookings extends javax.swing.JFrame {
 	}
 
 	// Function that displays the information of a booking that is clicked on with
-	// mouse within the JTable into their
+	// mouse within the JTable into theie
 	// corresponding TextFields
 	private void jTable_Display_BookingsMouseClicked(java.awt.event.MouseEvent evt) {
 
-		// Gets The Index Of The Selected Row
+		// Gets The Index Of The Slected Row
 		int i = jTable_Display_Bookings.getSelectedRow();
 
 		TableModel model = jTable_Display_Bookings.getModel();
 
-		// Display Selected Row In JTextFields
+		// Display Slected Row In JTexteFields
 		jTextField_booking_id.setText(model.getValueAt(i, 0).toString());
 		jTextField_property_id.setText(model.getValueAt(i, 1).toString());
 	}
@@ -358,11 +587,20 @@ public class Bookings extends javax.swing.JFrame {
 
 			@Override
 			public void run() {
-				setLocationRelativeTo(null);
 				new Bookings(mainModule, controller, model).setVisible(true);
 
 			}
 		});
+	}
+	
+	public void displayConfidentialInfoMessage() {
+		JOptionPane.showMessageDialog(this,
+				"Confidential Information:\n"
+				+ "\nHost Address:\nHouse Name/Number: "+hostHouseNameNumber+"\nStreet Name: "+hostStreetName+"\nCity: "+hostPlaceName+"\nPostcode: "+hostPostcode+"\n"
+				+ "\nGuest Address \nHouse Name/Number: "+houseNameNumberGuest+"\nStreet Name: "+streetNameGuest+"\nCity: "+placeNameGuest+"\nPostcode: "+postcodeGuest+"\n"
+				+ "\nProperty Address \nHouse Name/Number: "+houseNameNumber+"\nStreet Name: "+streetName+"\nCity: "+placeName+"\nPostcode: "+postcode+"\n"
+				+ "\nHost personal information: \nEmail: "+hostEmail+"\nTitle: "+hostTitle+"\nFirst name: "+hostFirstName+"\nSurname: "+hostSurname+"\nMobile number: "+hostMobileNumber+"\n"
+				+ "\nGuest personal information: \nEmail: "+guestEmail+"\nTitle: "+guestTitle+"\nFirst name: "+guestFirstName+"\nSurname: "+guestSurname+"\nMobile number: "+guestMobileNum);
 	}
 
 	// Variables used on the GUI initialised.
@@ -382,6 +620,14 @@ public class Bookings extends javax.swing.JFrame {
 	private JButton backButton;
 	private static int propertyId;
 	private static int Id;
+	private int bookingId, hostId, guestId, propId;
+	private String hostHouseNameNumber, hostStreetName, hostPlaceName, hostPostcode;
+	private String houseNameNumberGuest, streetNameGuest, placeNameGuest, postcodeGuest;
+	private String houseNameNumber, streetName, placeName, postcode;
+	private String hostEmail, hostTitle, hostFirstName, hostSurname, hostMobileNumber;
+	private String guestEmail, guestTitle, guestFirstName, guestSurname, guestMobileNum;
+	
+
 	private JButton confidentialInformationButton;
 }
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
