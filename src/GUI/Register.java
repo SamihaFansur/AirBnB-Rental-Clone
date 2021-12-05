@@ -69,6 +69,7 @@ public class Register extends JFrame {
 	Boolean validateStreetNameInput = false;
 	Boolean validatePostcodeInput = false;
 	Boolean emailAlreadyInDB = false;
+	Boolean validatePasswordInput = false;
 
 	public void initializeRegister() {
 		mainModule.currentState = STATE.SELF_REGISTRATION;
@@ -204,6 +205,8 @@ public class Register extends JFrame {
 				emailAlreadyInDB = emailExistsInDB(emailAddressTextField.getText());
 				// assumes UK number
 				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
+				
+				validatePasswordInput = checkPasswordStrength(passwordTextField.getText());
 
 				// first checking if the street number is a house name or number
 				// first checking if it's a number
@@ -251,10 +254,10 @@ public class Register extends JFrame {
 
 				// see postcode method for the validation for this.
 				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
-
+				
 				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB
 						&& validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput
-						&& validatePostcodeInput) {
+						&& validatePostcodeInput && validatePasswordInput) {
 					model.setTitle(registerTitleComboBox.getSelectedItem().toString());
 					model.setFirstName(firstNameTextField.getText());
 					model.setSurname(surnameTextField.getText());
@@ -366,6 +369,46 @@ public class Register extends JFrame {
 		}
 	}
 
+
+	private static boolean checkPasswordStrength(String password) {
+		// https://www.javacodeexamples.com/check-password-strength-in-java-example/668
+		int passwordRating = 0;
+
+		if (password.length() < 8) {
+			passwordRating = 0;
+		} else {
+			passwordRating += 1;
+		}
+		/*
+		 * if password contains 1 digit add 1 to rating
+		 */
+		if (password.matches("(?=.*[0-9]).*"))
+			passwordRating += 1;
+
+		// if password contains 1 lower case letter, add 1 to rating
+		if (password.matches("(?=.*[a-z]).*"))
+			passwordRating += 1;
+
+		/*
+		 *  if password contains 1 upper case letter then add 1 to rating.
+		 */
+	
+		if (password.matches("(?=.*[A-Z]).*"))
+			passwordRating += 1;
+
+		/*
+		 * if password contains 1 special character add 1 to rating.
+		 */
+		if (password.matches("(?=.*[~!@#$%^&*()_-]).*"))
+			passwordRating += 1;
+
+		// if passwordRating is less than 5, then it is not strong enough 
+		if (passwordRating < 5) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	public void displayError() {
 		ArrayList<String> arlist = new ArrayList<>();
 		if (!validateFirstNameInput) {
@@ -392,6 +435,10 @@ public class Register extends JFrame {
 		if (emailAlreadyInDB) {
 			arlist.add(" This email address already exists, please choose another");
 
+		}
+		if (!validatePasswordInput) {
+			arlist.add(" Password is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
+					+ "and has more than 8 characters.");
 		}
 		JOptionPane.showMessageDialog(this, arlist);
 	}
