@@ -353,7 +353,7 @@ public class Bookings extends javax.swing.JFrame {
 		jTextField_living_id = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jScrollPane1.setBounds(252, 62, 584, 462);
+		jScrollPane1.setBounds(252, 62, 594, 462);
 		jTable_Display_Bookings = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -671,9 +671,7 @@ public class Bookings extends javax.swing.JFrame {
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
 		);
 		jPanel1.setLayout(null);
 		jPanel1.add(backButton);
@@ -684,6 +682,11 @@ public class Bookings extends javax.swing.JFrame {
 		jPanel1.add(reviewButton);
 		jPanel1.add(confidentialInformationButton);
 		jPanel1.add(jScrollPane1);
+		
+		checkOutButton = new JButton("Check Out");
+		checkOutButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		checkOutButton.setBounds(74, 425, 113, 29);
+		jPanel1.add(checkOutButton);
 		getContentPane().setLayout(layout);
 
 		pack();
@@ -771,5 +774,6 @@ public class Bookings extends javax.swing.JFrame {
 	
 
 	private JButton confidentialInformationButton;
+	private JButton checkOutButton;
 }
 //code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
