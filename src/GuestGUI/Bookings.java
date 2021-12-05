@@ -98,64 +98,90 @@ public class Bookings extends javax.swing.JFrame {
 				BookingObject bookings;
 				
 				while (rs.next()) {
-					int tempPropertyId = rs.getInt("property_id");
+					
+					// use dates to comapre against chargeband dates later to find which chargeband the booking was made with.
+					String bookingStartDate = rs.getString("startDate");
+					String bookingEndDate = rs.getString("endDate");
+					int bookingPropertyId = rs.getInt("property_id");
 					
 					// for this property id, go to chargebands table and get sc, cc, total price per night, and start 
 					// date and end date
 					String propertyInfoQuery = "SELECT * FROM ChargeBands where property_id=?";
 					PreparedStatement propertyInfoPS = connection.prepareStatement(propertyInfoQuery);
-					propertyInfoPS.setInt(1, tempPropertyId);
+					propertyInfoPS.setInt(1, bookingPropertyId);
+
 					ResultSet propertyInfoRS = propertyInfoPS.executeQuery();
 					
-					String propertyStartDate ="";
-					String propertyEndDate ="";
+					String chargeBandStartDate ="";
+					String chargeBandEndDate ="";
 					double propertyServiceCharge = 0.0;
 					double propertyCleaningCharge = 0.0;
 					double propertyTotalPricePerNight= 0.0;
 					
+					Date formattedCBStartDate = null;
+					Date formattedCBEndDate = null;
+					Date formattedBookingStartDate= null;
+					Date formattedBookingEndDate = null;
+					
 					while(propertyInfoRS.next()) {
-						propertyStartDate = propertyInfoRS.getString("startDate");
-						propertyEndDate = propertyInfoRS.getString("endDate");
-						propertyServiceCharge = propertyInfoRS.getDouble("serviceCharge");
-						propertyCleaningCharge = propertyInfoRS.getDouble("cleaningCharge");
-						propertyTotalPricePerNight = propertyInfoRS.getDouble("totalPricePerNight");
-					
-					
-						System.out.println(propertyStartDate);
-						System.out.println(propertyStartDate);
+						chargeBandStartDate = propertyInfoRS.getString("startDate");
+						chargeBandEndDate = propertyInfoRS.getString("endDate");
 						
 						//converting string dates into Date object:
-						Date formattedPropStartDate = null;
-						Date formattedPropEndDate = null;
-						
 						try {
-							formattedPropStartDate = sourceFormat.parse(propertyStartDate);
-							formattedPropEndDate = sourceFormat.parse(propertyEndDate);	
+							formattedCBStartDate = sourceFormat.parse(chargeBandStartDate);
+							formattedCBEndDate = sourceFormat.parse(chargeBandEndDate);
+							formattedBookingStartDate = sourceFormat.parse(bookingStartDate);
+							formattedBookingEndDate = sourceFormat.parse(bookingEndDate);
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
+
+						//checking booking start and end dates between charge band start and end dates:
+						// if the following statement is true then the booking start dates and end dates exist within this
+						// chargeband. Get the cleaning charge, service charge...
+						if( (formattedBookingStartDate.equals(formattedCBStartDate) && formattedBookingEndDate.equals(formattedCBEndDate))
+								|| (formattedBookingStartDate.after(formattedCBStartDate) && formattedBookingEndDate.equals(formattedCBEndDate)) 	
+								|| (formattedBookingStartDate.after(formattedCBStartDate) && formattedBookingEndDate.before(formattedCBEndDate)) 	
+								|| (formattedBookingStartDate.equals(formattedCBStartDate) && formattedBookingEndDate.before(formattedCBEndDate)) 	
+								 ) {
+							propertyServiceCharge = propertyInfoRS.getDouble("serviceCharge");
+							propertyCleaningCharge = propertyInfoRS.getDouble("cleaningCharge");
+							propertyTotalPricePerNight = propertyInfoRS.getDouble("totalPricePerNight");
+					
+							//Get the cleaning charge, service charge...	
+							System.out.println("breaking out of the loop because booking dates exists within this CB dates");
+							break;
+						} 
 						
-						//calculating total price for all nights
-						double totalPriceForAllNight = 0.0;
-						
-						long timeDifference = formattedPropEndDate.getTime() - formattedPropEndDate.getTime();
-					    long diffDays = timeDifference / (24 * 60 * 60 * 1000) + 1;
-					    int days = (int) diffDays;
-						
-						System.out.println("tempPropertyId: "+tempPropertyId);
-						System.out.println("Number of days between the dates: "+days);
-						
-						totalPriceForAllNight = days*propertyTotalPricePerNight;
-						
-						
-						bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"), 
-								propertyServiceCharge, propertyCleaningCharge,
-								totalPriceForAllNight, days, 
-								rs.getString("provisional"), rs.getString("startDate"),
-								rs.getString("endDate"));
-						bookingsList.add(bookings);
 						
 					}
+					
+					System.out.println("cleaning charge: "+propertyCleaningCharge);
+					System.out.println("service charge: "+propertyServiceCharge);
+					System.out.println("total price per night: "+propertyTotalPricePerNight);
+					
+					//calculating total price for all nights
+					double totalPriceForAllNights = 0.0;
+					long timeDifference = formattedBookingEndDate.getTime() - formattedBookingStartDate.getTime();
+				    long diffDays = timeDifference / (24 * 60 * 60 * 1000);
+				    int days = (int) Math.ceil(diffDays);
+					
+
+					System.out.println("tempPropertyId: "+bookingPropertyId);
+					System.out.println("Number of days between the dates: "+days);
+					
+					totalPriceForAllNights = days*propertyTotalPricePerNight;
+					System.out.println("Total price per nights: "+totalPriceForAllNights);
+					
+					
+					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"), 
+							propertyServiceCharge, propertyCleaningCharge,
+							totalPriceForAllNights, (int)days, 
+							rs.getString("provisional"), rs.getString("startDate"),
+							rs.getString("endDate"));
+					bookingsList.add(bookings);
+					
 				}
 				 
 			} catch (Exception e) {
