@@ -27,6 +27,9 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
+/*
+ * Class for displaying booking objects and initialising reviews for the bookings.
+ */
 public class Bookings extends javax.swing.JFrame {
 
 	private Controller controller;
@@ -34,7 +37,7 @@ public class Bookings extends javax.swing.JFrame {
 	private MainModule mainModule;
 
 	/**
-	 * Creates new form Java_Insert_Update_Delete_Display
+	 * Gui for displaying all of the booking objects within the database in a table.
 	 */
 	public Bookings(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
@@ -45,7 +48,7 @@ public class Bookings extends javax.swing.JFrame {
 		Show_Bookings_In_JTable();
 	}
 
-	// get the connection
+	// Gets the connection to the database
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
@@ -61,22 +64,23 @@ public class Bookings extends javax.swing.JFrame {
 		}
 	}
 
-	// get a list of users from mysql database
+	// Creates a list of users from mysql database and puts them into an ArrayList
+	// to use.
 	public ArrayList<BookingObject> getBookingsList() {
 
 		ArrayList<BookingObject> bookingsList = new ArrayList<>();
 		Connection connection = getConnection();
 		if (mainModule.userState == USER.GUEST) {
 
-			
+			// Gets the information for a booking from the guest database
 			try {
 				String query = "SELECT * FROM `Booking` where guest_id=? and provisional!=?";
-				PreparedStatement st  = connection.prepareStatement(query);
+				PreparedStatement st = connection.prepareStatement(query);
 				st.setInt(1, model.getGuestId());
 				st.setString(2, "Pending");
-				
+
 				ResultSet rs = st.executeQuery();
-				
+
 				BookingObject bookings;
 				while (rs.next()) {
 					bookings = new BookingObject(rs.getInt("booking_id"), rs.getInt("property_id"),
@@ -87,9 +91,8 @@ public class Bookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//return bookingsList;
-
-		} else if(mainModule.userState == USER.HOST) {
+			// Gets the information for a booking from the host database
+		} else if (mainModule.userState == USER.HOST) {
 			try {
 				String query = "SELECT * FROM `Booking` where host_id=? and provisional!=?";
 				PreparedStatement st = connection.prepareStatement(query);
@@ -107,16 +110,15 @@ public class Bookings extends javax.swing.JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//return bookingsList;
 		}
-		
+
 		return bookingsList;
 	}
 
-	// Display Data In JTable
+	// Displays the Booking Objects from the Booking ArrayList In a JTable
 	public void Show_Bookings_In_JTable() {
 		ArrayList<BookingObject> list = getBookingsList();
-		DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
+		DefaultTableModel model = (DefaultTableModel) jTable_Display_Bookings.getModel();
 		Object[] row = new Object[8];
 		for (BookingObject element : list) {
 			row[0] = element.getBooking_id();
@@ -139,7 +141,7 @@ public class Bookings extends javax.swing.JFrame {
 			st = con.createStatement();
 			if ((st.executeUpdate(query)) == 1) {
 				// refresh jtable data
-				DefaultTableModel model = (DefaultTableModel) jTable_Display_Reviews.getModel();
+				DefaultTableModel model = (DefaultTableModel) jTable_Display_Bookings.getModel();
 				model.setRowCount(0);
 				Show_Bookings_In_JTable();
 
@@ -153,6 +155,7 @@ public class Bookings extends javax.swing.JFrame {
 	}
 
 	@SuppressWarnings("unchecked")
+	// Function for defining all of the GUI objects
 	private void initComponents() {
 
 		jPanel1 = new javax.swing.JPanel();
@@ -173,7 +176,7 @@ public class Bookings extends javax.swing.JFrame {
 		jTextField_living_id = new javax.swing.JTextField();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jTable_Display_Reviews = new javax.swing.JTable();
+		jTable_Display_Bookings = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -200,8 +203,6 @@ public class Bookings extends javax.swing.JFrame {
 		jLabel7.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel7.setText("Living:");
 
-		// NAVBAR
-
 		jTextField_booking_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
 		jTextField_property_id.setFont(new java.awt.Font("Verdana", 0, 14));
@@ -216,17 +217,17 @@ public class Bookings extends javax.swing.JFrame {
 
 		jTextField_living_id.setFont(new java.awt.Font("Verdana", 0, 14));
 
-		jTable_Display_Reviews
+		jTable_Display_Bookings
 				.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] { "Booking_ID",
 						"Property_ID", "Host_ID", "Guest_ID", "Provisional", "TotalPrice", "Start Date", "End Date" }));
 
-		jTable_Display_Reviews.addMouseListener(new java.awt.event.MouseAdapter() {
+		jTable_Display_Bookings.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				jTable_Display_ReviewsMouseClicked(evt);
+				jTable_Display_BookingsMouseClicked(evt);
 			}
 		});
-		jScrollPane1.setViewportView(jTable_Display_Reviews);
+		jScrollPane1.setViewportView(jTable_Display_Bookings);
 
 		backButton = new JButton("Back");
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -288,6 +289,7 @@ public class Bookings extends javax.swing.JFrame {
 		});
 		reviewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
+		// Adds all of the GUI objects to the frame and panels.
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout
 				.createSequentialGroup().addContainerGap(33, Short.MAX_VALUE)
@@ -404,12 +406,15 @@ public class Bookings extends javax.swing.JFrame {
 		pack();
 	}
 
-	// show jtable row data in jtextfields in the mouse clicked event
-	private void jTable_Display_ReviewsMouseClicked(java.awt.event.MouseEvent evt) {
-		// Get The Index Of The Slected Row
-		int i = jTable_Display_Reviews.getSelectedRow();
+	// Function that displays the information of a booking that is clicked on with
+	// mouse within the JTable into theie
+	// corresponding TextFields
+	private void jTable_Display_BookingsMouseClicked(java.awt.event.MouseEvent evt) {
 
-		TableModel model = jTable_Display_Reviews.getModel();
+		// Gets The Index Of The Slected Row
+		int i = jTable_Display_Bookings.getSelectedRow();
+
+		TableModel model = jTable_Display_Bookings.getModel();
 
 		// Display Slected Row In JTexteFields
 		jTextField_booking_id.setText(model.getValueAt(i, 0).toString());
@@ -422,9 +427,7 @@ public class Bookings extends javax.swing.JFrame {
 		jTextField_endDate.setText(model.getValueAt(i, 7).toString());
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
+	// Initialises the Booking GUI when called from other GUI pages
 	public void initializeBookings(int fId, int id) {
 		propertyId = fId;
 		Id = id;
@@ -455,6 +458,7 @@ public class Bookings extends javax.swing.JFrame {
 		});
 	}
 
+	// Variables used on the GUI initialised.
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;
@@ -464,7 +468,7 @@ public class Bookings extends javax.swing.JFrame {
 	private javax.swing.JLabel jLabel7;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTable jTable_Display_Reviews;
+	private javax.swing.JTable jTable_Display_Bookings;
 	private javax.swing.JTextField jTextField_booking_id;
 	private javax.swing.JTextField jTextField_property_id;
 	private javax.swing.JTextField jTextField_host_id;

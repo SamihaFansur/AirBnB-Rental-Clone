@@ -4,9 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BookingObject {
 
-	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+/*
+ * This class constructs Booking objects and is the helper class
+ * for other classes relating to Bookings.
+ */
+public class BookingObject {
 
 	private int booking_id;
 	private int property_id;
@@ -18,6 +21,8 @@ public class BookingObject {
 	private String startDate;
 	private String endDate;
 
+	
+	//Constructor for Booking Objects
 	public BookingObject(int booking_id, int property_id, int host_id, int guest_id, String provisional,
 			Double totalPrice, String startDate, String endDate) {
 		this.booking_id = booking_id;
@@ -30,6 +35,8 @@ public class BookingObject {
 		this.endDate = endDate;
 	}
 
+	//Getters and Setters for information relating to Booking objects.
+	
 	public int getBooking_id() {
 		return booking_id;
 	}

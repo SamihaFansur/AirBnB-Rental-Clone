@@ -23,10 +23,14 @@ import GUI.MainModule;
 import GUI.NavEnquirer;
 import Model.Model;
 
+/*
+ * GUI that allows user to leave a review for a booking
+ */
 public class Review extends JFrame {
-
+	//Gets a connection to the database
 	Connection connection = null;
 
+	
 	private JTextField descriptionTextField = new JTextField();
 	private JTextField AccuracyRatingTextField = new JTextField();
 	private JTextField locationRatingTextField = new JTextField();
@@ -45,28 +49,31 @@ public class Review extends JFrame {
 	private NavEnquirer navBeforeLogin = new NavEnquirer();
 	private JFrame frame;
 
+	//Constructor for a review 
 	public Review(MainModule mainModule, Controller controller, Model model) {
-		// initializeReview();
 		this.mainModule = mainModule;
 		this.controller = controller;
 		this.model = model;
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame so that it can be called from other GUI pages.
 	 */
 	public void initializeReview(int pId, int bId) {
 		propertyId = pId;
 		booking_id = bId;
 		
+		//Adds a frame and a NavBar panel
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		//Adds the main review panel
 		JPanel reviewPanel = new JPanel();
 
+		//Adds labels for textfields onto the panel
 		reviewPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(reviewPanel, BorderLayout.CENTER);
 		reviewPanel.setLayout(null);
@@ -111,13 +118,13 @@ public class Review extends JFrame {
 		lblDescription.setBounds(127, 437, 167, 34);
 		reviewPanel.add(lblDescription);
 
+		//Button to add review to database
+		//Takes information for textfields and creates a review object within the database.
 		JButton addReview = new JButton("Add Review");
 		addReview.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				//Get host_id from propertyid
 				try {
 				connection = ConnectionManager.getConnection();
 				String hostIdfromProperty = "Select host_id from Property where property_id=?";
@@ -134,7 +141,7 @@ public class Review extends JFrame {
 					System.err.println("Got an exception2!");
 					System.err.println(f.getMessage());
 				}
-				// INSERT Property INFO INTO TEXT FIELDS
+				// INSERT Review INFO INTO TEXT FIELDS on the GUI
 				try {
 					connection = ConnectionManager.getConnection();
 					//calculate average rating for review
@@ -142,15 +149,18 @@ public class Review extends JFrame {
 					Double location1 = (Double.parseDouble(locationRatingTextField.getText()));
 					Double value1 = (Double.parseDouble(valueRatingTextField.getText()));
 					Double communication1 = (Double.parseDouble(communicationRatingTextField.getText()));
-					Double cleanliness1 = (Double.parseDouble(cleanlinessRatingTextField.getText()));
+					Double cleanliness1 = (Double.parseDouble(cleanlinessRatingTextField.getText()));					
 					Double five = 5.0;
+					//Calculates the average rating from all the parameters for review
+					//and displays it in review rating textField
 					Double reviewRating1 = (accuracy1 + location1 + value1 + communication1 + cleanliness1 ) / five;
 					
-					// round to 2 dp
+
 					Double reviewRating2 = ((reviewRating1 * 100.00)/100.00);
 
 					String averageReviewRating = Double.toString(reviewRating2);
 					
+					//Adds a review object into the database
 					String addReview = "insert into Review (property_id, booking_id,host_id, accuracy, location, valueForMoney, communication, cleanliness, description, averageRating)"
 							+ " values(?,?,?,?,?,?,?,?,?,?)";
 					PreparedStatement ps_review = connection.prepareStatement(addReview);
@@ -178,12 +188,8 @@ public class Review extends JFrame {
 					System.err.println("Got an exception!");
 					System.err.println(f.getMessage());
 				}
-				
-				//Updating superhost to true for host if average of host reviews is higher than 4.7 for this review
-				//select avg(yourColumnName) as anyVariableName from yourTableName;
-				
-				
-				
+						
+				//Calculates average rating of all reviews for a host
 				try {
 					connection = ConnectionManager.getConnection();
 
@@ -205,7 +211,8 @@ public class Review extends JFrame {
 				}
 				
 				
-				//superHost
+				//Checks hosts overall Review Ratings on all properties, if they average above 4.7 then 
+				//host is set to superhost
 				try {
 					boolean superhost = false;
 					
@@ -235,6 +242,8 @@ public class Review extends JFrame {
 				
 			}
 		});
+		
+		//Defines the textfields and their attributes then adds them to panel.
 		addReview.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		addReview.setBounds(217, 609, 180, 23);
 		reviewPanel.add(addReview);
