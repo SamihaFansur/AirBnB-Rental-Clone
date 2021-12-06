@@ -136,7 +136,7 @@ public class EditBathroom extends JFrame {
 		editBathroomPanel.add(bathroomId);
 		bathroomId.setColumns(10);
 
-		JLabel lblBathroomId = new JLabel("Bathroom ID");
+		JLabel lblBathroomId = new JLabel("Bathroom No");
 		lblBathroomId.setBounds(349, 197, 95, 20);
 		editBathroomPanel.add(lblBathroomId);
 

@@ -270,9 +270,8 @@ public class Register extends JFrame {
 					model.setPostcode(postcodeTextField.getText());
 					model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 					submit();
-					
-					
-					//resetting text fields:
+
+					// resetting text fields:
 					registerTitleComboBox.setSelectedItem("Mr");
 					firstNameTextField.setText("");
 					surnameTextField.setText("");
@@ -284,8 +283,16 @@ public class Register extends JFrame {
 					cityComboBox.setSelectedItem("");
 					postcodeTextField.setText("");
 					accountTypeComboBox.setSelectedItem("Host");
-					
-					
+
+					validateFirstNameInput = false;
+					validateSurnameInput = false;
+					validateEmailInput = false;
+					validateMobileNumberInput = false;
+					validateHouseNameNumberInput = false;
+					validateStreetNameInput = false;
+					validatePostcodeInput = false;
+					emailAlreadyInDB = false;
+					validatePasswordInput = false;
 					frame.dispose();
 					mainModule.currentState = STATE.HOMEPAGE;
 					mainModule.userState = USER.ENQUIRER;
@@ -333,8 +340,8 @@ public class Register extends JFrame {
 	}
 
 	/*
-	 * regular expressions for email validation copied from website
-	 * Goyvaerts, J., 2021. How to Find or Validate an Email Address. [online]
+	 * regular expressions for email validation copied from website Goyvaerts, J.,
+	 * 2021. How to Find or Validate an Email Address. [online]
 	 * Regular-expressions.info. Available at:
 	 * <https://www.regular-expressions.info/email.html> [Accessed 21 November
 	 * 2021].
@@ -380,8 +387,10 @@ public class Register extends JFrame {
 		if (postcode.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$")) {
 			/*
 			 * regular expressions for postcode copied used from this java website:
-			 * HowToDoInJava. 2021. Java Regex - UK Postcode Validation - HowToDoInJava. [online] 
-			 * Available at: <https://howtodoinjava.com/java/regex/uk-postcode-validation/> [Accessed 26 November 2021].
+			 * HowToDoInJava. 2021. Java Regex - UK Postcode Validation - HowToDoInJava.
+			 * [online] Available at:
+			 * <https://howtodoinjava.com/java/regex/uk-postcode-validation/> [Accessed 26
+			 * November 2021].
 			 */
 			return true;
 		} else {
@@ -462,15 +471,17 @@ public class Register extends JFrame {
 		}
 		if (!validatePasswordInput) {
 
-			arlist.add("\nPassword is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
-					+ "and has more than 8 characters.");
+			arlist.add(
+					"\nPassword is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
+							+ "and has more than 8 characters.");
 		}
 		JOptionPane.showMessageDialog(this, arlist);
 	}
 
 	public void submit() {
 		try {
-			// generates a random salt before hashing the password and stores secure password into database
+			// generates a random salt before hashing the password and stores secure
+			// password into database
 			String salt = Password.getSalt();
 			String securePassword = Password.get_SHA_512_SecurePassword(model.getPassword(), salt);
 			connection = ConnectionManager.getConnection();

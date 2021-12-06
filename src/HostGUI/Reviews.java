@@ -22,7 +22,13 @@ import javax.swing.table.TableModel;
 import Controller.Controller;
 import GUI.MainModule;
 import Model.Model;
-
+/*
+ * code partially referenced from the following: 
+ * C#, JAVA,PHP, Programming ,Source Code. 2021. C#, JAVA,PHP, Programming ,Source Code: 
+ * Java And MySQL - Insert Update Delete And Display Data On JTable. [online] 
+ * Available at: <https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html> 
+ * [Accessed 18 November 2021].
+ * */
 /**
  * Class for displaying the reviews in the database onto a GUI
  */
@@ -450,4 +456,3 @@ public class Reviews extends javax.swing.JFrame {
 	private JTextField propertyRatingTextField;
 }
 
-//code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html

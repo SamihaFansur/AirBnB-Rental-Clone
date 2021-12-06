@@ -119,9 +119,9 @@ public class Controller extends MainModule {
 		} else if (mainModule.currentState == STATE.SEARCH && (mainModule.userState == USER.ENQUIRER
 				|| mainModule.userState == USER.HOST || mainModule.userState == USER.GUEST)) {
 			search.initializeSearch();
-			
-		// added for HOST GUI:
-		}else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState == USER.HOST) {		
+
+			// added for HOST GUI:
+		} else if (mainModule.currentState == STATE.HOST_ACCOUNT && mainModule.userState == USER.HOST) {
 			hostAccount.initializeHostAccount();
 		} else if (mainModule.currentState == STATE.GUEST_ACCOUNT && mainModule.userState == USER.GUEST) {
 			guestAccount.initializeGuestAccount();
@@ -129,7 +129,7 @@ public class Controller extends MainModule {
 				&& (mainModule.userState == USER.HOST || mainModule.userState == USER.GUEST)) {
 			editAccount.initializeEditAccount();
 		}
-		
+
 	}
 
 	public void editPropertyView(int facilitiesId, int id) { // facilities id is property_id when using 'add
@@ -180,13 +180,13 @@ public class Controller extends MainModule {
 			model.setGuestId(id);
 			bookProperty.initializeBookProperty(facilitiesId, id);
 		} else if (mainModule.editPropertyState == EDITPROPERTY.PROVISIONAL_BOOKINGS) {
-			if(mainModule.userState == USER.HOST) {
+			if (mainModule.userState == USER.HOST) {
 				model.setHostId(id);
-			}else if(mainModule.userState == USER.HOST) {
+			} else if (mainModule.userState == USER.HOST) {
 				model.setGuestId(id);
 			}
-			
-			System.out.println("id in controller = "+id);
+
+			System.out.println("id in controller = " + id);
 			provisionalBookings.initializeProvisionalBookings(facilitiesId, id);
 		} else if (mainModule.userState == USER.GUEST && mainModule.editPropertyState == EDITPROPERTY.REVIEW) {
 			model.setHostId(id);

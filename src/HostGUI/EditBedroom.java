@@ -189,7 +189,7 @@ public class EditBedroom extends JFrame {
 		editBedroomPanel.add(bed2People);
 		bed2People.setColumns(10);
 
-		JLabel lblBedroomId = new JLabel("Bedroom ID");
+		JLabel lblBedroomId = new JLabel("Bedroom No");
 		lblBedroomId.setBounds(316, 228, 95, 20);
 		editBedroomPanel.add(lblBedroomId);
 
