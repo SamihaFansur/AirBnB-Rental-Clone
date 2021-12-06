@@ -60,6 +60,7 @@ public class Homepage extends JFrame{
 			txtHomebreaksPlcManages.setBounds(67, 119, 461, 390);
 			txtHomebreaksPlcManages.setLineWrap(true);
 			txtHomebreaksPlcManages.setWrapStyleWord(true);
+			txtHomebreaksPlcManages.setEditable(false);
 			//txtHomebreaksPlcManages.setVisible(false);
 			
 			txtHomebreaksPlcManages.setFont(new Font("Arial Black", Font.PLAIN, 15));
@@ -69,7 +70,7 @@ public class Homepage extends JFrame{
 			
 			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+			
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 
