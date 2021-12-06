@@ -13,25 +13,14 @@ public class ConnectionManager {
 
 	public static Connection getConnection() throws SQLException {
 		try {
+			//creating a connection to server so database can be connected
 			connection = DriverManager.getConnection(serverName, username, pwd);
-			System.out.println("Conn made");
+			System.out.println("Connection successful");
 		} catch (SQLException ex) {
-			System.out.println("failed to make conn");
+			System.out.println("Failed to make connection");
 			ex.printStackTrace();
-		} finally {
-			System.out.println("conn still open");
-		}
+		} 
 		return connection;
 	}
 
-	public static void deleteProperty(int id) {
-		String sql = "DELETE FROM Property WHERE property_id=?";
-		try {
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, id);
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
