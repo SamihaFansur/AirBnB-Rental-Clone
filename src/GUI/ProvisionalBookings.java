@@ -409,6 +409,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 			}
 		});
 
+
 		//Button to accept the provisional booking and update it to a booking
 		acceptButton = new JButton("Accept");
 		acceptButton.setBounds(78, 223, 91, 29);
@@ -515,9 +516,11 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 						
 					}
 				} else if(mainModule.userState == USER.GUEST) {
+					displayMessageUnableToAcceptBookingAsGuest();
 				}
 			}
 		});
+
 
 		//Button to decline provisional booking and deltes it from the database
 		declineButton = new JButton("Decline");
@@ -546,6 +549,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 						
 					}
 				} else if(mainModule.userState == USER.GUEST) {
+					displayMessageUnableToDeclineBookingAsGuest();
 				}
 			}
 		});
@@ -569,6 +573,17 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		getContentPane().setLayout(layout);
 
 		pack();
+	}
+
+	
+	public void displayMessageUnableToAcceptBookingAsGuest() {
+		JOptionPane.showMessageDialog(this,
+				"Unable to accept provisional booking as a guest. Please login as a host to accept a provisional booking.");
+	}
+
+	public void displayMessageUnableToDeclineBookingAsGuest() {
+		JOptionPane.showMessageDialog(this,
+				"Unable to decline provisional booking as a guest. Please login as a host to decline a provisional booking.");
 	}
 
 	// Function that displays the information of a booking that is clicked on with
