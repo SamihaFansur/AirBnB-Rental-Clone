@@ -205,7 +205,7 @@ public class Register extends JFrame {
 				emailAlreadyInDB = emailExistsInDB(emailAddressTextField.getText());
 				// assumes UK number
 				validateMobileNumberInput = validateMobileNumber(mobileNumberTextField.getText());
-				
+
 				validatePasswordInput = checkPasswordStrength(passwordTextField.getText());
 
 				// first checking if the street number is a house name or number
@@ -254,7 +254,7 @@ public class Register extends JFrame {
 
 				// see postcode method for the validation for this.
 				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
-				
+
 				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB
 						&& validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput
 						&& validatePostcodeInput && validatePasswordInput) {
@@ -332,11 +332,14 @@ public class Register extends JFrame {
 		}
 	}
 
-	private boolean emailIsValid;
-	private boolean emailDoesNotAlreadyExistsInDB = false;
-
+	/*
+	 * regular expressions for email validation copied from website
+	 * Goyvaerts, J., 2021. How to Find or Validate an Email Address. [online]
+	 * Regular-expressions.info. Available at:
+	 * <https://www.regular-expressions.info/email.html> [Accessed 21 November
+	 * 2021].
+	 */
 	public boolean validateEmail(String email) {
-		// https://www.regular-expressions.info/email.html
 		if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}")) {
 			return false;
 		} else {
@@ -377,7 +380,8 @@ public class Register extends JFrame {
 		if (postcode.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$")) {
 			/*
 			 * regular expressions for postcode copied used from this java website:
-			 * https://howtodoinjava.com/java/regex/uk-postcode-validation/
+			 * HowToDoInJava. 2021. Java Regex - UK Postcode Validation - HowToDoInJava. [online] 
+			 * Available at: <https://howtodoinjava.com/java/regex/uk-postcode-validation/> [Accessed 26 November 2021].
 			 */
 			return true;
 		} else {
@@ -385,9 +389,12 @@ public class Register extends JFrame {
 		}
 	}
 
-
+	/*
+	 * V, R., 2021. Check password strength in Java example - Java Code Examples.
+	 * [online] Java Code Examples. Available at: <https://www.javacodeexamples.com/
+	 * check-password-strength-in-java-example/668> [Accessed 4 December 2021].
+	 */
 	private static boolean checkPasswordStrength(String password) {
-		// https://www.javacodeexamples.com/check-password-strength-in-java-example/668
 		int passwordRating = 0;
 
 		if (password.length() < 8) {
@@ -406,9 +413,9 @@ public class Register extends JFrame {
 			passwordRating += 1;
 
 		/*
-		 *  if password contains 1 upper case letter then add 1 to rating.
+		 * if password contains 1 upper case letter then add 1 to rating.
 		 */
-	
+
 		if (password.matches("(?=.*[A-Z]).*"))
 			passwordRating += 1;
 
@@ -418,13 +425,14 @@ public class Register extends JFrame {
 		if (password.matches("(?=.*[~!@#$%^&*()_-]).*"))
 			passwordRating += 1;
 
-		// if passwordRating is less than 5, then it is not strong enough 
+		// if passwordRating is less than 5, then it is not strong enough
 		if (passwordRating < 5) {
 			return false;
 		} else {
 			return true;
 		}
 	}
+
 	public void displayError() {
 		ArrayList<String> arlist = new ArrayList<>();
 		if (!validateFirstNameInput) {
@@ -453,6 +461,7 @@ public class Register extends JFrame {
 
 		}
 		if (!validatePasswordInput) {
+
 			arlist.add("\nPassword is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
 					+ "and has more than 8 characters.");
 		}
@@ -461,6 +470,7 @@ public class Register extends JFrame {
 
 	public void submit() {
 		try {
+			// generates a random salt before hashing the password and stores secure password into database
 			String salt = Password.getSalt();
 			String securePassword = Password.get_SHA_512_SecurePassword(model.getPassword(), salt);
 			connection = ConnectionManager.getConnection();
