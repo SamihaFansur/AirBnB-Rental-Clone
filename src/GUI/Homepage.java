@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-//import hostGUI.*;
 import Controller.Controller;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;

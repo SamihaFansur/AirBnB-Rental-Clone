@@ -58,6 +58,7 @@ public class Login extends JFrame {
 	 */
 	public void initializeLogin() {
 		mainModule.currentState = STATE.LOGIN;
+		//Nav bar for non logged in uses; i.e Enquirer
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
@@ -65,7 +66,7 @@ public class Login extends JFrame {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
+		//Adding textfields and buttons
 		JPanel loginPanel = new JPanel();
 
 		loginPanel.setBackground(new Color(204, 255, 255));
@@ -96,8 +97,8 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				model.setEmail(usernameField.getText());
-				model.setPassword(passwordField.getText());
+				model.setEmail(usernameField.getText()); //setting user email to check credentials
+				model.setPassword(passwordField.getText()); //setting user password to check credentials
 
 				userName_login = model.getEmail();
 				password_login = model.getPassword();
@@ -133,8 +134,6 @@ public class Login extends JFrame {
 		frame.setVisible(true);
 	}
 
-	private PreparedStatement loginQuery = null;
-	private ResultSet rs = null;
 
 	public void logUserIn() {
 
@@ -197,7 +196,6 @@ public class Login extends JFrame {
 						guestId = gettingTheGuestId(userName_login);
 						
 						model.setGuestId(guestId);
-						System.out.println("GUEST ID ON LOGIN = "+model.getGuestId());
 						
 					}
 					frame.dispose();
@@ -215,7 +213,6 @@ public class Login extends JFrame {
 					
 					guestId = gettingTheGuestId(userName_login);
 					model.setGuestId(guestId);
-					System.out.println("GUEST ID ON LOGIN = "+model.getGuestId());
 					JOptionPane.showMessageDialog(this, "You have successfully logged in");
 					frame.dispose();
 				}
@@ -232,7 +229,6 @@ public class Login extends JFrame {
 			loginQuery.close();
 			connection.close();
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 		
@@ -252,10 +248,8 @@ public class Login extends JFrame {
 				hostId = rs2.getInt(1);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("THIS IS THE HOST ID IN LOGIN: "+hostId);
 		model.setHostId(hostId);
 		
 		return hostId;
@@ -275,10 +269,8 @@ public class Login extends JFrame {
 				guestId = rs2.getInt(1);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("THIS IS THE GUEST ID IN LOGIN: "+guestId);
 		model.setGuestId(guestId);
 		
 		return guestId;
