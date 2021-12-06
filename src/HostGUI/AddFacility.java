@@ -410,7 +410,7 @@ public class AddFacility extends JFrame {
 		});
 		addFacilityPanel.add(backButton);
 
-		JLabel messegeLabel = new JLabel("Create all Facilities Before Leaving Page");
+		JLabel messegeLabel = new JLabel("Click the different buttons to add different facilities");
 		messegeLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		messegeLabel.setBounds(178, 141, 288, 42);
 		addFacilityPanel.add(messegeLabel);
