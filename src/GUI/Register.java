@@ -270,6 +270,22 @@ public class Register extends JFrame {
 					model.setPostcode(postcodeTextField.getText());
 					model.setAccountType(accountTypeComboBox.getSelectedItem().toString());
 					submit();
+					
+					
+					//resetting text fields:
+					registerTitleComboBox.setSelectedItem("Mr");
+					firstNameTextField.setText("");
+					surnameTextField.setText("");
+					emailAddressTextField.setText("");
+					mobileNumberTextField.setText("");
+					passwordTextField.setText("");
+					houseNumberTextField.setText("");
+					streetNameTextField.setText("");
+					cityComboBox.setSelectedItem("");
+					postcodeTextField.setText("");
+					accountTypeComboBox.setSelectedItem("Host");
+					
+					
 					frame.dispose();
 					mainModule.currentState = STATE.HOMEPAGE;
 					mainModule.userState = USER.ENQUIRER;
@@ -412,32 +428,32 @@ public class Register extends JFrame {
 	public void displayError() {
 		ArrayList<String> arlist = new ArrayList<>();
 		if (!validateFirstNameInput) {
-			arlist.add(" First name input is invalid");
+			arlist.add("\nFirst name input is invalid");
 		}
 		if (!validateSurnameInput) {
-			arlist.add(" Surname input is invalid");
+			arlist.add("\nSurname input is invalid");
 		}
 		if (!validateEmailInput) {
-			arlist.add(" This email input is invalid, please choose one of the form example@example.com");
+			arlist.add("\nThis email input is invalid, please choose one of the form example@example.com");
 		}
 		if (!validateMobileNumberInput) {
-			arlist.add(" Mobile number input is invalid, please choose 11 digits for your mobile number");
+			arlist.add("\nMobile number input is invalid, please choose 11 digits for your mobile number");
 		}
 		if (!validateHouseNameNumberInput) {
-			arlist.add(" House name/number input is invalid");
+			arlist.add("\nHouse name/number input is invalid");
 		}
 		if (!validateStreetNameInput) {
-			arlist.add(" Street name input is invalid");
+			arlist.add("\nStreet name input is invalid");
 		}
 		if (!validatePostcodeInput) {
-			arlist.add(" Postcode input is invalid");
+			arlist.add("\nPostcode input is invalid");
 		}
 		if (emailAlreadyInDB) {
-			arlist.add(" This email address already exists, please choose another");
+			arlist.add("\nThis email address already exists, please choose another");
 
 		}
 		if (!validatePasswordInput) {
-			arlist.add(" Password is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
+			arlist.add("\nPassword is not strong enough, it has to contain at least 1 digit, 1 lowercase, 1 uppercase letter, a special character out of ~!@#$%^&*()_-"
 					+ "and has more than 8 characters.");
 		}
 		JOptionPane.showMessageDialog(this, arlist);
