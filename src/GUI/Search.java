@@ -35,10 +35,6 @@ import Model.Model;
 
 public class Search extends javax.swing.JFrame {
 
-	/**
-	 * Creates new form Java_Insert_Update_Delete_Display
-	 */
-//
 	private Controller controller;
 	private Model model;
 	private MainModule mainModule;
@@ -48,7 +44,7 @@ public class Search extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable jTable_Display_Search;
-	private JButton btnNewButton;
+	private JButton searchBtn;
 	private JButton viewPropertyButton;
 	private JTextField minPriceTextField;
 	private JTextField maxPriceTextField;
@@ -66,12 +62,6 @@ public class Search extends javax.swing.JFrame {
 	private JPanel navBarPanel;
 	private Date startd;
 	private Date endd;
-	private String sd;
-	private String ed;
-	private double minPPN;
-	private double maxPPN;
-	private String placeName;
-	private int guestCap;
 
 	public Search(MainModule mainModule, Controller controller, Model model) {
 		this.model = model;
@@ -79,12 +69,13 @@ public class Search extends javax.swing.JFrame {
 		this.controller = controller;
 
 		initComponents();
+		//setting values entered as search criteria
 		model.setSD(startDateTextField.getText());
 		model.setED(endDateTextField.getText());
 		model.setMaxPPN(Double.parseDouble(minPriceTextField.getText()));
 		model.setMinPPN(Double.parseDouble(maxPriceTextField.getText()));
 		model.setGuestCap(Integer.parseInt(guestCapacityTextField.getText()));
-		model.setPlaceName("");
+		model.setPlaceName(locationComboBox.getSelectedItem().toString()); //was ""
 
 		Show_Search_In_JTable();
 	}
@@ -108,6 +99,7 @@ public class Search extends javax.swing.JFrame {
 		}
 	}
 
+	//Converts String to a Date object
 	public static Date parseDate(String date) {
 		try {
 			return new SimpleDateFormat("dd/mm/yyyy").parse(date);
@@ -115,6 +107,8 @@ public class Search extends javax.swing.JFrame {
 			return null;
 		}
 	}
+	
+	//Checks if the dates entered are valid for the dates in 2022
 	public Boolean validateDate(int day, int month, int year) {
 
 		boolean dateAccepted = false;
@@ -196,7 +190,7 @@ public class Search extends javax.swing.JFrame {
 
 	}
 	
-	// get a list of properties from mysql database
+	// get a list of properties and their details from database
 	public ArrayList<SearchObject> getSearchList() {
 		Connection connection = getConnection();
 		ArrayList<SearchObject> searchList = new ArrayList<>();
@@ -205,6 +199,7 @@ public class Search extends javax.swing.JFrame {
 		int guestCap = model.getGuestCap();
 		String sd = model.getSD();
 		String ed = model.getED();
+		
 		try {
 
 			startd = sourceFormat.parse(sd);
@@ -214,11 +209,10 @@ public class Search extends javax.swing.JFrame {
 		}
 		String placeName = model.getPlaceName();// city field
 		
-		///////////////////////////////////////// no search
-		///////////////////////////////////////// criteria////////////////////////////////////////////////////
+		///////////////////////////////////////// no search criteria////////////////////////////////////////////////////
 		if (minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022")
 				&& placeName.equals("")) {
-			int addressId, propId;
+			int addressId;
 			String city;
 			try {
 				SearchObject search;
@@ -259,8 +253,7 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
-		///////////////////////////////////////// 1 search
-		///////////////////////////////////////// criteria////////////////////////////////
+		///////////////////////////////////////// 1 search criteria////////////////////////////////
 		// startEndDate
 		if (minPPN == 0 && maxPPN == 0 && guestCap == 0 && !sd.equals("") && !ed.equals("") && placeName.equals("")) {
 			int addressId, propId;
@@ -274,10 +267,8 @@ public class Search extends javax.swing.JFrame {
 				ResultSet gettingAllCb = getAllCb.executeQuery();
 
 				while (gettingAllCb.next()) {
-					// if the start date and end date entered are before or after cb start date end
-					// date
-
-					if ((sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) && // equal works
+					// if the start date and end date entered are equal, before or after chargeband start date end date
+					if ((sourceFormat.parse(gettingAllCb.getString("startDate")).equals(startd) &&
 							sourceFormat.parse(gettingAllCb.getString("endDate")).equals(endd))
 							|| (startd.before(sourceFormat.parse(gettingAllCb.getString("startDate")))
 									&& endd.after(sourceFormat.parse(gettingAllCb.getString("startDate"))))) {
@@ -325,7 +316,7 @@ public class Search extends javax.swing.JFrame {
 		// city
 		if (minPPN == 0.0 && maxPPN == 0.0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022")
 				&& !placeName.equals("")) {
-			int addressId, propId;
+			int addressId;
 			String city;
 
 			try {
@@ -375,7 +366,7 @@ public class Search extends javax.swing.JFrame {
 		// guest
 		if (minPPN == 0.0 && maxPPN == 0.0 && guestCap != 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022")
 				&& placeName.equals("")) {
-			int addressId, propId;
+			int addressId;
 			String city;
 
 			try {
@@ -424,7 +415,7 @@ public class Search extends javax.swing.JFrame {
 		// minMax
 		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && sd.equals("01/01/2022") && ed.equals("31/12/2022")
 				&& placeName.equals("")) {
-			int addressId, propId; // validate field so that min and max cant contain 0 when they enter values
+			int addressId, propId;
 			String city;
 
 			try {
@@ -478,8 +469,7 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
-		//////////////////////////////////////////////////// 2 search
-		//////////////////////////////////////////////////// criteria///////////////////////////////////////////////
+		//////////////////////////////////////////////////// 2 search criteria///////////////////////////////////////////////
 		// minMax, startEndDate
 		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && !sd.equals("") && !ed.equals("") && placeName.equals("")) {
 			int addressId, propId;
@@ -850,8 +840,7 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
-		//////////////////////////////////////////////////// 3 search
-		//////////////////////////////////////////////////// criteria////////////////////////////////////////////////
+		//////////////////////////////////////////////////// 3 search criteria////////////////////////////////////////////////
 		// minMax, startEndDate, city
 		if (minPPN != 0 && maxPPN != 0 && guestCap == 0 && !sd.equals("") && !ed.equals("") && !placeName.equals("")) {
 			int addressId, propId;
@@ -1104,8 +1093,7 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
-		////////////////////////////////////////////////// ALL 4 SEARCH
-		////////////////////////////////////////////////// CRITERIA//////////////////////////////////////////////
+		////////////////////////////////////////////////// ALL 4 SEARCH CRITERIA//////////////////////////////////////////////
 		if (minPPN != 0 && maxPPN != 0 && guestCap != 0 && !sd.equals("") && !ed.equals("") && !placeName.equals("")) {
 			int addressId, propId;
 			String city;
@@ -1172,25 +1160,31 @@ public class Search extends javax.swing.JFrame {
 		return searchList;
 	}
 
-	// Display Data In JTable
+	// Display Data In Table
 
 	public void Show_Search_In_JTable() {
 
 		ArrayList<SearchObject> list = getSearchList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Search.getModel();
-		model.setRowCount(0);
+		model.setRowCount(0); //clears table every time 'search' button clicked
 		
 		Object[] row = new Object[6];
 		
 		
 		Connection connection = getConnection();
 		
+		//Displays property details in table rows
 		for (SearchObject element : list) {
 			row[0] = element.getPropertyId();
 			row[1] = element.getShortName();
 			row[2] = element.getGuestCapacity();
 			row[3] = element.getPlaceName();
-			row[4] = element.getBreakfast();
+			
+			if (element.getBreakfast()) {
+				row[4] = "Yes";
+			} else {
+				row[4] = "No";
+			}
 			
 			
 			int host_id = 0;
@@ -1221,14 +1215,21 @@ public class Search extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 			
-			row[5] = superhost;
+
+			if (superhost) {
+				row[5] = "Yes";
+			} else {
+				row[5] = "No";
+			}
+			
 			model.addRow(row);
 		}
 		
 	}
-
-	private boolean validateMaxPrice() {
-		return false;
+	
+	public void displayMessageEmptyPropertyId() {
+		JOptionPane.showMessageDialog(this,
+				"Please click on a row to select a property.");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1251,9 +1252,10 @@ public class Search extends javax.swing.JFrame {
 		jLabel6.setFont(new java.awt.Font("Verdana", 0, 18));
 		jLabel6.setText("Guest Capacity:");
 
-		jTable_Display_Search.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
-
-		}, new String[] { "Property ID", "Short Name", "Guest Capacity", "City", "Breakfast Offered", "SuperHost" }));
+		jTable_Display_Search.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, 
+				//Column names
+				new String[] { "Property ID", "Short Name", "Guest Capacity", "City", "Breakfast Offered", "SuperHost" }
+		));
 
 		jTable_Display_Search.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
@@ -1270,21 +1272,23 @@ public class Search extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// get value of propertyId in textbox
-				// pass property ID, guest ID to the controller.
+				// pass property ID into controller, so can display Property 
+				//information on the next page for the selected property
 				if (propertyIDTextField.getText().isEmpty()) {
-					// show JOptionPane
+					displayMessageEmptyPropertyId();
 				} else {
-					int propertyId = Integer.parseInt(propertyIDTextField.getText().toString());
 					mainModule.editPropertyState = EDITPROPERTY.BOOK_PROPERTY;
 					MainModule.controller.editPropertyView(Integer.parseInt(propertyIDTextField.getText()), 0);
 				}
 			}
 		});
+		
+		
 
-		btnNewButton = new JButton("Search");
-		btnNewButton.setBounds(100, 506, 79, 38);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton.addActionListener(new ActionListener() {
+		searchBtn = new JButton("Search");
+		searchBtn.setBounds(100, 506, 79, 38);
+		searchBtn.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		searchBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// checking for empty fields
@@ -1346,6 +1350,7 @@ public class Search extends javax.swing.JFrame {
 
 				}
 				
+				//setting minPrice
 				if (minPriceTextField.getText().isEmpty()) {
 					model.setMinPPN(0);
 				} else {
@@ -1393,6 +1398,7 @@ public class Search extends javax.swing.JFrame {
 			}
 		});
 
+		//search textfields and buttons
 		minPriceTextField = new JTextField();
 		minPriceTextField.setBounds(175, 66, 133, 31);
 		minPriceTextField.setText("0");
@@ -1463,6 +1469,7 @@ public class Search extends javax.swing.JFrame {
 		JButton backButton = new JButton("Back");
 		backButton.setBounds(66, 11, 91, 29);
 		backButton.addActionListener(new ActionListener() {
+			//setting appropriate user state so can return to correct page in the correct user state
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (mainModule.userState == USER.GUEST) {
@@ -1511,7 +1518,7 @@ public class Search extends javax.swing.JFrame {
 		jPanel1.add(viewPropertyButton);
 		jPanel1.add(propertyIdLabel);
 		jPanel1.add(propertyIDTextField);
-		jPanel1.add(btnNewButton);
+		jPanel1.add(searchBtn);
 		jPanel1.add(jScrollPane1);
 
 		lblNewLabel = new JLabel("View a Property to Book:");
@@ -1608,6 +1615,7 @@ public class Search extends javax.swing.JFrame {
 		JOptionPane.showMessageDialog(this,
 				"The start date is after end date or the dates you have picked are not in 2022. ");
 	}
+	
 	// show jtable row data in jtextfields in the mouse clicked event
 	private void jTable_Display_SearchMouseClicked(java.awt.event.MouseEvent evt) {
 		// Get The Index Of The Slected Row
@@ -1617,6 +1625,8 @@ public class Search extends javax.swing.JFrame {
 		// Display Slected Row In JTexteFields
 		propertyIDTextField.setText(model.getValueAt(i, 0).toString());
 	}
+	
+	
 	public void initializeSearch() {
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
