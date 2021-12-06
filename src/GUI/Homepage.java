@@ -41,6 +41,7 @@ public class Homepage extends JFrame{
 			 mainModule.currentState = STATE.HOMEPAGE;
 				try {
 					frame = new JFrame();
+					navBeforeLogin.addNavBeforeLogin(frame, mainModule);
 				}catch(Exception e) {
 					System.err.println(e.getMessage());
 				}
