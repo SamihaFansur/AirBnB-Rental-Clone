@@ -1186,7 +1186,7 @@ public class Search extends javax.swing.JFrame {
 			row[2] = element.getGuestCapacity();
 			row[3] = element.getPlaceName();
 			row[4] = element.getBreakfast();
-//          row[5] = list.get(i).getSuperhost();
+			row[5] = element.getSuperhost();
 			model.addRow(row);
 		}
 	}
