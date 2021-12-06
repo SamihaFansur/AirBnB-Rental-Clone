@@ -6,6 +6,7 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 //import hostGUI.*;
@@ -52,6 +53,24 @@ public class Homepage extends JFrame{
 			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
 			homePageLabel.setBounds(190, -27, 250, 152);
 			homepagePanel.add(homePageLabel);
+			
+			String description = "HomeBreaks Plc manages a collection of small properties for short-term "
+								+ "lease by hosts to renting guests. This software will enable you to sign "
+								+ "up as a either as a host or a guest or both.\nIf you would like to advertise "
+								+ "your properties to be rented please create a host account. If you would like to "
+								+ "rent properties please create a guest account. If you would like to have access to "
+								+ "both advertising and renting properties you can create a joint host and guest account. "
+								+ "\nEach advertised property is available for certain time periods. A property offers a "
+								+ "number of facilities, where each facility is themed after a zone in the property. "
+								+ "The six possible kinds of facility have standard names: sleeping, bathing, kitchen, "
+								+ "living, utility and outdoors. \nIf you'd like to search from available properties use "
+								+ "the 'Search' page to do so. To use the system features please login.";
+	        JTextArea textArea = new JTextArea(description);  
+	        textArea.setLineWrap(true);
+			textArea.setBounds(75,100,430,400);		
+			textArea.setFont(new Font("Arial", Font.PLAIN, 16));	
+			homepagePanel.add(textArea);
+			
 			frame.setBounds(100, 100, 600, 700);
 			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
