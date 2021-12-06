@@ -27,10 +27,6 @@ public class GuestAccount extends JFrame {
 	private NavGuest navForGuest = new NavGuest();
 	private JFrame frame;
 
-	public void close() {
-		frame.dispose();
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -51,6 +47,7 @@ public class GuestAccount extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeGuestAccount() {
+		//Nav bar for logged in users; Guest
 		try {
 			frame = new JFrame();
 			navForGuest.addGuestNav(frame, mainModule);
@@ -83,6 +80,8 @@ public class GuestAccount extends JFrame {
 		registerPanel.add(editAccountButton);
 
 		JButton provisionalBookingsButton = new JButton("Provisional Bookings");
+		
+		//displaying pending booking for current guest based on their email
 		provisionalBookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -113,6 +112,7 @@ public class GuestAccount extends JFrame {
 		registerPanel.add(provisionalBookingsButton);
 
 		JButton bookingsButton = new JButton("Bookings List");
+		//displaying accepted/declined/ended bookings for current guest based on their email
 		bookingsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
