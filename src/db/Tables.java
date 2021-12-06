@@ -1,3 +1,12 @@
+/*
+ * 
+ * 1. Make sure the correct jdbc driver is installed and added to the build path of the project
+2. Run tables.java once to set up the database and follow the comments written within the file in order to create/drop tables.
+3. Run MainModule.java to start the GUI
+
+ * 
+ */
+
 package db;
 
 import java.sql.Connection;
