@@ -30,7 +30,7 @@ import Controller.Controller;
 import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
-import HostGUI.SearchObject;
+import GUI.SearchObject;
 import Model.Model;
 
 public class Search extends javax.swing.JFrame {
@@ -1346,10 +1346,12 @@ public class Search extends javax.swing.JFrame {
 
 				}
 				
-				// setting min price
 				if (minPriceTextField.getText().isEmpty()) {
 					model.setMinPPN(0);
 				} else {
+					if(maxPriceTextField.getText().equals("0") || maxPriceTextField.getText().isEmpty()) {
+						model.setMaxPPN(1);
+					}
 					model.setMinPPN(Double.parseDouble(minPriceTextField.getText().toString()));
 				}
 
@@ -1357,6 +1359,9 @@ public class Search extends javax.swing.JFrame {
 				if (maxPriceTextField.getText().isEmpty()) {
 					model.setMaxPPN(0);
 				} else {
+					if(minPriceTextField.getText().equals("0") || minPriceTextField.getText().isEmpty()) {
+						model.setMinPPN(1);
+					}
 					model.setMaxPPN(Double.parseDouble(maxPriceTextField.getText().toString()));
 				}
 
