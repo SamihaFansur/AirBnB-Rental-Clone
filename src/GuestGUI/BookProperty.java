@@ -273,6 +273,8 @@ public class BookProperty extends JFrame {
 						addBooking();
 						// show pane saying booking accepted
 
+						displayMessageProvBookingSucessfull();
+						
 					} else {
 						displayMessageUnableToBook();
 					}
@@ -836,6 +838,9 @@ public class BookProperty extends JFrame {
 
 	}
 	
+	public void displayMessageProvBookingSucessfull() {
+		JOptionPane.showMessageDialog(this, "Provisonal booking successfull. Please check in Bookings List to see the status of your booking.");
+	}
 
 	public void displayMessageToLoginAsGuest() {
 		JOptionPane.showMessageDialog(this, "You must be logged in as a guest to book a property.");

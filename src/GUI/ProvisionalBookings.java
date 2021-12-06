@@ -510,7 +510,9 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 	
 								declineBookingPS.executeUpdate();							
 							}	
-					}
+						}
+						
+						displayMessageAcceptedBooking();
 					}catch(Exception e1) {
 						e1.printStackTrace();
 						
@@ -543,6 +545,7 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 					decliningBooking.setInt(2, bookingID);
 
 					decliningBooking.executeUpdate();
+					displayMessageDeclinedBooking();
 
 					}catch(Exception e1) {
 						e1.printStackTrace();
@@ -573,6 +576,16 @@ public class ProvisionalBookings extends javax.swing.JFrame {
 		getContentPane().setLayout(layout);
 
 		pack();
+	}
+
+	public void displayMessageAcceptedBooking() {
+		JOptionPane.showMessageDialog(this,
+				"Booking accepted successfully.");
+	}
+
+	public void displayMessageDeclinedBooking() {
+		JOptionPane.showMessageDialog(this,
+				"Booking declined successfully.");
 	}
 
 	

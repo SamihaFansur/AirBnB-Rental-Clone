@@ -1,4 +1,4 @@
-package HostGUI;
+package GUI;
 
 /*
  * This class constructs Search objects and is the helper class
