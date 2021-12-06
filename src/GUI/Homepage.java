@@ -1,160 +1,83 @@
 package GUI;
-//import hostGUI.*;
-import Controller.*;
-import GUI.MainModule.STATE;
-import GUI.MainModule;
-import Model.*;
-
-import java.awt.EventQueue;
-import javax.swing.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
+
+import Controller.Controller;
+import GUI.MainModule.STATE;
+import GUI.MainModule.USER;
+import Model.Model;
+import javax.swing.JTextField;
+
 public class Homepage extends JFrame{
-
-	private JFrame frame;
-
-
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//	
-//			Homepage window = new Homepage();
-//			window.frame.setVisible(true);
-//	}
-	
-
-	 public void close() {
-		 	this.frame.dispose();
-	 }	
-	 
-
-	/**	
 	 * Create the application.
 	 */
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private NavEnquirer navBeforeLogin = new NavEnquirer();
+	private JFrame frame ;
+	private JTextField txtHomebreaksPlcManages;
+
 	 public Homepage(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
 		this.model=model;
 		this.mainModule=mainModule;
 		this.controller=controller;
 	}
 
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	 public void initializeHomePage() {
-		 
-		 if(mainModule.userState == STATE.ENQUIRER) {
-			
-			frame = new JFrame();
-			frame.getContentPane().setBackground(new Color(204, 255, 255));
-			
-			JPanel navBarPanel = new JPanel();
-			navBarPanel.setBackground(new Color(51, 255, 255));
-			frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
-			
-			System.out.println("Initialise homepage");
-			
-			JButton navSearchButton = new JButton("Search");
-			navSearchButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.SEARCH;
-					MainModule.controller.drawNewView();
-					close();
-				}
-			});
-			navBarPanel.add(navSearchButton);
-			
-			JButton navRegisterButton = new JButton("Register");
-			navRegisterButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.SELF_REGISTRATION;
-					MainModule.controller.drawNewView();
-					close();
-				}
-			});
-			navBarPanel.add(navRegisterButton);
-			
-			JButton navLoginButton = new JButton("Login");
-			navLoginButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mainModule.currentState=STATE.LOGIN;
-					MainModule.controller.drawNewView();
-					close();
-							//Login sp = new Login();
-				}
-			});
-			navBarPanel.add(navLoginButton);
-			
-			JButton navContactButton = new JButton("Contact");
-			navContactButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
 
-					mainModule.currentState=STATE.CONTACT_US;
-					MainModule.controller.drawNewView();
-					close();
-					//Register sp = new Register();
+		 if(mainModule.userState == USER.ENQUIRER) {
+			 mainModule.currentState = STATE.HOMEPAGE;
+				try {
+					frame = new JFrame();
+					navBeforeLogin.addNavBeforeLogin(frame, mainModule);
+				}catch(Exception e) {
+					System.err.println(e.getMessage());
 				}
-			});
-			navBarPanel.add(navContactButton);
-			
-			JPanel loginPanel = new JPanel();
-			loginPanel.setBackground(new Color(204, 255, 255));
-			frame.getContentPane().add(loginPanel, BorderLayout.CENTER);
-			loginPanel.setLayout(null);
-			
-			JLabel homePageLabel = new JLabel("Home Page");
+				
+			JPanel homepagePanel = new JPanel();
+			homepagePanel.setBackground(new Color(204, 255, 255));
+			frame.getContentPane().add(homepagePanel, BorderLayout.CENTER);
+			homepagePanel.setLayout(null);
+
+			JLabel homePageLabel = new JLabel("HomeBreaks Plc");
 			homePageLabel.setFont(new Font("Arial Black", Font.PLAIN, 26));
-			homePageLabel.setBounds(202, -27, 222, 152);
-			loginPanel.add(homePageLabel);
-			frame.setBounds(100, 100, 600, 700);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-			frame.setLocationRelativeTo(null);
+			homePageLabel.setBounds(190, -27, 250, 152);
+			homepagePanel.add(homePageLabel);
 			
+			JTextArea txtHomebreaksPlcManages = new JTextArea("HomeBreaks Plc manages a collection of small properties for short-term  lease by hosts to renting guests. This software will enable you to sign up as a either as a host or a guest or both. If you would like to advertise your properties to be rented please create a host account. If you would like to rent properties please create a guest account. If you would like to have access to both advertising and renting properties you can create a joint host and guest account. Each advertised property is available for certain time periods. A property offers a number of facilities, where each facility is themed after a zone in the property. The six possible kinds of facility have standard names: sleeping, bathing, kitchenliving, utility and outdoors. If you'd like to search from available properties use the 'Search' page to do so. To use the system features please login."); 
+			txtHomebreaksPlcManages.setBounds(67, 119, 461, 390);
+			txtHomebreaksPlcManages.setLineWrap(true);
+			txtHomebreaksPlcManages.setWrapStyleWord(true);
+			//txtHomebreaksPlcManages.setVisible(false);
+			
+			txtHomebreaksPlcManages.setFont(new Font("Arial Black", Font.PLAIN, 15));
+			homepagePanel.add(txtHomebreaksPlcManages);
+			
+
+			
+			frame.setBounds(100, 100, 600, 700);
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
+
 		 }
-		 else if (mainModule.userState==STATE.HOST) {
-			 /*Homepage for host should display list of host properties and buttons in the nav for:
-			  * 	add property
-			  * 	charge bands
-			  * 	provision bookings
-			  * 	accepted bookings
-			  * 	search
-			  * 	contact
-			  * 
-			  * 
-			  */
-			 
+		 else if (mainModule.userState==USER.HOST) {
 		 }
-		 else if (mainModule.userState==STATE.GUEST) {
-			 
+		 else if (mainModule.userState==USER.GUEST) {
 		 }
-		 
 	}
 }
+

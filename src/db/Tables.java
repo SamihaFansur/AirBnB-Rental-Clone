@@ -9,98 +9,109 @@ public class Tables {
 
 	public static void main(String[] args) {
 		String createAddressTable = "CREATE TABLE Address("
-				+ "PRIMARY KEY (houseNameNumber, postcode), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
-				+ "placeName VARCHAR(255), postcode VARCHAR(10))";
+				+ "address_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
+				+ "placeName VARCHAR(255), postcode VARCHAR(255))";
 
-		String createAccountTable = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
-				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(15), "
-				+ "password VARCHAR(255), houseNameNumber VARCHAR(255) REFERENCES Address, postcode VARCHAR(10) REFERENCES Address)";
+		String createAccountTable = "CREATE TABLE Account("
+				+ "email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
+				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber VARCHAR(255), "
+				+ "password VARCHAR(255), address_id INT, FOREIGN KEY (address_id) REFERENCES Address(address_id), salt VARCHAR(255))";
 
 		String createHostAccountTable = "CREATE TABLE HostAccount("
-				+ "host_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(50), FOREIGN KEY (email) REFERENCES Account(email), "
+				+ "host_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email), "
 				+ "rating FLOAT , superhost BOOL)";
 
-		String createGuestAccountTable = "CREATE TABLE GuestAccount(guest_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-				+ "email VARCHAR(50), FOREIGN KEY (email) REFERENCES Account(email))";
-//
-//		String createReviewTable = "CREATE TABLE Review("
-//				+ "review_id INT NOT NULL PRIMARY KEY, accuracy DEC, location DEC, "
-//				+ "valueForMoney DEC, communication DEC, cleanliness DEC, description VARCHAR(255))";
-//
-//		String createOutdoorsTable = "CREATE TABLE Outdoors"
-//				+ "(outdoors_id INT NOT NULL PRIMARY KEY, freeOnSiteParking BOOL, "
-//				+ "onRoadParking BOOL, paidCarPark BOOL, patio BOOL, barbeque BOOL)";
-//
-//		String createLivingTable = "CREATE TABLE Living"
-//				+ "(living_id INT NOT NULL PRIMARY KEY, wifi BOOL, television BOOL, satellite BOOL, "
-//				+ "streaming BOOL, dvdPlayer BOOL, boardGames BOOL)";
-//
-//		String createKitchenTable = "CREATE TABLE Kitchen"
-//				+ "(kitchen_id INT NOT NULL PRIMARY KEY, refrigerator BOOL, microwave BOOL, "
-//				+ "oven BOOL, stove BOOL, dishwasher BOOL, tableware BOOL, cookware BOOL, " + "basicProvision BOOL)";
-//
-//		String createUtilityTable = "CREATE TABLE Utility"
-//				+ "(utility_id INT NOT NULL PRIMARY KEY, heating BOOL, washingMachine BOOL, "
-//				+ "dryingMaching BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
-//
-//		String createBedTypeTable = "CREATE TABLE BedType(bedType_id INT NOT NULL PRIMARY KEY, "
-//				+ "bed1 VARCHAR(20), bed2 VARCHAR(20), bed1People INT, bed2People INT)";
-//
-//		String createSleepingTable = "CREATE TABLE Sleeping("
-//				+ "sleeping_id INT NOT NULL PRIMARY KEY, bedLinen BOOL, towels BOOL, noOfBedrooms INT)";
-//
-//		String createSleeping_BedTypeTable = "CREATE TABLE Sleeping_BedType(PRIMARY KEY (sleeping_id, bedType_id), sleeping_id INT REFERENCES Sleeping(sleeping_id), "
-//				+ "bedType_id INT REFERENCES BedType(bedType_id), peopleInBedroom INT)";
-//
-//		String createBathTypeTable = "CREATE TABLE BathType(bathType_id INT NOT NULL PRIMARY KEY, "
-//				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
-//
-//		String createBathingTable = "CREATE TABLE Bathing("
-//				+ "bathing_id INT NOT NULL PRIMARY KEY, hairDryer BOOL, toiletPaper BOOL, noOfBathrooms INT)";
-//
-//		String createBathing_BathTypeTable = "CREATE TABLE Bathing_BathType(bathing_id INT, bathType_id INT, PRIMARY KEY (bathing_id, bathType_id), "
-//				+ "CONSTRAINT FK_Bathing FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
-//				+ "CONSTRAINT FK_BathType FOREIGN KEY (bathType_id) REFERENCES BathType(bathType_id))";
-//
-//		String createFacilitiesTable = "CREATE TABLE Facilities"
-//				+ "(facilities_id INT NOT NULL PRIMARY KEY, kitchen_id INT REFERENCES Kitchen, sleeping_id INT references Sleeping, bathing_id INT "
-//				+ "REFERENCES Bathing, living_id INT REFERENCES Living, utility_id INT REFERENCES Utility, outdoors_id INT REFERENCES Outdoors) ";
-//
-//		String createPropertyTable = "CREATE TABLE Property(property_id INT NOT NULL PRIMARY KEY, houseNameNumber VARCHAR(255), postcode VARCHAR(10), host_id INT REFERENCES HostAccount, "
-//				+ "facilities_id INT REFERENCES Facilities, review_id INT REFERENCES Review, CONSTRAINT FK_Property_Address FOREIGN KEY (houseNameNumber, postcode) REFERENCES Address(houseNameNumber, postcode), "
-//				+ "CONSTRAINT FK_Property_Host FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
-//				+ "description VARCHAR(255), shortName VARCHAR(50), guestCapacity INT)";
-//
-//        String createBookingTable = "CREATE TABLE Booking(booking_id INT NOT NULL PRIMARY KEY, "
-//                + "property_id INT REFERENCES Property, host_id INT REFERENCES HostAccount, "
-//                + "guest_id INT REFERENCES GuestAccount, review_id INT REFERENCES Review, "
-//                + "provisional BOOL, totalPrice FLOAT, startDate DATE, endDate DATE)";
-//
-//		String createChargeBandsTable = "CREATE TABLE ChargeBands"
-//				+ "(PRIMARY KEY (property_id, startDate), property_id INT REFERENCES Property, "
-//				+ "startDate DATE, endDate DATE, pricePerNight DOUBLE, serviceCharge DOUBLE, "
-//				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
-//
-//		String[] allCreateQueries = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable, createReviewTable, 
-//				createOutdoorsTable, createLivingTable, createKitchenTable,createUtilityTable, createBathTypeTable, createBathingTable, 
-//				createBathing_BathTypeTable, createSleepingTable, createBedTypeTable, createSleeping_BedTypeTable, createFacilitiesTable, createPropertyTable, createChargeBandsTable, createBookingTable};
-//		
+		String createGuestAccountTable = "CREATE TABLE GuestAccount("
+				+ "guest_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+				+ "email VARCHAR(255), FOREIGN KEY (email) REFERENCES Account(email))";
 
-				String[] allDropQueries = { "DROP TABLE IF EXISTS Outdoors", "DROP TABLE IF EXISTS Living",
-				"DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility", "DROP TABLE IF EXISTS Bathing_BathType",
-				"DROP TABLE IF EXISTS BathType", "DROP TABLE IF EXISTS Bathing", "DROP TABLE IF EXISTS BedType", "DROP TABLE IF EXISTS Sleeping",
-				"DROP TABLE IF EXISTS Sleeping_BedType", "DROP TABLE IF EXISTS Facilities", "DROP TABLE IF EXISTS Property",
-				"DROP TABLE IF EXISTS HostAccount","DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Address", "DROP TABLE IF EXISTS Account",
-				"DROP TABLE IF EXISTS Review","DROP TABLE IF EXISTS ChargeBands" , "DROP TABLE IF EXISTS Booking", "DROP TABLE IF EXISTS ACCOUNT", "DROP TABLE IF EXISTS ACCOUNTtttt"};
+		String createReviewTable = "CREATE TABLE Review("
+				+ "review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "booking_id INT, FOREIGN KEY (booking_id) REFERENCES Booking(booking_id),host_id INT, accuracy DOUBLE, location DOUBLE, "
+				+ "valueForMoney DOUBLE, communication DOUBLE, cleanliness DOUBLE, description VARCHAR(255), averageRating DOUBLE)";
+
+		String createOutdoorsTable = "CREATE TABLE Outdoors("
+				+ "outdoors_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, freeOnSiteParking BOOL, "
+				+ "onRoadParking BOOL, paidCarPark BOOL, patio BOOL, barbeque BOOL)";
+
+		String createLivingTable = "CREATE TABLE Living("
+				+ "living_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, wifi BOOL, television BOOL, satellite BOOL, "
+				+ "streaming BOOL, dvdPlayer BOOL, boardGames BOOL)";
+
+		String createKitchenTable = "CREATE TABLE Kitchen("
+				+ "kitchen_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, refrigerator BOOL, microwave BOOL, "
+				+ "oven BOOL, stove BOOL, dishwasher BOOL, tableware BOOL, cookware BOOL, basicProvision BOOL)";
+
+		String createUtilityTable = "CREATE TABLE Utility("
+				+ "utility_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, heating BOOL, washingMachine BOOL, "
+				+ "dryingMachine BOOL, fireExtinguisher BOOL, smokeAlarm BOOL, firstAidKit BOOL)";
+
+		String createSleepingTable = "CREATE TABLE Sleeping("
+				+ "sleeping_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bedLinen BOOL, towels BOOL, noOfBeds INT, noOfBedrooms INT)";
+
+		String createSleeping_BedTypeTable = "CREATE TABLE Sleeping_BedType("
+				+ "PRIMARY KEY (sleeping_id, bedType_id), sleeping_id INT, "
+				+ "FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), bedType_id INT, "
+				+ "peopleInBedroom INT, bed1 BOOL, bed2 BOOL, bed1ChoiceField VARCHAR(255), bed2ChoiceField VARCHAR(255), "
+				+ "bed1People INT, bed2People INT)";
+
+		String createBathingTable = "CREATE TABLE Bathing("
+				+ "bathing_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, hairDryer BOOL, "
+				+ "toiletPaper BOOL, noOfBathrooms INT)";
+
+		String createBathing_BathTypeTable = "CREATE TABLE Bathing_BathType("
+				+ "PRIMARY KEY (bathing_id, bathType_id), bathing_id INT, bathType_id INT, "
+				+ "FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
+				+ "toilet BOOL, bath BOOL, shower BOOL, shared BOOL)";
+
+		String createPropertyTable = "CREATE TABLE Property("
+				+ "property_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, address_id INT, "
+				+ "FOREIGN KEY (address_id) REFERENCES Address(address_id), "
+				+ "host_id INT , FOREIGN KEY (host_id) REFERENCES HostAccount(host_id), "
+				+ "description VARCHAR(255), shortName VARCHAR(255), guestCapacity INT, breakfast BOOL)";
+
+		String createFacilitiesTable = "CREATE TABLE Facilities("
+				+ "facilities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+				+ "property_id INT , FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "kitchen_id INT , FOREIGN KEY (kitchen_id) REFERENCES Kitchen(kitchen_id), "
+				+ "sleeping_id INT , FOREIGN KEY (sleeping_id) REFERENCES Sleeping(sleeping_id), "
+				+ "bathing_id INT , FOREIGN KEY (bathing_id) REFERENCES Bathing(bathing_id), "
+				+ "living_id INT , FOREIGN KEY (living_id) REFERENCES Living(living_id), "
+				+ "utility_id INT , FOREIGN KEY (utility_id) REFERENCES Utility(utility_id), "
+				+ "outdoors_id INT , FOREIGN KEY (outdoors_id) REFERENCES Outdoors(outdoors_id)) ";
+
+
+        String createBookingTable = "CREATE TABLE Booking(booking_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+               + "property_id INT REFERENCES Property, host_id INT REFERENCES HostAccount, "
+               + "guest_id INT REFERENCES GuestAccount, provisional VARCHAR(255), totalPrice FLOAT, startDate VARCHAR(255), endDate VARCHAR(255))";
+
+		String createChargeBandsTable = "CREATE TABLE ChargeBands(PRIMARY KEY (property_id, startDate), "
+				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
+				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
+				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
+		
+		//If you want to drop tables, comment out line 112 and then run tables.java
+
+		String[] allDropQueries = {  "DROP TABLE IF EXISTS Sleeping_BedType",
+				"DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Facilities",
+				"DROP TABLE IF EXISTS ChargeBands", "DROP TABLE IF EXISTS Review", "DROP TABLE IF EXISTS Booking","DROP TABLE IF EXISTS GuestAccount", "DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS Outdoors",
+				"DROP TABLE IF EXISTS Living", "DROP TABLE IF EXISTS Kitchen", "DROP TABLE IF EXISTS Utility",
+				"DROP TABLE IF EXISTS Sleeping", "DROP TABLE IF EXISTS Bathing","DROP TABLE IF EXISTS Property", "DROP TABLE IF EXISTS HostAccount",
+			"DROP TABLE IF EXISTS Account", "DROP TABLE IF EXISTS Address"};
 		dropAllTables(allDropQueries);
+		
 
 		
-//	String testAccount = "CREATE TABLE Account(email VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255), "
-//				+ "firstName VARCHAR(255), surname VARCHAR(255), mobileNumber INT, "
-//				+ "password VARCHAR(255), houseNameNumber VARCHAR(255), streetName VARCHAR(255), "
-//				+ "city VARCHAR(255), postcode VARCHAR(10), accountType VARCHAR(255))";
-		String[] create = {createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable};
+		//If you want to create tables, first drop tables and then comment out line 101 then run tables.java to create tables
+		// make sure all tables created before facilities
+		
+		String[] create = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable,
+				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
+				createBathing_BathTypeTable, createSleepingTable, createSleeping_BedTypeTable, createPropertyTable,
+				createFacilitiesTable, createChargeBandsTable, createBookingTable, createReviewTable};
+
 		createAllTables(create);
+
 	}
 
 	static void createTable(String query) {
@@ -125,16 +136,16 @@ public class Tables {
 	static void dropAllTables(String[] allDropQueries) {
 		for (int i = 0; i < allDropQueries.length; i++) {
 			dropTable(allDropQueries[i]);
-			System.out.println("Dropped " + i + " in given database...");
 		}
 	}
-	
+
 	static void createAllTables(String[] allCreateQueries) {
-	
+
 		for (int i = 0; i < allCreateQueries.length; i++) {
 			createTable(allCreateQueries[i]);
-			System.out.println("Created " + i + " in given database...");
 		}
 	}
-	
+
 }
+
+//drop tables doesnt work

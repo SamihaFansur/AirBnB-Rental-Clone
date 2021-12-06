@@ -1,151 +1,188 @@
+package HostGUI;
 
-package hostGUI;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import Controller.Controller;
-import GUI.Login;
+import GUI.ConnectionManager;
 import GUI.MainModule;
-import GUI.MainModule.STATE;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
 import Model.Model;
 
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
-
-public class EditBathing extends JFrame{
-
+public class EditBathing extends JFrame {
 
 	private JFrame frame;
-	private JTextField noOfBahtroomsTextField;
+	private JRadioButton toiletPaperRadioBtn;
+	private JRadioButton hairDryerRadioBtn;
+	private JButton addBathing;
+	private NavHost navForHost = new NavHost();
 
-	public void close() {
-		frame.dispose();
-	}
+	private int idAfter;
+	private int facilitiesidAfter;
+
+	private boolean hairDryer, toiletPaper;
+
+	Connection connection = null;
+
 
 	/**
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public EditBathing(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+
+	public EditBathing(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditBathing();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBathing() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
+	public void initializeEditBathing(int facilitiesId, int id) {
 
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
+		//Nav bar for logged in users; Host
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
 
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
-
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = STATE.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
-
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
-
-		JLabel editBathingLabel = new JLabel("Bathing");
-		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBathingLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(editBathingLabel);
+		idAfter = id;
+		facilitiesidAfter = facilitiesId;
 		
+		JPanel editBathingPanel = new JPanel();
+		editBathingPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBathingPanel, BorderLayout.CENTER);
+		editBathingPanel.setLayout(null);
+
+		JLabel editBathingLabel = new JLabel("Add Bathing Facility");
+		editBathingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		editBathingLabel.setBounds(185, 57, 261, 57);
+		editBathingPanel.add(editBathingLabel);
+
+		//displaying Bathing facility amenities stored in the database for a particular bathing id 
+		//which related to a bathing facility for a particular property
+		try {
+			connection = ConnectionManager.getConnection();
+
+			String selectBathingRecord = "select hairDryer, toiletPaper from Bathing " + "where bathing_id=?";
+
+			PreparedStatement selectingBathingValues = connection.prepareStatement(selectBathingRecord);
+
+			selectingBathingValues.setInt(1, id);
+			ResultSet rs = selectingBathingValues.executeQuery();
+			while (rs.next()) {
+				hairDryer = rs.getBoolean("hairDryer");
+				toiletPaper = rs.getBoolean("toiletPaper");
+			}
+
+			connection.close();
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
 		JLabel hairDryerLabel = new JLabel("Hair Dryer");
 		hairDryerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		hairDryerLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(hairDryerLabel);
-		
+		hairDryerLabel.setBounds(170, 188, 167, 34);
+		editBathingPanel.add(hairDryerLabel);
+
+		hairDryerRadioBtn = new JRadioButton("Hair Dryer", hairDryer);
+		hairDryerRadioBtn.setBounds(364, 188, 21, 23);
+		editBathingPanel.add(hairDryerRadioBtn);
+
 		JLabel toiletPaperLabel = new JLabel("Toilet Paper");
 		toiletPaperLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		toiletPaperLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(toiletPaperLabel);
-		
-		JLabel noOfBathroomsLabel = new JLabel("Number Of Bathrooms");
-		noOfBathroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		noOfBathroomsLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(noOfBathroomsLabel);
-		
-		JRadioButton hairDryerRadioBtn = new JRadioButton("");
-		hairDryerRadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(hairDryerRadioBtn);
-		
-		JRadioButton toiletPaperRadioBtn = new JRadioButton("");
-		toiletPaperRadioBtn.setBounds(364, 199, 21, 23);
-		registerPanel.add(toiletPaperRadioBtn);
-		
-		noOfBahtroomsTextField = new JTextField();
-		noOfBahtroomsTextField.setBounds(347, 254, 106, 29);
-		registerPanel.add(noOfBahtroomsTextField);
-		noOfBahtroomsTextField.setColumns(10);
-		
-		JButton addBathroomButton = new JButton("Add Bathroom");
-		addBathroomButton.setBounds(199, 405, 209, 46);
-		registerPanel.add(addBathroomButton);
+		toiletPaperLabel.setBounds(170, 285, 167, 34);
+		editBathingPanel.add(toiletPaperLabel);
 
+		toiletPaperRadioBtn = new JRadioButton("Toilet paper", toiletPaper);
+		toiletPaperRadioBtn.setBounds(364, 296, 21, 23);
+		editBathingPanel.add(toiletPaperRadioBtn);
+
+		addBathing = new JButton("Add Bathrooms");
+		addBathing.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				updateBathingDetails(id);
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_BATHROOM;
+				MainModule.controller.editPropertyView(facilitiesidAfter, id);
+				frame.dispose();
+			}
+		});
+		addBathing.setBounds(185, 480, 200, 23);
+		editBathingPanel.add(addBathing);
+
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(44, 76, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainModule.userState = USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); 
+				frame.dispose();
+
+			}
+		});
+		editBathingPanel.add(backButton);
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-}
 
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
+	//Saves changes and updates all relevant database tables
+	public void updateBathingDetails(int id) {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setHairDryer(hairDryerRadioBtn.isSelected());
+			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
+
+			String updateBathingRecord = "update Bathing set hairDryer=?, toiletPaper=? " + "where bathing_id=?";
+
+			PreparedStatement updatingBathingValues = connection.prepareStatement(updateBathingRecord);
+			updatingBathingValues.setBoolean(1, model.getHairDryer());
+			updatingBathingValues.setBoolean(2, model.getToiletPaper());
+			updatingBathingValues.setInt(3, idAfter);
+			updatingBathingValues.executeUpdate();
+
+			String updateBathingIdInFacilities = "update Facilities set bathing_id=? where facilities_id=?";
+
+			PreparedStatement updatingBathingIdInFacilities = connection.prepareStatement(updateBathingIdInFacilities);
+			updatingBathingIdInFacilities.setInt(1, idAfter);
+			updatingBathingIdInFacilities.setInt(2, facilitiesidAfter);
+
+			updatingBathingIdInFacilities.executeUpdate();
+
+			connection.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+}
