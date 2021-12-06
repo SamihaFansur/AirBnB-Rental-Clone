@@ -1179,16 +1179,52 @@ public class Search extends javax.swing.JFrame {
 		ArrayList<SearchObject> list = getSearchList();
 		DefaultTableModel model = (DefaultTableModel) jTable_Display_Search.getModel();
 		model.setRowCount(0);
+		
 		Object[] row = new Object[6];
+		
+		
+		Connection connection = getConnection();
+		
 		for (SearchObject element : list) {
 			row[0] = element.getPropertyId();
 			row[1] = element.getShortName();
 			row[2] = element.getGuestCapacity();
 			row[3] = element.getPlaceName();
 			row[4] = element.getBreakfast();
-			row[5] = element.getSuperhost();
+			
+			
+			int host_id = 0;
+			boolean superhost = false;
+			try {
+			String hostIdFromProperty = "Select host_id from Property where property_id=?";
+
+			PreparedStatement hostIdValue = connection.prepareStatement(hostIdFromProperty);
+			hostIdValue.setInt(1, element.getPropertyId());
+
+			ResultSet hostIds = hostIdValue.executeQuery();
+
+			while (hostIds.next()) {
+				host_id = hostIds.getInt("host_id");
+			}
+			
+			String superHostFromHost = "Select superhost from HostAccount where host_id=?";
+
+			PreparedStatement superHostValue = connection.prepareStatement(superHostFromHost);
+			superHostValue.setInt(1, host_id);
+
+			ResultSet superHosts = superHostValue.executeQuery();
+
+			while (superHosts.next()) {
+				superhost = superHosts.getBoolean("superhost");
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			row[5] = superhost;
 			model.addRow(row);
 		}
+		
 	}
 
 	private boolean validateMaxPrice() {
