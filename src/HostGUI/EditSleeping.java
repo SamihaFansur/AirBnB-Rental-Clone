@@ -1,34 +1,42 @@
+package HostGUI;
 
-package hostGUI;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import Controller.Controller;
-import GUI.Login;
+import GUI.ConnectionManager;
 import GUI.MainModule;
-import GUI.MainModule.STATE;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
 import Model.Model;
 
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
-
-public class EditSleeping extends JFrame{
-
+public class EditSleeping extends JFrame {
 
 	private JFrame frame;
-	private JTextField noOfBedroomsTextField;
+	private NavHost navForHost = new NavHost();
+	private JRadioButton towelsRadioBtn;
+	private JRadioButton bedLinenRadioBtn;
+
+	private int idAfter;
+	private int facilitiesidAfter;
+
+	private boolean bedLinen, towels;
+
+	Connection connection = null;
 
 	public void close() {
 		frame.dispose();
@@ -38,114 +46,154 @@ public class EditSleeping extends JFrame{
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public EditSleeping(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JTextField numberOfBedsTextField;
+
+	public EditSleeping(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditSleeping();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditSleeping() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
+	public void initializeEditSleeping(int facilitiesId, int id) {
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
 
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
+		idAfter = id;
+		facilitiesidAfter = facilitiesId;
 
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
+		JPanel editSleepingPanel = new JPanel();
+		editSleepingPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editSleepingPanel, BorderLayout.CENTER);
+		editSleepingPanel.setLayout(null);
 
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = STATE.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
-
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
-
-		JLabel editSleepingLabel = new JLabel("Sleeping");
+		JLabel editSleepingLabel = new JLabel("Add Sleeping Facility");
 		editSleepingLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editSleepingLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(editSleepingLabel);
-		
+		editSleepingLabel.setBounds(197, 50, 249, 57);
+		editSleepingPanel.add(editSleepingLabel);
+
+		try {
+			connection = ConnectionManager.getConnection();
+
+			String selectSleepingRecord = "select bedLinen, towels from Sleeping " + "where sleeping_id=?";
+
+			PreparedStatement selectingSleepingValues = connection.prepareStatement(selectSleepingRecord);
+
+			selectingSleepingValues.setInt(1, id);
+			ResultSet rs = selectingSleepingValues.executeQuery();
+			while (rs.next()) {
+				bedLinen = rs.getBoolean("bedLinen");
+				towels = rs.getBoolean("towels");
+			}
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+
 		JLabel bedLinenLabel = new JLabel("Bed Linen");
 		bedLinenLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bedLinenLabel.setBounds(170, 135, 167, 34);
-		registerPanel.add(bedLinenLabel);
-		
+		bedLinenLabel.setBounds(170, 167, 167, 34);
+		editSleepingPanel.add(bedLinenLabel);
+
+		bedLinenRadioBtn = new JRadioButton("Bed Linen", bedLinen);
+		bedLinenRadioBtn.setBounds(398, 177, 21, 23);
+		editSleepingPanel.add(bedLinenRadioBtn);
+
 		JLabel towelsLabel = new JLabel("Towels");
 		towelsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		towelsLabel.setBounds(170, 191, 167, 34);
-		registerPanel.add(towelsLabel);
-		
-		JLabel noOfBedroomsLabel = new JLabel("Number Of Bedrooms");
-		noOfBedroomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		noOfBedroomsLabel.setBounds(170, 254, 167, 34);
-		registerPanel.add(noOfBedroomsLabel);
-		
-		JRadioButton refrigeratorRadioBtn = new JRadioButton("");
-		refrigeratorRadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(refrigeratorRadioBtn);
-		
-		JRadioButton microwaveRadioBtn = new JRadioButton("");
-		microwaveRadioBtn.setBounds(364, 199, 21, 23);
-		registerPanel.add(microwaveRadioBtn);
-		
-		noOfBedroomsTextField = new JTextField();
-		noOfBedroomsTextField.setBounds(347, 254, 106, 29);
-		registerPanel.add(noOfBedroomsTextField);
-		noOfBedroomsTextField.setColumns(10);
-		
-		JButton addBedroomButton = new JButton("Add Bedroom");
-		addBedroomButton.setBounds(199, 405, 209, 46);
-		registerPanel.add(addBedroomButton);
+		towelsLabel.setBounds(170, 265, 167, 34);
+		editSleepingPanel.add(towelsLabel);
 
+		towelsRadioBtn = new JRadioButton("Towels", towels);
+		towelsRadioBtn.setBounds(398, 264, 21, 23);
+		editSleepingPanel.add(towelsRadioBtn);
+
+		JButton addBedroomButton = new JButton("Add Bedrooms");
+		addBedroomButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateSleepingDetails(id);
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_BEDROOM;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+				frame.dispose();
+			}
+		});
+		addBedroomButton.setBounds(197, 482, 209, 46);
+		editSleepingPanel.add(addBedroomButton);
+
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(27, 69, 91, 23);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainModule.userState = USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+				frame.dispose();
+
+			}
+		});
+		editSleepingPanel.add(backButton);
+
+		JLabel noOfBedsLabel = new JLabel("Number of Beds in Faciity");
+		noOfBedsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		noOfBedsLabel.setBounds(171, 358, 209, 34);
+		editSleepingPanel.add(noOfBedsLabel);
+
+		numberOfBedsTextField = new JTextField();
+		numberOfBedsTextField.setBounds(385, 358, 49, 29);
+		editSleepingPanel.add(numberOfBedsTextField);
+		numberOfBedsTextField.setColumns(10);
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-}
 
+	public void updateSleepingDetails(int id) {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setBedLinen(bedLinenRadioBtn.isSelected());
+			model.setTowels(towelsRadioBtn.isSelected());
+			model.setNoOfBeds(Integer.parseInt(numberOfBedsTextField.getText()));
+			String updateSleepingRecord = "update Sleeping set bedLinen=?, towels=?, noOfBeds=? "
+					+ "where sleeping_id=?";
+
+			PreparedStatement updatingSleepingValues = connection.prepareStatement(updateSleepingRecord);
+			updatingSleepingValues.setBoolean(1, model.getBedLinen());
+			updatingSleepingValues.setBoolean(2, model.getTowels());
+			updatingSleepingValues.setInt(3, model.getNoOfBeds());
+			updatingSleepingValues.setInt(4, idAfter);
+			updatingSleepingValues.executeUpdate();
+
+			String updateSleepingIdInFacilities = "update Facilities set sleeping_id=? where facilities_id=?";
+
+			PreparedStatement updatingSleepingIdInFacilities = connection
+					.prepareStatement(updateSleepingIdInFacilities);
+			updatingSleepingIdInFacilities.setInt(1, idAfter);
+			updatingSleepingIdInFacilities.setInt(2, facilitiesidAfter);
+			updatingSleepingIdInFacilities.executeUpdate();
+			
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+}
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

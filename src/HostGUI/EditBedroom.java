@@ -1,38 +1,84 @@
 
-package hostGUI;
+package HostGUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.Controller;
-import GUI.Login;
+import GUI.ConnectionManager;
 import GUI.MainModule;
-import GUI.MainModule.STATE;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
 import Model.Model;
 
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
-
-public class EditBedroom extends JFrame{
-
+public class EditBedroom extends JFrame {
 
 	private JFrame frame;
-	private JTextField Bed1NoOfPeopleTextField;
-	private JTextField Bed2NoOfPeopleTextField;
+	private NavHost navForHost = new NavHost();
+
+	private JButton addBedType;
+	private JTable table = new JTable();
+	private javax.swing.JTable jTable_Display_Properties;
+
+	private JTextField bedroomId;
+	private JTextField bed1People;
+	private JTextField bed2People;
+	private JComboBox BedType1ComboBox;
+	private JComboBox BedType2ComboBox;
+	private JRadioButton Bed1RadioButton;
+	private JRadioButton Bed2RadioButton;
+	private String bed1Value;
+	private String bed2Value;
+
+	Connection connection = null;
+
+	private int idAfter;
+	private int facilitiesidAfter;
 
 	public void close() {
 		frame.dispose();
+	}
+
+	// get the connection
+
+	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
+	private static String username = "team018";
+	private static String pwd = "7854a03f";
+
+	public Connection getConnection() {
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(serverName, username, pwd);
+			return connection;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -40,137 +86,381 @@ public class EditBedroom extends JFrame{
 	 */
 
 	private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public EditBedroom(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Model model;
+	private MainModule mainModule;
+
+	public EditBedroom(MainModule mainModule, Controller controller, Model model) {
+
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
+
+	// Creates a list of property objects using the information in the Bedroom
+	// table
+	// within the database
+	public ArrayList<Bedroom> getUsersList() {
+		ArrayList<Bedroom> Bedroom = new ArrayList<>();
+		Connection connection = getConnection();
+		int sleepid = 0;
+		String getSleepingId = "SELECT sleeping_id FROM Facilities WHERE facilities_id = " + facilitiesidAfter;
+		try {
+			PreparedStatement sleeping = connection.prepareStatement(getSleepingId);
+			ResultSet getsleep = sleeping.executeQuery();
+			while (getsleep.next()) {
+				sleepid = getsleep.getInt("sleeping_id");
+			}
+			
+			String query = "SELECT * FROM `Sleeping_BedType` WHERE sleeping_id = ?" ;
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, sleepid);
+			ResultSet rs = st.executeQuery();
+			Bedroom bedroom;
+			while (rs.next()) {
+				bedroom = new Bedroom(rs.getInt("sleeping_id"), rs.getInt("bedType_id"), rs.getInt("peopleInBedroom"),
+						rs.getBoolean("bed1"), rs.getString("bed1ChoiceField"),rs.getInt("bed1People"), rs.getBoolean("bed2"),
+						rs.getString("bed2ChoiceField"), rs.getInt("bed2People"));
+				Bedroom.add(bedroom);
+			}
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Bedroom;
+	}
 
 	/**
+	 * {
+	 * 
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBedroom() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
+	public void initializeEditBedroom(int facilitiesId, int id) {
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
 
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
+		idAfter = id;
+		facilitiesidAfter = facilitiesId;
 
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
+		JPanel editBedroomPanel = new JPanel();
+		editBedroomPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBedroomPanel, BorderLayout.CENTER);
+		editBedroomPanel.setLayout(null);
 
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = STATE.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
-
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
-
-		JLabel editBedroomLabel = new JLabel("Edit Bedroom");
+		JLabel editBedroomLabel = new JLabel("Add beds in bedroom");
 		editBedroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBedroomLabel.setBounds(248, 47, 183, 57);
-		registerPanel.add(editBedroomLabel);
-		
-		JLabel bed1Label = new JLabel("Bed 1:");
-		bed1Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bed1Label.setBounds(170, 135, 167, 34);
-		registerPanel.add(bed1Label);
-		
-		JLabel televisionLabel = new JLabel("Bed Type:");
-		televisionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		televisionLabel.setBounds(199, 188, 167, 34);
-		registerPanel.add(televisionLabel);
-		
-		JLabel bed1NoOfPeopleLabel = new JLabel("No Of People");
-		bed1NoOfPeopleLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bed1NoOfPeopleLabel.setBounds(199, 251, 167, 34);
-		registerPanel.add(bed1NoOfPeopleLabel);
-		
-		JLabel bed2Label = new JLabel("Bed 2:");
-		bed2Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bed2Label.setBounds(170, 310, 167, 34);
-		registerPanel.add(bed2Label);
-		
-		JLabel bed2TypeLabel = new JLabel("Bed Type");
-		bed2TypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bed2TypeLabel.setBounds(199, 369, 167, 34);
-		registerPanel.add(bed2TypeLabel);
-		
-		JRadioButton bed1RadioBtn = new JRadioButton("");
-		bed1RadioBtn.setBounds(364, 146, 21, 23);
-		registerPanel.add(bed1RadioBtn);
-		
-		JRadioButton bed2RadioBtn = new JRadioButton("");
-		bed2RadioBtn.setBounds(364, 310, 21, 23);
-		registerPanel.add(bed2RadioBtn);
-		
-		JLabel bed2NoOfPeopleLabel = new JLabel("No Of People");
-		bed2NoOfPeopleLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bed2NoOfPeopleLabel.setBounds(199, 435, 167, 34);
-		registerPanel.add(bed2NoOfPeopleLabel);
-		
-		JComboBox Bed1TypeComboBox = new JComboBox();
-		Bed1TypeComboBox.setBounds(364, 196, 67, 22);
-		registerPanel.add(Bed1TypeComboBox);
-		
-		JComboBox Bed2TypeComboBox_1 = new JComboBox();
-		Bed2TypeComboBox_1.setBounds(364, 377, 67, 22);
-		registerPanel.add(Bed2TypeComboBox_1);
-		
-		Bed1NoOfPeopleTextField = new JTextField();
-		Bed1NoOfPeopleTextField.setBounds(364, 260, 67, 20);
-		registerPanel.add(Bed1NoOfPeopleTextField);
-		Bed1NoOfPeopleTextField.setColumns(10);
-		
-		Bed2NoOfPeopleTextField = new JTextField();
-		Bed2NoOfPeopleTextField.setColumns(10);
-		Bed2NoOfPeopleTextField.setBounds(364, 444, 67, 20);
-		registerPanel.add(Bed2NoOfPeopleTextField);
+		editBedroomLabel.setBounds(182, 55, 275, 57);
+		editBedroomPanel.add(editBedroomLabel);
 
+		Object[] colomns = { "Bedroom Id", "Bed 1", "Bed 1 Type", "Bed 1 capacity", "Bed 2", "Bed 2 Type",
+				"Bed 2 capacity" };
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(colomns);
+		table.setModel(model);
+		ArrayList<Bedroom> list = getUsersList();
+		Object[] row = new Object[7];
+		for (Bedroom element : list) {
+			row[0] = element.getbedType_id();
+			row[1] = element.getbed1();
+			row[2] = element.getbed1ChoiceField();
+			row[3] = element.getbed1People();
+			row[4] = element.getbed2();
+			row[5] = element.getbed2ChoiceField();
+			row[6] = element.getbed2People();
+			model.addRow(row);
+	
+		}
+		bedroomId = new JTextField();
+		bedroomId.setBounds(146, 228, 133, 20);
+		editBedroomPanel.add(bedroomId);
+		bedroomId.setColumns(10);
+
+		bed1People = new JTextField();
+		bed1People.setBounds(146, 321, 133, 20);
+		editBedroomPanel.add(bed1People);
+		bed1People.setColumns(10);
+
+		bed2People = new JTextField();
+		bed2People.setBounds(146, 414, 133, 20);
+		editBedroomPanel.add(bed2People);
+		bed2People.setColumns(10);
+
+		JLabel lblBedroomId = new JLabel("Bedroom ID");
+		lblBedroomId.setBounds(316, 228, 95, 20);
+		editBedroomPanel.add(lblBedroomId);
+
+		JLabel lblBed1Type = new JLabel("Bed 1 Type");
+		lblBed1Type.setBounds(316, 290, 95, 20);
+		editBedroomPanel.add(lblBed1Type);
+
+		JLabel lblBed1People = new JLabel("Bed 1 Capacity");
+		lblBed1People.setBounds(316, 321, 95, 20);
+		editBedroomPanel.add(lblBed1People);
+
+		JLabel lblBed2Type = new JLabel("Bed 2 Type");
+		lblBed2Type.setBounds(316, 383, 95, 20);
+		editBedroomPanel.add(lblBed2Type);
+
+		JLabel lblBed2People = new JLabel("Bed 2 Capacity");
+		lblBed2People.setBounds(318, 414, 95, 20);
+		editBedroomPanel.add(lblBed2People);
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(67, 470, 464, 115);
+		editBedroomPanel.add(scrollPane);
+
+		String bedTypes[] = {"", "King", "Bunk", "Single", "Double" };
+
+		BedType1ComboBox = new JComboBox(bedTypes);
+		BedType1ComboBox.setBounds(146, 289, 133, 22);
+		editBedroomPanel.add(BedType1ComboBox);
+
+		BedType2ComboBox = new JComboBox(bedTypes);
+		BedType2ComboBox.setBounds(146, 381, 133, 22);
+		editBedroomPanel.add(BedType2ComboBox);
+
+		Bed1RadioButton = new JRadioButton("Bed 1");
+		Bed1RadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Bed1RadioButton.isSelected()) {
+					bed1Value = "Yes";
+				} else {
+					bed1Value = "No";
+				}
+			}
+		});
+		Bed1RadioButton.setBounds(146, 255, 111, 23);
+		editBedroomPanel.add(Bed1RadioButton);
+
+		Bed2RadioButton = new JRadioButton("Bed 2");
+		Bed2RadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Bed2RadioButton.isSelected()) {
+					bed2Value = "Yes";
+				} else {
+					bed2Value = "No";
+				}
+			}
+		});
+		Bed2RadioButton.setBounds(146, 348, 111, 23);
+		editBedroomPanel.add(Bed2RadioButton);
+
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainModule.userState = USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_SLEEPING;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+				frame.dispose();
+			}
+		});
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(20, 27, 91, 23);
+		editBedroomPanel.add(backButton);
+
+		JButton addButton = new JButton("Add Bed Details");
+		JButton updateButton = new JButton("Update Bed Details");
+
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Add form data
+				model.addRow(new Object[] { bedroomId.getText(), bed1Value, BedType1ComboBox.getSelectedItem(),
+						bed1People.getText(), bed2Value, BedType2ComboBox.getSelectedItem(), bed2People.getText() });
+				addBedTypeDetails(idAfter);
+				// Delete form after adding data
+				bedroomId.setText("");
+				Bed1RadioButton.setSelected(false);
+				BedType1ComboBox.setSelectedItem("");
+				bed1People.setText("");
+				BedType1ComboBox.setSelectedItem("");
+				Bed2RadioButton.setSelected(false);
+				bed2People.setText("");
+			}
+		});
+		addButton.setBounds(220, 150, 140, 23);
+		editBedroomPanel.add(addButton);
+
+		updateButton.setBounds(220, 184, 140, 23);
+		editBedroomPanel.add(updateButton);
+
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int i = table.getSelectedRow();
+				bedroomId.setText((String) model.getValueAt(i, 0));
+				Bed1RadioButton.setSelected((boolean) model.getValueAt(i, 1));
+				BedType1ComboBox.setSelectedItem(model.getValueAt(i, 2));
+				bed1People.setText((String) model.getValueAt(i, 3));
+				BedType2ComboBox.setSelectedItem(model.getValueAt(i, 4));
+				Bed2RadioButton.setSelected((boolean) model.getValueAt(i, 5));
+				bed2People.setText((String) model.getValueAt(i, 6));
+			}
+		});
+
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Update the form
+				int i = table.getSelectedRow();
+				model.setValueAt(bedroomId.getText(), i, 0);
+				model.setValueAt(Bed1RadioButton.getText(), i, 1);
+				model.setValueAt(BedType1ComboBox.getSelectedItem(), i, 2);
+				model.setValueAt(bed1People.getText(), i, 3);
+				model.setValueAt(Bed2RadioButton.getText(), i, 4);
+				model.setValueAt(BedType2ComboBox.getSelectedItem(), i, 5);
+				model.setValueAt(bed2People.getText(), i, 6);
+				updateBedTypeDetails(idAfter);
+			}
+		});
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-}
 
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
+	public void addBedTypeDetails(int id) {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setBedroomId(Integer.parseInt(bedroomId.getText()));
+			model.setBed1(Bed1RadioButton.isSelected());
+			model.setBed1Type((String) BedType1ComboBox.getSelectedItem());
+			model.setBed1Capacity(Integer.parseInt(bed1People.getText()));
+			model.setBed2(Bed2RadioButton.isSelected());
+			model.setBed2Type((String) BedType2ComboBox.getSelectedItem());
+			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
+
+			String updateSleepingBedTypeQuery = "insert into Sleeping_BedType (sleeping_id, bedType_id, bed1, "
+					+ "bed1ChoiceField, bed1People, bed2, bed2ChoiceField, bed2People)" + " values(?,?,?,?,?,?,?,?)";
+			PreparedStatement ps_sleepingBedType = connection.prepareStatement(updateSleepingBedTypeQuery);
+
+			ps_sleepingBedType.setInt(1, id);
+			ps_sleepingBedType.setInt(2, model.getBedroomId());
+			ps_sleepingBedType.setBoolean(3, model.getBed1());
+			ps_sleepingBedType.setString(4, model.getBed1Type());
+			ps_sleepingBedType.setInt(5, model.getBed1Capacity());
+			ps_sleepingBedType.setBoolean(6, model.getBed2());
+			ps_sleepingBedType.setString(7, model.getBed2Type());
+			ps_sleepingBedType.setInt(8, model.getBed2Capacity());
+			ps_sleepingBedType.executeUpdate();
+
+			String addNoOfBedroomsInSleeping = "update Sleeping set noOfBedrooms=? where sleeping_id=?";
+			String getNoOfBedroomsAddedInSleepingBedType = "select * from Sleeping_BedType where sleeping_id = ?";
+
+			PreparedStatement ps_gettingNoOfbedroomsAddedInSleepingBedType = connection
+					.prepareStatement(getNoOfBedroomsAddedInSleepingBedType);
+			ps_gettingNoOfbedroomsAddedInSleepingBedType.setInt(1, id);
+
+			int noOfBedroomsAdded = 0;
+			ResultSet rs = ps_gettingNoOfbedroomsAddedInSleepingBedType.executeQuery();
+			while (rs.next()) {
+				noOfBedroomsAdded = rs.getRow();
+				System.out.println("LENGTH OF RESULT SET IS = " + rs.getRow());
+				System.out.println("no of bedrooms added var = " + noOfBedroomsAdded);
+			}
+
+			PreparedStatement ps_addingNoOfBedroomsInSleeping = connection.prepareStatement(addNoOfBedroomsInSleeping);
+
+			ps_addingNoOfBedroomsInSleeping.setInt(1, noOfBedroomsAdded);
+			ps_addingNoOfBedroomsInSleeping.setInt(2, id);
+			ps_addingNoOfBedroomsInSleeping.executeUpdate();
+
+			String addNoOfPeopleInBedroom = "select bed1People, bed2People from Sleeping_BedType where sleeping_id=?";
+			PreparedStatement getNoOfPeopleInBedroom = connection.prepareStatement(addNoOfPeopleInBedroom);
+			getNoOfPeopleInBedroom.setInt(1, id);
+
+			int bed1People = 0;
+			int bed2People = 0;
+			int peopleInBedroom = 0;
+			ResultSet totalPeople = getNoOfPeopleInBedroom.executeQuery();
+			while (totalPeople.next()) {
+				bed1People = totalPeople.getInt(1);
+				bed2People = totalPeople.getInt(2);
+			}
+			peopleInBedroom = bed1People + bed2People;
+
+			String addNoOfPeopleInSleepingBedType = "update Sleeping_BedType set peopleInBedroom=? where sleeping_id=? and bedType_id=?";
+
+			PreparedStatement ps_addingNoOfPeopleInSleepingBedType = connection
+					.prepareStatement(addNoOfPeopleInSleepingBedType);
+
+			ps_addingNoOfPeopleInSleepingBedType.setInt(1, peopleInBedroom);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(2, id);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(3, model.getBedroomId());
+			ps_addingNoOfPeopleInSleepingBedType.executeUpdate();
+
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public void updateBedTypeDetails(int id) {
+		System.out.println("id fed into updateBathTypeDetails func = " + id);
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setBedroomId(Integer.parseInt(bedroomId.getText()));
+			model.setBed1(Boolean.parseBoolean(Bed1RadioButton.getText()));
+			model.setBed1Type((String) BedType1ComboBox.getSelectedItem());
+			model.setBed1Capacity(Integer.parseInt(bed1People.getText()));
+			model.setBed2(Boolean.parseBoolean(Bed2RadioButton.getText()));
+			model.setBed2Type((String) BedType2ComboBox.getSelectedItem());
+			model.setBed2Capacity(Integer.parseInt(bed2People.getText()));
+
+			String updateSleepingBedTypeQuery = "update Sleeping_BedType set bed1=?, bed1ChoiceField=?, bed1People=?, "
+					+ "bed2=?, bed2ChoiceField=?, bed2People=? " + "where bedType_id=? and sleeping_id=?";
+
+			PreparedStatement ps_SleepingBedType = connection.prepareStatement(updateSleepingBedTypeQuery);
+
+			ps_SleepingBedType.setBoolean(1, model.getBed1());
+			ps_SleepingBedType.setString(2, model.getBed1Type());
+			ps_SleepingBedType.setInt(3, model.getBed1Capacity());
+			ps_SleepingBedType.setBoolean(4, model.getBed2());
+			ps_SleepingBedType.setString(5, model.getBed2Type());
+			ps_SleepingBedType.setInt(6, model.getBed2Capacity());
+			ps_SleepingBedType.setInt(7, model.getBedroomId());
+			ps_SleepingBedType.setInt(8, id);
+			ps_SleepingBedType.executeUpdate();
+
+			String addNoOfPeopleInBedroom = "select bed1People, bed2People from Sleeping_BedType where sleeping_id=?";
+			PreparedStatement getNoOfPeopleInBedroom = connection.prepareStatement(addNoOfPeopleInBedroom);
+			getNoOfPeopleInBedroom.setInt(1, id);
+
+			int bed1People = 0;
+			int bed2People = 0;
+			int peopleInBedroom = 0;
+			ResultSet totalPeople = getNoOfPeopleInBedroom.executeQuery();
+			while (totalPeople.next()) {
+				bed1People = totalPeople.getInt(1);
+				bed2People = totalPeople.getInt(2);
+			}
+			peopleInBedroom = bed1People + bed2People;
+
+			String addNoOfPeopleInSleepingBedType = "update Sleeping_BedType set peopleInBedroom=? where sleeping_id=? and bedType_id=?";
+
+			PreparedStatement ps_addingNoOfPeopleInSleepingBedType = connection
+					.prepareStatement(addNoOfPeopleInSleepingBedType);
+
+			ps_addingNoOfPeopleInSleepingBedType.setInt(1, peopleInBedroom);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(2, id);
+			ps_addingNoOfPeopleInSleepingBedType.setInt(3, model.getBedroomId());
+			ps_addingNoOfPeopleInSleepingBedType.executeUpdate();
+
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+}

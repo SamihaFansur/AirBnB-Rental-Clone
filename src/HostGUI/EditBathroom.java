@@ -1,154 +1,398 @@
 
-package hostGUI;
+package HostGUI;
 
-import java.awt.EventQueue;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.Controller;
-import GUI.Login;
+import GUI.ConnectionManager;
 import GUI.MainModule;
-import GUI.MainModule.STATE;
+import GUI.MainModule.EDITPROPERTY;
+import GUI.MainModule.USER;
 import Model.Model;
 
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Font;
-
-public class EditBathroom extends JFrame{
-
+public class EditBathroom extends JFrame {
 
 	private JFrame frame;
+	private NavHost navForHost = new NavHost();
 
 	public void close() {
 		frame.dispose();
 	}
 
-	/**
+	/*
 	 * Create the application.
 	 */
 
-	 private Controller controller;
-	 private Model model;
-	 private MainModule mainModule;
-	 public EditBathroom(MainModule mainModule, Controller controller, Model model) {
-		//initializeHomePage();
-		this.model=model;
-		this.mainModule=mainModule;
-		this.controller=controller;
-	 }
+	private Controller controller;
+	private Model model;
+	private MainModule mainModule;
+	private JRadioButton toiletRadioBtn;
+	private JRadioButton showerRadioBtn;
+	private JRadioButton bathRadioBtn;
+	private JRadioButton sharedBathroomRadioBtn;
+	private JTable table = new JTable();
+	private JRadioButton toiletRadioButton;
+	private JRadioButton showerRadioButton;
+	private JRadioButton bathRadioButton;
+	private JRadioButton sharedRadioButton;
+	private String toilet;
+	private String shower;
+	private String bath;
+	private String shared;
 
+	private JTextField bathroomId;
+
+	Connection connection = null;
+
+	private int idAfter;
+	private int facilitiesidAfter;
+
+	public EditBathroom(MainModule mainModule, Controller controller, Model model) {
+		// initializeEditBathroom();
+		this.model = model;
+		this.mainModule = mainModule;
+		this.controller = controller;
+	}
+
+	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
+	private static String username = "team018";
+	private static String pwd = "7854a03f";
+	public Connection getConnection() {
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(serverName, username, pwd);
+			return connection;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initializeEditBathroom() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 255, 255));
+	public void initializeEditBathroom(int facilitiesId, int id) {
 
-		JPanel navBarPanel = new JPanel();
-		navBarPanel.setBackground(new Color(51, 255, 255));
-		frame.getContentPane().add(navBarPanel, BorderLayout.NORTH);
+		try {
+			frame = new JFrame();
+			navForHost.addHostNav(frame, mainModule);
 
-		JButton navHomeButton = new JButton("Home");
-		navHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navHomeButton);
-		JButton navSearchButton = new JButton("Search");
-		navSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SEARCH;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navSearchButton);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 
-		JButton navRegisterButton = new JButton("Register");
-		navRegisterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.SELF_REGISTRATION;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navRegisterButton);
+		idAfter = id;
+		facilitiesidAfter = facilitiesId;
 
-		JButton navLogoutButton = new JButton("Logout");
-		navLogoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainModule.currentState = STATE.HOMEPAGE;
-				mainModule.userState = STATE.ENQUIRER;
-				MainModule.controller.drawNewView();
-//				close();
-			}
-		});
-		navBarPanel.add(navLogoutButton);
+		JPanel editBathroomPanel = new JPanel();
+		editBathroomPanel.setBackground(new Color(204, 255, 255));
+		frame.getContentPane().add(editBathroomPanel, BorderLayout.CENTER);
+		editBathroomPanel.setLayout(null);
 
-		JPanel registerPanel = new JPanel();
-		registerPanel.setBackground(new Color(204, 255, 255));
-		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
-		registerPanel.setLayout(null);
-
-		JLabel editBathroomLabel = new JLabel("Edit Bathroom");
+		JLabel editBathroomLabel = new JLabel("Add Bathrooms");
 		editBathroomLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		editBathroomLabel.setBounds(217, 55, 183, 57);
-		registerPanel.add(editBathroomLabel);
-		
-		JLabel toiletLabel = new JLabel("Toilet");
-		toiletLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		toiletLabel.setBounds(170, 150, 167, 34);
-		registerPanel.add(toiletLabel);
-		
-		JLabel bathLabel = new JLabel("Bathtub");
-		bathLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bathLabel.setBounds(170, 226, 167, 34);
-		registerPanel.add(bathLabel);
-		
-		JLabel showerLabel = new JLabel("Shower");
-		showerLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		showerLabel.setBounds(170, 315, 167, 34);
-		registerPanel.add(showerLabel);
-		
-		JLabel sharedHostLabel = new JLabel("Shared Bathroom(host)");
-		sharedHostLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		sharedHostLabel.setBounds(170, 392, 167, 34);
-		registerPanel.add(sharedHostLabel);
-		
-		JRadioButton toiletRadioBtn = new JRadioButton("");
-		toiletRadioBtn.setBounds(364, 161, 21, 23);
-		registerPanel.add(toiletRadioBtn);
-		
-		JRadioButton showerRadioBtn = new JRadioButton("");
-		showerRadioBtn.setBounds(364, 315, 21, 23);
-		registerPanel.add(showerRadioBtn);
-		
-		JRadioButton bathtubRadioBtn = new JRadioButton("");
-		bathtubRadioBtn.setBounds(364, 237, 21, 23);
-		registerPanel.add(bathtubRadioBtn);
-		
-		JRadioButton sharedBathroomRadioBtn = new JRadioButton("");
-		sharedBathroomRadioBtn.setBounds(364, 403, 21, 23);
-		registerPanel.add(sharedBathroomRadioBtn);
+		editBathroomLabel.setBounds(213, 72, 290, 57);
+		editBathroomPanel.add(editBathroomLabel);
 
+		Object[] colomns = { "Bathroom Id", "Toilet", "Bath", "Shower", "Shared" };
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(colomns);
+		table.setModel(model);
+		ArrayList<Bathroom> list = getUsersList();
+		Object[] row = new Object[5];
+		for (Bathroom element : list) {
+			row[0] = element.getBathType_id();
+			row[1] = element.getToilet();
+			row[2] = element.getBath();
+			row[3] = element.getShower();
+			row[4] = element.getShared();
+		
+			model.addRow(row);
+	
+		}
+		bathroomId = new JTextField();
+		bathroomId.setBounds(134, 198, 133, 20);
+		editBathroomPanel.add(bathroomId);
+		bathroomId.setColumns(10);
+
+		JLabel lblBathroomId = new JLabel("Bathroom ID");
+		lblBathroomId.setBounds(349, 197, 95, 20);
+		editBathroomPanel.add(lblBathroomId);
+
+		JLabel lblToilet = new JLabel("Toilet");
+		lblToilet.setBounds(349, 228, 95, 20);
+		editBathroomPanel.add(lblToilet);
+
+		JLabel lblBath = new JLabel("Bath");
+		lblBath.setBounds(349, 259, 95, 20);
+		editBathroomPanel.add(lblBath);
+
+		JLabel lblShower = new JLabel("Shower");
+		lblShower.setBounds(349, 290, 95, 20);
+		editBathroomPanel.add(lblShower);
+
+		JLabel lblShared = new JLabel("Shared");
+		lblShared.setBounds(349, 321, 95, 20);
+		editBathroomPanel.add(lblShared);
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(68, 486, 464, 115);
+		editBathroomPanel.add(scrollPane);
+
+		JButton addButton = new JButton("Add Bathroom");
+		JButton updateButton = new JButton("Update Bathroom");
+
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Add form data
+				model.addRow(new Object[] { bathroomId.getText(), toilet, bath, shower, shared });
+				addBathTypeDetails(idAfter);
+				// Delete form after adding data
+				bathroomId.setText("");
+				toiletRadioButton.setText("");
+				bathRadioButton.setText("");
+				showerRadioButton.setText("");
+				sharedRadioButton.setText("");
+			}
+		});
+		addButton.setBounds(224, 393, 142, 23);
+		editBathroomPanel.add(addButton);
+
+		updateButton.setBounds(224, 427, 142, 23);
+		editBathroomPanel.add(updateButton);
+
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainModule.userState = USER.HOST;
+				mainModule.editPropertyState = EDITPROPERTY.EDIT_BATHING;
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+//					close();
+				frame.dispose();
+			}
+		});
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		backButton.setBounds(20, 27, 91, 23);
+		editBathroomPanel.add(backButton);
+
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int i = table.getSelectedRow();
+				bathroomId.setText((String) model.getValueAt(i, 0));
+				toiletRadioButton.setText((String) model.getValueAt(i, 1));
+				bathRadioButton.setText((String) model.getValueAt(i, 2));
+				showerRadioButton.setText((String) model.getValueAt(i, 3));
+				sharedRadioButton.setText((String) model.getValueAt(i, 4));
+			}
+		});
+
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Update the form
+				int i = table.getSelectedRow();
+				model.setValueAt(bathroomId.getText(), i, 0);
+				model.setValueAt(toiletRadioButton.getText(), i, 1);
+				model.setValueAt(bathRadioButton.getText(), i, 2);
+				model.setValueAt(showerRadioButton.getText(), i, 3);
+				model.setValueAt(sharedRadioButton.getText(), i, 4);
+
+				updateBathTypeDetails(idAfter);
+			}
+		});
+
+		toiletRadioButton = new JRadioButton("Toilet");
+		toiletRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toiletRadioButton.isSelected()) {
+					toilet = "Yes";
+				} else {
+					toilet = "No";
+				}
+			}
+		});
+		toiletRadioButton.setBounds(134, 227, 111, 23);
+		editBathroomPanel.add(toiletRadioButton);
+
+		bathRadioButton = new JRadioButton("Bath");
+		bathRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bathRadioButton.isSelected()) {
+					bath = "Yes";
+				} else {
+					bath = "No";
+				}
+			}
+		});
+		bathRadioButton.setBounds(134, 258, 111, 23);
+		editBathroomPanel.add(bathRadioButton);
+
+		showerRadioButton = new JRadioButton("Shower");
+		showerRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (showerRadioButton.isSelected()) {
+					shower = "Yes";
+				} else {
+					shower = "No";
+				}
+			}
+		});
+		showerRadioButton.setBounds(134, 289, 111, 23);
+		editBathroomPanel.add(showerRadioButton);
+
+		sharedRadioButton = new JRadioButton("Shared with Host");
+		sharedRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sharedRadioButton.isSelected()) {
+					shared = "Yes";
+				} else {
+					shared = "No";
+				}
+			}
+		});
+
+		sharedRadioButton.setBounds(134, 320, 111, 23);
+		editBathroomPanel.add(sharedRadioButton);
 
 		frame.setBounds(100, 100, 600, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-}
+	public ArrayList<Bathroom> getUsersList() {
+		ArrayList<Bathroom> Bathroom = new ArrayList<>();
+		Connection connection = getConnection();
+		int bathid = 0;
+		String getBathingId = "SELECT bathing_id FROM Facilities WHERE facilities_id = " + facilitiesidAfter;
+		try {
+			PreparedStatement bathing = connection.prepareStatement(getBathingId);
+			ResultSet getbath = bathing.executeQuery();
+			while (getbath.next()) {
+				bathid = getbath.getInt("bathing_id");
+			}
+			
+			String query = "SELECT * FROM `Bathing_BathType` WHERE bathing_id = ?" ;
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, bathid);
+			ResultSet rs = st.executeQuery();
+			Bathroom bathroom;
+			while (rs.next()) {
+				bathroom = new Bathroom(rs.getInt("bathing_id"), rs.getInt("bathType_id"), rs.getBoolean("toilet"),
+						rs.getBoolean("bath"), rs.getBoolean("shower"),rs.getBoolean("shared"));
+				Bathroom.add(bathroom);
+			}
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Bathroom;
+	}
+	public void addBathTypeDetails(int id) {
+		System.out.println("id fed into addBathTypeDetails func = " + id);
+		try {
+			connection = ConnectionManager.getConnection();
 
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
+			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
+			model.setToilet(toiletRadioButton.isSelected());
+			model.setBath(bathRadioButton.isSelected());
+			model.setShower(showerRadioButton.isSelected());
+			model.setShared(sharedRadioButton.isSelected());
+
+			String updateBathingBathTypeQuery = "insert into Bathing_BathType (bathing_id, bathType_id, toilet, bath, shower, shared)"
+					+ " values(?,?,?,?,?,?)";
+			PreparedStatement ps_bathingBathType = connection.prepareStatement(updateBathingBathTypeQuery);
+
+			ps_bathingBathType.setInt(1, id);
+			ps_bathingBathType.setInt(2, model.getBathroomId());
+			ps_bathingBathType.setBoolean(3, model.getToilet());
+			ps_bathingBathType.setBoolean(4, model.getBath());
+			ps_bathingBathType.setBoolean(5, model.getShower());
+			ps_bathingBathType.setBoolean(6, model.getShared());
+
+			System.out.println(ps_bathingBathType);
+			ps_bathingBathType.executeUpdate();
+
+			String addNoOfBathroomsInBathing = "update Bathing set noOfBathrooms=? where bathing_id=?";
+			String getNoOfBathroomsAddedInBathingBathType = "select * from Bathing_BathType where bathing_id = ?";
+
+			PreparedStatement ps_gettingNoOfBathroomsAddedInBathingBathType = connection
+					.prepareStatement(getNoOfBathroomsAddedInBathingBathType);
+
+			ps_gettingNoOfBathroomsAddedInBathingBathType.setInt(1, id);
+
+			int noOfBathroomsAdded = 0;
+			ResultSet rs = ps_gettingNoOfBathroomsAddedInBathingBathType.executeQuery();
+			while (rs.next()) {
+				noOfBathroomsAdded = rs.getRow();
+			}
+
+			PreparedStatement ps_addingNoOfBathroomsInBathing = connection.prepareStatement(addNoOfBathroomsInBathing);
+
+			ps_addingNoOfBathroomsInBathing.setInt(1, noOfBathroomsAdded); // add length of resultset as 2nd param
+			ps_addingNoOfBathroomsInBathing.setInt(2, id);
+			ps_addingNoOfBathroomsInBathing.executeUpdate();
+
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public void updateBathTypeDetails(int id) {
+		try {
+			connection = ConnectionManager.getConnection();
+
+			model.setBathroomId(Integer.parseInt(bathroomId.getText()));
+			model.setToilet(Boolean.parseBoolean(toiletRadioButton.getText()));
+			model.setBath(Boolean.parseBoolean(bathRadioButton.getText()));
+			model.setShower(Boolean.parseBoolean(showerRadioButton.getText()));
+			model.setShared(Boolean.parseBoolean(sharedRadioButton.getText()));
+
+			String updateBathingBathTypeQuery = "update Bathing_BathType set toilet=?, bath=?, shower=?, shared=? where bathType_id=? and bathing_id=?";
+
+			PreparedStatement ps_BathingBathType = connection.prepareStatement(updateBathingBathTypeQuery);
+
+			ps_BathingBathType.setBoolean(1, model.getToilet());
+			ps_BathingBathType.setBoolean(2, model.getBath());
+			ps_BathingBathType.setBoolean(3, model.getShower());
+			ps_BathingBathType.setBoolean(4, model.getShared());
+			ps_BathingBathType.setInt(5, model.getBathroomId());
+			ps_BathingBathType.setInt(6, id);
+			ps_BathingBathType.executeUpdate();
+
+			connection.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+	}
+}
