@@ -34,7 +34,13 @@ import GUI.MainModule.EDITPROPERTY;
 import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
-
+/*
+ * code partially referenced from the following: 
+ * C#, JAVA,PHP, Programming ,Source Code. 2021. C#, JAVA,PHP, Programming ,Source Code: 
+ * Java And MySQL - Insert Update Delete And Display Data On JTable. [online] 
+ * Available at: <https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html> 
+ * [Accessed 18 November 2021].
+ * */
 /*
  * Class for displaying booking objects and initialising reviews for the bookings.
  */
@@ -387,8 +393,8 @@ public class Bookings extends javax.swing.JFrame {
 		
 		jTable_Display_Bookings
 				.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] { 
-						"Booking Id", "Property Id", "Service Charge (£)", "Cleaning Charge (£)",
-						"Overall Price (£)", "Total Nights", "Provisional", "Start Date", "End Date" }));
+						"Booking Id", "Property Id", "Service Charge (ï¿½)", "Cleaning Charge (ï¿½)",
+						"Overall Price (ï¿½)", "Total Nights", "Provisional", "Start Date", "End Date" }));
 
 		jTable_Display_Bookings.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
@@ -855,4 +861,3 @@ public class Bookings extends javax.swing.JFrame {
 	private JButton confidentialInformationButton;
 	private JButton checkOutButton;
 }
-//code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html

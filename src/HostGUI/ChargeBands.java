@@ -82,9 +82,11 @@ public class ChargeBands extends JFrame {
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
+
 	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
 	private static String username = "team018";
 	private static String pwd = "7854a03f";
+
 	public Connection getConnection() {
 		Connection connection;
 		try {
@@ -136,9 +138,9 @@ public class ChargeBands extends JFrame {
 			row[3] = element.getServiceCharge();
 			row[4] = element.getCleaningCharge();
 			row[5] = element.getTotalPricePerNight();
-		
+
 			model.addRow(row);
-	
+
 		}
 
 		startDate = new JTextField();
@@ -233,7 +235,7 @@ public class ChargeBands extends JFrame {
 						// NOTE: cant do the following time check until dates are converted to date
 						// objects
 						Boolean timeCheck = formattedStartDate.before(formattedEndDate);
-					
+
 						// making all prices into doubles:
 						Double pricePerNightDoubleValidation = Double.parseDouble(pricePerNight.getText());
 						Double serviceChargeDoubleValidation = Double.parseDouble(serviceCharge.getText());
@@ -264,15 +266,14 @@ public class ChargeBands extends JFrame {
 						if (timeCheck && startDateAccepted && endDateAccepted) {
 
 							// checking if charge bands overlap here
-							if (checkForOverlappingChargeBands(propertyId, formattedStartDate, formattedEndDate)) {					
+							if (checkForOverlappingChargeBands(propertyId, formattedStartDate, formattedEndDate)) {
 								displayChargeBandNotPossibleMessage();
-								
-							} else {			
-								model.addRow(new Object[] { startDate.getText(), endDate.getText(),
-										pricePerNight.getText(), serviceCharge.getText(), cleaningCharge.getText()
-								}
 
-								);							
+							} else {
+								model.addRow(new Object[] { startDate.getText(), endDate.getText(),
+										pricePerNight.getText(), serviceCharge.getText(), cleaningCharge.getText() }
+
+								);
 								addAChargeBand(propertyIdAfter);
 								// Delete form after adding data
 								startDate.setText("");
@@ -344,7 +345,7 @@ public class ChargeBands extends JFrame {
 				} else {
 					mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY;
 
-				}	
+				}
 				MainModule.controller.editPropertyView(hostId, propertyId);
 				frame.setVisible(false);
 
@@ -358,19 +359,21 @@ public class ChargeBands extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
+
 	public ArrayList<ChargeBand> getUsersList() {
 		ArrayList<ChargeBand> ChargeBand = new ArrayList<>();
 		Connection connection = getConnection();
-	
-			String query = "SELECT * FROM `ChargeBands` WHERE property_id = ?" ;
-			try {
+
+		String query = "SELECT * FROM `ChargeBands` WHERE property_id = ?";
+		try {
 			PreparedStatement st = connection.prepareStatement(query);
 			st.setInt(1, model.getPropertyId());
 			ResultSet rs = st.executeQuery();
 			ChargeBand chargeband;
 			while (rs.next()) {
-				chargeband = new ChargeBand(rs.getInt("property_id"), rs.getString("startDate"), rs.getString("endDate"),
-						rs.getDouble("pricePerNight"), rs.getDouble("serviceCharge"),rs.getDouble("cleaningCharge"), rs.getDouble("totalPricePerNight"));
+				chargeband = new ChargeBand(rs.getInt("property_id"), rs.getString("startDate"),
+						rs.getString("endDate"), rs.getDouble("pricePerNight"), rs.getDouble("serviceCharge"),
+						rs.getDouble("cleaningCharge"), rs.getDouble("totalPricePerNight"));
 				ChargeBand.add(chargeband);
 			}
 			connection.close();
@@ -400,16 +403,21 @@ public class ChargeBands extends JFrame {
 				Date formattedEndDateFromTable = sourceFormat.parse(endDateFromTable);
 
 				// checking if start date and end dates are equal
-				Boolean sameDates = startDate.equals(formattedStartDateFromTable) || endDate.equals(formattedEndDateFromTable);
+				Boolean sameDates = startDate.equals(formattedStartDateFromTable)
+						|| endDate.equals(formattedEndDateFromTable);
 				System.out.println(sameDates);
 				// check if users start date is within an existing start date and end date
-				Boolean startDateInsideABand = startDate.after(formattedStartDateFromTable) && startDate.before(formattedEndDateFromTable);
+				Boolean startDateInsideABand = startDate.after(formattedStartDateFromTable)
+						&& startDate.before(formattedEndDateFromTable);
 				System.out.println(startDateInsideABand);
 
 				// check if users end date is within an existing start date and end date
-				Boolean endDateInsideABand = endDate.after(formattedStartDateFromTable) && endDate.before(formattedEndDateFromTable);
-				System.out.println("endDate.after(formattedStartDateFromTable) " + endDate.after(formattedStartDateFromTable));
-				System.out.println("endDate.before(formattedEndDateFromTable) " + endDate.before(formattedEndDateFromTable));
+				Boolean endDateInsideABand = endDate.after(formattedStartDateFromTable)
+						&& endDate.before(formattedEndDateFromTable);
+				System.out.println(
+						"endDate.after(formattedStartDateFromTable) " + endDate.after(formattedStartDateFromTable));
+				System.out.println(
+						"endDate.before(formattedEndDateFromTable) " + endDate.before(formattedEndDateFromTable));
 
 				System.out.println(endDateInsideABand);
 
@@ -417,12 +425,14 @@ public class ChargeBands extends JFrame {
 				// date and end date respectively
 				// (checking for a charge band period being made inside another charge band
 				// period)
-				Boolean overlappingBandCheckOne = startDate.after(formattedStartDateFromTable)&& endDate.before(formattedEndDateFromTable);
+				Boolean overlappingBandCheckOne = startDate.after(formattedStartDateFromTable)
+						&& endDate.before(formattedEndDateFromTable);
 				System.out.println(overlappingBandCheckOne);
 
 				// check if users start date and end date is BEFORE and AFTER an existing start
 				// date and end date respectively
-				Boolean overlappingBandCheckTwo = startDate.before(formattedStartDateFromTable)&& endDate.after(formattedEndDateFromTable);
+				Boolean overlappingBandCheckTwo = startDate.before(formattedStartDateFromTable)
+						&& endDate.after(formattedEndDateFromTable);
 				System.out.println(overlappingBandCheckTwo);
 
 				// if any of the above are true the band cannot be made
@@ -512,7 +522,6 @@ public class ChargeBands extends JFrame {
 
 	// from
 	// here:https://stackoverflow.com/questions/22326339/how-create-date-object-with-values-in-java/22326675
-	
 
 	public Boolean validateDate(int day, int month, int year) {
 
@@ -641,8 +650,12 @@ public class ChargeBands extends JFrame {
 		return true;
 	}
 
-	// function to round double values copied from:
-	// https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+	/*
+	 * function to round double values copied from: Stack Overflow. 2021. Round a
+	 * double to 2 decimal places. [online] Available at:
+	 * <https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-
+	 * places> [Accessed 30 November 2021].
+	 */
 	public static double round(double value, int places) {
 		if (places < 0)
 			throw new IllegalArgumentException();

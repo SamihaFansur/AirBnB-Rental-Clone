@@ -24,7 +24,14 @@ import GUI.MainModule.STATE;
 import GUI.MainModule.USER;
 import Model.Model;
 
-
+/*
+ * code partially referenced from the following: 
+ * C#, JAVA,PHP, Programming ,Source Code. 2021. C#, JAVA,PHP, Programming ,Source Code: 
+ * Java And MySQL - Insert Update Delete And Display Data On JTable. [online] 
+ * Available at: <https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html> 
+ * [Accessed 18 November 2021].
+ * */
+/**
 /**
  * Class for displaying the facilities in the database onto a GUI
  */
@@ -360,4 +367,3 @@ public class Facilities extends javax.swing.JFrame {
 	private static int propertyId;
 }
 
-//code partially from https://1bestcsharp.blogspot.com/2016/01/java-and-mysql-insert-update-delete-display.html
