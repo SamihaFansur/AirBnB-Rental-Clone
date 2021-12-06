@@ -39,7 +39,7 @@ public class Register extends JFrame {
 	private JTextField mobileNumberTextField;
 	private JComboBox accountTypeComboBox;
 	private JComboBox registerTitleComboBox;
-	private JPanel registerPanel = new JPanel();
+//	private JPanel registerPanel = new JPanel();
 	private Model model;
 	private Controller controller;
 	private MainModule mainModule;
@@ -80,7 +80,7 @@ public class Register extends JFrame {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
+		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(new Color(204, 255, 255));
 		frame.getContentPane().add(registerPanel, BorderLayout.CENTER);
 		registerPanel.setLayout(null);
@@ -255,6 +255,8 @@ public class Register extends JFrame {
 				// see postcode method for the validation for this.
 				validatePostcodeInput = validatePostcode(postcodeTextField.getText().toUpperCase());
 
+				System.out.println(validateFirstNameInput);
+				System.out.println(firstNameTextField.getText());
 				if (validateFirstNameInput && validateSurnameInput && validateEmailInput && !emailAlreadyInDB
 						&& validateMobileNumberInput && validateHouseNameNumberInput && validateStreetNameInput
 						&& validatePostcodeInput && validatePasswordInput) {
@@ -283,17 +285,8 @@ public class Register extends JFrame {
 					cityComboBox.setSelectedItem("");
 					postcodeTextField.setText("");
 					accountTypeComboBox.setSelectedItem("Host");
-
-					validateFirstNameInput = false;
-					validateSurnameInput = false;
-					validateEmailInput = false;
-					validateMobileNumberInput = false;
-					validateHouseNameNumberInput = false;
-					validateStreetNameInput = false;
-					validatePostcodeInput = false;
-					emailAlreadyInDB = false;
-					validatePasswordInput = false;
-					frame.dispose();
+				
+					frame.dispose();	
 					mainModule.currentState = STATE.HOMEPAGE;
 					mainModule.userState = USER.ENQUIRER;
 					MainModule.controller.drawNewView();
