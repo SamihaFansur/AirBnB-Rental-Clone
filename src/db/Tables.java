@@ -89,6 +89,8 @@ public class Tables {
 				+ "property_id INT, FOREIGN KEY (property_id) REFERENCES Property(property_id), "
 				+ "startDate VARCHAR(255), endDate VARCHAR(255), pricePerNight DOUBLE, serviceCharge DOUBLE, "
 				+ "cleaningCharge DOUBLE, totalPricePerNight DOUBLE)";
+		
+		//If you want to drop tables, comment out line 112 and then run tables.java
 
 		String[] allDropQueries = {  "DROP TABLE IF EXISTS Sleeping_BedType",
 				"DROP TABLE IF EXISTS Bathing_BathType", "DROP TABLE IF EXISTS Facilities",
@@ -100,7 +102,8 @@ public class Tables {
 		
 
 		
-// make sure all tables created before facilities
+		//If you want to create tables, first drop tables and then comment out line 101 then run tables.java to create tables
+		// make sure all tables created before facilities
 		
 		String[] create = { createAddressTable, createAccountTable, createHostAccountTable, createGuestAccountTable,
 				createOutdoorsTable, createLivingTable, createKitchenTable, createUtilityTable, createBathingTable,
@@ -133,7 +136,6 @@ public class Tables {
 	static void dropAllTables(String[] allDropQueries) {
 		for (int i = 0; i < allDropQueries.length; i++) {
 			dropTable(allDropQueries[i]);
-			System.out.println("Dropped " + i + " in given database...");
 		}
 	}
 
@@ -141,7 +143,6 @@ public class Tables {
 
 		for (int i = 0; i < allCreateQueries.length; i++) {
 			createTable(allCreateQueries[i]);
-			System.out.println("Created " + i + " in given database...");
 		}
 	}
 
