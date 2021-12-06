@@ -82,8 +82,7 @@ public class Bookings extends javax.swing.JFrame {
 		ArrayList<BookingObject> bookingsList = new ArrayList<>();
 		Connection connection = getConnection();
 		if (mainModule.userState == USER.GUEST) {
-
-			// Gets the information for a booking from the guest database
+			
 			try {
 				
 				//cc, sc, overall price, total number of nights
@@ -440,227 +439,256 @@ public class Bookings extends javax.swing.JFrame {
 		confidentialInformationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+								System.out.println("in action listener");
+								
 				
-				//first check if the booking is accepted.
-				// get booking id, propid, hostid, guest id,
-				// use above to show guest info in a pop up
-				
-				
+				// Gets the information for a booking from the guest database
+				// get bookingId
+				// check if its "Ended" OR "Declined", if it is, display another message saying "confidential info unavailable as booking ended"
+				// else : run below:
 				
 				try {
 					bookingId = Integer.parseInt(jTextField_booking_id.getText().toString());
-					hostId = 0;
-					guestId = 0;
-					propId = Integer.parseInt(jTextField_property_id.getText().toString());
-
-
+					System.out.println("BOOKING ID----------"+bookingId);
 					Connection connection = getConnection();
+					String getBookingStatus = "select * from Booking where booking_id=?";
+					PreparedStatement getProvisionalStatus = connection.prepareStatement(getBookingStatus);
+					getProvisionalStatus.setInt(1, bookingId);
+
+					// getting row of data belonging to the booking id above
 					
-					String checkIfBookingAccepted = "select booking_id, host_id, guest_id from Booking where booking_id=? and provisional=?";
-					PreparedStatement checksProvisional = connection.prepareStatement(checkIfBookingAccepted);
-					checksProvisional.setInt(1, bookingId);
-					checksProvisional.setString(2, "Accepted");
-					
-					//this resultset will gimme booking id for all accepted bookings
-					//now need to get confi info
-					ResultSet getsConfidentialInfo = checksProvisional.executeQuery();
-					while(getsConfidentialInfo.next()) {
-						hostId = getsConfidentialInfo.getInt("host_id");
-						guestId = getsConfidentialInfo.getInt("guest_id");
+					ResultSet getRSForPendingBookings = getProvisionalStatus.executeQuery();
+					System.out.println("INTO THE QUERY ");
+					while(getRSForPendingBookings.next()) {
+						System.out.println("inside the 1st prepared statement ");
+						//check to see value of the provisional column. 
+						String bookingStatus = getRSForPendingBookings.getString("provisional");
 
-					
-						System.out.println("Booking: "+bookingId);
-						System.out.println("Guest id: "+guestId);
-						System.out.println("host id: "+hostId);
-						
-						String addressInfo = "select address_id from Property where property_id=?";
-						PreparedStatement getAddressInfo = connection.prepareStatement(addressInfo);
-						getAddressInfo.setInt(1, propId);
+						if(bookingStatus.equals("Pending") || bookingStatus.equals("Declined")) {
+							//display message saying unable to see confidential information
+							System.out.println("BOOKING IS DECLINED OR PENDING");
+							displayMessageUnableToViewConfidentialInfo();
 
-				
-						System.out.println("property id: "+propId);
+						}else if (bookingStatus.equals("Accepted")){
+							// getting confidential information from user:
+							System.out.println("Clicking on an accepted booking.");
+							try {
+								bookingId = Integer.parseInt(jTextField_booking_id.getText().toString());
+								hostId = 0;
+								guestId = 0;
+								propId = Integer.parseInt(jTextField_property_id.getText().toString());
 
-						int addressIdProperty = 0;
-						ResultSet gettingAddressIdProperty = getAddressInfo.executeQuery();
-						while(gettingAddressIdProperty.next()) {
-							addressIdProperty = gettingAddressIdProperty.getInt("address_id");
+								
+								String checkIfBookingAccepted = "select booking_id, host_id, guest_id from Booking where booking_id=? and provisional=?";
+								PreparedStatement checksProvisional = connection.prepareStatement(checkIfBookingAccepted);
+								checksProvisional.setInt(1, bookingId);
+								checksProvisional.setString(2, "Accepted");
+								
+								//this result set will gimme booking id for all accepted bookings
+								//now need to get confi info
+								ResultSet getsConfidentialInfo = checksProvisional.executeQuery();
+								while(getsConfidentialInfo.next()) {
+									hostId = getsConfidentialInfo.getInt("host_id");
+									guestId = getsConfidentialInfo.getInt("guest_id");
 
-							String propertyInformation = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
-							PreparedStatement getPropertyInfoPS = connection.prepareStatement(propertyInformation);
-							getPropertyInfoPS.setInt(1, addressIdProperty);
+								
+									System.out.println("Booking: "+bookingId);
+									System.out.println("Guest id: "+guestId);
+									System.out.println("host id: "+hostId);
+									
+									String addressInfo = "select address_id from Property where property_id=?";
+									PreparedStatement getAddressInfo = connection.prepareStatement(addressInfo);
+									getAddressInfo.setInt(1, propId);
+
 							
-							System.out.println("addressid property: "+addressIdProperty);
-							
-							houseNameNumber = "";
-							streetName = "";
-							placeName = "";
-							postcode = "";
+									System.out.println("property id: "+propId);
+
+									int addressIdProperty = 0;
+									ResultSet gettingAddressIdProperty = getAddressInfo.executeQuery();
+									while(gettingAddressIdProperty.next()) {
+										addressIdProperty = gettingAddressIdProperty.getInt("address_id");
+
+										String propertyInformation = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+										PreparedStatement getPropertyInfoPS = connection.prepareStatement(propertyInformation);
+										getPropertyInfoPS.setInt(1, addressIdProperty);
+										
+										System.out.println("addressid property: "+addressIdProperty);
+										
+										houseNameNumber = "";
+										streetName = "";
+										placeName = "";
+										postcode = "";
 
 
-							ResultSet gettingPropertyInfo = getPropertyInfoPS.executeQuery();
+										ResultSet gettingPropertyInfo = getPropertyInfoPS.executeQuery();
 
-							while(gettingPropertyInfo.next()) {
-								houseNameNumber = gettingPropertyInfo.getString("houseNameNumber");
-								streetName = gettingPropertyInfo.getString("streetName");
-								placeName = gettingPropertyInfo.getString("placeName");
-								postcode = gettingPropertyInfo.getString("postcode");
+										while(gettingPropertyInfo.next()) {
+											houseNameNumber = gettingPropertyInfo.getString("houseNameNumber");
+											streetName = gettingPropertyInfo.getString("streetName");
+											placeName = gettingPropertyInfo.getString("placeName");
+											postcode = gettingPropertyInfo.getString("postcode");
+										}
+									
+										System.out.println("houseNameNumber: "+houseNameNumber);
+										System.out.println("streetName: "+streetName);
+										System.out.println("placeName: "+placeName);
+										System.out.println("postcode: "+postcode);
+
+
+
+									}
+									
+									
+
+									
+									/////////-----host confidential info--------------
+									
+									// first go to hostAccoutn table to get email using host_id, 
+									//se email to get address id from address table
+									// use address id to get hosts address from address table
+									//use email to get hosts confidential info from Account table
+									
+									String hostEmailQuery = "select email from HostAccount where host_id=?";
+									PreparedStatement hostEmailPS = connection.prepareStatement(hostEmailQuery);
+									hostEmailPS.setInt(1, hostId);
+									ResultSet hostIdRS = hostEmailPS.executeQuery();
+									hostEmail = "";
+									while(hostIdRS.next()) {
+										hostEmail = hostIdRS.getString("email");
+									}
+									
+									System.out.println("host email = "+hostEmail);
+									
+									// getting hosts personal information from Account table (including address id to be used later):
+									String hostInfoIDQuery = "select title, firstName, surname, mobileNumber, address_id from Account where email=?";
+									PreparedStatement hostInfoPS = connection.prepareStatement(hostInfoIDQuery);
+									hostInfoPS.setString(1, hostEmail);
+									ResultSet hostInfoRS = hostInfoPS.executeQuery();
+									hostTitle = "";
+									hostFirstName = "";
+									hostSurname="";
+									hostMobileNumber="";
+									
+									int hostAddressId = 0;
+									
+									while(hostInfoRS.next()) {
+										hostTitle = hostInfoRS.getString("title");
+										hostFirstName = hostInfoRS.getString("firstName");
+										hostSurname = hostInfoRS.getString("surname");
+										hostMobileNumber = hostInfoRS.getString("mobileNumber");
+										hostAddressId = hostInfoRS.getInt("address_id");
+									}
+									System.out.println("hostTitle: "+hostTitle);
+									System.out.println("hostFirstName: "+hostFirstName);
+									System.out.println("hostSurname: "+hostSurname);
+									System.out.println("hostMobileNumber: "+hostMobileNumber);
+									System.out.println("hostAddressId: "+hostAddressId);
+									
+									//getting hosts address from Address table:
+									String hostPropertyInfo = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+									PreparedStatement getHostPropertyInfoPS = connection.prepareStatement(hostPropertyInfo);
+									getHostPropertyInfoPS.setInt(1, hostAddressId);
+									
+									hostHouseNameNumber = "";
+									hostStreetName = "";
+									hostPlaceName = "";
+									hostPostcode = "";
+
+									ResultSet gettingHostPropertyInfo = getHostPropertyInfoPS.executeQuery();
+
+									while(gettingHostPropertyInfo.next()) {
+										hostHouseNameNumber = gettingHostPropertyInfo.getString("houseNameNumber");
+										hostStreetName = gettingHostPropertyInfo.getString("streetName");
+										hostPlaceName = gettingHostPropertyInfo.getString("placeName");
+										hostPostcode = gettingHostPropertyInfo.getString("postcode");
+									}
+									
+									
+										System.out.println("hosthouseNameNumber: "+hostHouseNameNumber);
+										System.out.println("hoststreetName: "+hostStreetName);
+										System.out.println("hostplaceName: "+hostPlaceName);
+										System.out.println("hostpostcode: "+hostPostcode);
+
+									//--------guest confidential info--------
+									guestEmail = "";
+									
+									String getGuestEmail = "select email from GuestAccount where guest_id=?";
+									PreparedStatement getsGuestEmail = connection.prepareStatement(getGuestEmail);
+									getsGuestEmail.setInt(1, guestId);
+
+									ResultSet gettingGuestEmail = getsGuestEmail.executeQuery();
+									while(gettingGuestEmail.next()){
+										guestEmail = gettingGuestEmail.getString("email");
+										
+										//gets address id from accounts table
+										int guestAddressId = 0;
+										guestTitle = "";
+										guestFirstName = "";
+										guestSurname = "";
+										guestMobileNum = "";
+
+										
+										String getGuestAddressId = "select address_id, title, firstName, surname, mobileNumber from Account where email=?";
+										PreparedStatement getsGuestAddressId = connection.prepareStatement(getGuestAddressId);
+										getsGuestAddressId.setString(1, guestEmail);
+										
+										ResultSet gettingGuestAddressId = getsGuestAddressId.executeQuery();
+										while(gettingGuestAddressId.next()) {
+											guestAddressId = gettingGuestAddressId.getInt("address_id");
+											guestFirstName = gettingGuestAddressId.getString("firstName");
+											guestSurname = gettingGuestAddressId.getString("surname");
+											guestTitle = gettingGuestAddressId.getString("title");
+											guestMobileNum = gettingGuestAddressId.getString("mobileNumber");
+
+											String propertyInfoGuest = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
+											PreparedStatement getPropertyInfoGuest = connection.prepareStatement(propertyInfoGuest);
+											getPropertyInfoGuest.setInt(1, guestAddressId);
+											
+											
+											System.out.println("guestEmail: "+guestEmail);
+											System.out.println("guestTitle: "+guestTitle);
+											System.out.println("guestFirstName: "+guestFirstName);
+											System.out.println("guestSurname: "+guestSurname);
+											System.out.println("guestMobileNum: "+guestMobileNum);
+											
+											
+											houseNameNumberGuest = "";
+											streetNameGuest = "";
+											placeNameGuest = "";
+											postcodeGuest = "";
+
+
+											ResultSet gettingPropertyInfoGuest = getPropertyInfoGuest.executeQuery();
+
+											while(gettingPropertyInfoGuest.next()) {
+												houseNameNumberGuest = gettingPropertyInfoGuest.getString("houseNameNumber");
+												streetNameGuest = gettingPropertyInfoGuest.getString("streetName");
+												placeNameGuest = gettingPropertyInfoGuest.getString("placeName");
+												postcodeGuest = gettingPropertyInfoGuest.getString("postcode");
+											}	
+
+											
+										System.out.println("guesthouseNameNumber: "+houseNameNumberGuest);
+										System.out.println("guestplaceName: "+placeNameGuest);
+										System.out.println("guestStreetName: "+streetNameGuest);
+										System.out.println("guestpostcode: "+postcodeGuest);		
+										}
+									}
+								}
+								
+								displayConfidentialInfoMessage();
+								
 							}
-						
-							System.out.println("houseNameNumber: "+houseNameNumber);
-							System.out.println("streetName: "+streetName);
-							System.out.println("placeName: "+placeName);
-							System.out.println("postcode: "+postcode);
-
-
-
-						}
-						
-						
-
-						
-						/////////-----host confidential info--------------
-						
-						// first go to hostAccoutn table to get email using host_id, 
-						//se email to get address id from address table
-						// use address id to get hosts address from address table
-						//use email to get hosts confidential info from Account table
-						
-						String hostEmailQuery = "select email from HostAccount where host_id=?";
-						PreparedStatement hostEmailPS = connection.prepareStatement(hostEmailQuery);
-						hostEmailPS.setInt(1, hostId);
-						ResultSet hostIdRS = hostEmailPS.executeQuery();
-						hostEmail = "";
-						while(hostIdRS.next()) {
-							hostEmail = hostIdRS.getString("email");
-						}
-						
-						System.out.println("host email = "+hostEmail);
-						
-						// getting hosts personal information from Account table (including address id to be used later):
-						String hostInfoIDQuery = "select title, firstName, surname, mobileNumber, address_id from Account where email=?";
-						PreparedStatement hostInfoPS = connection.prepareStatement(hostInfoIDQuery);
-						hostInfoPS.setString(1, hostEmail);
-						ResultSet hostInfoRS = hostInfoPS.executeQuery();
-						hostTitle = "";
-						hostFirstName = "";
-						hostSurname="";
-						hostMobileNumber="";
-						
-						int hostAddressId = 0;
-						
-						while(hostInfoRS.next()) {
-							hostTitle = hostInfoRS.getString("title");
-							hostFirstName = hostInfoRS.getString("firstName");
-							hostSurname = hostInfoRS.getString("surname");
-							hostMobileNumber = hostInfoRS.getString("mobileNumber");
-							hostAddressId = hostInfoRS.getInt("address_id");
-						}
-						System.out.println("hostTitle: "+hostTitle);
-						System.out.println("hostFirstName: "+hostFirstName);
-						System.out.println("hostSurname: "+hostSurname);
-						System.out.println("hostMobileNumber: "+hostMobileNumber);
-						System.out.println("hostAddressId: "+hostAddressId);
-						
-						//getting hosts address from Address table:
-						String hostPropertyInfo = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
-						PreparedStatement getHostPropertyInfoPS = connection.prepareStatement(hostPropertyInfo);
-						getHostPropertyInfoPS.setInt(1, hostAddressId);
-						
-						hostHouseNameNumber = "";
-						hostStreetName = "";
-						hostPlaceName = "";
-						hostPostcode = "";
-
-						ResultSet gettingHostPropertyInfo = getHostPropertyInfoPS.executeQuery();
-
-						while(gettingHostPropertyInfo.next()) {
-							hostHouseNameNumber = gettingHostPropertyInfo.getString("houseNameNumber");
-							hostStreetName = gettingHostPropertyInfo.getString("streetName");
-							hostPlaceName = gettingHostPropertyInfo.getString("placeName");
-							hostPostcode = gettingHostPropertyInfo.getString("postcode");
-						}
-						
-						
-							System.out.println("hosthouseNameNumber: "+hostHouseNameNumber);
-							System.out.println("hoststreetName: "+hostStreetName);
-							System.out.println("hostplaceName: "+hostPlaceName);
-							System.out.println("hostpostcode: "+hostPostcode);
-
-						//--------guest confidential info--------
-						guestEmail = "";
-						
-						String getGuestEmail = "select email from GuestAccount where guest_id=?";
-						PreparedStatement getsGuestEmail = connection.prepareStatement(getGuestEmail);
-						getsGuestEmail.setInt(1, guestId);
-
-						ResultSet gettingGuestEmail = getsGuestEmail.executeQuery();
-						while(gettingGuestEmail.next()){
-							guestEmail = gettingGuestEmail.getString("email");
-							
-							//gets address id from accounts table
-							int guestAddressId = 0;
-							guestTitle = "";
-							guestFirstName = "";
-							guestSurname = "";
-							guestMobileNum = "";
-
-							
-							String getGuestAddressId = "select address_id, title, firstName, surname, mobileNumber from Account where email=?";
-							PreparedStatement getsGuestAddressId = connection.prepareStatement(getGuestAddressId);
-							getsGuestAddressId.setString(1, guestEmail);
-							
-							ResultSet gettingGuestAddressId = getsGuestAddressId.executeQuery();
-							while(gettingGuestAddressId.next()) {
-								guestAddressId = gettingGuestAddressId.getInt("address_id");
-								guestFirstName = gettingGuestAddressId.getString("firstName");
-								guestSurname = gettingGuestAddressId.getString("surname");
-								guestTitle = gettingGuestAddressId.getString("title");
-								guestMobileNum = gettingGuestAddressId.getString("mobileNumber");
-
-								String propertyInfoGuest = "select houseNameNumber, streetName, placeName, postcode from Address where address_id=?";
-								PreparedStatement getPropertyInfoGuest = connection.prepareStatement(propertyInfoGuest);
-								getPropertyInfoGuest.setInt(1, guestAddressId);
-								
-								
-								System.out.println("guestEmail: "+guestEmail);
-								System.out.println("guestTitle: "+guestTitle);
-								System.out.println("guestFirstName: "+guestFirstName);
-								System.out.println("guestSurname: "+guestSurname);
-								System.out.println("guestMobileNum: "+guestMobileNum);
-								
-								
-								houseNameNumberGuest = "";
-								streetNameGuest = "";
-								placeNameGuest = "";
-								postcodeGuest = "";
-
-
-								ResultSet gettingPropertyInfoGuest = getPropertyInfoGuest.executeQuery();
-
-								while(gettingPropertyInfoGuest.next()) {
-									houseNameNumberGuest = gettingPropertyInfoGuest.getString("houseNameNumber");
-									streetNameGuest = gettingPropertyInfoGuest.getString("streetName");
-									placeNameGuest = gettingPropertyInfoGuest.getString("placeName");
-									postcodeGuest = gettingPropertyInfoGuest.getString("postcode");
-								}	
-
-								
-							System.out.println("guesthouseNameNumber: "+houseNameNumberGuest);
-							System.out.println("guestplaceName: "+placeNameGuest);
-							System.out.println("guestStreetName: "+streetNameGuest);
-							System.out.println("guestpostcode: "+postcodeGuest);		
+							catch(Exception e1) {
+								e1.printStackTrace();
 							}
 						}
-					}
-					
-					displayConfidentialInfoMessage();
+					}	
 					
 				}
 				catch(Exception e1) {
 					e1.printStackTrace();
 				}
-				
-				
 			}
 		});
 
@@ -686,6 +714,41 @@ public class Bookings extends javax.swing.JFrame {
 		checkOutButton = new JButton("Check Out");
 		checkOutButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		checkOutButton.setBounds(74, 425, 113, 29);
+		checkOutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mainModule.userState == USER.GUEST) {
+					// get booking id.
+					// update provisional to "Ended". 
+					
+					
+					try {
+						bookingId = Integer.parseInt(jTextField_booking_id.getText().toString());
+						Connection connection = getConnection();
+						
+						String endBooking = "update Booking set provisional=? where booking_id=? ";
+						PreparedStatement endsBooking = connection.prepareStatement(endBooking);
+						endsBooking.setString(1, "Ended");
+						endsBooking.setInt(2, bookingId);
+						endsBooking.executeUpdate();
+						
+						
+						
+					}
+					catch(Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					displayCheckOutSuccessfull();
+					
+				} else if (mainModule.userState == USER.HOST){
+					// display message saying only guests can checkout
+					displayHostUnableToCheckOut();
+					
+				}
+			}
+		});
+		
 		jPanel1.add(checkOutButton);
 		getContentPane().setLayout(layout);
 
@@ -746,6 +809,22 @@ public class Bookings extends javax.swing.JFrame {
 				+ "\nProperty Address \nHouse Name/Number: "+houseNameNumber+"\nStreet Name: "+streetName+"\nCity: "+placeName+"\nPostcode: "+postcode+"\n"
 				+ "\nHost personal information: \nEmail: "+hostEmail+"\nTitle: "+hostTitle+"\nFirst name: "+hostFirstName+"\nSurname: "+hostSurname+"\nMobile number: "+hostMobileNumber+"\n"
 				+ "\nGuest personal information: \nEmail: "+guestEmail+"\nTitle: "+guestTitle+"\nFirst name: "+guestFirstName+"\nSurname: "+guestSurname+"\nMobile number: "+guestMobileNum);
+	}
+	
+
+	public void displayMessageUnableToViewConfidentialInfo() {
+		JOptionPane.showMessageDialog(this,
+				"Confidential information is unavailable once guests have checked out. To view confidential information for a provisional booking you must accept the booking first.");
+	}
+	
+	public void displayHostUnableToCheckOut() {
+		JOptionPane.showMessageDialog(this,
+				"Only guests can checkout. Once check out is successfull, confidential information will be unavailable.");
+	}
+	
+	public void displayCheckOutSuccessfull() {
+		JOptionPane.showMessageDialog(this,
+				"Check out successfull. Once check out is successfull, confidential information will be unavailable.");
 	}
 
 	// Variables used on the GUI initialised.
