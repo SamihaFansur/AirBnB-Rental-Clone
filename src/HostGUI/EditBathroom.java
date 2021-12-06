@@ -7,8 +7,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,6 +76,19 @@ public class EditBathroom extends JFrame {
 		this.controller = controller;
 	}
 
+	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
+	private static String username = "team018";
+	private static String pwd = "7854a03f";
+	public Connection getConnection() {
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(serverName, username, pwd);
+			return connection;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -104,7 +119,18 @@ public class EditBathroom extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(colomns);
 		table.setModel(model);
-
+		ArrayList<Bathroom> list = getUsersList();
+		Object[] row = new Object[5];
+		for (Bathroom element : list) {
+			row[0] = element.getBathType_id();
+			row[1] = element.getToilet();
+			row[2] = element.getBath();
+			row[3] = element.getShower();
+			row[4] = element.getShared();
+		
+			model.addRow(row);
+	
+		}
 		bathroomId = new JTextField();
 		bathroomId.setBounds(134, 198, 133, 20);
 		editBathroomPanel.add(bathroomId);
@@ -261,7 +287,34 @@ public class EditBathroom extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
+	public ArrayList<Bathroom> getUsersList() {
+		ArrayList<Bathroom> Bathroom = new ArrayList<>();
+		Connection connection = getConnection();
+		int bathid = 0;
+		String getBathingId = "SELECT bathing_id FROM Facilities WHERE facilities_id = " + facilitiesidAfter;
+		try {
+			PreparedStatement bathing = connection.prepareStatement(getBathingId);
+			ResultSet getbath = bathing.executeQuery();
+			while (getbath.next()) {
+				bathid = getbath.getInt("bathing_id");
+			}
+			
+			String query = "SELECT * FROM `Bathing_BathType` WHERE bathing_id = ?" ;
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, bathid);
+			ResultSet rs = st.executeQuery();
+			Bathroom bathroom;
+			while (rs.next()) {
+				bathroom = new Bathroom(rs.getInt("bathing_id"), rs.getInt("bathType_id"), rs.getBoolean("toilet"),
+						rs.getBoolean("bath"), rs.getBoolean("shower"),rs.getBoolean("shared"));
+				Bathroom.add(bathroom);
+			}
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Bathroom;
+	}
 	public void addBathTypeDetails(int id) {
 		System.out.println("id fed into addBathTypeDetails func = " + id);
 		try {

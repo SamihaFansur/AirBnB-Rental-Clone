@@ -96,7 +96,7 @@ public class EditBedroom extends JFrame {
 		this.controller = controller;
 	}
 
-	// Creates a list of property objects using the information in the Property
+	// Creates a list of property objects using the information in the Bedroom
 	// table
 	// within the database
 	public ArrayList<Bedroom> getUsersList() {
@@ -213,7 +213,7 @@ public class EditBedroom extends JFrame {
 		scrollPane.setBounds(67, 470, 464, 115);
 		editBedroomPanel.add(scrollPane);
 
-		String bedTypes[] = {"King", "Bunk", "Single", "Double" };
+		String bedTypes[] = {"", "King", "Bunk", "Single", "Double" };
 
 		BedType1ComboBox = new JComboBox(bedTypes);
 		BedType1ComboBox.setBounds(146, 289, 133, 22);
