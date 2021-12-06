@@ -93,6 +93,8 @@ public class Search extends javax.swing.JFrame {
 	private static String pwd = "7854a03f";
 	DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 	public Connection getConnection() {
 		Connection connection;
@@ -1245,7 +1247,7 @@ public class Search extends javax.swing.JFrame {
 		jLabel6 = new javax.swing.JLabel();
 
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jScrollPane1.setBounds(318, 13, 565, 634);
+		jScrollPane1.setBounds(318, 28, 565, 619);
 		jTable_Display_Search = new javax.swing.JTable();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1531,6 +1533,15 @@ public class Search extends javax.swing.JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 367, 227, 31);
 		jPanel1.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("'0' is treated as empty field");
+		lblNewLabel_1.setBounds(10, 46, 199, 14);
+		jPanel1.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("Bookmarked Properties:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setBounds(318, 11, 210, 14);
+		jPanel1.add(lblNewLabel_2);
 
 		// NAVBAR
 
