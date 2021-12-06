@@ -27,7 +27,6 @@ import Model.Model;
 public class EditBathing extends JFrame {
 
 	private JFrame frame;
-	private JTextField noOfBathroomsTextField;
 	private JRadioButton toiletPaperRadioBtn;
 	private JRadioButton hairDryerRadioBtn;
 	private JButton addBathing;
@@ -40,9 +39,6 @@ public class EditBathing extends JFrame {
 
 	Connection connection = null;
 
-	public void close() {
-		frame.dispose();
-	}
 
 	/**
 	 * Create the application.
@@ -64,6 +60,7 @@ public class EditBathing extends JFrame {
 	 */
 	public void initializeEditBathing(int facilitiesId, int id) {
 
+		//Nav bar for logged in users; Host
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -85,6 +82,8 @@ public class EditBathing extends JFrame {
 		editBathingLabel.setBounds(185, 57, 261, 57);
 		editBathingPanel.add(editBathingLabel);
 
+		//displaying Bathing facility amenities stored in the database for a particular bathing id 
+		//which related to a bathing facility for a particular property
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -102,7 +101,6 @@ public class EditBathing extends JFrame {
 			connection.close();
 
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 
@@ -145,7 +143,7 @@ public class EditBathing extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); 
 				frame.dispose();
 
 			}
@@ -158,12 +156,11 @@ public class EditBathing extends JFrame {
 		frame.setVisible(true);
 	}
 
+	//Saves changes and updates all relevant database tables
 	public void updateBathingDetails(int id) {
-		System.out.println("Printing id fed into updateBathingDetails = " + id);
 		try {
 			connection = ConnectionManager.getConnection();
 
-			System.out.println("id after in updateBathing func = " + idAfter);
 			model.setHairDryer(hairDryerRadioBtn.isSelected());
 			model.setToiletPaper(toiletPaperRadioBtn.isSelected());
 
@@ -174,7 +171,6 @@ public class EditBathing extends JFrame {
 			updatingBathingValues.setBoolean(2, model.getToiletPaper());
 			updatingBathingValues.setInt(3, idAfter);
 			updatingBathingValues.executeUpdate();
-			System.out.println(updatingBathingValues.toString());
 
 			String updateBathingIdInFacilities = "update Facilities set bathing_id=? where facilities_id=?";
 
@@ -183,14 +179,10 @@ public class EditBathing extends JFrame {
 			updatingBathingIdInFacilities.setInt(2, facilitiesidAfter);
 
 			updatingBathingIdInFacilities.executeUpdate();
-			System.out.println(updatingBathingIdInFacilities.toString());
 
 			connection.close();
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
 }
-
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
