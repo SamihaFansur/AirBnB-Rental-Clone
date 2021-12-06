@@ -4,7 +4,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-// https://howtodoinjava.com/java/java-security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/#3-better-password-security-using-sha-algorithms
+/*
+ 
+ Rajavel, M., Taylor, M., Gupta, L., Sarkar, D., Li, L., mangy, s. and Nadeem, M., 2021. 
+ Java - Create a Secure Password Hash - HowToDoInJava. [online] HowToDoInJava. 
+ Available at: <https://howtodoinjava.com/java/java-security/how-to-generate-secure-password
+ -hash-md5-sha-pbkdf2-bcrypt-examples/#3-better-password-security-using-sha-algorithms> 
+ [Accessed 4 December 2021]. 
+ 
+ */
 public class Password {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
