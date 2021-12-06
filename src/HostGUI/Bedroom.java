@@ -11,7 +11,7 @@ public class Bedroom {
  private String bed1ChoiceField, bed2ChoiceField;
  
  public Bedroom(int sleeping_id, int bedType_id, int peopleInBedroom, boolean bed1, 
-		 String bed1ChoiceField, int bed1People, boolean bed2, String bed2ChoiceField, int bed2People) {
+		 String bed1ChoiceField, int bed1People, boolean bed2, String bed2ChoiceField, int bed2P) {
 	 this.sleeping_id = sleeping_id;
 	 this.bedType_id = bedType_id;
 	 this.peopleInBedroom = peopleInBedroom;
@@ -20,14 +20,12 @@ public class Bedroom {
 	 this.bed1People = bed1People;
 	 this.bed2 = bed2;
 	 this.bed2ChoiceField = bed2ChoiceField; 
-	 this.bed2People = bed2People;
+	 this.bed2People = bed2P;
 
 }
 
 	//Getters and setters for information relating to a bedroom
-	public int getsleeping_id() {
-		return sleeping_id;
-	}
+
 
 	public int getbedType_id() {
 		return bedType_id;

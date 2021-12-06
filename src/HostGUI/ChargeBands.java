@@ -8,12 +8,14 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -80,6 +82,19 @@ public class ChargeBands extends JFrame {
 		this.mainModule = mainModule;
 		this.controller = controller;
 	}
+	private static String serverName = "jdbc:mysql://stusql.dcs.shef.ac.uk/team018";
+	private static String username = "team018";
+	private static String pwd = "7854a03f";
+	public Connection getConnection() {
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(serverName, username, pwd);
+			return connection;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -108,10 +123,23 @@ public class ChargeBands extends JFrame {
 		chargeBandsLabel.setBounds(222, 53, 183, 57);
 		chargeBandsPanel.add(chargeBandsLabel);
 
-		Object[] colomns = { "Start date", "End date", "Price per Night (£)", "Service Charge", "Cleaning Charge" };
+		Object[] colomns = { "Start date", "End date", "Price per Night (ï¿½)", "Service Charge", "Cleaning Charge" };
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(colomns);
 		table.setModel(model);
+		ArrayList<ChargeBand> list = getUsersList();
+		Object[] row = new Object[6];
+		for (ChargeBand element : list) {
+			row[0] = element.getStartDate();
+			row[1] = element.getEndDate();
+			row[2] = element.getPricePerNight();
+			row[3] = element.getServiceCharge();
+			row[4] = element.getCleaningCharge();
+			row[5] = element.getTotalPricePerNight();
+		
+			model.addRow(row);
+	
+		}
 
 		startDate = new JTextField();
 		startDate.setBounds(134, 198, 133, 20);
@@ -146,15 +174,15 @@ public class ChargeBands extends JFrame {
 		lblEndDate.setBounds(349, 228, 95, 20);
 		chargeBandsPanel.add(lblEndDate);
 
-		JLabel lblPricePerNight = new JLabel("Price per Night (£)");
+		JLabel lblPricePerNight = new JLabel("Price per Night (ï¿½)");
 		lblPricePerNight.setBounds(349, 259, 95, 20);
 		chargeBandsPanel.add(lblPricePerNight);
 
-		JLabel lblServiceCharge = new JLabel("Sevice charge per Night (£)");
+		JLabel lblServiceCharge = new JLabel("Sevice charge per Night (ï¿½)");
 		lblServiceCharge.setBounds(349, 290, 95, 20);
 		chargeBandsPanel.add(lblServiceCharge);
 
-		JLabel lblCleaningCharge = new JLabel("Cleaning Charge per Night (£)");
+		JLabel lblCleaningCharge = new JLabel("Cleaning Charge per Night (ï¿½)");
 		lblCleaningCharge.setBounds(349, 321, 95, 20);
 		chargeBandsPanel.add(lblCleaningCharge);
 
@@ -329,6 +357,27 @@ public class ChargeBands extends JFrame {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+	public ArrayList<ChargeBand> getUsersList() {
+		ArrayList<ChargeBand> ChargeBand = new ArrayList<>();
+		Connection connection = getConnection();
+	
+			String query = "SELECT * FROM `ChargeBands` WHERE property_id = ?" ;
+			try {
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, model.getPropertyId());
+			ResultSet rs = st.executeQuery();
+			ChargeBand chargeband;
+			while (rs.next()) {
+				chargeband = new ChargeBand(rs.getInt("property_id"), rs.getString("startDate"), rs.getString("endDate"),
+						rs.getDouble("pricePerNight"), rs.getDouble("serviceCharge"),rs.getDouble("cleaningCharge"), rs.getDouble("totalPricePerNight"));
+				ChargeBand.add(chargeband);
+			}
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ChargeBand;
 	}
 
 	// returns true if charge band overlaps with an existing charge band
