@@ -29,10 +29,6 @@ public class EditLiving extends JFrame {
 	private JFrame frame;
 	private NavHost navForHost = new NavHost();
 
-	public void close() {
-		frame.dispose();
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -65,6 +61,7 @@ public class EditLiving extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void initializeEditLiving(int facilitiesId, int id) {
+		//Nav bar for logged in users; Host
 		try {
 			frame = new JFrame();
 			navForHost.addHostNav(frame, mainModule);
@@ -86,6 +83,8 @@ public class EditLiving extends JFrame {
 		editLivingLabel.setBounds(183, 54, 183, 57);
 		editLivingPanel.add(editLivingLabel);
 
+		//displaying Living facility amenities stored in the database for a particular living id 
+		//which related to a living facility for a particular property
 		try {
 			connection = ConnectionManager.getConnection();
 
@@ -107,7 +106,6 @@ public class EditLiving extends JFrame {
 			}
 			connection.close();
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 
@@ -183,7 +181,7 @@ public class EditLiving extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainModule.userState = USER.HOST;
 				mainModule.editPropertyState = EDITPROPERTY.EDIT_PROPERTY_FACILITIES;
-				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter); // fix params
+				MainModule.controller.editPropertyView(facilitiesidAfter, idAfter);
 				frame.dispose();
 			}
 		});
@@ -195,6 +193,7 @@ public class EditLiving extends JFrame {
 		frame.setVisible(true);
 	}
 
+	//Saves changes and updates all relevant database tables
 	public void updateLivingDetails() {
 		try {
 			connection = ConnectionManager.getConnection();
@@ -207,7 +206,7 @@ public class EditLiving extends JFrame {
 			model.setBoardGames(boardGamesRadioBtn.isSelected());
 
 			String updateLivingRecord = "update Living set wifi=?, television=?, "
-					+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? " + "where living_id=?";
+										+ "satellite=?, streaming=?, dvdPlayer=?, boardGames=? " + "where living_id=?";
 
 			PreparedStatement updatingLivingValues = connection.prepareStatement(updateLivingRecord);
 			updatingLivingValues.setBoolean(1, model.getWifi());
@@ -228,10 +227,7 @@ public class EditLiving extends JFrame {
 
 			connection.close();
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
 	}
 }
-
-//NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW

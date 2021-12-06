@@ -58,7 +58,7 @@ public class Login extends JFrame {
 	 */
 	public void initializeLogin() {
 		mainModule.currentState = STATE.LOGIN;
-		//Nav bar for non logged in users; i.e Enquirer
+		//Nav bar for non logged in users; Enquirer
 		try {
 			frame = new JFrame();
 			navBeforeLogin.addNavBeforeLogin(frame, mainModule);
