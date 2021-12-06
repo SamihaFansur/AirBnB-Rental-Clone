@@ -318,12 +318,12 @@ public class EditAccount extends JFrame {
 			passwordQuery.setString(1, model.getEmail());
 			ResultSet rs = passwordQuery.executeQuery();
 			if (rs.next()) {
-				if (securePassword.matches(rs.getString("password"))){
+				if (securePassword.matches(rs.getString("password"))) {
 					passwordCorrect = true;
 				} else {
 					passwordCorrect = false;
 				}
-	
+
 			}
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
@@ -348,7 +348,7 @@ public class EditAccount extends JFrame {
 			updateAccount.setString(1, model.getTitle());
 			updateAccount.setString(2, model.getFirstName());
 			updateAccount.setString(3, model.getSurname());
-			updateAccount.setString(4,securePassword);
+			updateAccount.setString(4, securePassword);
 			updateAccount.setString(5, salt);
 			updateAccount.setString(6, model.getEmail());
 
@@ -409,142 +409,173 @@ public class EditAccount extends JFrame {
 	// Function for deleting account and removing all related information from the
 	// database
 	public void deleteAccount() {
-		try {
-			connection = ConnectionManager.getConnection();
-			String getHostId = "SELECT host_id from HostAccount WHERE email = ?";
-			PreparedStatement stmt = connection.prepareStatement(getHostId);
-			int host_id = 0;
-			stmt.setString(1, model.getEmail());
-			ResultSet rs_host = stmt.executeQuery();
-			while (rs_host.next()) {
-				host_id = rs_host.getInt("host_id");
-			}
-			// Gets all of the properties that the account owns if it is a host
-			String selectPropertyRecord = "SELECT property_id,address_id from Property where host_id = ?";
+//		if (mainModule.userState == USER.HOST) {
+			try {
+				connection = ConnectionManager.getConnection();
+				String getHostId = "SELECT host_id from HostAccount WHERE email = ?";
+				PreparedStatement stmt = connection.prepareStatement(getHostId);
 
-			PreparedStatement selectPropertyValues = connection.prepareStatement(selectPropertyRecord,
-					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-			int address = 0;
-			selectPropertyValues.setInt(1, host_id);
-			ResultSet rs = selectPropertyValues.executeQuery();
+				stmt.setString(1, model.getEmail());
+				ResultSet rs_host = stmt.executeQuery();
+				while (rs_host.next()) {
+					model.setHostId(rs_host.getInt("host_id"));
+				}
+				String getGuestId = "SELECT guest_id from GuestAccount WHERE email = ?";
+				PreparedStatement stmt_guest = connection.prepareStatement(getGuestId);
+				stmt_guest.setString(1, model.getEmail());
+				ResultSet rs_guest = stmt_guest.executeQuery();
+				while (rs_guest.next()) {
+					model.setGuestId(rs_guest.getInt("guest_id"));
+				}
+				// Gets all of the properties that the account owns if it is a host
+				String selectPropertyRecord = "SELECT property_id,address_id from Property where host_id = ?";
 
-			while (rs.next()) {
-				model.setPropertyId(rs.getInt("property_id"));
-				address = rs.getInt("address_id");
-				// Gets all the facilities related to the accounts properties
-				String selectFacilitiesRecord = "SELECT facilities_id,outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE property_id = ? ";
-
-				PreparedStatement selectFacilitiesValues = connection.prepareStatement(selectFacilitiesRecord,
+				PreparedStatement selectPropertyValues = connection.prepareStatement(selectPropertyRecord,
 						ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-				selectFacilitiesValues.setInt(1, model.getPropertyId());
-				ResultSet rs_facilities = selectFacilitiesValues.executeQuery();
+				int address = 0;
+				selectPropertyValues.setInt(1, model.getHostId());
+				ResultSet rs = selectPropertyValues.executeQuery();
 
-				int outdoors = 0, utility = 0, living = 0, bathing = 0, sleeping = 0, kitchen = 0;
-				while (rs_facilities.next()) {
-					outdoors = rs_facilities.getInt("outdoors_id");
-					utility = rs_facilities.getInt("utility_id");
-					living = rs_facilities.getInt("living_id");
-					bathing = rs_facilities.getInt("bathing_id");
-					sleeping = rs_facilities.getInt("sleeping_id");
-					kitchen = rs_facilities.getInt("kitchen_id");
-					rs_facilities.deleteRow();
+				while (rs.next()) {
+					model.setPropertyId(rs.getInt("property_id"));
+					address = rs.getInt("address_id");
+					// Gets all the facilities related to the accounts properties
+					String selectFacilitiesRecord = "SELECT facilities_id,outdoors_id, utility_id, living_id, bathing_id, sleeping_id, kitchen_id FROM Facilities WHERE property_id = ? ";
 
-					// Deletes the information out of the facilities related to the account
-					String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHERE sleeping_id = ?";
-					PreparedStatement deleteSleeping_BedType = connection.prepareStatement(deleteSleeping_BedTypeQuery);
-					deleteSleeping_BedType.setInt(1, sleeping);
-					int e = deleteSleeping_BedType.executeUpdate();
-					if (e > 0) {
+					PreparedStatement selectFacilitiesValues = connection.prepareStatement(selectFacilitiesRecord,
+							ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+					selectFacilitiesValues.setInt(1, model.getPropertyId());
+					ResultSet rs_facilities = selectFacilitiesValues.executeQuery();
+
+					int outdoors = 0, utility = 0, living = 0, bathing = 0, sleeping = 0, kitchen = 0;
+					while (rs_facilities.next()) {
+						outdoors = rs_facilities.getInt("outdoors_id");
+						utility = rs_facilities.getInt("utility_id");
+						living = rs_facilities.getInt("living_id");
+						bathing = rs_facilities.getInt("bathing_id");
+						sleeping = rs_facilities.getInt("sleeping_id");
+						kitchen = rs_facilities.getInt("kitchen_id");
+						rs_facilities.deleteRow();
+
+						// Deletes the information out of the facilities related to the account
+						String deleteSleeping_BedTypeQuery = "DELETE FROM Sleeping_BedType WHERE sleeping_id = ?";
+						PreparedStatement deleteSleeping_BedType = connection
+								.prepareStatement(deleteSleeping_BedTypeQuery);
+						deleteSleeping_BedType.setInt(1, sleeping);
+						deleteSleeping_BedType.executeUpdate();
+
+						String deleteSleepingQuery = "DELETE FROM Sleeping WHERE sleeping_id = ?";
+						PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
+						deleteSleeping.setInt(1, sleeping);
+						deleteSleeping.executeUpdate();
+
+						String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE outdoors_id = ?";
+						PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
+						deleteOutdoors.setInt(1, outdoors);
+						deleteOutdoors.executeUpdate();
+
+						String deleteKitchenQuery = "DELETE FROM Kitchen WHERE kitchen_id = ?";
+						PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
+						deleteKitchen.setInt(1, kitchen);
+						deleteKitchen.executeUpdate();
+
+						String deleteLivingQuery = "DELETE FROM Living WHERE living_id = ?";
+						PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
+						deleteLiving.setInt(1, living);
+						deleteLiving.executeUpdate();
+
+						String deleteUtilityQuery = "DELETE FROM Utility WHERE utility_id = ?";
+						PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
+						deleteUtility.setInt(1, utility);
+						deleteUtility.executeUpdate();
+
+						String deleteBathing_BathTypeQuery = "DELETE FROM Bathing_BathType WHERE bathing_id = ?";
+						PreparedStatement deleteBathing_BathType = connection
+								.prepareStatement(deleteBathing_BathTypeQuery);
+						deleteBathing_BathType.setInt(1, bathing);
+						deleteBathing_BathType.executeUpdate();
+
+						String deleteBathingQuery = "DELETE FROM Bathing WHERE bathing_id = ?";
+						PreparedStatement deleteBathing = connection.prepareStatement(deleteBathingQuery);
+						deleteBathing.setInt(1, bathing);
+						deleteBathing.executeUpdate();
+
 					}
-					String deleteSleepingQuery = "DELETE FROM Sleeping WHERE sleeping_id = ?";
-					PreparedStatement deleteSleeping = connection.prepareStatement(deleteSleepingQuery);
-					deleteSleeping.setInt(1, sleeping);
-					int d = deleteSleeping.executeUpdate();
-					if (d > 0) {
-					}
-					String deleteOutdoorsQuery = "DELETE FROM Outdoors WHERE outdoors_id = ?";
-					PreparedStatement deleteOutdoors = connection.prepareStatement(deleteOutdoorsQuery);
-					deleteOutdoors.setInt(1, outdoors);
-					int f = deleteOutdoors.executeUpdate();
-					if (f > 0) {
-					}
-					String deleteKitchenQuery = "DELETE FROM Kitchen WHERE kitchen_id = ?";
-					PreparedStatement deleteKitchen = connection.prepareStatement(deleteKitchenQuery);
-					deleteKitchen.setInt(1, kitchen);
-					int g = deleteKitchen.executeUpdate();
-					if (g > 0) {
-					}
-					String deleteLivingQuery = "DELETE FROM Living WHERE living_id = ?";
-					PreparedStatement deleteLiving = connection.prepareStatement(deleteLivingQuery);
-					deleteLiving.setInt(1, living);
-					int h = deleteLiving.executeUpdate();
-					if (h > 0) {
-					}
-					String deleteUtilityQuery = "DELETE FROM Utility WHERE utility_id = ?";
-					PreparedStatement deleteUtility = connection.prepareStatement(deleteUtilityQuery);
-					deleteUtility.setInt(1, utility);
-					int i = deleteUtility.executeUpdate();
-					if (i > 0) {
-					}
-					String deleteBathing_BathTypeQuery = "DELETE FROM Bathing_BathType WHERE bathing_id = ?";
-					PreparedStatement deleteBathing_BathType = connection.prepareStatement(deleteBathing_BathTypeQuery);
-					deleteBathing_BathType.setInt(1, bathing);
-					int j = deleteBathing_BathType.executeUpdate();
-					if (j > 0) {
-					}
-					String deleteBathingQuery = "DELETE FROM Bathing WHERE bathing_id = ?";
-					PreparedStatement deleteBathing = connection.prepareStatement(deleteBathingQuery);
-					deleteBathing.setInt(1, bathing);
-					int k = deleteBathing.executeUpdate();
-					if (k > 0) {
-					}
+				
+					// Deletes the account from the address database
+
+					String deleteChargeBandsQuery = "DELETE FROM ChargeBands WHERE property_id = ?";
+					PreparedStatement deleteChargeBands = connection.prepareStatement(deleteChargeBandsQuery);
+					deleteChargeBands.setInt(1, model.getPropertyId());
+					deleteChargeBands.executeUpdate();
+
+					String deleteReviewsQuery = "DELETE FROM Review WHERE property_id = ?";
+					PreparedStatement deleteReviews = connection.prepareStatement(deleteReviewsQuery);
+					deleteReviews.setInt(1, model.getPropertyId());
+					deleteReviews.executeUpdate();
+
+					String deleteBookingQuery = "DELETE FROM Booking WHERE property_id = ?";
+					PreparedStatement deleteBooking = connection.prepareStatement(deleteBookingQuery);
+					deleteBooking.setInt(1, model.getPropertyId());
+					deleteBooking.executeUpdate();
+					rs.deleteRow();
+					String deleteAddressQuery = "DELETE FROM Address WHERE address_id = ?";
+					PreparedStatement deleteAddress = connection.prepareStatement(deleteAddressQuery);
+					deleteAddress.setInt(1, address);
+					deleteAddress.executeUpdate();
+					
 				}
-				// Deletes the account from the address database
-				rs.deleteRow();
-				String deleteAddressQuery = "DELETE FROM Address WHERE address_id = ?";
-				PreparedStatement deleteAddress = connection.prepareStatement(deleteAddressQuery);
-				deleteAddress.setInt(1, address);
-				int m = deleteAddress.executeUpdate();
-				if (m > 0) {
-				}
-			}
-			// Deletes account out of the address table
-			String deleteAccountAddressQuery = "DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
-			PreparedStatement deleteAccountAddress = connection.prepareStatement(deleteAccountAddressQuery);
-			deleteAccountAddress.setString(1, model.getHouseNameNum());
-			deleteAccountAddress.setString(2, model.getPostcode());
-			int l = deleteAccountAddress.executeUpdate();
-			if (l > 0) {
-			}
-			// Deletes account out of the hostAccount table
-			String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
-			PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
-			deleteHostAccount.setString(1, model.getEmail());
-			int j = deleteHostAccount.executeUpdate();
-			if (j > 0) {
-			}
-			// Deletes account out of the guestAccount table
-			String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
-			PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
-			deleteGuestAccount.setString(1, model.getEmail());
-			int k = deleteGuestAccount.executeUpdate();
-			if (k > 0) {
-			}
-			// Deletes account out of the account table
-			String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
-			PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
-			deleteAccount.setString(1, model.getEmail());
-			int i = deleteAccount.executeUpdate();
-			if (i > 0) {
-				frame.dispose();
-				JOptionPane.showMessageDialog(this, "Account deleted.");
-			}
-			connection.close();
 
-		} catch (Exception e) {
-			System.err.println("Got an exception!");
-			System.err.println(e.getMessage());
-		}
+				String deleteBookingGuestQuery = "DELETE FROM Booking WHERE guest_id = ? ";
+				PreparedStatement deleteBookingGuest = connection.prepareStatement(deleteBookingGuestQuery);
+				deleteBookingGuest.setInt(1, model.getGuestId());
+				deleteBookingGuest.executeUpdate();
+
+				// Deletes account out of the address table
+				String deleteAccountAddressQuery = "DELETE FROM Address WHERE houseNameNumber = ? AND postcode = ?";
+				PreparedStatement deleteAccountAddress = connection.prepareStatement(deleteAccountAddressQuery);
+				deleteAccountAddress.setString(1, model.getHouseNameNum());
+				deleteAccountAddress.setString(2, model.getPostcode());
+				int l = deleteAccountAddress.executeUpdate();
+				if (l > 0) {
+				}
+				// Deletes account out of the hostAccount table
+				String deleteHostAccountQuery = "DELETE FROM HostAccount WHERE  email = ?";
+				PreparedStatement deleteHostAccount = connection.prepareStatement(deleteHostAccountQuery);
+				deleteHostAccount.setString(1, model.getEmail());
+				int j = deleteHostAccount.executeUpdate();
+				if (j > 0) {
+				}
+				// Deletes account out of the guestAccount table
+				String deleteGuestAccountQuery = "DELETE FROM GuestAccount WHERE  email = ?";
+				PreparedStatement deleteGuestAccount = connection.prepareStatement(deleteGuestAccountQuery);
+				deleteGuestAccount.setString(1, model.getEmail());
+				int k = deleteGuestAccount.executeUpdate();
+				if (k > 0) {
+				}
+				// Deletes account out of the account table
+				String deleteAccountQuery = "DELETE FROM Account WHERE email = ?";
+				PreparedStatement deleteAccount = connection.prepareStatement(deleteAccountQuery);
+				deleteAccount.setString(1, model.getEmail());
+				int i = deleteAccount.executeUpdate();
+				if (i > 0) {
+					frame.dispose();
+					JOptionPane.showMessageDialog(this, "Account deleted.");
+				}
+				connection.close();
+
+			} catch (Exception e) {
+				System.err.println("Got an exception!");
+				System.err.println(e.getMessage());
+			}
+	//	} else {
+//			try {
+//				
+//			} catch (Exception e) {
+//				
+//			}
+//		}
 	}
+
 }
 //NEED TO ALIGN CONTENT IN THE CENTER & RESIZE WINDOW
