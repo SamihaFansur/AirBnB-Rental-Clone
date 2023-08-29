@@ -1,4 +1,4 @@
-# COM2008-3008-ASSIGNMENT
+# Air-Bnb Rental Application Clone
 
 UML Diagram
 ![Example Image](./uml-rental.png)
@@ -12,5 +12,8 @@ Register & Login pages
 
 Login page
 ![Example Image](./airbnb-login.png)
+
+Property List Filter Page
+![Example Image](./properties-list-filter.png)
 
 
